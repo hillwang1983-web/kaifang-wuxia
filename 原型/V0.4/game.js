@@ -133,11 +133,28 @@ for (const ch of CHARS) {
   }
 }
 // 兵器：手里的刀剑单独画，跟着出招角度转
-const WEAPON = { xia: { len: 12, col: '#E8E2D2', hilt: '#C9A45C' }, bandit: { len: 8, col: '#C9C2B2', hilt: '#3B2F28' }, boss: { len: 15, col: '#D8D2C2', hilt: '#3B2F28', wide: true } };
+const WEAPON = { xia: { len: 15, col: '#E8E2D2', hilt: '#C9A45C' }, bandit: { len: 8, col: '#C9C2B2', hilt: '#3B2F28' }, boss: { len: 15, col: '#D8D2C2', hilt: '#3B2F28', wide: true } };
 const WALK = ['w1', 'idle', 'w2', 'idle'];
 const dirOf = (a) => { const c = Math.cos(a), s = Math.sin(a); return c > 0.7 ? 'right' : c < -0.7 ? 'left' : s > 0 ? 'down' : 'up'; };
+// 素材精灵表：16×16 一帧，列是朝向（下、上、左、右），行 0–3 走路、行 4 出招；脚踩在帧底
+const SHEET_COL = { down: 0, up: 1, left: 2, right: 3 }, SHEET_ROW = { idle: 0, w1: 1, w2: 3, atk: 4 };
+function footShadow(g, x, y, w) {
+  if (IMG.shadow && w <= 8) { g.drawImage(IMG.shadow, x - 6, y - 4); return; }
+  g.fillStyle = 'rgba(0,0,0,0.3)'; g.fillRect(x - w + 1, y - 2, w * 2 - 2, 3); g.fillRect(x - w + 3, y + 1, w * 2 - 6, 1);
+}
 function drawChar(g, id, dir, frame, x, y, o) {
   o = o || {};
+  const sh = SHEET[id];
+  if (sh) {
+    x = Math.round(x + (o.dx || 0)); y = Math.round(y + (o.dy || 0));
+    if (!o.noShadow) footShadow(g, x, y, 6);
+    const sx = SHEET_COL[dir] * 16, sy = (SHEET_ROW[frame] || 0) * 16;
+    g.save(); if (o.alpha !== undefined) g.globalAlpha = o.alpha;
+    g.drawImage(o.white ? sh.white : sh.n, sx, sy, 16, 16, x - 8, y - 15, 16, 16);
+    if (o.red) { g.globalAlpha = (o.alpha === undefined ? 1 : o.alpha) * 0.55; g.drawImage(sh.red, sx, sy, 16, 16, x - 8, y - 15, 16, 16); }
+    g.restore(); return;
+  }
+  if (frame === 'atk') frame = 'idle';
   const d = dir === 'left' ? 'right' : dir, set0 = SPR[id][d][frame], s = o.white ? set0.white : set0.n, w = s.width;
   x = Math.round(x + (o.dx || 0)); y = Math.round(y + (o.dy || 0));
   if (!o.noShadow) { g.fillStyle = 'rgba(0,0,0,0.34)'; g.fillRect(x - 5, y - 1, 10, 2); g.fillRect(x - 4, y + 1, 8, 1); }
@@ -148,8 +165,8 @@ function drawChar(g, id, dir, frame, x, y, o) {
   g.restore();
 }
 function drawWeapon(g, id, x, y, ang, behind) {
-  const w = WEAPON[id]; if (!w) return;
-  const hx = Math.round(x + Math.cos(ang) * 4), hy = Math.round(y - 9 + Math.sin(ang) * 3);
+  const w = WEAPON[id]; if (!w || (id === 'boss' && BOSS.idle)) return;
+  const hx = Math.round(x + Math.cos(ang) * 4), hy = Math.round(y - (SHEET[id] ? 7 : 9) + Math.sin(ang) * 3);
   const tx = hx + Math.cos(ang) * w.len, ty = hy + Math.sin(ang) * w.len * 0.85;
   g.save(); if (behind) g.globalAlpha = 0.85;
   line(g, hx + 1, hy + 1, tx + 1, ty + 1, INK);
@@ -158,8 +175,25 @@ function drawWeapon(g, id, x, y, ang, behind) {
   P(g, hx, hy, w.hilt); P(g, Math.round(hx - Math.cos(ang) * 2), Math.round(hy - Math.sin(ang) * 2), w.hilt);
   g.restore();
 }
+// 首领：按状态挑动作条，蓄力 / 出招分左右；帧底到脚的距离 48 高的是 4、96 高的是 18
+function drawBoss(g, e, ex, ey, t) {
+  const side = Math.cos(e.face) >= 0 ? 'R' : 'L';
+  let a = 'idle', i = Math.floor(t * 8);
+  if (e.state === 'down') { a = 'hit'; i = 3; }
+  else if (e.state === 'windup') { a = 'charge' + side; i = Math.min(2, Math.floor((e.t / e.atk.tele) * 3)); }
+  else if (e.state === 'dash') { a = 'attack' + side; i = 0; }
+  else if (e.state === 'recover' && e.t < 0.32) { a = 'attack' + side; i = Math.floor(e.t / 0.08); }
+  else if (e.state === 'stagger' || e.state === 'flinch') { a = 'hit'; i = Math.floor(e.t * 10); }
+  else if (e.moving) { a = 'walk'; i = Math.floor(e.an * 10); }
+  const B = BOSS[a], x = Math.round(ex), y = Math.round(ey);
+  i = a === 'hit' && e.state === 'down' ? 3 : i % B.count;
+  fe(g, x, y, 12, 3, 'rgba(0,0,0,0.3)');
+  g.drawImage(e.flash > 0 ? B.white : B.n, i * 96, 0, 96, B.fh, x - 48, y - B.fh + (B.fh === 96 ? 18 : 4), 96, B.fh);
+}
 function portrait(canvas, id) {
   const g = canvas.getContext('2d');
+  canvas.classList.toggle('face', !!FACE[id]);
+  if (FACE[id]) { canvas.width = 38; canvas.height = 38; g.clearRect(0, 0, 38, 38); g.drawImage(FACE[id], 0, 0); return; }
   if (SPR[id]) { const s = SPR[id].down.idle.n; canvas.width = s.width; canvas.height = 12; g.clearRect(0, 0, s.width, 12); g.drawImage(s, 0, 0); return; }
   const im = OBJ[id]; if (!im) return;
   canvas.width = Math.max(16, im.width); canvas.height = Math.max(12, im.height); g.clearRect(0, 0, canvas.width, canvas.height); g.drawImage(im, 0, 0);
@@ -265,6 +299,39 @@ const OBJ = {
   tree: mkTree(0), tree2: mkTree(1), rock: mkRock(), tent: mkTent(), wood: mkWood(), herb: mkHerb(), boat: mkBoat(), lantern: mkLantern(), fence: mkFence(),
   reed: mkReed(), barrel: mkBarrel(), board: mkBoard(), cart: mkCart(), sign: mkSign(), dummy: mkDummy(false), dummyHit: mkDummy(true),
 };
+Object.assign(OBJ, { home2: OBJ.home, bigtree: OBJ.tree, rock2: OBJ.rock, boulder: OBJ.rock, boulder2: OBJ.rock, tent2: OBJ.tent, stump: OBJ.wood, bush: OBJ.tree2, firepit: cnv(1, 1) });
+
+// ---- 素材图（Ninja Adventure 素材包，CC0，来源见 assets/na/README.md）。某张没读到就退回上面的程序绘制
+const NA = 'assets/na/';
+const IMG = {}, SHEET = {}, BOSS = {}, FACE = {};
+const CHAR_FILE = { xia: 'player', shen: 'shen', xu: 'xu', lu: 'lu', zhou: 'zhou', bandit: 'bandit', archer: 'archer', guard: 'guard', captain: 'captain' };
+// 首领每个动作一条图：站立 / 走 / 受击是 96×48 一帧，蓄力 / 出招是 96×96 一帧，分左右两版
+const BOSS_FILE = { idle: 48, walk: 48, hit: 48, chargeL: 96, chargeR: 96, attackL: 96, attackR: 96 };
+function loadImg(src) { return new Promise((ok) => { const im = new Image(); im.onload = () => ok(im); im.onerror = () => ok(null); im.src = NA + src; }); }
+const crop = (im, x, y, w, h) => { const c = cnv(w, h); c.getContext('2d').drawImage(im, x, y, w, h, 0, 0, w, h); return c; };
+async function loadAssets() {
+  const jobs = [];
+  const add = (src, fn) => jobs.push(loadImg(src).then((im) => { if (im) fn(im); }));
+  for (const k of ['floor', 'water', 'nature', 'house', 'camp']) add('tiles/' + k + '.png', (im) => { IMG[k] = im; });
+  add('shadow.png', (im) => { IMG.shadow = im; });
+  for (const [id, f] of Object.entries(CHAR_FILE)) {
+    add('chars/' + f + '.png', (im) => { SHEET[id] = { n: im, white: silhouette(im, '#FFFFFF'), red: silhouette(im, '#FF7A60') }; });
+    add('faces/' + f + '.png', (im) => { FACE[id] = im; });
+  }
+  add('faces/boss.png', (im) => { FACE.boss = im; });
+  const boss = {};
+  for (const [k, fh] of Object.entries(BOSS_FILE)) add('boss/' + k + '.png', (im) => { boss[k] = { n: im, white: silhouette(im, '#FFFFFF'), fh, count: Math.round(im.width / 96) }; });
+  await Promise.all(jobs);
+  if (Object.keys(boss).length === Object.keys(BOSS_FILE).length) Object.assign(BOSS, boss);
+  if (IMG.house && IMG.nature && IMG.camp && IMG.water) Object.assign(OBJ, {
+    house: crop(IMG.house, 0, 0, 64, 48), home: crop(IMG.house, 192, 0, 64, 48), home2: crop(IMG.house, 64, 0, 64, 48), forge: crop(IMG.house, 256, 0, 48, 48),
+    tree: crop(IMG.nature, 0, 0, 32, 32), tree2: crop(IMG.nature, 32, 0, 32, 32), bigtree: crop(IMG.nature, 48, 288, 48, 48),
+    rock: crop(IMG.nature, 240, 144, 16, 16), rock2: crop(IMG.nature, 288, 144, 16, 16), boulder: crop(IMG.nature, 208, 128, 32, 32), boulder2: crop(IMG.nature, 256, 128, 32, 32),
+    tent: crop(IMG.camp, 64, 0, 48, 48), tent2: crop(IMG.camp, 112, 0, 48, 48), firepit: crop(IMG.camp, 192, 80, 32, 32), stump: crop(IMG.camp, 16, 80, 32, 32),
+    wood: crop(IMG.camp, 0, 0, 32, 16), herb: crop(IMG.nature, 96, 176, 16, 16), boat: crop(IMG.water, 416, 0, 32, 16), lantern: crop(IMG.camp, 96, 80, 16, 32),
+    fence: crop(IMG.house, 160, 80, 48, 16), reed: crop(IMG.nature, 144, 176, 16, 16), barrel: crop(IMG.camp, 64, 80, 16, 16), bush: crop(IMG.nature, 96, 160, 16, 16),
+  });
+}
 
 // ---- 界面素材
 function frameImg(hi, mid, lo, fill) {
@@ -289,11 +356,12 @@ function stickBase() {
   return 'url(' + c.toDataURL() + ')';
 }
 const rs = document.documentElement.style;
-rs.setProperty('--fDark', frameImg('#5A4A3C', '#3B2F28', '#241C17', 'rgba(20,16,13,0.9)'));
-rs.setProperty('--fPaper', frameImg('#B98A5A', '#8A5E3C', '#5E3E26', '#EADFC4'));
-rs.setProperty('--fGold', frameImg('#F0D78F', '#D8B66A', '#9A7A3A', 'rgba(26,20,15,0.94)'));
-rs.setProperty('--fOpt', frameImg('#D6C4A0', '#B49C74', '#86704E', '#F3EAD6'));
-rs.setProperty('--fOptSel', frameImg('#F0D78F', '#D8B66A', '#9A7A3A', '#F7EEDA'));
+// 面板统一用深紫灰（借鉴 Sephiria 的菜单底色），选中项金框，地名和说话人用米色牌子
+rs.setProperty('--fDark', frameImg('#6B5E8A', '#4A3F63', '#2A2340', 'rgba(28,23,42,0.9)'));
+rs.setProperty('--fPaper', frameImg('#6B5E8A', '#4A3F63', '#2A2340', 'rgba(33,27,49,0.97)'));
+rs.setProperty('--fGold', frameImg('#F0D78F', '#D8B66A', '#9A7A3A', 'rgba(33,27,49,0.95)'));
+rs.setProperty('--fOpt', frameImg('#5A4F78', '#3B3352', '#231D33', '#2C2542'));
+rs.setProperty('--fOptSel', frameImg('#F0D78F', '#D8B66A', '#9A7A3A', '#3A3150'));
 rs.setProperty('--bRed', roundBtn(32, '#E0603F', '#A8402C'));
 rs.setProperty('--bJade', roundBtn(26, '#5FB3A1', '#3F8576'));
 rs.setProperty('--bGray', roundBtn(24, '#BDB2A0', '#7E7466'));
@@ -360,26 +428,44 @@ const SFX = {
 const U = 3;
 const MAP_W = 70, MAP_H = 25;
 const WORLD = { w: MAP_W * 16 * U, h: MAP_H * 16 * U };
+// 物件：[种类, 左上角 x, y]（像素）。SIZE 是素材图的尺寸，程序绘制的替身按底边居中对齐到同一个框里
 const PROPS = [
-  ['house', 14, 55], ['home', 196, 51], ['forge', 128, 187], ['home', 22, 197],
-  ['boat', 184, 6], ['lantern', 36, 128], ['lantern', 104, 128], ['lantern', 214, 128], ['fence', 64, 50], ['fence', 82, 50], ['fence', 250, 50],
-  ['reed', 18, 36], ['reed', 40, 38], ['reed', 116, 37], ['reed', 196, 38], ['reed', 236, 36], ['reed', 270, 38],
-  ['barrel', 126, 50], ['barrel', 133, 56], ['board', 178, 50], ['sign', 244, 132], ['cart', 296, 160],
-  ['tree', -6, 240], ['tree2', 58, 262], ['tree', 236, 254], ['tree2', 262, 70], ['tree', 290, 268], ['tree2', 360, 270], ['tree', 330, 4], ['tree2', 452, 0], ['tree', 540, 6], ['tree2', 560, 262], ['tree', 790, 30], ['tree2', 776, 250], ['tree', 600, 272], ['tree2', 470, 268], ['tree', 680, 270],
-  ['rock', 288, 22], ['rock', 306, 31], ['rock', 292, 45], ['rock', 312, 54], ['rock', 382, 176], ['rock', 402, 178], ['rock', 422, 176], ['rock', 442, 178], ['rock', 322, 236], ['rock', 340, 246],
-  ['tent', 628, 38], ['tent', 720, 216], ['rock', 760, 120], ['rock', 600, 210], ['barrel', 668, 52], ['barrel', 676, 58],
+  ['house', 8, 54], ['home', 197, 50], ['forge', 130, 188], ['home2', 16, 198],
+  ['boat', 186, 14], ['lantern', 32, 114], ['lantern', 100, 114], ['lantern', 210, 114], ['fence', 72, 58],
+  ['reed', 15, 36], ['reed', 52, 38], ['reed', 113, 37], ['reed', 236, 36], ['reed', 270, 40],
+  ['barrel', 122, 58], ['barrel', 128, 68], ['board', 178, 50], ['sign', 244, 132], ['cart', 296, 160],
+  ['tree', -7, 246], ['tree2', 57, 268], ['bigtree', 227, 244], ['tree', 289, 274], ['tree2', 359, 276], ['bigtree', 321, -6], ['tree', 539, 12], ['tree2', 559, 268], ['tree', 789, 36], ['bigtree', 767, 240], ['tree', 599, 278], ['tree2', 469, 274], ['tree', 679, 276], ['tree2', 262, 64],
+  ['boulder', 286, 10], ['rock', 312, 34], ['rock2', 294, 46], ['boulder2', 306, 40], ['rock', 386, 178], ['rock2', 406, 180], ['rock', 426, 178], ['rock2', 446, 180], ['boulder', 318, 226], ['rock', 344, 248],
+  ['tent', 622, 20], ['tent2', 714, 198], ['boulder', 756, 104], ['boulder2', 596, 194], ['barrel', 668, 50], ['barrel', 680, 58], ['stump', 700, 80],
+  ['bush', 252, 100], ['bush', 270, 214], ['bush', 520, 60], ['bush', 560, 230], ['bush', 744, 150], ['bush', 600, 60],
 ];
-for (const prop of PROPS) if (prop[1]>=600) prop[1]+=220;
-PROPS.push(['tree',480,305],['tree2',590,320],['rock',430,310],['rock',708,180],['tree',850,350],['tent',945,215],['barrel',945,100],['board',117,290],['barrel',172,307],['barrel',186,307],['home',8,298]);
-const FOOT = { house: [4, 33, 42, 15], home: [4, 33, 42, 15], forge: [4, 33, 42, 15], rock: [2, 6, 20, 9], tent: [4, 16, 28, 13], tree: [11, 30, 8, 6], tree2: [11, 30, 8, 6], fence: [1, 3, 16, 7], barrel: [1, 8, 10, 5], board: [2, 18, 18, 5], cart: [2, 10, 30, 9], sign: [7, 17, 4, 4] };
-const FIREPOS = [866, 104];
+// 青石渡扩图：匪营整体东移 220 像素，南面添了绕路、旧行囊和渡口对峙场地
+for (const prop of PROPS) if (prop[1] >= 590) prop[1] += 220;
+PROPS.push(['tree', 479, 311], ['tree2', 589, 326], ['rock', 434, 310], ['rock2', 712, 180], ['tree', 849, 356], ['tent', 939, 197], ['barrel', 943, 98], ['board', 117, 290], ['barrel', 170, 305], ['barrel', 184, 305], ['home2', 1, 300]);
+// 扩图后空出来的山坡和南路两侧补些树石，不挡路、不压对峙场地（x 150–300 的渡口南面）
+PROPS.push(['tree', 610, 20], ['tree2', 650, 6], ['bigtree', 700, -6], ['tree', 764, 14], ['bush', 822, 44], ['tree2', 862, 4],
+  ['tree', 600, 214], ['bush', 640, 252], ['tree2', 772, 236], ['boulder', 792, 290], ['rock', 650, 266],
+  ['tree', 336, 350], ['bush', 392, 372], ['tree2', 432, 356], ['tree', 612, 352], ['bush', 700, 372], ['tree', 764, 350], ['tree2', 824, 362], ['bush', 884, 334], ['tree', 958, 346], ['tree2', 1036, 352], ['boulder', 1078, 300],
+  ['tree', 1084, 120], ['tree2', 1088, 200], ['bush', 1060, 60]);
+const SIZE = { house: [64, 48], home: [64, 48], home2: [64, 48], forge: [48, 48], tree: [32, 32], tree2: [32, 32], bigtree: [48, 48], rock: [16, 16], rock2: [16, 16], boulder: [32, 32], boulder2: [32, 32], tent: [48, 48], tent2: [48, 48], boat: [32, 16], lantern: [16, 32], fence: [48, 16], reed: [16, 16], barrel: [16, 16], board: [22, 24], cart: [34, 20], sign: [18, 22], stump: [32, 32], bush: [16, 16] };
+const FOOT = { house: [3, 16, 58, 30], home: [3, 16, 58, 30], home2: [3, 16, 58, 30], forge: [2, 16, 44, 30], tree: [11, 25, 10, 6], tree2: [11, 25, 10, 6], bigtree: [17, 38, 14, 8], rock: [2, 7, 12, 8], rock2: [2, 7, 12, 8], boulder: [3, 12, 26, 18], boulder2: [3, 12, 26, 18], tent: [4, 18, 40, 28], tent2: [4, 18, 40, 28], fence: [1, 8, 46, 7], barrel: [2, 7, 12, 8], board: [2, 18, 18, 5], cart: [2, 10, 30, 9], sign: [7, 17, 4, 4], stump: [3, 10, 26, 18], lantern: [2, 27, 6, 4] };
+// 北缘密林：山道和匪营背后的树墙，人走不进去（地块坐标：列、行、宽、高）
+const PLATS = [[22, 0, 8, 2], [58, 0, 7, 2]];
+const CLIFF = 10;
+for (const [c, r, w, h] of PLATS) {
+  const rnd = RNG(c * 31 + r * 7 + 5);
+  for (let y = r * 16 - 18; y < (r + h) * 16 - 10; y += 13) for (let x = c * 16 - 8; x < (c + w) * 16 - 16; x += 17) PROPS.push([rnd() < 0.5 ? 'tree' : 'tree2', x + ((rnd() * 6) | 0), y + ((rnd() * 4) | 0)]);
+}
+const FIREPOS = [866, 100];
 const DUMMY_POS = { x: 96 * U, y: 250 * U };
 const OBST = [
   { x: 0, y: 0, w: 144 * U, h: 40 * U }, { x: 176 * U, y: 0, w: 112 * U, h: 40 * U },
-  { x: (FIREPOS[0] + 3) * U, y: (FIREPOS[1] + 10) * U, w: 10 * U, h: 6 * U },
+  { x: (FIREPOS[0] - 5) * U, y: (FIREPOS[1] + 8) * U, w: 26 * U, h: 20 * U },
   { x: DUMMY_POS.x - 9, y: DUMMY_POS.y - 9, w: 18, h: 9 },
 ];
 for (const [k, x, y] of PROPS) { const f = FOOT[k]; if (f) OBST.push({ x: (x + f[0]) * U, y: (y + f[1]) * U, w: f[2] * U, h: f[3] * U }); }
+for (const [c, r, w, h] of PLATS) OBST.push({ x: c * 16 * U, y: r * 16 * U, w: w * 16 * U, h: (h * 16 + (r + h < MAP_H ? CLIFF : 0)) * U });
+function propXY(k, x, y) { const im = OBJ[k], s = SIZE[k] || [im.width, im.height]; return [x + ((s[0] - im.width) >> 1), y + s[1] - im.height]; }
 const MAP = (() => {
   const rnd = RNG(4242), m = [];
   const dist = (px, py, pts) => { let best = 1e9; for (let i = 0; i + 1 < pts.length; i++) { const [ax, ay] = pts[i], [bx, by] = pts[i + 1]; const vx = bx - ax, vy = by - ay, t = clamp(((px - ax) * vx + (py - ay) * vy) / (vx * vx + vy * vy), 0, 1); best = Math.min(best, Math.hypot(px - ax - vx * t, py - ay - vy * t)); } return best; };
@@ -409,7 +495,59 @@ const MAP = (() => {
   return m;
 })();
 const kindAt = (c, r) => (r < 0 || r >= MAP_H || c < 0 || c >= MAP_W ? (r < 3 && c >= -6 && c <= 17 ? (r === 2 ? 'shore' : 'water') : 'dark') : CODE[MAP[r][c]][0]);
+// 素材地块：草地铺底；泥路、青石、河水按四邻自动拼边（3×3 拼块 + 横条 + 竖条 + 孤点，在图集里排成 4×4）
+const GROUND = { dirt: 'path', camp: 'path', stone: 'stone', water: 'water', shore: 'water', plank: 'water' };
+const autoCell = (n, s, w, e) => [w && e ? 1 : !w && !e ? 3 : !w ? 0 : 2, n && s ? 1 : !n && !s ? 3 : !n ? 0 : 2];
+let STONE = null;
+// 青石板：把泥路那几块的泥色换成青灰，再刻出错缝的石缝（file:// 下读不了像素，就退回原色泥路）
+function stoneAtlas() {
+  const c = cnv(64, 80), g = c.getContext('2d'); g.drawImage(IMG.floor, 0, 112, 64, 80, 0, 0, 64, 80);
+  try {
+    const d = g.getImageData(0, 0, 64, 80), px = d.data;
+    for (let i = 0; i < px.length; i += 4) {
+      const r = px[i], gr = px[i + 1], b = px[i + 2]; if (r < gr + 10) continue;
+      const x = (i >> 2) % 64, y = (i >> 2) >> 6, L = 0.3 * r + 0.59 * gr + 0.11 * b;
+      const k = y % 8 === 0 || (x + ((y >> 3) % 2) * 8) % 16 === 0 ? 0.74 : 1;
+      px[i] = L * 0.8 * k + 14; px[i + 1] = L * 0.86 * k + 18; px[i + 2] = L * 0.92 * k + 26;
+    }
+    g.putImageData(d, 0, 0);
+  } catch (e) { return null; }
+  return c;
+}
+function naTileAt(c, r, wf) {
+  const inMap = r >= 0 && r < MAP_H && c >= 0 && c < MAP_W, code = inMap ? MAP[r][c] : 'X';
+  const k = kindAt(c, r), cls = GROUND[k] || k;
+  const same = (dc, dr) => {
+    const nc = c + dc, nr = r + dr, out = nr < 0 || nr >= MAP_H || nc < 0 || nc >= MAP_W, nk = kindAt(nc, nr), ncls = GROUND[nk] || nk;
+    if (cls === 'water') return ncls === 'water';
+    if (out) return true;
+    return cls === 'path' || cls === 'stone' ? ncls === 'path' || ncls === 'stone' : ncls === cls;
+  };
+  const n = same(0, -1), s = same(0, 1), w = same(-1, 0), e = same(1, 0);
+  const h = (Math.imul(c + 101, 374761393) ^ Math.imul(r + 57, 668265263)) >>> 0;
+  const key = 'na' + cls + code + +n + +s + +w + +e + (h % 60) + '_' + (cls === 'water' ? wf : 0);
+  if (TILE[key]) return TILE[key];
+  const t = cnv(16, 16), g = t.getContext('2d'), F = IMG.floor, Wt = IMG.water;
+  const at = (im, col, row) => g.drawImage(im, col * 16, row * 16, 16, 16, 0, 0, 16, 16);
+  const [ac, ar] = autoCell(n, s, w, e);
+  if (cls === 'water') {
+    at(Wt, ac, 6 + ar);
+    if (n && s && w && e) { const sr = RNG(h % 9973 + 11); for (let i = 0; i < 2; i++) { const y = 2 + ((sr() * 12) | 0), x = (((sr() * 12) | 0) + wf * 3) % 13; R(g, x, y, 3, 1, 'rgba(255,255,255,0.5)'); } }
+    if (code === '#') at(Wt, 1, 13);
+  } else if (cls === 'path' || (cls === 'stone' && !STONE)) {
+    if (ac === 1 && ar === 1 && h % 11 === 0) at(F, h % 2, 11); else at(F, ac, 7 + ar);
+  } else if (cls === 'stone') {
+    g.drawImage(STONE, ac * 16, ar * 16, 16, 16, 0, 0, 16, 16);
+  } else {
+    at(F, h % 10 < 6 ? 0 : 1 + (h % 4), 12);
+    if (code === "'") for (const [fx, fy, col] of [[3 + h % 7, 4, '#FFF3D6'], [10, 9 + h % 4, '#F07858']]) { P(g, fx, fy, col); P(g, fx - 1, fy, col); P(g, fx + 1, fy, col); P(g, fx, fy - 1, col); P(g, fx, fy + 1, col); P(g, fx, fy, '#F2C440'); }
+    if (code === ';') { P(g, 4 + h % 6, 11, '#8C8C84'); P(g, 5 + h % 6, 11, '#B4B2A8'); P(g, 11, 5 + h % 5, '#8C8C84'); }
+    if (cls === 'dark') R(g, 0, 0, 16, 16, 'rgba(14,20,10,0.72)');
+  }
+  TILE[key] = t; return t;
+}
 function tileAt(c, r, wf) {
+  if (IMG.floor && IMG.water) return naTileAt(c, r, wf);
   let code;
   if (r < 0 || r >= MAP_H || c < 0 || c >= MAP_W) code = r < 3 && c >= -6 && c <= 17 ? (r === 2 ? '_' : '~') : 'X';
   else code = MAP[r][c];
@@ -418,11 +556,14 @@ function tileAt(c, r, wf) {
   return tile(k, v, k === 'water' || k === 'shore' ? wf : 0);
 }
 // 整张地图预先画好三帧（水面流动），路和草地交界处补一圈草边
-const MAPBG = [0, 1, 2].map((f) => {
+let MAPBG = null;
+function buildMap() {
+  if (IMG.floor && !STONE) STONE = stoneAtlas();
+  MAPBG = [0, 1, 2].map((f) => {
   const c = cnv(MAP_W * 16, MAP_H * 16), g = c.getContext('2d');
   for (let r = 0; r < MAP_H; r++) for (let col = 0; col < MAP_W; col++) g.drawImage(tileAt(col, r, f), col * 16, r * 16);
   const rnd = RNG(99);
-  for (let r = 0; r < MAP_H; r++) for (let col = 0; col < MAP_W; col++) {
+  if (!IMG.floor) for (let r = 0; r < MAP_H; r++) for (let col = 0; col < MAP_W; col++) {
     const k = kindAt(col, r); if (k !== 'dirt' && k !== 'camp' && k !== 'stone') continue;
     const x0 = col * 16, y0 = r * 16;
     for (const [dc, dr] of [[0, -1], [0, 1], [-1, 0], [1, 0]]) {
@@ -440,8 +581,13 @@ const MAPBG = [0, 1, 2].map((f) => {
       }
     }
   }
+  // 物件的落地阴影（静态，画进底图）
+  for (const [k, x, y] of PROPS) {
+    const sz = SIZE[k]; if (!sz || k === 'reed' || k === 'boat' || k === 'lantern') continue;
+    const w = sz[0]; fe(g, x + (w >> 1), y + sz[1] - 2, Math.round(w * 0.34), w >= 32 ? 3 : 2, 'rgba(10,8,20,0.2)');
+  }
   return c;
-});
+}); }
 const W3 = (x, y) => ({ x: x * U, y: y * U });
 const NPCS = [
   { id: 'shen', name: '沈青', ...W3(62, 152) },
@@ -462,7 +608,7 @@ const RESPAWN = W3(84, 160);
 const KIND = {
   bandit: { name: '匪徒', hp: 45, r: 17, speed: 95, aggro: 210, leash: 330, flinch: true,
     atks: [{ id: 'slash', shape: 'cone', range: 74, half: 0.9, tele: 0.7, dmg: 9, rec: 0.55, inter: true, reach: 58 }] },
-  boss: { name: '匪首', hp: 240, r: 24, speed: 86, aggro: 9999, leash: 560, flinch: false,
+  boss: { name: '匪首', hp: 240, r: 30, speed: 86, aggro: 9999, leash: 560, flinch: false,
     atks: {
       heavy: { id: 'heavy', shape: 'cone', range: 150, half: 0.65, tele: 1.5, dmg: 28, rec: 0.6, inter: true, reach: 118 },
       sweep: { id: 'sweep', shape: 'circle', range: 78, tele: 0.6, dmg: 12, rec: 0.5, inter: false, reach: 64 },
@@ -569,6 +715,7 @@ function strikeEnemies(range, half, dmg, isSkill, big) {
     e.hp -= dmg+bonus; e.flash = 0.12;
     fxText(e.x, e.y - 66, '-' + (dmg+bonus), big || isSkill ? '#F2D27A' : '#EFE6D2', true);
     burst(e.x, e.y - 30, big ? 8 : 5, ['#FFFFFF', '#F2D27A', '#F2A03C'], 140, 40);
+    G.fx.push({ type: 'streak', x: e.x, y: e.y - 30, a: p.face + (Math.random() - 0.5) * 0.8, len: big || isSkill ? 22 : 15, t: 0, dur: 0.14 });
     const d = Math.hypot(e.x - p.x, e.y - p.y) || 1, kb = big ? 26 : isSkill ? 16 : 8;
     if (K.flinch || e.state === 'idle') move(e, ((e.x - p.x) / d) * kb, ((e.y - p.y) / d) * kb, K.r);
     if (e.state === 'idle') e.state = 'chase';
@@ -890,7 +1037,7 @@ function dialogFor(id) {
     if (inv.med) return D({ who: '沈青', sub: '青石渡药师', id, text: '药包……真的拿回来了。山道上，还顺利吗？', note: '两个选择的奖励相同：铜钱 +20 · 绷带 +1',
       opts: [{ label: '交出药包，并讲述经过', sub: f.branch === 'A' ? '告诉她：你击退了匪首，夺回药包' : '告诉她：你用药草 2 与匪首换回了药包', key: 'give_tell', primary: true },
         { label: '只交出药包，不提山道细节', sub: '沈青只会确认收到了药', key: 'give_quiet' }] });
-    if (!f.accepted) return D({ who: '沈青', sub: '青石渡药师', id, text: '渡口的药包被山道上的匪首扣下了。病人等不起，你能帮我取回来吗？', opts: [{ label: '接下这件事', key: 'accept', primary: true }, { label: '再想想', key: 'close' }] });
+    if (!f.accepted) return D({ who: '沈青', sub: '青石渡药师', id, text: '你是外乡来的吧？渡口的药包被山道上的匪首扣下了。病人等不起，你能帮我取回来吗？', opts: [{ label: '接下这件事', key: 'accept', primary: true }, { label: '再想想', key: 'close' }] });
     return D({ who: '沈青', sub: '青石渡药师', id, text: f.lostBoss ? '伤成这样……匪首下手不轻吧？先歇歇，别逞强。' : '药包在山道尽头的匪营里。受了伤就回来，我给你包扎。', opts: [{ label: '请她包扎', sub: '生命补满，不花绷带', key: 'heal' }, { label: '闲聊', key: 'chat_shen' }, { label: '这就去', key: 'close' }] });
   }
   if (id === 'xu') {
@@ -906,7 +1053,7 @@ function dialogFor(id) {
     return D({ who: '陆平', sub: '渡口管事', id, text: f.askedLu ? '你问的那件事，别再提了。药呢？' : f.accepted ? '药呢？快些，沈大夫那边等着呢。' : '你是新来的？沈大夫正为药包的事发愁，去帮帮她。', opts: [{ label: '闲聊', key: 'chat_lu' }, { label: '知道了', key: 'close' }] });
   }
   if (id === 'zhou') {
-    let text = '剑饰能改你剑招的路数。一份料加 5 铜钱，我给你做一件，必定成功。剑饰槽只放一件，换新的，旧的就毁了。';
+    let text = '山里那位出手前总要停一下，破势就是冲那个停顿去的；要是怕内力跟不上，选回气。一份料加 5 铜钱，必定做成；剑饰槽只放一件，换新的，旧的就毁了。';
     if (G.orn === '破势' && G.stats.interrupts > 0) text = '看来破势派上用场了，刀口没卷吧？想换回气，料和钱备齐了就来。';
     else if (G.orn === '回气' && G.stats.qiBack > 0) text = '回气用得顺手？内力续上了，剑招就能多出几下。想换破势，料和钱备齐了就来。';
     const opts = [
@@ -927,7 +1074,7 @@ function dialogFor(id) {
     if (f.branch === 'B') {
       const opts = [];
       if (!f.bought) opts.push({ label: '买修械料（5 铜钱）', sub: '木料 2 + 废铁 1，限购一份', key: 'buy_boss', primary: true });
-      if (f.delivered) opts.push({ label: '切磋一场', sub: f.sparWins < 2 ? '赢了给一份修械料（还剩 ' + (2 - f.sparWins) + ' 次）' : '已经没有物质奖励', key: 'spar' });
+      if (f.delivered) opts.push({ label: '切磋一场', sub: '点到为止，没有物质奖励', key: 'spar' });
       opts.push({ label: '离开', key: 'close' });
       const t = f.delivered ? '药已按约给你，想切磋随时奉陪。' : f.bought ? '按约办事的人，我记着。' : '你肯按约办事。我这有一份修械料，五文给你。';
       return D({ who: '匪首', sub: '匪营', id, text: t + (f.bossClaim && f.delivered ? ' 那本账，你要是有门路，帮我们问问。' : ''), opts });
@@ -1288,10 +1435,10 @@ function updateChapter(dt){
   }
 }
 function drawChapterWorld(g,items,t){
-  if(G.f.branch&&!G.chapter.clues.includes('ledger'))items.push({y:LEDGER_POS.y/U,d:()=>{g.drawImage(OBJ.wood,LEDGER_POS.x/U-10,LEDGER_POS.y/U-12);R(g,LEDGER_POS.x/U-4,LEDGER_POS.y/U-20,8,9,'#E4D5B0');line(g,LEDGER_POS.x/U-2,LEDGER_POS.y/U-17,LEDGER_POS.x/U+2,LEDGER_POS.y/U-17,'#5A4436');diamond(g,LEDGER_POS.x/U,LEDGER_POS.y/U-27,'#8CD4BC');}});
-  if(!G.chapter.cache)items.push({y:CACHE_POS.y/U,d:()=>{g.drawImage(OBJ.wood,CACHE_POS.x/U-10,CACHE_POS.y/U-12);P(g,CACHE_POS.x/U,CACHE_POS.y/U-18,'#C1D3AC');}});
+  if(G.f.branch&&!G.chapter.clues.includes('ledger'))items.push({y:LEDGER_POS.y/U,d:()=>{g.drawImage(OBJ.wood,Math.round(LEDGER_POS.x/U)-(OBJ.wood.width>>1),Math.round(LEDGER_POS.y/U)-OBJ.wood.height+3);R(g,LEDGER_POS.x/U-4,LEDGER_POS.y/U-20,8,9,'#E4D5B0');line(g,LEDGER_POS.x/U-2,LEDGER_POS.y/U-17,LEDGER_POS.x/U+2,LEDGER_POS.y/U-17,'#5A4436');diamond(g,LEDGER_POS.x/U,LEDGER_POS.y/U-27,'#8CD4BC');}});
+  if(!G.chapter.cache)items.push({y:CACHE_POS.y/U,d:()=>{g.drawImage(OBJ.wood,Math.round(CACHE_POS.x/U)-(OBJ.wood.width>>1),Math.round(CACHE_POS.y/U)-OBJ.wood.height+3);P(g,CACHE_POS.x/U,CACHE_POS.y/U-18,'#C1D3AC');}});
   if(G.f.delivered&&G.chapter.decision&&!G.chapter.finalStarted)items.push({y:FINAL_POS.y/U,d:()=>{drawChar(g,'lu','down','idle',FINAL_POS.x/U,FINAL_POS.y/U);diamond(g,FINAL_POS.x/U,FINAL_POS.y/U-31,'#E7D181');}});
-  if(G.ally&&!G.chapter.finalResolved)items.push({y:G.ally.y/U,d:()=>{drawChar(g,G.ally.id,dirOf(G.ally.face),'idle',G.ally.x/U,G.ally.y/U);LABELS.push([G.ally.id==='xu'?'许舟 · 支援':'匪首 · 同行',G.ally.x/U,G.ally.y/U-26,'dim']);}});
+  if(G.ally&&!G.chapter.finalResolved)items.push({y:G.ally.y/U,d:()=>{if(G.ally.id==='boss'&&BOSS.idle)drawBoss(g,{state:'idle',face:G.ally.face||0,flash:0,t:0,an:0},G.ally.x/U,G.ally.y/U,t);else drawChar(g,G.ally.id,dirOf(G.ally.face),'idle',G.ally.x/U,G.ally.y/U);LABELS.push([G.ally.id==='xu'?'许舟 · 支援':'匪首 · 同行',G.ally.x/U,G.ally.y/U-(G.ally.id==='boss'&&BOSS.idle?46:22),'dim']);}});
   for(const a of G.arrows)items.push({y:a.y/U,d:()=>{const len=Math.hypot(a.vx,a.vy);line(g,a.x/U,a.y/U-8,(a.x-a.vx/len*20)/U,(a.y-a.vy/len*20)/U-8,'#E4CF8E');}});
 }
 
@@ -1324,7 +1471,7 @@ function syncBattle(){
 function perfText(){const s=perfStats(),combat=perfStats('combat');return s?'性能（本页前台）：'+s.frames+' 帧 / '+(s.durationMs/1000).toFixed(1)+' 秒 · p95≤'+s.p95+'ms（1ms分辨率）· 最大 '+s.max.toFixed(1)+'ms · >100ms '+s.over100+' / >200ms '+s.over200+'；战斗段 '+(combat?(combat.durationMs/1000).toFixed(1)+' 秒':'尚无样本')+(combat?.durationMs>=300000?'（样本累计≥5分钟，不代表连续实机达标）':'（不足5分钟，不能据此判定达标）'):'性能：本页尚无采样';}
 function recordPayload(){
   syncBattle();const r=Playtest.ensure(G,{debug:DEBUG});
-  return {build:'V0.4-20261022-mobile2',session:PAGE_SESSION,exportedAt:new Date().toISOString(),evidence:r.debugUsed?'调试记录':r.profile.operator==='真人试玩'?'真人自报、正常输入记录':r.profile.operator==='自动化输入检查'?'自动化正常输入检查':'正常入口、操作者未声明',coverage:r.coverage,record:JSON.parse(JSON.stringify(r)),progress:{branch:G.f.branch,decision:G.chapter.decision,finished:G.chapter.finalResolved,inventory:{...G.inv},ornament:G.orn,skills:[...G.chapter.skills]},performance:{scope:'本页会话；p95向上取整至1ms，计入全部前台长帧；后台及恢复跨界帧排除',all:perfStats(),combat:perfStats('combat'),practice:perfStats('practice'),move:perfStats('move'),dialogue:perfStats('dialogue'),menu:perfStats('menu'),idle:perfStats('idle')},environment:{userAgent:navigator.userAgent,viewport:[innerWidth,innerHeight],pixelRatio:devicePixelRatio,standalone:matchMedia('(display-mode: standalone)').matches},limitations:['旧存档升级前的事件不补造','正常入口不证明操作者为真人','调试记录不能作为自然试玩样本','未进行五人真实实机验收']};
+  return {build:'V0.4-20261023-na',session:PAGE_SESSION,exportedAt:new Date().toISOString(),evidence:r.debugUsed?'调试记录':r.profile.operator==='真人试玩'?'真人自报、正常输入记录':r.profile.operator==='自动化输入检查'?'自动化正常输入检查':'正常入口、操作者未声明',coverage:r.coverage,record:JSON.parse(JSON.stringify(r)),progress:{branch:G.f.branch,decision:G.chapter.decision,finished:G.chapter.finalResolved,inventory:{...G.inv},ornament:G.orn,skills:[...G.chapter.skills]},performance:{scope:'本页会话；p95向上取整至1ms，计入全部前台长帧；后台及恢复跨界帧排除',all:perfStats(),combat:perfStats('combat'),practice:perfStats('practice'),move:perfStats('move'),dialogue:perfStats('dialogue'),menu:perfStats('menu'),idle:perfStats('idle')},environment:{userAgent:navigator.userAgent,viewport:[innerWidth,innerHeight],pixelRatio:devicePixelRatio,standalone:matchMedia('(display-mode: standalone)').matches},limitations:['旧存档升级前的事件不补造','正常入口不证明操作者为真人','调试记录不能作为自然试玩样本','未进行五人真实实机验收']};
 }
 function fmtTime(s) { const m = Math.floor(s / 60), r = Math.floor(s % 60); return m + ' 分 ' + (r < 10 ? '0' : '') + r + ' 秒'; }
 function recordText() {
@@ -1557,7 +1704,38 @@ function updFx(dt) {
 // ---------------------------------------------------------------- 绘制：先画到低分辨率缓冲，再整数倍放大
 let DPR = 1, VW = 0, VH = 0, Z = 3;
 const BUF = cnv(1, 1), bg = BUF.getContext('2d');
+const LBUF = cnv(1, 1), lgc = LBUF.getContext('2d');
 const AMB = [];
+// 光照：越往山里越暗（青石渡傍晚、山道薄暮、匪营入夜），灯笼、营火、铁匠铺和人物身边各有一圈暖光
+function ambientAt(px) { return px < 240 ? 0.1 : px < 300 ? 0.1 + ((px - 240) / 60) * 0.14 : px < 760 ? 0.24 : px < 840 ? 0.24 + ((px - 760) / 80) * 0.26 : 0.5; }
+function lightPass(g, ox, oy, BW, BH, t) {
+  const lights = [];
+  for (const [k, x, y] of PROPS) if (k === 'lantern') lights.push({ x: x + (OBJ.lantern.width > 9 ? 11 : 7), y: y + (OBJ.lantern.width > 9 ? 14 : 18), r: 30, cut: 0.95, col: [255, 170, 90], a: 0.2 + 0.03 * Math.sin(t * 7 + x) });
+  lights.push({ x: FIREPOS[0] + 8, y: FIREPOS[1] + 10, r: 58 + Math.sin(t * 11) * 2, cut: 1, col: [255, 150, 70], a: 0.32 });
+  lights.push({ x: 153, y: 222, r: 22, cut: 0.7, col: [255, 140, 80], a: 0.16 });
+  lights.push({ x: Math.round(G.p.x / U), y: Math.round(G.p.y / U) - 8, r: 36, cut: 0.6 });
+  for (const e of G.enemies) if (e.alive && e.state === 'windup') lights.push({ x: e.x / U, y: e.y / U - 6, r: 26, cut: 0.5, col: [255, 80, 50], a: 0.28 * clamp(e.t / e.atk.tele, 0.3, 1) });
+  if (G.f.asked && !G.inv.med && G.f.branch === null) HERBS.forEach((h, i) => { if (!G.f.herbs[i]) lights.push({ x: h.x / U, y: h.y / U - 5, r: 14, cut: 0.5, col: [127, 208, 190], a: 0.22 }); });
+  lgc.globalCompositeOperation = 'source-over'; lgc.clearRect(0, 0, BW, BH);
+  const grad = lgc.createLinearGradient(0, 0, BW, 0);
+  for (let i = 0; i <= 8; i++) grad.addColorStop(i / 8, 'rgba(14,10,30,' + ambientAt(ox + (i / 8) * BW).toFixed(3) + ')');
+  lgc.fillStyle = grad; lgc.fillRect(0, 0, BW, BH);
+  lgc.globalCompositeOperation = 'destination-out';
+  for (const L of lights) {
+    const x = L.x - ox, y = L.y - oy; if (x < -L.r || y < -L.r || x > BW + L.r || y > BH + L.r) continue;
+    const rg = lgc.createRadialGradient(x, y, 0, x, y, L.r); rg.addColorStop(0, 'rgba(0,0,0,' + L.cut + ')'); rg.addColorStop(1, 'rgba(0,0,0,0)');
+    lgc.fillStyle = rg; lgc.fillRect(x - L.r, y - L.r, L.r * 2, L.r * 2);
+  }
+  g.drawImage(LBUF, 0, 0);
+  g.globalCompositeOperation = 'lighter';
+  for (const L of lights) {
+    if (!L.col) continue;
+    const x = L.x - ox, y = L.y - oy; if (x < -L.r || y < -L.r || x > BW + L.r || y > BH + L.r) continue;
+    const rg = g.createRadialGradient(x, y, 0, x, y, L.r * 0.8); rg.addColorStop(0, 'rgba(' + L.col.join(',') + ',' + L.a.toFixed(3) + ')'); rg.addColorStop(1, 'rgba(' + L.col.join(',') + ',0)');
+    g.fillStyle = rg; g.fillRect(x - L.r, y - L.r, L.r * 2, L.r * 2);
+  }
+  g.globalCompositeOperation = 'source-over';
+}
 let ambT = 0;
 function resize() {
   const viewport=window.visualViewport;
@@ -1568,6 +1746,7 @@ function resize() {
   cv.width = Math.max(1, Math.round(VW * DPR)); cv.height = Math.max(1, Math.round(VH * DPR));
   Z = clamp(Math.round(VH / 170), 2, 5);
   BUF.width = Math.ceil(VW / Z) + 1; BUF.height = Math.ceil(VH / Z) + 1;
+  LBUF.width = BUF.width; LBUF.height = BUF.height;
   if (stick.id === null) stickHome();
 }
 addEventListener('resize', resize);
@@ -1604,6 +1783,9 @@ let hudRects = [];
 function draw(realT) {
   const p = G.p, g = bg, BW = BUF.width, BH = BUF.height, t = G.started ? G.time : realT;
   let ox = Math.round(p.x / U) - Math.floor(BW / 2), oy = Math.round(p.y / U) - Math.floor(BH / 2);
+  // 镜头不出地图：地图比画面宽（高）时夹在边内，比画面小就居中
+  const MW = MAP_W * 16, MH = MAP_H * 16;
+  ox = BW < MW ? clamp(ox, 0, MW - BW) : Math.floor((MW - BW) / 2); oy = BH < MH ? clamp(oy, 0, MH - BH) : Math.floor((MH - BH) / 2);
   if (G.shake > 0.3) { ox += Math.round((Math.random() - 0.5) * G.shake); oy += Math.round((Math.random() - 0.5) * G.shake); }
   g.setTransform(1, 0, 0, 1, 0, 0); g.imageSmoothingEnabled = false;
   g.fillStyle = '#0E0B09'; g.fillRect(0, 0, BW, BH);
@@ -1619,45 +1801,49 @@ function draw(realT) {
   if (G.dummy.state === 'windup') drawZonePx(g, Math.round(DUMMY_POS.x / U), Math.round(DUMMY_POS.y / U), G.dummy.atk, G.dummy.face, clamp(G.dummy.t / G.dummy.atk.tele, 0, 1), false);
   for (const fx of G.fx) if (fx.type === 'zone' && Math.floor(fx.t * 30) % 2 === 0) drawZonePx(g, Math.round(fx.x / U), Math.round(fx.y / U), fx, fx.face, 1, true);
   const items = [];
-  drawChapterWorld(g,items,t);
-  for (const [k, x, y] of PROPS) { const im = OBJ[k]; items.push({ y: y + im.height, d: () => g.drawImage(im, x, y) }); }
-  { const im = FIRE[Math.floor(t * 8) % 3]; items.push({ y: FIREPOS[1] + 18, d: () => { g.fillStyle = 'rgba(242,160,60,' + (0.13 + 0.05 * Math.sin(t * 9)) + ')'; for (let yy = -12; yy <= 12; yy++) for (let xx = -14; xx <= 14; xx++) if ((xx + yy) % 2 === 0 && xx * xx + yy * yy < 160) g.fillRect(FIREPOS[0] + 8 + xx, FIREPOS[1] + 12 + yy, 1, 1); g.drawImage(im, FIREPOS[0], FIREPOS[1]); } }); }
+  drawChapterWorld(g, items, t);
+  for (const [k, x, y] of PROPS) { const im = OBJ[k], [dx, dy] = propXY(k, x, y); items.push({ y: SIZE[k] ? y + SIZE[k][1] : dy + im.height, d: () => g.drawImage(im, dx, dy) }); }
+  { const im = FIRE[Math.floor(t * 8) % 3]; items.push({ y: FIREPOS[1] + 22, d: () => { g.drawImage(OBJ.firepit, FIREPOS[0] - 8, FIREPOS[1] - 2); g.fillStyle = 'rgba(242,160,60,' + (0.13 + 0.05 * Math.sin(t * 9)) + ')'; for (let yy = -12; yy <= 12; yy++) for (let xx = -14; xx <= 14; xx++) if ((xx + yy) % 2 === 0 && xx * xx + yy * yy < 160) g.fillRect(FIREPOS[0] + 8 + xx, FIREPOS[1] + 12 + yy, 1, 1); g.drawImage(im, FIREPOS[0], FIREPOS[1]); } }); }
   { const dd = G.dummy, dx = Math.round(DUMMY_POS.x / U), dy = Math.round(DUMMY_POS.y / U); items.push({ y: dy, d: () => { const wob = dd.state === 'stagger' ? Math.round(Math.sin(t * 30)) : dd.state === 'windup' ? -1 : 0; g.drawImage(dd.hit > 0 ? OBJ.dummyHit : OBJ.dummy, dx - 9 + wob, dy - 23); if (dd.state === 'windup') { drawBang(g, dx, dy - 31); if (G.orn === '破势') LABELS.push(['可打断', dx, dy - 40, 'red']); } LABELS.push(['木人桩', dx, dy - 27, 'dim']); } }); }
-  if (!f.matPicked) items.push({ y: CRATE.y / U + 2, d: () => { g.drawImage(OBJ.wood, Math.round(CRATE.x / U) - 10, Math.round(CRATE.y / U) - 13); diamond(g, Math.round(CRATE.x / U), Math.round(CRATE.y / U) - 20 - (Math.floor(t * 2) % 2), '#D8B66A'); } });
-  if (f.asked && !inv.med && f.branch === null) HERBS.forEach((h, i) => { if (!f.herbs[i]) items.push({ y: h.y / U, d: () => g.drawImage(OBJ.herb, Math.round(h.x / U) - 8, Math.round(h.y / U) - 13) }); });
+  if (!f.matPicked) items.push({ y: CRATE.y / U + 2, d: () => { g.drawImage(OBJ.wood, Math.round(CRATE.x / U) - (OBJ.wood.width >> 1), Math.round(CRATE.y / U) - OBJ.wood.height + 2); diamond(g, Math.round(CRATE.x / U), Math.round(CRATE.y / U) - 20 - (Math.floor(t * 2) % 2), '#D8B66A'); } });
+  if (f.asked && !inv.med && f.branch === null) HERBS.forEach((h, i) => { if (!f.herbs[i]) items.push({ y: h.y / U, d: () => g.drawImage(OBJ.herb, Math.round(h.x / U) - (OBJ.herb.width >> 1), Math.round(h.y / U) - OBJ.herb.height + 1) }); });
   LABELS.length = 0;
   for (const it of INSPECT) if (!f.inspected[it.id] && it.id !== 'sign') items.push({ y: it.y / U + 1, d: () => { P(g, Math.round(it.x / U), Math.round(it.y / U) - 26 - (Math.floor(t * 2) % 2), '#F2D27A'); P(g, Math.round(it.x / U), Math.round(it.y / U) - 28 - (Math.floor(t * 2) % 2), '#F2D27A'); P(g, Math.round(it.x / U), Math.round(it.y / U) - 29 - (Math.floor(t * 2) % 2), '#F2D27A'); } });
   for (const n of NPCS.filter(n=>!(G.ally?.id===n.id&&!G.chapter.finalResolved))) items.push({ y: n.y / U, d: () => {
     const near = Math.hypot(p.x - n.x, p.y - n.y) < 220;
     drawChar(g, n.id, near ? dirOf(Math.atan2(p.y - n.y, p.x - n.x)) : 'down', 'idle', n.x / U, n.y / U);
-    LABELS.push([n.name, n.x / U, n.y / U - 25]);
+    LABELS.push([n.name, n.x / U, n.y / U - 22]);
     const mark = (n.id === 'shen' && (!f.accepted || inv.med)) || (n.id === 'zhou' && !G.orn && inv.wood >= 2 && inv.iron >= 1);
-    if (mark) diamond(g, Math.round(n.x / U), Math.round(n.y / U) - 40 - (Math.floor(t * 2) % 2), '#D8B66A');
+    if (mark) diamond(g, Math.round(n.x / U), Math.round(n.y / U) - 36 - (Math.floor(t * 2) % 2), '#D8B66A');
   } });
   for (const e of G.enemies) {
     if (!e.alive || (e.kind==='boss'&&G.ally?.id==='boss'&&!G.chapter.finalResolved)) continue;
     items.push({ y: e.y / U, d: () => {
       const K = KIND[e.kind], ex = e.x / U, ey = e.y / U;
+      if (e.state === 'down' && BOSS.idle) { drawBoss(g, e, ex, ey, t); LABELS.push(['匪首', ex, ey - 44]); return; }
       if (e.state === 'down') {
         const s = SPR.boss.down.idle.n; g.fillStyle = 'rgba(0,0,0,0.34)'; g.fillRect(Math.round(ex) - 6, Math.round(ey) - 1, 12, 2);
         g.drawImage(s, 0, 0, s.width, 15, Math.round(ex) - 9, Math.round(ey) - 15, s.width, 15);
         LABELS.push(['匪首', ex, ey - 20]); return;
       }
       if (e.state === 'dying') {
-        const s = SPR.bandit.right.idle.n, k = e.dieT / 0.6;
-        g.save(); g.globalAlpha = Math.max(0, k); g.translate(Math.round(ex), Math.round(ey) - 4); g.rotate(Math.PI / 2 * (1 - k)); g.drawImage(s, -8, -15); g.restore(); return;
+        const k = e.dieT / 0.6;
+        g.save(); g.globalAlpha = Math.max(0, k); g.translate(Math.round(ex), Math.round(ey) - 4); g.rotate(Math.PI / 2 * (1 - k));
+        if (SHEET.bandit) g.drawImage(SHEET.bandit.n, 48, 0, 16, 16, -8, -11, 16, 16); else g.drawImage(SPR.bandit.right.idle.n, -8, -15);
+        g.restore(); return;
       }
-      const dir = dirOf(e.face), fr = e.moving ? WALK[Math.floor(e.an * 8) % 4] : 'idle';
+      const bossArt = e.kind === 'boss' && BOSS.idle;
+      const dir = dirOf(e.face), fr = e.state === 'recover' && e.t < 0.2 ? 'atk' : e.moving ? WALK[Math.floor(e.an * 8) % 4] : 'idle';
       const lean = e.state === 'windup' ? -1 : e.state === 'recover' && e.t < 0.15 ? 1 : 0;
       const ldx = Math.round(Math.cos(e.face) * lean), ldy = Math.round(Math.sin(e.face) * lean * 0.5);
       const wang = e.state === 'windup' ? e.face + Math.PI * 0.8 * (e.atk && e.atk.shape === 'line' ? 0.2 : 1) : e.state === 'recover' && e.t < 0.2 ? e.face + 0.5 : e.state === 'dash' ? e.face : e.face + 1.1;
       const behind = Math.sin(wang) < -0.2;
       if (behind) drawWeapon(g, e.kind, ex + ldx, ey + ldy, wang, true);
-      drawChar(g, e.kind, dir, fr, ex, ey, { white: e.flash > 0, dx: ldx, dy: ldy });
-      if(e.kind==='archer'){g.strokeStyle='#D8B66A';g.lineWidth=1;g.beginPath();g.arc(ex+Math.cos(e.face)*5,ey-8,5,e.face-1.2,e.face+1.2);g.stroke();}
+      if (bossArt) drawBoss(g, e, ex, ey, t); else drawChar(g, e.kind, dir, fr, ex, ey, { white: e.flash > 0, dx: ldx, dy: ldy });
+      if (e.kind === 'archer') { g.strokeStyle = '#D8B66A'; g.lineWidth = 1; g.beginPath(); g.arc(ex + Math.cos(e.face) * 5, ey - 7, 5, e.face - 1.2, e.face + 1.2); g.stroke(); }
       if (!behind) drawWeapon(g, e.kind, ex + ldx, ey + ldy, wang);
-      const top = Math.round(ey) - 23;
-      if (e.kind === 'boss' && !e.hostile) LABELS.push(['匪首', ex, ey - 25]);
+      const top = Math.round(ey) - (bossArt ? 44 : 21);
+      if (e.kind === 'boss' && !e.hostile) LABELS.push(['匪首', ex, ey - (bossArt ? 46 : 25)]);
       else if (e.hostile && e.kind !== 'boss' && e.hp < K.hp) {
         const w = 14, x0 = Math.round(ex - w / 2);
         R(g, x0 - 1, top - 1, w + 2, 4, INK); R(g, x0, top, w, 2, '#3B2F28'); R(g, x0, top, Math.max(0, Math.round(w * e.hp / K.hp)), 2, '#D9553A'); R(g, x0, top, Math.max(0, Math.round(w * e.hp / K.hp)), 1, '#F08A6A');
@@ -1666,14 +1852,14 @@ function draw(realT) {
       if(e.kind!=='boss')LABELS.push([K.name,ex,ey-28,e.kind==='archer'?'red':'dim']);
       if (e.state === 'windup') {
         drawBang(g, Math.round(ex), top - 8, e.atk.inter ? '#E0603F' : '#F2A03C');
-        if (e.atk.inter && G.orn === '破势') LABELS.push(['可打断', ex, ey - 38, 'red']);
+        if (e.atk.inter && G.orn === '破势') LABELS.push(['可打断', ex, ey - (bossArt ? 56 : 34), 'red']);
       }
       if (e.state === 'stagger') for (let k = 0; k < 3; k++) { const a = t * 6 + k * 2.1; P(g, Math.round(ex + Math.cos(a) * 7), Math.round(top - 2 + Math.sin(a) * 2), '#F2D27A'); }
     } });
   }
   items.push({ y: p.y / U, d: () => {
     for (const tr of p.trail) drawChar(g, 'xia', dirOf(p.face), 'w1', tr.x / U, tr.y / U, { alpha: tr.t * 1.6, noShadow: true });
-    const fr = p.moving ? WALK[Math.floor(p.an * 8) % 4] : 'idle';
+    const fr = p.swing > 0 ? 'atk' : p.moving ? WALK[Math.floor(p.an * 8) % 4] : 'idle';
     const blink = p.inv > 0 && Math.floor(t * 30) % 2 === 0;
     const sw = p.swing > 0 ? 1 - p.swing / p.swingDur : -1;
     const half = p.swingKind === 'sk' ? (Chapter.SKILLS[p.activeSkill]?.half||.95) : p.swingKind === 'atk3' ? 1.35 : 1.15;
@@ -1684,25 +1870,38 @@ function draw(realT) {
     drawChar(g, 'xia', dirOf(p.face), fr, p.x / U, p.y / U, { alpha: blink ? 0.45 : 1, red: p.hurt > 0, dx: ldx, dy: ldy });
     if (!behind) drawWeapon(g, 'xia', p.x / U + ldx, p.y / U + ldy, wang);
     if (sw >= 0) {
-      const r = p.swingKind === 'sk' ? (Chapter.SKILLS[p.activeSkill]?.range/U||30) : p.swingKind === 'atk3' ? 23 : 19, col = p.swingKind === 'sk' ? (G.orn === '破势' ? '#F08A6A' : '#7FD0BE') : '#EFE6D2';
-      const lo = -half, hi = -half + sw * half * 2;
-      for (let layer = 0; layer < 3; layer++) {
-        g.fillStyle = layer === 0 ? col : layer === 1 ? 'rgba(239,230,210,0.55)' : 'rgba(239,230,210,0.25)';
-        const rr = r - layer;
-        for (let a = lo; a <= hi; a += 0.05) { const aa = p.combo === 1 && p.swingKind !== 'sk' ? p.face - a : p.face + a; g.fillRect(Math.round(p.x / U + Math.cos(aa) * rr), Math.round(p.y / U - 7 + Math.sin(aa) * rr * 0.8), 1, 1); }
+      // 月牙刀光：比人大一圈，中段最厚、两头收尖，挥完后整体淡出；剑招半径按所带招式的攻击距离
+      const sk = p.swingKind === 'sk', r = sk ? Math.round((Chapter.SKILLS[p.activeSkill]?.range || 108) / U) : p.swingKind === 'atk3' ? 28 : 24, maxT = sk ? 9 : p.swingKind === 'atk3' ? 8 : 6;
+      const edge = sk ? (G.orn === '破势' ? '#F08A6A' : '#7FD0BE') : '#BFD8F2';
+      const lo = -half, hi = -half + Math.min(1, sw * 1.4) * half * 2, fade = sw < 0.7 ? 1 : 1 - (sw - 0.7) / 0.3;
+      const rev = p.combo === 1 && !sk;
+      for (let a = lo; a <= hi; a += 0.025) {
+        const k = (a - lo) / Math.max(0.001, hi - lo), th = Math.max(1, Math.round(maxT * Math.sin(Math.PI * Math.min(1, k)) * fade));
+        const aa = rev ? p.face - a : p.face + a, cx = p.x / U, cy = p.y / U - 7;
+        for (let j = 0; j < th; j++) {
+          g.fillStyle = j === 0 ? edge : j < th - 1 ? 'rgba(255,255,255,' + (0.95 * fade).toFixed(2) + ')' : 'rgba(255,255,255,' + (0.4 * fade).toFixed(2) + ')';
+          const rr = r - j; g.fillRect(Math.round(cx + Math.cos(aa) * rr), Math.round(cy + Math.sin(aa) * rr * 0.8), 1, 1);
+        }
       }
     }
   } });
   items.sort((a, b) => a.y - b.y).forEach((it) => it.d());
   for (const fx of G.fx) if (fx.type === 'pt') { g.globalAlpha = Math.max(0, 1 - fx.t / fx.dur); g.fillStyle = fx.col; g.fillRect(Math.round(fx.x / U), Math.round(fx.y / U), 1, 1); }
   g.globalAlpha = 1;
+  // 命中闪光：两道交叉的黄白光条
+  for (const fx of G.fx) if (fx.type === 'streak') {
+    const k = fx.t / fx.dur, cx = Math.round(fx.x / U), cy = Math.round(fx.y / U), L = fx.len * (0.6 + 0.4 * k);
+    for (const [da, col] of [[0, '#FFF59A'], [1.9, '#F2A03C']]) {
+      const a = fx.a + da, dx = Math.cos(a) * L / 2, dy = Math.sin(a) * L / 2;
+      g.globalAlpha = 1 - k; line(g, cx - dx, cy - dy, cx + dx, cy + dy, col); if (da === 0) line(g, cx - dx, cy - dy + 1, cx + dx, cy + dy + 1, '#FFFFFF');
+    }
+    g.globalAlpha = 1;
+  }
   ambT += 1 / 60;
   if (ambT > 0.4) { ambT = 0; AMB.push({ x: 164 + Math.random() * 2, y: 189, t: 0, dur: 2.2, vx: 2 + Math.random() * 3 }); }
   for (let i = AMB.length - 1; i >= 0; i--) { const a = AMB[i]; a.t += 1 / 60; if (a.t > a.dur) { AMB.splice(i, 1); continue; } const k = a.t / a.dur; g.fillStyle = 'rgba(190,184,172,' + (0.45 * (1 - k)) + ')'; const s = 1 + Math.floor(k * 3); g.fillRect(Math.round(a.x + a.vx * a.t * 3), Math.round(a.y - a.t * 9), s, s); }
-  const flick = 0.12 + 0.04 * Math.sin(t * 7);
-  g.fillStyle = 'rgba(240,140,90,' + flick + ')';
-  for (const [k, x, y] of PROPS) if (k === 'lantern') for (let yy = -7; yy <= 7; yy++) for (let xx = -7; xx <= 7; xx++) if ((xx + yy) % 2 === 0 && xx * xx + yy * yy < 46) g.fillRect(x + 4 + xx, y + 4 + yy, 1, 1);
   g.setTransform(1, 0, 0, 1, 0, 0);
+  lightPass(g, ox, oy, BW, BH, t);
 
   ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.imageSmoothingEnabled = false;
   ctx.fillStyle = '#0E0B09'; ctx.fillRect(0, 0, cv.width, cv.height);
@@ -1747,7 +1946,7 @@ function questText() {
   if (f.asked) return ['取回药包，交给沈青', '采止血草 ' + inv.herb + '/2 交给匪首；或直接动手'];
   return ['取回药包，交给沈青', '药包在山道尽头的匪营'];
 }
-let toastKey = '';
+let toastKey = '', bannerRegion = null, bannerT = 0;
 function hud(dt) {
   const p = G.p, inv = G.inv;
   setStyle($('hpf'), 'width', (p.hp / p.maxHp * 100).toFixed(1) + '%');
@@ -1792,6 +1991,10 @@ function hud(dt) {
     toastKey = tk; const box = $('toasts'); box.textContent = '';
     for (const t of G.toasts) { const d = document.createElement('div'); d.className = 'toast px-dark'; d.textContent = t.text; box.appendChild(d); }
   }
+  // 进入新区域时，顶部弹出米色地名牌，停 2.6 秒后淡出
+  const region = p.x < 768 ? '青石渡' : p.x < 2400 ? '山道' : '匪营';
+  if (G.started && !paused() && region !== bannerRegion) { bannerRegion = region; bannerT = 2.6; const b = $('banner'); b.textContent = region; b.hidden = false; b.classList.remove('out'); }
+  if (bannerT > 0) { bannerT -= dt; if (bannerT <= 0) $('banner').classList.add('out'); }
   const pf = $('perf');
   if (G.ui.perf) { if(performance.now()-perfCacheAt>1000||!perfCache){perfCache=perfStats();perfCacheAt=performance.now();}const ps=perfCache; pf.hidden = false; setText('perf', ps ? Math.round(ps.fps) + ' FPS · P95≤' + ps.p95 + 'MS · MAX '+Math.round(ps.max)+'MS' : '...'); } else pf.hidden = true;
 }
@@ -1819,7 +2022,8 @@ function drawCast(t) {
   if ($('start').hidden) return;
   castG.clearRect(0, 0, castC.width, castC.height);
   const fr = WALK[Math.floor(t * 6) % 4];
-  ['xia', 'shen', 'xu', 'lu', 'zhou', 'bandit', 'boss'].forEach((id, i) => drawChar(castG, id, 'down', i === 0 ? fr : 'idle', 12 + i * 22, 21));
+  ['xia', 'shen', 'xu', 'lu', 'zhou', 'bandit'].forEach((id, i) => drawChar(castG, id, 'down', i === 0 ? fr : 'idle', 12 + i * 22, 45));
+  if (BOSS.idle) castG.drawImage(BOSS.idle.n, (Math.floor(t * 8) % BOSS.idle.count) * 96, 0, 96, 48, 124, 1, 96, 48); else drawChar(castG, 'boss', 'down', 'idle', 166, 45);
 }
 
 // ---------------------------------------------------------------- 主循环
@@ -1860,10 +2064,10 @@ function boot(data) {
   Playtest.ensure(G,{debug:DEBUG});
   const cs = getComputedStyle(document.documentElement);
   SERIF = cs.getPropertyValue('--serif') || 'serif'; SANS = cs.getPropertyValue('--sans') || 'sans-serif'; PIX = cs.getPropertyValue('--pix') || 'monospace';
-  resize(); renderAll(); requestAnimationFrame(frame);
+  loadAssets().then(() => { buildMap(); portrait($('myFace'), 'xia'); resize(); renderAll(); last = performance.now(); requestAnimationFrame(frame); });
 }
 try { window.claude?.hot?.snapshot?.(() => ({ G: JSON.parse(JSON.stringify(G)) })); } catch (e) { /* 没有热更新也能玩 */ }
-if (location.search.includes('debug')) window.__duko = { get G() { return G; }, interact, doAct, attack, skill, dodge, useBandage, commit, loadSave, clearSave, recordText, recordPayload, perfRec, perfStats, newGame, get locations(){return {NPCS,CRATE,HERBS,LEDGER_POS,CACHE_POS,FINAL_POS};}, openDlg, toggleAtlas, kill, hurtPlayer, respawn, updArcher, updateChapter, get saveKey(){return SAVE_KEY;}, get target() { return curTarget; }, step(dt, n) { for (let i = 0; i < (n || 1); i++) { if (G.started && !paused()) { if (G.hitstop > 0) G.hitstop -= dt; else update(dt); } } hud(dt); } };
+if (location.search.includes('debug')) window.__duko = { get G() { return G; }, get BUF() { return BUF; }, get LBUF() { return LBUF; }, draw, OBST, NPCS, INSPECT, CRATE, HERBS, DUMMY_POS, RESPAWN, WORLD, interact, doAct, attack, skill, dodge, useBandage, commit, loadSave, clearSave, recordText, recordPayload, perfRec, perfStats, newGame, get locations(){return {NPCS,CRATE,HERBS,LEDGER_POS,CACHE_POS,FINAL_POS};}, openDlg, toggleAtlas, kill, hurtPlayer, respawn, updArcher, updateChapter, get saveKey(){return SAVE_KEY;}, get target() { return curTarget; }, step(dt, n) { for (let i = 0; i < (n || 1); i++) { if (G.started && !paused()) { if (G.hitstop > 0) G.hitstop -= dt; else update(dt); } } hud(dt); } };
 installPlaytestForm();
 const hot = window.claude?.hot;
 if (hot?.ready) hot.ready(boot); else boot(hot?.data ?? {});

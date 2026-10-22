@@ -13,6 +13,9 @@
 | chars/lu.png | Actor/Character/Noble |
 | chars/zhou.png | Actor/Character/Hunter |
 | chars/bandit.png | Actor/Character/NinjaRed |
+| chars/archer.png | Actor/Character/NinjaGreen（弓手） |
+| chars/guard.png | Actor/Character/FighterWhite（护院） |
+| chars/captain.png | Actor/Character/Samurai（护院头领） |
 | boss/*.png | Actor/Boss/GiantRedSamurai |
 | faces/*.png | 对应角色的 Faceset.png |
 | tiles/*.png | Backgrounds/Tilesets 下的 Floor、Water、Nature、House、camp |
