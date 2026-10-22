@@ -42,6 +42,26 @@ GitHub Actions 对相关 PR 和 main 的变更运行同一个 `npm run test:all`
 
 浏览器缺失、依赖缺失或用例失败均使命令非零退出，不自动跳过。调试推进、浏览器模拟及正常自动输入分别提供相应证据；这些结果不等于真人手机手感、自然通关时长或完整网金回归。历史验收记录里的本机路径只用于追溯，当前复测以这里的命令为准。
 
+## 一条命令更新公网青石渡试玩
+
+发布主机首次将 `preview-deploy.example.json` 复制为 `.preview-deploy.local.json`，填写已存在的青石渡服务目录、LaunchAgent 标签与公网看板地址。此本机配置被 Git 忽略。本机已完成配置，也可双击仓库根目录的 `更新公网试玩.command`；原本地目录中的同名文件是指向此 Git 工作目录的启动入口。终端直接运行：
+
+```sh
+npm run update:preview
+```
+
+默认抓取 `origin/main` 的最新提交，不切换或覆盖当前工作分支。在临时目录按该提交安装锁定依赖、准备 Chromium、运行 `npm run test:all`；只有成功后才备份旧版、发布四个资源、`assets/na/` 素材目录与服务代码、重启青石渡服务并检查提交号和全部资源、素材的哈希。测试失败不发布，发布检查失败自动恢复旧版并以非零状态报错。公网检查覆盖看板健康、登录入口与未登录拦截；不会将这些结果冒充登录后的公网试玩。
+
+```sh
+npm run update:preview -- --check-only   # 只抓取、测试，不发布
+# 只有明确需要发布尚未合入 main 的分支时才指定来源：
+npm run update:preview -- --remote fork --branch codex/preview-update-script
+```
+
+脚本当前仅支持本机既有的 macOS launchd 部署。它不改网关或其他游戏，不操作账号库、浏览器存档，也不自动合并 PR。远端分支缺少 V0.4 或提交号健康检查支持时明确失败，无备用模板或旧文件替代。依赖安装或下载失败也会停止。
+
+旧版备份存于服务目录的 `backups/`，不会自动删除；`runtime-manifest.json` 记录当前运行版本，`last-update.json` 记录最近成功发布的 Git 来源、哈希与备份。更新锁遗留时，确认没有更新进程后才可移除 `.update-lock`。脚本不提供定时执行；有新代码时运行同一命令即可。
+
 ## 多终端协作
 
 1. 开始前运行 `git status --short --branch` 和 `git fetch origin`，检查任务是否已有 PR。先保留本端未提交工作，再基于最新 `origin/main` 建立任务分支，如 `git switch -c device/任务名 origin/main`。

@@ -4,6 +4,7 @@ on:
     paths:
       - '原型/V0.4/**'
       - 'tests/**'
+      - 'scripts/**'
       - 'portal-integration/**'
       - 'package*.json'
       - '.github/workflows/v04.yml'
@@ -12,6 +13,7 @@ on:
     paths:
       - '原型/V0.4/**'
       - 'tests/**'
+      - 'scripts/**'
       - 'portal-integration/**'
       - 'package*.json'
       - '.github/workflows/v04.yml'

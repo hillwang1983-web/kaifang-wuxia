@@ -34,3 +34,5 @@ playwright-report/
 *.db
 .DS_Store
 原型/V0.4/试玩记录/*.json
+
+.preview-deploy.local.json

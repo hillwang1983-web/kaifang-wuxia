@@ -3,7 +3,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { resolve, relative, join, sep, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-export function createQingshiServer(root) {
+export function createQingshiServer(root, release = {}) {
   const routes = new Map();
   for (const name of ['index.html', 'chapter.js', 'playtest.js', 'game.js']) {
     const asset = { body: readFileSync(new URL(name, root)), type: name.endsWith('.js')
@@ -19,7 +19,7 @@ export function createQingshiServer(root) {
     const name = relative(rootDir, join(entry.parentPath, entry.name)).split(sep).join('/'), type = TYPES[extname(name)];
     if (type) routes.set('/qingshi-v04/' + encodeURI(name), { body: readFileSync(new URL(name, root)), type });
   }
-  const health = { body: Buffer.from(JSON.stringify({ ok: true, service: 'qingshi-v04', version: 'V0.4-20261023-na' })), type: 'application/json' };
+  const health = { body: Buffer.from(JSON.stringify({ ok: true, service: 'qingshi-v04', version: 'V0.4-20261023-na', commit: release.commit || null })), type: 'application/json' };
   routes.set('/healthz', health); routes.set('/qingshi-v04/healthz', health);
   return http.createServer((req, res) => {
     const headers = { 'cache-control': 'no-store', 'x-content-type-options': 'nosniff' };
