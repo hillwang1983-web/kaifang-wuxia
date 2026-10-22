@@ -15,8 +15,10 @@
   --gold: #D8B66A;
   --cin: #E0603F;
   --jade: #5FB3A1;
-  --paper-ink: #2A2018;
-  --paper-mute: #6A5A48;
+  --paper-ink: #EFE6D2;
+  --paper-mute: #B8AACE;
+  --plaque: #F0E2C4;
+  --plaque-ink: #3B2F28;
   --serif: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
   --sans: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   --pix: 'Silkscreen', 'Noto Sans SC', monospace;
@@ -48,22 +50,29 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 #stick { position: absolute; width: 126px; height: 126px; margin: -63px 0 0 -63px; background: var(--iStick) center / 100% 100% no-repeat; image-rendering: pixelated; pointer-events: none; z-index: 2; }
 #knob { position: absolute; left: 36px; top: 36px; width: 54px; height: 54px; background: var(--iKnob) center / 100% 100% no-repeat; image-rendering: pixelated; }
 
-#status { position: absolute; z-index: 2; left: calc(10px + var(--sl)); top: 8px; width: 272px; display: flex; gap: 8px; align-items: center; padding: 1px 4px; pointer-events: none; }
-.portrait { width: 54px; height: 54px; flex: none; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; }
-.portrait canvas { width: 48px; height: 36px; }
-.bars { flex: 1; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-.brow { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--muted); }
-.brow > span { width: 28px; flex: none; }
-.brow .pnum { font-size: 14px; color: var(--ink); min-width: 32px; text-align: right; }
+/* 左上只留两条细血条，数字压在条里（借鉴 Sephiria 的极简 HUD） */
+#status { position: absolute; z-index: 2; left: calc(10px + var(--sl)); top: 8px; width: 232px; display: flex; gap: 8px; align-items: center; padding: 0 2px; pointer-events: none; }
+.portrait { display: none; }
+.bars { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.brow { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--muted); }
+.brow > span { width: 26px; flex: none; }
+.brow .pbar { height: 18px; }
+.brow .pbar.mp { height: 15px; }
+.pbar > b { position: absolute; inset: 0; z-index: 1; display: flex; align-items: center; justify-content: center; font: 700 11px var(--pix); color: #FFFFFF; text-shadow: 1px 0 #0E0B09, -1px 0 #0E0B09, 0 1px #0E0B09, 0 -1px #0E0B09; }
+#banner { position: absolute; z-index: 4; left: 50%; top: 12px; transform: translateX(-50%); padding: 3px 22px; font: 700 18px var(--serif); letter-spacing: 6px; color: var(--plaque-ink); background: var(--plaque); border: 3px solid #0E0B09; box-shadow: inset 0 -3px 0 #C9B48E; pointer-events: none; white-space: nowrap; transition: opacity 0.5s; }
+#banner::before, #banner::after { content: ""; position: absolute; top: -3px; bottom: -3px; width: 8px; background: #8A5E3C; border: 3px solid #0E0B09; box-shadow: inset 0 3px 0 #B07C50; }
+#banner::before { left: -17px; }
+#banner::after { right: -17px; }
+#banner.out { opacity: 0; }
 .pbar { flex: 1; height: 15px; background: #1C1612; border: 3px solid #0E0B09; box-sizing: border-box; position: relative; overflow: hidden; }
 .pbar > i { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: var(--c); box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.28), inset 0 -3px 0 rgba(0, 0, 0, 0.25); }
 .pbar > i::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 12px, rgba(0, 0, 0, 0.4) 12px 15px); }
 .pbar.thin { height: 9px; }
 
-#quest { position: absolute; z-index: 2; left: calc(10px + var(--sl)); top: 90px; width: 272px; display: flex; flex-direction: column; gap: 2px; padding: 0 4px; pointer-events: none; }
-.eyebrow { font-size: 12px; color: var(--gold); font-weight: 700; letter-spacing: 1px; }
-#qt { font: 700 17px/1.35 var(--serif); text-wrap: balance; }
-#qs, #qo { font-size: 13px; color: var(--muted); line-height: 1.45; }
+#quest { position: absolute; z-index: 2; left: calc(10px + var(--sl)); top: 70px; width: 232px; display: flex; flex-direction: column; gap: 1px; padding: 0 2px; pointer-events: none; }
+.eyebrow { font-size: 11px; color: var(--gold); font-weight: 700; letter-spacing: 1px; }
+#qt { font: 700 15px/1.35 var(--serif); text-wrap: balance; }
+#qs, #qo { font-size: 12px; color: var(--muted); line-height: 1.45; }
 #qs.echo { color: var(--gold); }
 
 #res { position: absolute; z-index: 2; right: calc(10px + var(--sr)); top: 8px; display: flex; gap: 6px; align-items: center; }
@@ -108,9 +117,10 @@ button.chip, .sq { cursor: pointer; }
 #dlgL { flex: 1; min-width: 0; display: flex; gap: 12px; }
 #dFace { width: 72px; height: 72px; flex: none; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; }
 #dFace canvas { width: 64px; height: 48px; }
+#dFace canvas.face { width: 68px; height: 68px; align-self: center; }
 #dBody { display: flex; flex-direction: column; gap: 6px; min-width: 0; overflow-y: auto; }
-#dWho { font: 700 19px var(--serif); }
-#dWho small { font: 500 13px var(--sans); color: var(--paper-mute); margin-left: 8px; }
+#dWho { align-self: flex-start; font: 700 17px var(--serif); color: var(--plaque-ink); background: var(--plaque); padding: 1px 12px; border: 3px solid #0E0B09; box-shadow: inset 0 -3px 0 #C9B48E; }
+#dWho small { font: 500 12px var(--sans); color: #6A5A48; margin-left: 8px; }
 #dText { font: 700 18px/1.65 var(--serif); }
 #dNote { margin-top: auto; font-size: 13px; color: var(--paper-mute); font-weight: 700; line-height: 1.5; }
 #dOpts { width: min(360px, 46%); flex: none; display: flex; flex-direction: column; gap: 4px; justify-content: center; overflow-y: auto; }
@@ -122,9 +132,9 @@ button.chip, .sq { cursor: pointer; }
 .lh b { font: 700 18px var(--serif); }
 #logx { width: 48px; height: 48px; }
 #logl { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 6px; font-size: 14px; line-height: 1.55; font-weight: 500; }
-#logl li::marker { color: #9A6A3A; }
+#logl li::marker { color: var(--gold); }
 .empty { font-size: 14px; color: var(--paper-mute); }
-.sec { margin-top: 12px; padding-top: 10px; border-top: 3px solid #B49C74; display: flex; flex-direction: column; gap: 8px; }
+.sec { margin-top: 12px; padding-top: 10px; border-top: 3px solid #4A3F63; display: flex; flex-direction: column; gap: 8px; }
 .sec b { font: 700 16px var(--serif); }
 #rec { margin: 0; white-space: pre-wrap; font: 500 13px/1.6 var(--sans); color: var(--paper-ink); }
 .mini { height: 48px; padding: 0 10px; background: none; font: 700 14px var(--sans); cursor: pointer; }
@@ -136,8 +146,8 @@ button.chip, .sq { cursor: pointer; }
 .card h2 { margin: 0; font: 700 26px/1.3 var(--serif); }
 .card p { margin: 0; font-size: 15px; line-height: 1.7; max-width: 36em; font-weight: 500; }
 .card .sub { color: var(--gold); font: 700 12px var(--pix); letter-spacing: 2px; text-transform: uppercase; }
-.px-paper .sub { color: #9A6A3A; }
-.cast { width: 100%; max-width: 440px; height: auto; aspect-ratio: 156 / 24; }
+.px-paper .sub { color: var(--gold); }
+.cast { width: 100%; max-width: 460px; height: auto; aspect-ratio: 210 / 50; }
 .keys { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; font-size: 14px; line-height: 1.55; color: var(--muted); margin: 0; }
 .keys dt { color: var(--ink); font-weight: 700; }
 .keys dd { margin: 0; }
@@ -145,7 +155,7 @@ button.chip, .sq { cursor: pointer; }
 .big { height: 58px; padding: 0 22px; font: 700 18px var(--sans); cursor: pointer; background: none; }
 .ghost { height: 58px; padding: 0 20px; font: 700 16px var(--sans); cursor: pointer; background: none; }
 .hint { font-size: 13px; color: var(--muted); }
-.echo-l { color: #8A4A2A !important; font-family: var(--serif) !important; font-weight: 700 !important; }
+.echo-l { color: #F2C66D !important; font-family: var(--serif) !important; font-weight: 700 !important; }
 .sum { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; font-size: 15px; margin: 0; }
 .sum dt { color: var(--paper-mute); font-weight: 500; }
 .sum dd { margin: 0; font-weight: 700; }
@@ -261,8 +271,8 @@ kbd { font:inherit; color:var(--gold); }
   <div id="status" class="px-dark">
     <div class="portrait px-dark"><canvas id="myFace" width="16" height="12"></canvas></div>
     <div class="bars">
-      <div class="brow"><span>生命</span><div class="pbar" style="--c:#D9553A"><i id="hpf"></i></div><b class="pnum" id="hpn">100</b></div>
-      <div class="brow"><span>内力</span><div class="pbar" style="--c:#4FA898"><i id="mpf"></i></div><b class="pnum" id="mpn">100</b></div>
+      <div class="brow"><span>生命</span><div class="pbar" style="--c:#D9553A"><i id="hpf"></i><b id="hpn">100</b></div></div>
+      <div class="brow"><span>内力</span><div class="pbar mp" style="--c:#4A86C8"><i id="mpf"></i><b id="mpn">100</b></div></div>
     </div>
   </div>
 
@@ -286,6 +296,7 @@ kbd { font:inherit; color:var(--gold); }
   <div id="saveError" role="alert" hidden></div>
 
   <div id="toasts" aria-live="polite"></div>
+  <div id="banner" hidden></div>
   <button id="nearTalk" type="button" hidden><span></span></button>
   <div id="combatHint" class="px-dark" hidden></div>
 
@@ -359,7 +370,7 @@ kbd { font:inherit; color:var(--gold); }
     <div class="card px-dark">
       <div class="sub">原创武侠 · 第一章 · V0.4</div>
       <h1>青石渡风波</h1>
-      <canvas class="cast" id="cast" width="156" height="24" aria-label="少侠、沈青、许舟、陆平、周砚、匪徒、匪首的像素形象"></canvas>
+      <canvas class="cast" id="cast" width="210" height="50" aria-label="少侠、沈青、许舟、陆平、周砚、匪徒、匪首的像素形象"></canvas>
       <p>你不记得如何来到这个江湖。醒来时，青石渡正在等一船救命药。山上有人扣货，山下有人闭口不言。先救人，再决定要不要追问那本账。</p>
       <dl class="keys">
         <dt>手机</dt><dd>横屏。左半边按住拖动来走，右下角出招；走近人物会出现「交谈」。</dd>
@@ -391,5 +402,5 @@ kbd { font:inherit; color:var(--gold); }
 
 <script src="chapter.js"></script>
 <script src="playtest.js"></script>
-<script src="game.js?v=20261022-mobile2"></script>
+<script src="game.js?v=20261023-na"></script>
 </html>

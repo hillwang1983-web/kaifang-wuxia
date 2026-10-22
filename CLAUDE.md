@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 项目是什么
 
-《金庸群侠传 Online》（网金）的私服复刻，个人学习自用，不分发、不商用。文档、注释、提交说明都是**中文**，新增内容沿用中文。根目录有一份`武侠开放世界RPG游戏设计总纲_V0.3.pdf`（后续原创玩法的设计与验收（V0.3，2026-10-22）：「渡口失药」约 20–30 分钟的单人手机横屏动作验证包，要求用**独立数据库和独立角色库**，不得写网金复刻的正式角色库，也不得覆盖当前客户端；目前没有代码对应。同目录的 `武侠开放世界RPG游戏设计总纲_V0.3_修订稿.md` 是它的 Markdown 修订稿（附录 A 列出改动与待决策项）；`武侠开放世界 RPG · V0.3 评审意见.pdf` 是外部评审，吸收后整理成 `武侠开放世界RPG游戏设计总纲_V0.4_草稿.md`（首页有逐条处理表，附录 A 参数总表、附录 C 待确认的草稿取值）。可复用与必须新写的部分见 PDF 第 09–10 节）。`原型/` 是这个验证包的网页试玩：`渡口失药试玩.html`（人物、首领、地块、建筑用 `原型/assets/na/` 里的 Ninja Adventure 素材（CC0，来源与文件对照见那里的 README），读不到素材时退回代码绘制；发布 Artifact 时要把 `assets/na/` 一并放进 `files`。本地存档走「副本修改 + 操作号去重」的提交；加 `?debug` 会暴露 `window.__duko` 供脚本逐帧测试）和 `像素样张.html`（美术方向样张）。本地预览用 `.claude/launch.json` 里的 `prototype` 配置（`python -m http.server 8770 --directory 原型`）。
+《金庸群侠传 Online》（网金）的私服复刻，个人学习自用，不分发、不商用。文档、注释、提交说明都是**中文**，新增内容沿用中文。根目录有一份`武侠开放世界RPG游戏设计总纲_V0.3.pdf`（后续原创玩法的设计与验收（V0.3，2026-10-22）：「渡口失药」约 20–30 分钟的单人手机横屏动作验证包，要求用**独立数据库和独立角色库**，不得写网金复刻的正式角色库，也不得覆盖当前客户端；目前没有代码对应。同目录的 `武侠开放世界RPG游戏设计总纲_V0.3_修订稿.md` 是它的 Markdown 修订稿（附录 A 列出改动与待决策项）；`武侠开放世界 RPG · V0.3 评审意见.pdf` 是外部评审，吸收后整理成 `武侠开放世界RPG游戏设计总纲_V0.4_草稿.md`（首页有逐条处理表，附录 A 参数总表、附录 C 待确认的草稿取值）。可复用与必须新写的部分见 PDF 第 09–10 节）。`原型/V0.4/` 是这个验证包唯一的网页试玩《青石渡风波》（第一幕即原先的《渡口失药》，单文件版已于 2026-10-23 并入）：`index.html` 页面、`game.js` 画面 / 输入 / 战斗 / 对话、`chapter.js` 章节规则与存档事务、`playtest.js` 试玩记录；人物、首领、地块、建筑用 `原型/V0.4/assets/na/` 里的 Ninja Adventure 素材（CC0，来源与文件对照见那里的 README），读不到素材时退回代码绘制；发布 Artifact 时把 `chapter.js` `playtest.js` `game.js` 和 `assets/na/` 一并放进 `files`。本地存档走「副本修改 + 操作号去重」的提交；加 `?debug` 会暴露 `window.__duko` 供脚本逐帧测试。`原型/像素样张.html` 是美术方向样张。本地预览用 `npm run serve`（http://127.0.0.1:8793/qingshi-v04/），或 `.claude/launch.json` 里的 `prototype` 配置（`python -m http.server 8770 --directory 原型`，打开 `/V0.4/index.html`）。
 
 两个子项目，靠**原版 TCP 协议**对接：
 
@@ -13,7 +13,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 本项目已使用 Git 多终端协作。先读根目录 `AGENTS.md` 和 `README.md`：以远端最新 main 为共同基线，一任务一分支，通过 PR 审阅合入，不覆盖其他终端提交。部署包与本机数据仍按 `.gitignore` 排除。
 
-`原型/V0.4/` 是独立《青石渡风波》章节，使用 `qingshi-chapter-v04` 存档键；它与单文件《渡口失药》和根目录 V0.4 设计草稿分别维护。V0.4 统一测试入口为 `npm test`（规则/采样/HTTP）与 `npm run test:all`（再加浏览器回归），试玩用 `npm run serve`。这些通过不代表网金复刻全套回归或真人实机验收。
+试玩存档键是 `qingshi-chapter-v04`；数值以章节现值为准，根目录 V0.4 设计草稿（附录 C「原型现值」）另行同步。统一测试入口为 `npm test`（规则/采样/HTTP）与 `npm run test:all`（再加浏览器回归），试玩用 `npm run serve`。这些通过不代表网金复刻全套回归或真人实机验收。
 
 ## 常用命令
 

@@ -1,6 +1,6 @@
 import http from 'node:http';
-import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { readFileSync, readdirSync } from 'node:fs';
+import { resolve, relative, join, sep, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 export function createQingshiServer(root) {
@@ -11,7 +11,15 @@ export function createQingshiServer(root) {
     routes.set('/qingshi-v04/' + name, asset);
     if (name === 'index.html') routes.set('/qingshi-v04/', asset);
   }
-  const health = { body: Buffer.from(JSON.stringify({ ok: true, service: 'qingshi-v04', version: 'V0.4-20261022-mobile2' })), type: 'application/json' };
+  // 素材图（Ninja Adventure，CC0）：启动时列出 assets/na 下的文件，只发布这份清单
+  const TYPES = { '.png': 'image/png', '.md': 'text/markdown; charset=utf-8', '.txt': 'text/plain; charset=utf-8' };
+  const rootDir = fileURLToPath(root);
+  for (const entry of readdirSync(new URL('assets/na/', root), { recursive: true, withFileTypes: true })) {
+    if (!entry.isFile()) continue;
+    const name = relative(rootDir, join(entry.parentPath, entry.name)).split(sep).join('/'), type = TYPES[extname(name)];
+    if (type) routes.set('/qingshi-v04/' + encodeURI(name), { body: readFileSync(new URL(name, root)), type });
+  }
+  const health = { body: Buffer.from(JSON.stringify({ ok: true, service: 'qingshi-v04', version: 'V0.4-20261023-na' })), type: 'application/json' };
   routes.set('/healthz', health); routes.set('/qingshi-v04/healthz', health);
   return http.createServer((req, res) => {
     const headers = { 'cache-control': 'no-store', 'x-content-type-options': 'nosniff' };
