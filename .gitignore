@@ -20,3 +20,17 @@
 *.err
 __pycache__/
 *.pyc
+
+# 多终端本机状态与依赖
+node_modules/
+test-results/
+playwright-report/
+.remember/
+.playwright-mcp/
+备份/
+*.log
+*.jsonlog
+*.sqlite-*
+*.db
+.DS_Store
+原型/V0.4/试玩记录/*.json

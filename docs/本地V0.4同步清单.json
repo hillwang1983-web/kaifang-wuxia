@@ -1,0 +1,94 @@
+{
+  "source": "本地开放武侠目录；2026-10-23接入前快照",
+  "base": "9a705ee5f166a1ea00bcfbad298723c1d58a52d2",
+  "files": [
+    {
+      "path": "原型/V0.4/chapter.js",
+      "sha256": "fb1a5a26fe28706075e6a3a4f69fc81bd49d5b5898cc391781b39d742faded03"
+    },
+    {
+      "path": "原型/V0.4/game.js",
+      "sha256": "91e29215bd495f27c2d0c421d2ec050b16aa52341874db14aeeb0ad52917f360"
+    },
+    {
+      "path": "原型/V0.4/index.html",
+      "sha256": "c473d7d0a5c585f89e2dde83c8ead0443c05cb4c608848acfd164fc48ae368c3"
+    },
+    {
+      "path": "原型/V0.4/playtest.js",
+      "sha256": "18fc9595ea31d2e5dc057f243b77c68499a16eeeaad7d9af84239bb8df213d4a"
+    },
+    {
+      "path": "原型/V0.4/README.md",
+      "sha256": "b963e574a5ae727374d78edff3d08d62b9561f3ba9636d98d8ffe6a65d638590"
+    },
+    {
+      "path": "原型/V0.4/优化验收_20261022.md",
+      "sha256": "a15a6aa36b3330a77378bb797ae92b0d6bd7a55a347f3ec10a8e6da48feba44a"
+    },
+    {
+      "path": "原型/V0.4/优化验证结果_20261022.json",
+      "sha256": "db81c5072a3cd5dd19a3e7765aea064e2507bb101d5cc8e99d3589f0817383d8"
+    },
+    {
+      "path": "原型/V0.4/原版校验.json",
+      "sha256": "95dede27f77a790e7f1b5ad39bd9af20e5d53c68c176caf1c85b270430a5a33c"
+    },
+    {
+      "path": "原型/V0.4/自动验证结果.json",
+      "sha256": "0263dc28948134b366b8b6ae84a6541f869fc4f30ceb083d91c5aeadbf83fd93"
+    },
+    {
+      "path": "原型/V0.4/验收记录.md",
+      "sha256": "f89177ef47e3360b79433caa5ac12e453a462da788ea7c19afeddce1fdeb1832"
+    },
+    {
+      "path": "tests/browser-acceptance.js",
+      "sha256": "5cf75a4369c84e522f70462fdc9cff5a9deff9e73150d59663f6a82b38c12cad"
+    },
+    {
+      "path": "tests/browser-controls.js",
+      "sha256": "d51e1c1f0113077beb518e9ceaf72e7d48e3fff08f13375912ddb5d12772f426"
+    },
+    {
+      "path": "tests/browser-normal-input.js",
+      "sha256": "82b26d8d30102548f2963123c94d365f466f39e89bcff367ff6a343124ee9603"
+    },
+    {
+      "path": "tests/browser-polish.js",
+      "sha256": "bc6927417b016e7e80a6e03613b5c940a45108bd113db025fa07333661f8e262"
+    },
+    {
+      "path": "tests/browser-recovery.js",
+      "sha256": "e3e54dc0b36b11f7a9b9ec04724717593730193f3028d8fa6a147c008ef149e5"
+    },
+    {
+      "path": "tests/browser-safety.js",
+      "sha256": "5b79ada7523f79fdff3f1dabba153e4e10223a2a333353eb37821c824a0a4bd8"
+    },
+    {
+      "path": "tests/chapter.test.cjs",
+      "sha256": "c01f7694a6bbe306ace57c25d2df3a585804e8cd83693aacee7e707b06ee550f"
+    },
+    {
+      "path": "tests/mobile-browser.test.mjs",
+      "sha256": "56c689c08ae33808b427460750d5751ef67628c2a319e9808fbb34b258cffb8b"
+    },
+    {
+      "path": "tests/playtest.test.cjs",
+      "sha256": "67248b7353463a2db051ebdfb0debf221e35a76a071e1642489b10a428e017cd"
+    },
+    {
+      "path": "原型/V0.4/试玩记录/填写说明.md",
+      "sha256": "3052cfdbe5d4ae0a7543dd2819c823da134bf803a35dbacdd3835217a6b488ec"
+    },
+    {
+      "path": "portal-integration/server.mjs",
+      "sha256": "ebe5b9647000de348ba0683be3fa15491533e2a8a739e36f1a2d4bd804402657"
+    },
+    {
+      "path": "portal-integration/server.test.mjs",
+      "sha256": "f152150fb0db056f7992f5f0740e3755736a6d870aebe81062c8e12f2ab95e27"
+    }
+  ]
+}
