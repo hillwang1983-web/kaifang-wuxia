@@ -51,7 +51,7 @@ GitHub Actions 对相关 PR 和 main 的变更运行同一个 `npm run test:all`
 
 ## 一条命令更新公网青石渡试玩
 
-发布主机首次将 `preview-deploy.example.json` 复制为 `.preview-deploy.local.json`，填写已存在的青石渡服务目录、LaunchAgent 标签与公网看板地址。此本机配置被 Git 忽略。本机已完成配置，直接运行：
+发布主机首次将 `preview-deploy.example.json` 复制为 `.preview-deploy.local.json`，填写已存在的青石渡服务目录、LaunchAgent 标签与公网看板地址。此本机配置被 Git 忽略。本机已完成配置，也可双击仓库根目录的 `更新公网试玩.command`；原本地目录中的同名文件是指向此 Git 工作目录的启动入口。终端直接运行：
 
 ```sh
 npm run update:preview
