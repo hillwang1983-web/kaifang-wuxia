@@ -134,3 +134,29 @@ test('landscape touch controls preserve notch and home-indicator margins', async
   }));
   assert.ok(positions.every(r => r.right <= 874 - 59 && r.bottom <= 402 - 21), JSON.stringify(positions));
 });
+
+test('touch attacks stay in place without stick input, including after releasing the stick (#4)', async t => {
+  const context = await browser.newContext({ viewport: { width: 844, height: 390 }, isMobile: true, hasTouch: true });
+  t.after(() => context.close()); const page = await context.newPage();
+  await page.goto(base + '?debug'); await page.locator('#bStart').tap();
+  const cdp = await context.newCDPSession(page), box = await page.locator('#bAtk').boundingBox();
+  const at = { x: box.x + box.width / 2, y: box.y + box.height / 2 };
+  const pos = () => page.evaluate(() => [__duko.G.p.x, __duko.G.p.y]);
+  const tapAttack = async (times) => {
+    for (let i = 0; i < times; i++) {
+      await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ id: 2, ...at }] });
+      await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+      await page.waitForTimeout(260);
+    }
+  };
+  const start = await pos(); await tapAttack(6);
+  assert.deepEqual(await pos(), start, 'two full three-hit combos must not move the player');
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ id: 1, x: 80, y: 270 }] });
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ id: 1, x: 125, y: 270 }] });
+  await page.waitForTimeout(150);
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+  await page.waitForTimeout(80); const released = await pos();
+  assert.ok(released[0] > start[0], 'stick should still move the player');
+  await tapAttack(3);
+  assert.deepEqual(await pos(), released, 'attacks after releasing the stick keep no leftover movement');
+});
