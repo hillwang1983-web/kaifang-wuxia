@@ -748,7 +748,7 @@ function attack() {
   const c = P_.combo[p.combo];
   p.atkCd = c.big ? 0.45 : P_.atkCd; p.comboT = 0.65; aim(1.6);
   p.swing = p.swingDur = c.big ? 0.2 : 0.15; p.swingKind = c.big ? 'atk3' : 'atk';
-  move(p, Math.cos(p.face) * (c.big ? 14 : 6), Math.sin(p.face) * (c.big ? 14 : 6), 16);
+  // 普攻原地出剑，不自动前冲；位移只来自摇杆、闪避和剑招突进（#4）。
   (c.big ? SFX.swing3 : SFX.swing)();
   strikeEnemies(c.range, c.half, c.dmg, false, c.big);
 }
