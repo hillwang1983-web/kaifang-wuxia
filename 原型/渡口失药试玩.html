@@ -231,7 +231,7 @@ button.chip, .sq { cursor: pointer; }
       <div class="sub">Pixel · 单人试玩</div>
       <h1>渡口失药</h1>
       <canvas class="cast" id="cast" width="156" height="24" aria-label="少侠、沈青、许舟、陆平、周砚、匪徒、匪首的像素形象"></canvas>
-      <p>青石渡的药包被山道上的匪首扣下了。取回药包，交给药师沈青。可以动手，也可以交涉；你怎么办成这件事，人物会记得。</p>
+      <p>你初到青石渡，正赶上渡口的药包被山道上的匪首扣下。取回药包，交给药师沈青。可以动手，也可以交涉；你怎么办成这件事，人物会记得。</p>
       <dl class="keys">
         <dt>手机</dt><dd>横屏。左半边按住拖动来走，右下角出招；走近人物会出现「交谈」。</dd>
         <dt>键盘</dt><dd>WASD 或方向键走 · J 普攻（连按三段） · K 剑招 · 空格 闪避 · E 交谈 · H 包扎 · 对话里按数字键选</dd>
@@ -706,7 +706,7 @@ const INSPECT = [
   { id: 'sign', name: '路标', obj: 'sign', ...W3(253, 154) },
 ];
 const CRATE = W3(216, 212);
-const HERBS = [W3(490, 53), W3(513, 257)];
+const HERBS = [W3(482, 104), W3(513, 257)]; // 前一株在匪徒出没区东缘，采它会惊动一名匪徒
 const ZONE = W3(420, 117);
 const RESPAWN = W3(84, 160);
 const KIND = {
@@ -720,7 +720,7 @@ const KIND = {
       charge: { id: 'charge', shape: 'line', range: 240, width: 22, tele: 1.0, dmg: 20, rec: 0.8, inter: false, reach: 260, minD: 150 },
     } },
 };
-const P_ = { speed: 210, atkCd: 0.3, skCd: 0.9, skCost: 30, dgCd: 0.7, mpRegen: 6, combo: [{ dmg: 10, range: 60, half: 1.1 }, { dmg: 12, range: 62, half: 1.15 }, { dmg: 18, range: 72, half: 1.35, big: true }], skDmg: 26, qiBack: 18, bandageHeal: 0.4 };
+const P_ = { speed: 210, atkCd: 0.3, skCd: 0.9, skCost: 32, dgCd: 0.7, mpRegen: 10, combo: [{ dmg: 10, range: 60, half: 1.1 }, { dmg: 12, range: 62, half: 1.15 }, { dmg: 18, range: 72, half: 1.35, big: true }], skDmg: 26, qiBack: 16, bandageHeal: 0.4 };
 
 function mkEnemy(kind, x, y) {
   const K = KIND[kind];
@@ -925,13 +925,13 @@ function kill(e) {
 function endSpar(e, win) {
   e.hostile = false; e.spar = false; e.state = 'idle'; e.hp = KIND.boss.hp; e.x = e.hx; e.y = e.hy; e.plan = null;
   if (win) {
-    const n = G.f.sparWins + 1;
+    const n = G.f.sparWins + 1, prize = G.f.branch === 'A' && n <= 2;
     commit('spar:' + n, '切磋胜利', (d) => {
       d.f.sparWins = n;
-      if (n <= 2) { d.inv.wood += 2; d.inv.iron += 1; lg(d, '第 ' + n + ' 次切磋赢了匪首，得一份修械料'); } else lg(d, '又赢了匪首一场切磋');
+      if (d.f.branch === 'A' && n <= 2) { d.inv.wood += 2; d.inv.iron += 1; lg(d, '第 ' + n + ' 次切磋赢了匪首，得一份修械料'); } else lg(d, '又赢了匪首一场切磋');
       d.mem.boss.att += 1;
     });
-    toast(n <= 2 ? '切磋赢了！匪首给了一份修械料' : '切磋赢了！（之后没有物质奖励）'); SFX.coin();
+    toast(prize ? '切磋赢了！匪首给了一份修械料' : G.f.branch === 'A' ? '切磋赢了！（之后没有物质奖励）' : '切磋赢了！匪首抱拳：「好身手。」'); SFX.coin();
   } else { toast('点到为止。匪首收了刀：「再来？」'); }
   saveNow(false);
 }
@@ -1128,7 +1128,7 @@ function dialogFor(id) {
     if (inv.med) return D({ who: '沈青', sub: '青石渡药师', id, text: '药包……真的拿回来了。山道上，还顺利吗？', note: '两个选择的奖励相同：铜钱 +20 · 绷带 +1',
       opts: [{ label: '交出药包，并讲述经过', sub: f.branch === 'A' ? '告诉她：你击退了匪首，夺回药包' : '告诉她：你用药草 2 与匪首换回了药包', key: 'give_tell', primary: true },
         { label: '只交出药包，不提山道细节', sub: '沈青只会确认收到了药', key: 'give_quiet' }] });
-    if (!f.accepted) return D({ who: '沈青', sub: '青石渡药师', id, text: '渡口的药包被山道上的匪首扣下了。病人等不起，你能帮我取回来吗？', opts: [{ label: '接下这件事', key: 'accept', primary: true }, { label: '再想想', key: 'close' }] });
+    if (!f.accepted) return D({ who: '沈青', sub: '青石渡药师', id, text: '你是外乡来的吧？渡口的药包被山道上的匪首扣下了。病人等不起，你能帮我取回来吗？', opts: [{ label: '接下这件事', key: 'accept', primary: true }, { label: '再想想', key: 'close' }] });
     return D({ who: '沈青', sub: '青石渡药师', id, text: f.lostBoss ? '伤成这样……匪首下手不轻吧？先歇歇，别逞强。' : '药包在山道尽头的匪营里。受了伤就回来，我给你包扎。', opts: [{ label: '请她包扎', sub: '生命补满，不花绷带', key: 'heal' }, { label: '闲聊', key: 'chat_shen' }, { label: '这就去', key: 'close' }] });
   }
   if (id === 'xu') {
@@ -1144,7 +1144,7 @@ function dialogFor(id) {
     return D({ who: '陆平', sub: '渡口管事', id, text: f.askedLu ? '你问的那件事，别再提了。药呢？' : f.accepted ? '药呢？快些，沈大夫那边等着呢。' : '你是新来的？沈大夫正为药包的事发愁，去帮帮她。', opts: [{ label: '闲聊', key: 'chat_lu' }, { label: '知道了', key: 'close' }] });
   }
   if (id === 'zhou') {
-    let text = '剑饰能改你剑招的路数。一份料加 5 铜钱，我给你做一件，必定成功。剑饰槽只放一件，换新的，旧的就毁了。';
+    let text = '山里那位出手前总要停一下，破势就是冲那个停顿去的；要是怕内力跟不上，选回气。一份料加 5 铜钱，必定做成；剑饰槽只放一件，换新的，旧的就毁了。';
     if (G.orn === '破势' && G.stats.interrupts > 0) text = '看来破势派上用场了，刀口没卷吧？想换回气，料和钱备齐了就来。';
     else if (G.orn === '回气' && G.stats.qiBack > 0) text = '回气用得顺手？内力续上了，剑招就能多出几下。想换破势，料和钱备齐了就来。';
     const opts = [
@@ -1165,7 +1165,7 @@ function dialogFor(id) {
     if (f.branch === 'B') {
       const opts = [];
       if (!f.bought) opts.push({ label: '买修械料（5 铜钱）', sub: '木料 2 + 废铁 1，限购一份', key: 'buy_boss', primary: true });
-      if (f.delivered) opts.push({ label: '切磋一场', sub: f.sparWins < 2 ? '赢了给一份修械料（还剩 ' + (2 - f.sparWins) + ' 次）' : '已经没有物质奖励', key: 'spar' });
+      if (f.delivered) opts.push({ label: '切磋一场', sub: '点到为止，没有物质奖励', key: 'spar' });
       opts.push({ label: '离开', key: 'close' });
       const t = f.delivered ? '药已按约给你，想切磋随时奉陪。' : f.bought ? '按约办事的人，我记着。' : '你肯按约办事。我这有一份修械料，五文给你。';
       return D({ who: '匪首', sub: '匪营', id, text: t + (f.bossClaim && f.delivered ? ' 那本账，你要是有门路，帮我们问问。' : ''), opts });
@@ -1472,7 +1472,7 @@ function update(dt) {
   for (const k of keys) { const m = MOVE[k]; if (m) { ix += m[0]; iy += m[1]; } }
   const il = Math.hypot(ix, iy); if (il > 1) { ix /= il; iy /= il; }
   p.ix = ix; p.iy = iy; p.moving = false;
-  p.mp = Math.min(p.maxMp, p.mp + P_.mpRegen * dt);
+  if (!inCombat()) p.mp = Math.min(p.maxMp, p.mp + P_.mpRegen * dt); // 战斗中不自然恢复（R-02-5）
   if (p.dodge > 0) {
     p.dodge -= dt; move(p, p.dvx * dt, p.dvy * dt, 16);
     p.trail.push({ x: p.x, y: p.y, t: 0.25 });
@@ -1695,7 +1695,7 @@ function hud(dt) {
   if (inv.med) mats.push('药包');
   $('mats').hidden = mats.length === 0; setText('matsT', mats.join(' · '));
   const q = questText(); setText('qt', q[0]); setText('qs', q[1]); $('qs').classList.toggle('echo', G.f.delivered);
-  setText('qo', G.f.delivered ? (G.f.sparWins < 2 ? '可选：回匪营找匪首切磋' : '') : (G.orn ? '剑饰：' + G.orn : '可选：找周砚做一件剑饰'));
+  setText('qo', G.f.delivered ? (G.f.branch === 'A' ? (G.f.sparWins < 2 ? '可选：回匪营找匪首切磋' : '') : (G.f.bought ? '' : '可选：回匪营向匪首买修械料')) : (G.orn ? '剑饰：' + G.orn : '可选：找周砚做一件剑饰'));
   const orn = $('orn'); setText('orn', G.orn || '无剑饰'); orn.classList.toggle('none', !G.orn);
   setStyle($('bSk'), '--p', (p.skCd / P_.skCd * 100).toFixed(0) + '%');
   setStyle($('bAtk'), '--p', (p.atkCd / 0.45 * 100).toFixed(0) + '%');
