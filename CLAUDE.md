@@ -11,7 +11,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `服务端/` — `jyserver`：Python 3.14 + asyncio 重写的服务端，说原版协议，原版客户端 `loginp.exe` 能直接连。
 - `客户端/` — 逆向出来的客户端协议库 `jyclient.py` + WebSocket 网关 `gateway.py` + 浏览器页面 `web/`，即「网页版客户端」。它是服务端的主要测试对象。
 
-没有 git 仓库，没有版本管理（`服务端/.gitignore` 只忽略 `captures/`、`__pycache__`）。改之前自己留意备份；发布靠打 zip（见下）。
+本项目已使用 Git 多终端协作。先读根目录 `AGENTS.md` 和 `README.md`：以远端最新 main 为共同基线，一任务一分支，通过 PR 审阅合入，不覆盖其他终端提交。部署包与本机数据仍按 `.gitignore` 排除。
+
+`原型/V0.4/` 是独立《青石渡风波》章节，使用 `qingshi-chapter-v04` 存档键；它与单文件《渡口失药》和根目录 V0.4 设计草稿分别维护。V0.4 统一测试入口为 `npm test`（规则/采样/HTTP）与 `npm run test:all`（再加浏览器回归），试玩用 `npm run serve`。这些通过不代表网金复刻全套回归或真人实机验收。
 
 ## 常用命令
 

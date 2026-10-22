@@ -1,0 +1,178 @@
+{
+  "checkedAt": "2026-10-22 08:56:48 UTC",
+  "scope": "浏览器调试路径与 Chromium 手机模拟；不是外部自然试玩",
+  "nodeTests": {
+    "passed": 10,
+    "failed": 0
+  },
+  "originalHashes": "4/4 unchanged",
+  "browser": {
+    "browser-acceptance.js": [
+      {
+        "scenario": "A-public",
+        "ending": "public",
+        "peace": false,
+        "coin": 70,
+        "clues": 3,
+        "branch": "A",
+        "duplicate": true,
+        "reload": true
+      },
+      {
+        "scenario": "A-public-docs",
+        "ending": "public",
+        "peace": false,
+        "coin": 70,
+        "clues": 2,
+        "branch": "A",
+        "duplicate": true,
+        "reload": true
+      },
+      {
+        "scenario": "B-peace",
+        "ending": "mediate",
+        "peace": true,
+        "coin": 65,
+        "clues": 3,
+        "branch": "B",
+        "duplicate": false,
+        "reload": true
+      },
+      {
+        "scenario": "B-mediate-fight",
+        "ending": "mediate",
+        "peace": false,
+        "coin": 65,
+        "clues": 1,
+        "branch": "B",
+        "duplicate": true,
+        "reload": true
+      },
+      {
+        "scenario": "leave",
+        "ending": "leave",
+        "peace": false,
+        "coin": 65,
+        "clues": 3,
+        "branch": "B",
+        "duplicate": true,
+        "reload": true
+      },
+      {
+        "scenario": "leave-no-clues",
+        "ending": "leave",
+        "peace": false,
+        "coin": 65,
+        "clues": 0,
+        "branch": "B",
+        "duplicate": true,
+        "reload": true
+      }
+    ],
+    "browser-safety.js": {
+      "results": [
+        {
+          "name": "存档失败时包扎不半完成",
+          "pass": true
+        },
+        {
+          "name": "存档失败时不显示交换条件已接受",
+          "pass": true
+        },
+        {
+          "name": "存档失败时不显示拿药成功和出售材料",
+          "pass": true
+        },
+        {
+          "name": "普通输入不能调用当前对话没有的动作",
+          "pass": true
+        },
+        {
+          "name": "箭被木桶阻挡，人物不掉血",
+          "pass": true
+        },
+        {
+          "name": "同伴提供真实攻击",
+          "pass": true
+        },
+        {
+          "name": "切磋结算失败保留可重试状态",
+          "pass": true
+        },
+        {
+          "name": "未找到证人时结尾不虚构证词与支援",
+          "pass": true
+        },
+        {
+          "name": "通关后仍可进入承诺的切磋",
+          "pass": true
+        },
+        {
+          "name": "截流剑基础形态能打断，破势增强控制时间",
+          "pass": true
+        },
+        {
+          "name": "横扫多目标只回一次气",
+          "pass": true
+        },
+        {
+          "name": "突进不能穿过房屋",
+          "pass": true
+        },
+        {
+          "name": "对话开启清除未释放移动输入",
+          "pass": true
+        }
+      ],
+      "errors": [],
+      "pass": true
+    },
+    "browser-recovery.js": {
+      "failedStartRolledBack": true,
+      "checkpointReload": true,
+      "defeatedFoeStayedDefeated": true,
+      "finalFoes": 2,
+      "defeats": 1,
+      "hp": 100,
+      "errors": []
+    },
+    "browser-controls.js": {
+      "simultaneousTouchMoveAttack": true,
+      "stopsOnRelease": true,
+      "nativeAtlasScroll": true,
+      "touchEquip": true,
+      "viewport": [
+        844,
+        390
+      ],
+      "layout": [
+        {
+          "id": "bSk",
+          "visible": true,
+          "minTouch": 63.17999267578125
+        },
+        {
+          "id": "bSk2",
+          "visible": true,
+          "minTouch": 59.93998718261719
+        },
+        {
+          "id": "bDg",
+          "visible": true,
+          "minTouch": 58.32000732421875
+        },
+        {
+          "id": "bAtk",
+          "visible": true,
+          "minTouch": 77.75994873046875
+        },
+        {
+          "id": "bMap",
+          "visible": true,
+          "minTouch": 76.5
+        }
+      ],
+      "errors": []
+    }
+  }
+}

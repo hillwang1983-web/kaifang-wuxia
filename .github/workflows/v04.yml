@@ -1,0 +1,32 @@
+name: 青石渡 V0.4 回归
+on:
+  pull_request:
+    paths:
+      - '原型/V0.4/**'
+      - 'tests/**'
+      - 'portal-integration/**'
+      - 'package*.json'
+      - '.github/workflows/v04.yml'
+  push:
+    branches: [main]
+    paths:
+      - '原型/V0.4/**'
+      - 'tests/**'
+      - 'portal-integration/**'
+      - 'package*.json'
+      - '.github/workflows/v04.yml'
+permissions:
+  contents: read
+jobs:
+  v04:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:all

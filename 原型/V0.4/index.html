@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#151d21">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>青石渡风波 · V0.4</title>
+<style>
+/* 布局：像素画面铺满全屏（整数倍放大），HUD 叠在四角：左上状态与请求、右上资源、左下摇杆、右下三个战斗键；首领血条在底部正中；对话框是纸色木框，从底部升起 */
+:root {
+  --ground: #0E0B09;
+  --ink: #EFE6D2;
+  --muted: #B9AD98;
+  --gold: #D8B66A;
+  --cin: #E0603F;
+  --jade: #5FB3A1;
+  --paper-ink: #2A2018;
+  --paper-mute: #6A5A48;
+  --serif: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+  --sans: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --pix: 'Silkscreen', 'Noto Sans SC', monospace;
+  --sl: env(safe-area-inset-left, 0px);
+  --sr: env(safe-area-inset-right, 0px);
+  --sb: env(safe-area-inset-bottom, 0px);
+  color-scheme: dark;
+}
+html, body { width: 100%; height: 100%; touch-action: manipulation; overscroll-behavior: none; }
+[hidden] { display: none !important; }
+body { position: fixed; inset: 0; margin: 0; background: var(--ground); color: var(--ink); font-family: var(--sans); overflow: hidden; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+#app { position: fixed; inset: 0; width: var(--app-width, 100%); height: 100%; overflow: hidden; touch-action: none; }
+#cv { position: absolute; inset: 0; width: 100%; height: 100%; display: block; image-rendering: pixelated; }
+canvas, .ic { image-rendering: pixelated; image-rendering: crisp-edges; }
+button { font-family: var(--sans); color: var(--ink); -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+.px-dark, .px-paper, .px-gold, .px-opt, .px-optsel { border: 12px solid transparent; border-image-slice: 4 fill; border-image-width: 12px; border-image-repeat: stretch; box-sizing: border-box; image-rendering: pixelated; }
+.px-dark { border-image-source: var(--fDark); }
+.px-paper { border-image-source: var(--fPaper); color: var(--paper-ink); }
+.px-gold { border-image-source: var(--fGold); }
+.px-opt { border-image-source: var(--fOpt); color: var(--paper-ink); }
+.px-optsel { border-image-source: var(--fOptSel); color: var(--paper-ink); }
+.ic { width: 36px; height: 36px; flex: none; display: block; }
+.ic.s { width: 30px; height: 30px; }
+.pnum { font: 700 17px var(--pix); font-variant-numeric: tabular-nums; }
+
+#stickzone { position: absolute; left: 0; top: 0; bottom: 0; width: 48%; z-index: 1; touch-action: none; }
+#stick { position: absolute; width: 126px; height: 126px; margin: -63px 0 0 -63px; background: var(--iStick) center / 100% 100% no-repeat; image-rendering: pixelated; pointer-events: none; z-index: 2; }
+#knob { position: absolute; left: 36px; top: 36px; width: 54px; height: 54px; background: var(--iKnob) center / 100% 100% no-repeat; image-rendering: pixelated; }
+
+#status { position: absolute; z-index: 2; left: calc(10px + var(--sl)); top: 8px; width: 272px; display: flex; gap: 8px; align-items: center; padding: 1px 4px; pointer-events: none; }
+.portrait { width: 54px; height: 54px; flex: none; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; }
+.portrait canvas { width: 48px; height: 36px; }
+.bars { flex: 1; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.brow { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--muted); }
+.brow > span { width: 28px; flex: none; }
+.brow .pnum { font-size: 14px; color: var(--ink); min-width: 32px; text-align: right; }
+.pbar { flex: 1; height: 15px; background: #1C1612; border: 3px solid #0E0B09; box-sizing: border-box; position: relative; overflow: hidden; }
+.pbar > i { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: var(--c); box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.28), inset 0 -3px 0 rgba(0, 0, 0, 0.25); }
+.pbar > i::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 12px, rgba(0, 0, 0, 0.4) 12px 15px); }
+.pbar.thin { height: 9px; }
+
+#quest { position: absolute; z-index: 2; left: calc(10px + var(--sl)); top: 90px; width: 272px; display: flex; flex-direction: column; gap: 2px; padding: 0 4px; pointer-events: none; }
+.eyebrow { font-size: 12px; color: var(--gold); font-weight: 700; letter-spacing: 1px; }
+#qt { font: 700 17px/1.35 var(--serif); text-wrap: balance; }
+#qs, #qo { font-size: 13px; color: var(--muted); line-height: 1.45; }
+#qs.echo { color: var(--gold); }
+
+#res { position: absolute; z-index: 2; right: calc(10px + var(--sr)); top: 8px; display: flex; gap: 6px; align-items: center; }
+.chip { height: 54px; display: flex; align-items: center; gap: 6px; padding: 0 4px; white-space: nowrap; background: none; }
+.chip small { font-size: 12px; color: var(--muted); font-weight: 700; }
+button.chip, .sq { cursor: pointer; }
+.sq { width: 54px; height: 54px; padding: 0; display: flex; align-items: center; justify-content: center; background: none; }
+#mats { font-size: 13px; font-weight: 700; }
+#saved { position: absolute; z-index: 2; right: calc(10px + var(--sr)); top: 66px; height: 36px; padding: 0 6px; display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 700; color: var(--jade); pointer-events: none; transition: opacity 0.3s; }
+#perf { position: absolute; z-index: 7; left: 50%; top: 4px; transform: translateX(-50%); font: 700 12px var(--pix); color: var(--jade); background: rgba(14, 11, 9, 0.8); padding: 2px 8px; border: 3px solid #0E0B09; pointer-events: none; white-space: nowrap; }
+
+#toasts { position: absolute; z-index: 4; left: 50%; top: 70px; transform: translateX(-50%); display: flex; flex-direction: column; gap: 4px; align-items: center; pointer-events: none; width: clamp(240px, calc(100% - 590px), 480px); }
+.toast { padding: 0 6px; font-size: 15px; font-weight: 700; text-align: center; line-height: 1.5; }
+
+#interact { position: absolute; z-index: 3; left: 50%; bottom: calc(14px + var(--sb)); transform: translateX(-50%); height: 60px; display: flex; align-items: center; gap: 8px; padding: 0 12px; font: 700 17px var(--sans); white-space: nowrap; }
+
+#bossbar { position: absolute; z-index: 2; left: 50%; bottom: calc(10px + var(--sb)); transform: translateX(-50%); width: min(310px, 40%); display: flex; flex-direction: column; gap: 4px; padding: 0 4px 2px; pointer-events: none; }
+#bossbar .top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+#bossbar .nm { font: 700 17px var(--serif); }
+#bbTag { position: static; }
+#bossbar .pbar { flex: none; }
+
+#pad { position: absolute; z-index: 2; right: calc(16px + var(--sr)); bottom: calc(12px + var(--sb)); width: 252px; height: 216px; }
+.rb { position: absolute; border: 0; padding: 0; background: var(--btn) center / 100% 100% no-repeat; image-rendering: pixelated; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--ink); font: 700 15px var(--sans); cursor: pointer; touch-action: none; overflow: hidden; border-radius: 50%; }
+.rb .ic, .rb span { position: relative; }
+.rb .cd { position: absolute; inset: 6px; border-radius: 50%; background: conic-gradient(rgba(0, 0, 0, 0.62) var(--p, 0%), transparent 0); pointer-events: none; }
+.rb.atk { right: 0; bottom: 6px; width: 96px; height: 96px; font-size: 17px; --btn: var(--bRed); }
+.rb.sk { right: 106px; bottom: 96px; width: 78px; height: 78px; --btn: var(--bJade); }
+.rb.dg { right: 114px; bottom: 0; width: 72px; height: 72px; --btn: var(--bGray); }
+.rb.hot { --btn: var(--bHot); }
+.rb.low { opacity: 0.55; }
+.rb.press { transform: translateY(3px); }
+.combo { position: absolute; right: 2px; bottom: 104px; font: 700 15px var(--pix); color: var(--gold); text-shadow: 3px 0 #0E0B09, -3px 0 #0E0B09, 0 3px #0E0B09, 0 -3px #0E0B09; pointer-events: none; }
+.tag { position: absolute; padding: 0 8px; height: 24px; display: flex; align-items: center; font-size: 13px; font-weight: 700; white-space: nowrap; background: #3A2F27; border: 3px solid #0E0B09; box-shadow: inset 0 0 0 3px #8A6A3A; color: var(--ink); pointer-events: none; }
+.tag.none { background: #1C1612; box-shadow: inset 0 0 0 3px #3B2F28; color: var(--muted); font-weight: 500; }
+.tag.red { background: var(--cin); box-shadow: inset 0 0 0 3px #F08A6A; color: #14110E; }
+#orn { right: 100px; bottom: 182px; }
+
+#app.talking #pad, #app.talking #stick, #app.talking #interact, #app.talking #bossbar { display: none; }
+
+#dlg { position: absolute; z-index: 5; left: calc(10px + var(--sl)); right: calc(10px + var(--sr)); bottom: calc(8px + var(--sb)); max-height: calc(100% - 84px); display: flex; gap: 14px; padding: 4px 6px; }
+#dlgL { flex: 1; min-width: 0; display: flex; gap: 12px; }
+#dFace { width: 72px; height: 72px; flex: none; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; }
+#dFace canvas { width: 64px; height: 48px; }
+#dBody { display: flex; flex-direction: column; gap: 6px; min-width: 0; overflow-y: auto; }
+#dWho { font: 700 19px var(--serif); }
+#dWho small { font: 500 13px var(--sans); color: var(--paper-mute); margin-left: 8px; }
+#dText { font: 700 18px/1.65 var(--serif); }
+#dNote { margin-top: auto; font-size: 13px; color: var(--paper-mute); font-weight: 700; line-height: 1.5; }
+#dOpts { width: min(360px, 46%); flex: none; display: flex; flex-direction: column; gap: 4px; justify-content: center; overflow-y: auto; }
+.opt { min-height: 58px; flex: none; display: flex; flex-direction: column; justify-content: center; gap: 1px; padding: 0 8px; text-align: left; background: none; font: 700 16px var(--sans); cursor: pointer; }
+.opt small { font-size: 13px; font-weight: 500; color: var(--paper-mute); }
+
+#logp { position: absolute; z-index: 6; right: calc(10px + var(--sr)); top: 66px; width: min(460px, calc(100% - 24px)); max-height: calc(100% - 80px); overflow-y: auto; padding: 4px 8px 6px; }
+.lh { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
+.lh b { font: 700 18px var(--serif); }
+#logx { width: 48px; height: 48px; }
+#logl { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 6px; font-size: 14px; line-height: 1.55; font-weight: 500; }
+#logl li::marker { color: #9A6A3A; }
+.empty { font-size: 14px; color: var(--paper-mute); }
+.sec { margin-top: 12px; padding-top: 10px; border-top: 3px solid #B49C74; display: flex; flex-direction: column; gap: 8px; }
+.sec b { font: 700 16px var(--serif); }
+#rec { margin: 0; white-space: pre-wrap; font: 500 13px/1.6 var(--sans); color: var(--paper-ink); }
+.mini { height: 48px; padding: 0 10px; background: none; font: 700 14px var(--sans); cursor: pointer; }
+#recTa { width: 100%; height: 120px; font: 500 12px var(--sans); }
+
+.ov { position: absolute; inset: 0; z-index: 10; display: flex; align-items: center; justify-content: center; background: rgba(10, 8, 6, 0.86); padding-block: 12px; padding-left: max(16px, var(--sl)); padding-right: max(16px, var(--sr)); box-sizing: border-box; overflow-y: auto; }
+.card { width: min(640px, 100%); display: flex; flex-direction: column; gap: 10px; padding: 8px 14px 12px; margin: auto; }
+.card h1 { margin: 0; font: 700 38px/1.2 var(--serif); letter-spacing: 4px; }
+.card h2 { margin: 0; font: 700 26px/1.3 var(--serif); }
+.card p { margin: 0; font-size: 15px; line-height: 1.7; max-width: 36em; font-weight: 500; }
+.card .sub { color: var(--gold); font: 700 12px var(--pix); letter-spacing: 2px; text-transform: uppercase; }
+.px-paper .sub { color: #9A6A3A; }
+.cast { width: 100%; max-width: 440px; height: auto; aspect-ratio: 156 / 24; }
+.keys { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; font-size: 14px; line-height: 1.55; color: var(--muted); margin: 0; }
+.keys dt { color: var(--ink); font-weight: 700; }
+.keys dd { margin: 0; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.big { height: 58px; padding: 0 22px; font: 700 18px var(--sans); cursor: pointer; background: none; }
+.ghost { height: 58px; padding: 0 20px; font: 700 16px var(--sans); cursor: pointer; background: none; }
+.hint { font-size: 13px; color: var(--muted); }
+.echo-l { color: #8A4A2A !important; font-family: var(--serif) !important; font-weight: 700 !important; }
+.sum { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; font-size: 15px; margin: 0; }
+.sum dt { color: var(--paper-mute); font-weight: 500; }
+.sum dd { margin: 0; font-weight: 700; }
+#rotate { display: none; flex-direction: column; gap: 10px; text-align: center; font: 700 22px var(--serif); }
+#rotate small { font: 500 15px var(--sans); color: var(--muted); }
+@media (orientation: portrait) and (pointer: coarse) { #rotate { display: flex; } }
+@media (prefers-reduced-motion: reduce) { .rb.press { transform: none; } }
+
+/* V0.4：沿用木框与像素美术，新增手记与章节导航。 */
+:root { --ground:#111b20; --serif:'Songti SC','SimSun',serif; --sans:'PingFang SC','Microsoft YaHei',sans-serif; --pix:'Courier New','PingFang SC',monospace; }
+#app { height:var(--app-height,100dvh); }
+#quest { width:254px; }
+#status { width:254px; }
+#qt { font-size:16px; }
+#qs,#qo { font-size:12px; }
+#region { position:absolute; top:10px; left:50%; transform:translateX(-50%); z-index:2; text-align:center; padding:0 12px; pointer-events:none; }
+#regionName { display:block; font:700 21px var(--serif); letter-spacing:4px; }
+#regionHint { font-size:11px; color:var(--muted); }
+#bMap { position:absolute; top:110px; right:12px; z-index:3; background:none; padding:1px 4px; cursor:pointer; }
+#bMap canvas { display:block; width:140px; height:50px; }
+#bMap span { font-size:11px; color:var(--muted); }
+kbd { font:inherit; color:var(--gold); }
+#pad { width:264px; height:220px; }
+.rb.sk { right:105px; bottom:91px; width:78px; height:78px; font-size:13px; }
+.rb.sk2 { right:8px; bottom:119px; width:74px; height:74px; --btn:var(--bJade); }
+#orn { bottom:185px; right:103px; font-size:12px; }
+#saveError { position:absolute; z-index:30; top:64px; left:50%; transform:translateX(-50%); background:#7c302a; border:2px solid #f0ad83; padding:8px 14px; max-width:70%; font-size:13px; }
+.atlas-card { width:min(900px,100%); max-height:calc(var(--app-height,100dvh) - 24px); overflow:auto; padding:10px 16px; box-sizing:border-box; }
+.atlas-card h2 { margin:2px 0 0; font:700 24px var(--serif); }
+.atlas-tabs { display:flex; gap:8px; margin-bottom:12px; }
+.atlas-tabs button { flex:1; }
+#atlasBody { min-height:180px; }
+.mapfull { display:block; width:100%; height:auto; max-height:230px; border:3px solid #786a52; object-fit:contain; background:#233934; }
+.maplegend { display:flex; flex-wrap:wrap; gap:6px 16px; font-size:12px; margin:9px 0; color:var(--paper-mute); }
+.atlas-note { font-size:14px; line-height:1.7; margin:8px 0; }
+.skill-row { display:grid; grid-template-columns:140px 1fr auto; gap:12px; align-items:center; border-bottom:2px solid #baa783; padding:12px 0; }
+.skill-row h3 { margin:0 0 6px; font:700 20px var(--serif); }
+.skill-row p { margin:0; font-size:13px; line-height:1.6; }
+.skill-row small { color:var(--paper-mute); }
+.skill-actions { display:flex; gap:4px; }
+.skill-actions button { font-size:12px; padding:0 8px; }
+.clue-row { border-bottom:2px solid #baa783; padding:8px 0; font-size:14px; line-height:1.7; }
+.clue-row h3 { margin:0; font:700 18px var(--serif); }
+#dlg { max-height:calc(100% - 76px); }
+#dOpts { width:min(360px,45%); }
+#dText { font-size:17px; line-height:1.65; }
+#start .card { max-height:calc(var(--app-height,100dvh) - 30px); overflow:auto; }
+#start h1 { font-size:44px; letter-spacing:7px; }
+#start .sub { color:#8fc1b1; letter-spacing:2px; }
+#start p { color:#d2d7c5; }
+@media (max-height:500px) {
+  #status { width:218px; top:3px; transform:scale(.86); transform-origin:top left; }
+  #quest { top:70px; width:206px; border-width:8px; border-image-width:8px; }
+  #qs,#qo { font-size:11px; }
+  #res { top:3px; transform:scale(.85); transform-origin:top right; }
+  #region { top:4px; padding:0 5px; }
+  #regionName { font-size:17px; }
+  #regionHint { display:none; }
+  #bMap { top:57px; right:calc(9px + var(--sr)); border-width:8px; border-image-width:8px; }
+  #bMap canvas { width:112px; height:40px; }
+  #pad { transform:scale(.81); transform-origin:bottom right; right:calc(4px + var(--sr)); bottom:calc(4px + var(--sb)); }
+  #stick { transform:scale(.78); }
+  #interact { height:48px; bottom:calc(6px + var(--sb)); font-size:14px; }
+  #bossbar { width:230px; bottom:7px; }
+  #start .card { gap:5px; padding:4px 14px; width:min(700px,100%); }
+  #start h1 { font-size:31px; }
+  #start .cast { display:none; }
+  #start p { font-size:13px; }
+  #start .keys { font-size:12px; }
+  #start .big,#start .ghost { height:46px; font-size:15px; }
+  #dFace { display:none; }
+  #dText { font-size:14px; line-height:1.6; }
+  #dWho { font-size:17px; }
+  #dNote { font-size:11px; }
+  .opt { min-height:48px; font-size:13px; }
+  .opt small { font-size:11px; }
+  #dlg { gap:8px; padding:0 4px; }
+  .atlas-card { padding:2px 10px; }
+  .atlas-card h2 { font-size:20px; }
+  .atlas-tabs { margin-bottom:4px; }
+  .atlas-tabs .mini,.atlas-card .lh .mini { height:40px; font-size:13px; }
+  .skill-row { grid-template-columns:110px 1fr auto; gap:8px; padding:6px 0; }
+  .skill-row h3 { font-size:16px; }
+  .skill-row p { font-size:12px; }
+  .skill-actions { flex-direction:column; }
+  .skill-actions .mini { height:37px; }
+  .mapfull { max-height:160px; }
+  #toasts { top:42px; width:min(330px,50%); }
+  .toast { font-size:12px; }
+}
+
+
+/* 交谈入口保持可见；人物本身也有可点击区域。 */
+#nearTalk { position:absolute; z-index:3; transform:translate(-50%,-100%); background:none; border:0; cursor:pointer; padding:0; display:flex; align-items:flex-start; justify-content:center; touch-action:none; color:#201a12; }
+#nearTalk span { background:#E6CB8A; border:2px solid #35271b; box-shadow:0 2px #090b09; padding:4px 8px; white-space:nowrap; font:700 12px var(--sans); }
+#app.talking #nearTalk { display:none; }
+#combatHint { position:absolute; left:50%; bottom:88px; transform:translateX(-50%); z-index:2; padding:0 8px; max-width:38%; font-size:12px; text-align:center; pointer-events:none; }
+.rb.sk small { font-size:10px; color:#f2dfb1; line-height:1.1; }
+#testForm { display:flex; flex-direction:column; gap:8px; font-size:13px; line-height:1.6; }
+#testForm summary { cursor:pointer; font-weight:700; margin:8px 0; }
+#testForm label { display:flex; flex-direction:column; margin:7px 0; }
+#testForm input,#testForm select,#testForm textarea,#promptNote { box-sizing:border-box; width:100%; min-height:38px; color:#2A2018; background:#f4ead1; border:1px solid #9e8b65; padding:6px; font:13px var(--sans); user-select:text; }
+#rec { max-height:260px; overflow-y:auto; }
+@media(max-height:500px){#combatHint{bottom:80px;font-size:10px;max-width:38%;border-width:7px;border-image-width:7px;}#nearTalk span{font-size:11px;padding:3px 5px;}#rec{max-height:140px;} .rb.sk .ic{width:23px;height:23px;} }
+
+</style>
+
+<div id="app">
+  <canvas id="cv" aria-label="游戏画面：青石渡、山道与匪营"></canvas>
+  <div id="stickzone" aria-hidden="true"></div>
+  <div id="stick" aria-hidden="true"><div id="knob"></div></div>
+
+  <div id="status" class="px-dark">
+    <div class="portrait px-dark"><canvas id="myFace" width="16" height="12"></canvas></div>
+    <div class="bars">
+      <div class="brow"><span>生命</span><div class="pbar" style="--c:#D9553A"><i id="hpf"></i></div><b class="pnum" id="hpn">100</b></div>
+      <div class="brow"><span>内力</span><div class="pbar" style="--c:#4FA898"><i id="mpf"></i></div><b class="pnum" id="mpn">100</b></div>
+    </div>
+  </div>
+
+  <div id="quest" class="px-dark">
+    <div class="eyebrow">第一幕 · 渡口失药</div>
+    <div id="qt"></div>
+    <div id="qs"></div>
+    <div id="qo"></div>
+  </div>
+
+  <div id="res">
+    <div class="chip px-dark"><img class="ic" data-ic="coin" alt=""><b class="pnum" id="coin">30</b><small>铜钱</small></div>
+    <button class="chip px-dark" id="bBand" type="button" aria-label="用一条绷带包扎（H）"><img class="ic" data-ic="bandage" alt=""><b class="pnum" id="band">2</b><small>绷带</small></button>
+    <div class="chip px-dark" id="mats" hidden><img class="ic s" data-ic="pack" alt=""><span id="matsT"></span></div>
+    <button class="sq px-dark" id="bLog" type="button" aria-label="江湖日志与试玩记录"><img class="ic s" data-ic="book" alt=""></button>
+  </div>
+  <div id="saved" class="px-dark" hidden><img class="ic s" data-ic="save" alt="" style="width:18px;height:18px">已存档</div>
+  <div id="perf" hidden></div>
+  <div id="region" class="px-dark"><span id="regionName">青石渡</span><small id="regionHint">山雨欲来</small></div>
+  <button id="bMap" class="px-dark" aria-label="打开江湖图与武学（M）"><canvas id="minimap" width="140" height="50" aria-hidden="true"></canvas><span>江湖图 / 武学 <kbd>M</kbd></span></button>
+  <div id="saveError" role="alert" hidden></div>
+
+  <div id="toasts" aria-live="polite"></div>
+  <button id="nearTalk" type="button" hidden><span></span></button>
+  <div id="combatHint" class="px-dark" hidden></div>
+
+  <button id="interact" class="px-gold" type="button" hidden><img class="ic s" data-ic="talk" alt=""><span id="interactT"></span></button>
+
+  <div id="bossbar" class="px-dark" hidden>
+    <div class="top"><span class="nm" id="bbName">匪首</span><span class="tag red" id="bbTag" hidden>蓄力 · 可打断</span></div>
+    <div class="pbar" style="--c:#B9AE98"><i id="bbHp"></i></div>
+    <div class="pbar thin" style="--c:#E0603F"><i id="bbT"></i></div>
+  </div>
+
+  <div id="pad">
+    <span id="orn" class="tag none">无剑饰</span>
+    <span class="combo" id="combo"></span>
+    <button class="rb sk" id="bSk" type="button" aria-label="追风刺（K）"><i class="cd"></i><img class="ic s" data-ic="skill" alt=""><span id="skName0">追风刺</span><small id="skCost0"></small></button>
+    <button class="rb sk sk2" id="bSk2" type="button" aria-label="截流剑（I）"><i class="cd"></i><img class="ic s" data-ic="skill" alt=""><span id="skName1">截流剑</span><small id="skCost1"></small></button>
+    <button class="rb dg" id="bDg" type="button" aria-label="闪避（空格）"><i class="cd"></i><img class="ic s" data-ic="dodge" alt=""><span>闪避</span></button>
+    <button class="rb atk" id="bAtk" type="button" aria-label="普攻（J）"><i class="cd"></i><img class="ic" data-ic="atk" alt=""><span>普攻</span></button>
+  </div>
+
+  <div id="dlg" class="px-paper" hidden>
+    <div id="dlgL">
+      <div id="dFace" class="px-opt"><canvas id="dFaceC" width="16" height="12"></canvas></div>
+      <div id="dBody">
+        <div id="dWho"></div>
+        <div id="dText"></div>
+        <div id="dNote"></div>
+      </div>
+    </div>
+    <div id="dOpts"></div>
+  </div>
+
+  <div id="logp" class="px-paper" hidden>
+    <div class="lh"><b>江湖日志</b><button class="sq px-opt" id="logx" type="button" aria-label="关闭"><img class="ic s" data-ic="close" alt=""></button></div>
+    <ol id="logl"></ol>
+    <div class="empty" id="logEmpty">还没有记下什么。</div>
+    <div class="sec">
+      <b>试玩记录</b>
+      <pre id="rec"></pre>
+      <details id="testForm"><summary>补充这次试玩记录（可选）</summary>
+        <label>操作者<select data-profile="operator"><option>未声明</option><option>真人试玩</option><option>自动化输入检查</option></select></label>
+        <label>来源<select data-profile="source"><option>未填写</option><option>朋友或同事</option><option>游戏群</option><option>社区</option><option>陌生招募</option></select></label>
+        <label>游戏经验<select data-profile="experience"><option>未填写</option><option>很少玩游戏</option><option>动作游戏玩家</option><option>武侠游戏玩家</option><option>网金老玩家</option></select></label>
+        <label>设备 / 系统 / 浏览器<input data-profile="device" placeholder="例如：手机型号、系统、浏览器版本"></label>
+        <label>电量与低电量模式<input data-profile="power" placeholder="记录是否充电、低电量模式，无法确认则写未知"></label>
+        <label>卡在哪里<textarea data-profile="difficulty" rows="2"></textarea></label>
+        <label>刚才发生了什么，你为什么这样做<textarea data-profile="observation" rows="2"></textarea></label>
+        <label>还想试什么<textarea data-profile="nextTry" rows="2"></textarea></label>
+        <label>本次提示等级<select id="promptLevel"><option value="1">一级：提醒操作或方向</option><option value="2">二级：解释目标</option><option value="3">三级：告知解法或代操作</option></select></label>
+        <input id="promptNote" aria-label="提示内容" placeholder="记录说了什么；系统内引导不算人工提示">
+        <button id="bPrompt" class="mini px-opt" type="button">记下这次人工提示</button>
+        <div id="promptCount"></div>
+      </details>
+      <div class="row">
+        <button class="mini px-opt" id="bCopy" type="button">复制这份记录</button>
+        <button class="mini px-opt" id="bExport" type="button">导出完整 JSON</button>
+        <button class="mini px-opt" id="bPerf" type="button">显示帧率</button>
+      </div>
+      <textarea id="recTa" readonly hidden aria-label="试玩记录（可全选复制）"></textarea>
+    </div>
+  </div>
+
+  <div id="atlas" class="ov" hidden>
+    <div class="atlas-card px-paper">
+      <div class="lh"><div><div class="sub">青石渡手记</div><h2>江湖图与武学</h2></div><button id="atlasClose" class="mini px-opt" aria-label="收起江湖图">收起 ×</button></div>
+      <div class="atlas-tabs" role="tablist" aria-label="手记分类"><button id="tabMap" class="mini px-optsel" role="tab" aria-selected="true">江湖图</button><button id="tabSkills" class="mini px-opt" role="tab" aria-selected="false">剑法与剑饰</button><button id="tabClues" class="mini px-opt" role="tab" aria-selected="false">线索与人物</button></div>
+      <div id="atlasBody"></div>
+    </div>
+  </div>
+  <div id="start" class="ov">
+    <div class="card px-dark">
+      <div class="sub">原创武侠 · 第一章 · V0.4</div>
+      <h1>青石渡风波</h1>
+      <canvas class="cast" id="cast" width="156" height="24" aria-label="少侠、沈青、许舟、陆平、周砚、匪徒、匪首的像素形象"></canvas>
+      <p>你不记得如何来到这个江湖。醒来时，青石渡正在等一船救命药。山上有人扣货，山下有人闭口不言。先救人，再决定要不要追问那本账。</p>
+      <dl class="keys">
+        <dt>手机</dt><dd>横屏。左半边按住拖动来走，右下角出招；走近人物会出现「交谈」。</dd>
+        <dt>键盘</dt><dd>WASD 或方向键走 · J 普攻（连按三段） · K / I 双剑招 · 空格 闪避 · E 交谈 · H 包扎 · M 地图与换招 · 对话里按数字键选</dd>
+      </dl>
+      <div class="row">
+        <button class="big px-gold" id="bStart" type="button">踏入青石渡</button>
+        <button class="ghost px-dark" id="bNew" type="button" hidden>重新开始</button>
+        <button class="ghost px-dark" id="bFull" type="button" aria-describedby="fullHint">全屏</button>
+      </div>
+      <p class="hint" id="fullHint" role="status" hidden></p>
+      <div class="hint" id="saveHint"></div>
+    </div>
+  </div>
+
+  <div id="done" class="ov" hidden>
+    <div class="card px-paper">
+      <div class="sub">青石渡 · 第一章终</div>
+      <h2 id="endingTitle">风波之后</h2>
+      <p class="echo-l" id="echo"></p>
+      <dl class="sum" id="sum"></dl>
+      <p style="font-size:13px;color:var(--paper-mute)">这一局的取药方式、证据与抉择都已保存。可继续探索、换招切磋；用新存档体验另一种选择。</p>
+      <div class="row"><button class="big px-optsel" id="bMore" type="button">继续逛逛</button><button class="ghost px-opt" id="bAgain" type="button">重新开始</button></div>
+    </div>
+  </div>
+
+  <div id="rotate" class="ov">请把手机横过来<small>这个试玩按横屏设计</small></div>
+</div>
+
+<script src="chapter.js"></script>
+<script src="playtest.js"></script>
+<script src="game.js?v=20261022-mobile2"></script>
+</html>
