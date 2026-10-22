@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>网金图集查看器</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{--bg:#1d1f24;--panel:#262a31;--line:#3a404a;--fg:#e6e8eb;--dim:#8e96a3;--acc:#4da3ff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:13px/1.4 "Microsoft YaHei",system-ui,sans-serif}
+header{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:8px 12px;background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+button,select,input{background:#2f343d;color:var(--fg);border:1px solid var(--line);border-radius:4px;padding:3px 8px;font:inherit}
+button{cursor:pointer}button:hover{border-color:var(--acc)}button.on{background:var(--acc);color:#000}
+input[type=range]{padding:0}
+.tabs button{border-radius:4px 4px 0 0}
+#info{color:var(--dim);margin-left:auto}
+main{padding:12px}
+.hide{display:none!important}
+#drop{border:2px dashed var(--line);padding:30px;text-align:center;color:var(--dim);border-radius:8px}
+#drop.over{border-color:var(--acc);color:var(--fg)}
+/* grid */
+#grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.cell{width:132px;background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:4px;cursor:pointer}
+.cell:hover{border-color:var(--acc)}
+.cell .thumb{height:96px;display:flex;align-items:center;justify-content:center;
+  background:repeating-conic-gradient(#3a3f48 0 25%,#2c3038 0 50%) 0 0/12px 12px;overflow:hidden}
+.cell .thumb i{display:block;image-rendering:pixelated;background-repeat:no-repeat}
+.cell .nm{font-size:11px;word-break:break-all;margin-top:3px;max-height:2.8em;overflow:hidden}
+.cell .sz{font-size:11px;color:var(--dim)}
+/* compose */
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0}
+#stage{display:flex;flex-wrap:wrap;gap:10px}
+.cv{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:4px;text-align:center}
+.cv canvas{display:block;image-rendering:pixelated;
+  background:repeating-conic-gradient(#3a3f48 0 25%,#2c3038 0 50%) 0 0/16px 16px}
+#layers{margin:6px 0;display:flex;flex-direction:column;gap:2px;max-width:640px}
+.ly{display:flex;gap:6px;align-items:center;background:var(--panel);padding:2px 6px;border-radius:3px}
+.ly .n{flex:1}
+.ly select{padding:0 2px}
+.dim{color:var(--dim)}
+#sheetView canvas{image-rendering:pixelated;background:repeating-conic-gradient(#3a3f48 0 25%,#2c3038 0 50%) 0 0/16px 16px;border:1px solid var(--line)}
+#log{white-space:pre-wrap;color:var(--dim);font-size:12px;margin-top:8px}
+</style>
+</head>
+<body>
+<header>
+  <b>网金图集查看器</b>
+  <select id="dirSel" title="来自 ../out/ 的目录列表（需 http 服务）"><option value="">（../out/ 目录）</option></select>
+  <button id="btnLoad">加载</button>
+  <button id="btnPick">选择目录…</button>
+  <input type="file" id="picker" webkitdirectory multiple class="hide">
+  <span class="tabs">
+    <button data-tab="grid" class="on">缩略网格</button>
+    <button data-tab="compose">Role 叠加</button>
+    <button data-tab="sheet">精灵表(rle6)</button>
+  </span>
+  <span id="info"></span>
+</header>
+<main>
+  <div id="drop">把含 atlas.json + atlas_*.png 的输出目录拖到这里，或点“选择目录…”；通过 <code>python -m http.server</code> 打开本页时可直接用上方下拉框。</div>
+
+  <section id="tab-grid" class="hide">
+    <div class="row">
+      <input id="gFilter" placeholder="按名称过滤（子串，不分大小写）" size="28">
+      <select id="gKind"><option value="">全部类型</option></select>
+      <label>换色套 <select id="gVar"></select></label>
+      <label>缩放 <select id="gScale"><option>1</option><option>2</option><option>4</option></select></label>
+      <button id="gPrev">◀</button><span id="gPage"></span><button id="gNext">▶</button>
+    </div>
+    <div id="grid"></div>
+  </section>
+
+  <section id="tab-compose" class="hide">
+    <div class="row">
+      <label>角色记录组 <select id="cGroup"></select></label>
+      <label>缩放 <select id="cScale"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></label>
+      <label><input type="checkbox" id="cAnchor" checked> 锚点十字</label>
+      <label><input type="checkbox" id="cBox"> 每层包围框</label>
+      <label>全部层换色 <select id="cVarAll"></select></label>
+      <button id="cReset">重置层序</button>
+    </div>
+    <div class="row">
+      <button id="cPlay">▶ 播放</button>
+      <label>帧 <input type="range" id="cFrame" min="0" max="63" value="0" style="width:260px"> <b id="cFrameN">0</b></label>
+      <label>每组帧数 <input type="number" id="cGsz" value="8" min="1" max="256" style="width:55px"></label>
+      <label>组号 <input type="number" id="cGrp" value="0" min="0" style="width:55px"></label>
+      <label>只在组内循环 <input type="checkbox" id="cLoopGrp" checked></label>
+      <label>fps <input type="number" id="cFps" value="8" min="1" max="60" style="width:50px"></label>
+    </div>
+    <div class="dim">层序：从上到下 = 从后到前（先画在下面）。默认猜测：阴影 → 身体 M?0000 → 头发 M?M* → 衣服 M?P* → 武器 M?W*（同类多个只默认开第一个）。</div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start">
+      <div id="layers" style="min-width:300px"></div>
+      <div id="stage"></div>
+    </div>
+    <div class="row">
+      <button id="cSheetBtn">帧总览</button>
+      <select id="cSheetTag"></select>
+      <span class="dim">按“每组帧数”为列数，把当前层设置下该 CPn 的全部帧排成一张总览图（看 8 向×8 帧是否成立）</span>
+    </div>
+    <canvas id="cSheet" style="image-rendering:pixelated;max-width:100%;background:#2c3038"></canvas>
+  </section>
+
+  <section id="tab-sheet" class="hide">
+    <div class="row">
+      <select id="sImg" style="max-width:360px"></select>
+      <label>列 <input type="number" id="sCols" value="8" min="1" style="width:55px"></label>
+      <label>行 <input type="number" id="sRows" value="8" min="1" style="width:55px"></label>
+      <button id="sByCw" title="cols=floor(w/cw), rows=floor(h/ch)">按 cw,ch 切分</button>
+      <label>缩放 <select id="sScale"><option>1</option><option>2</option><option selected>3</option><option>4</option></select></label>
+      <button id="sPlay">▶ 播放</button>
+      <label>单元 <input type="range" id="sCell" min="0" max="63" value="0" style="width:200px"> <b id="sCellN">0</b></label>
+      <label>fps <input type="number" id="sFps" value="8" min="1" max="60" style="width:50px"></label>
+    </div>
+    <div class="dim" id="sMeta"></div>
+    <div id="sheetView" class="row" style="align-items:flex-start">
+      <div><div class="dim">整图（红线=单元格）</div><canvas id="sWhole"></canvas></div>
+      <div><div class="dim">当前单元</div><canvas id="sOne"></canvas></div>
+    </div>
+  </section>
+  <div id="log"></div>
+</main>
+
+<script>
+"use strict";
+const $=s=>document.querySelector(s);
+const log=(...a)=>{ $('#log').textContent+=a.join(' ')+'\n'; };
+
+// ------------------------------------------------------------------ 数据源
+// src = { json, label, url(file) -> Promise<string URL> }
+let SRC=null, ATLAS=null;
+const pageImgs=new Map();          // page file -> Promise<HTMLImageElement>
+const varMaps={};                  // variant -> Map("name|frame" -> item)
+let objUrls=[];
+
+function resetData(){
+  objUrls.forEach(u=>URL.revokeObjectURL(u)); objUrls=[];
+  pageImgs.clear(); for(const k in varMaps) delete varMaps[k];
+}
+async function loadFromHttp(dir){
+  resetData();
+  const base=dir.replace(/\/?$/,'/');
+  const r=await fetch(base+'atlas.json'); if(!r.ok) throw new Error(base+'atlas.json: HTTP '+r.status);
+  SRC={label:dir,urlOf:f=>base+f}; ATLAS=await r.json(); afterLoad();
+}
+async function loadFromFiles(files){
+  resetData();
+  const map={}; let jsonFile=null;
+  for(const f of files){
+    const rel=(f.webkitRelativePath||f.name).split('/').slice(1).join('/')||f.name;
+    map[rel]=f; if(rel==='atlas.json') jsonFile=f;
+  }
+  if(!jsonFile){ // 用户可能直接选了 out/ 的上一级: 找第一个 */atlas.json
+    const k=Object.keys(map).find(k=>/(^|\/)atlas\.json$/.test(k));
+    if(!k) throw new Error('所选目录里没有 atlas.json');
+    const pre=k.slice(0,-'atlas.json'.length);
+    jsonFile=map[k]; for(const kk of Object.keys(map)) if(kk.startsWith(pre)) map[kk.slice(pre.length)]=map[kk];
+  }
+  ATLAS=JSON.parse(await jsonFile.text());
+  SRC={label:(files[0].webkitRelativePath||'').split('/')[0]||'本地目录',
+       urlOf:f=>{ const b=map[f]; if(!b) throw new Error('缺少文件 '+f); const u=URL.createObjectURL(b); objUrls.push(u); return u; }};
+  afterLoad();
+}
+function getPage(file){
+  if(!pageImgs.has(file)) pageImgs.set(file,new Promise((res,rej)=>{
+    const im=new Image(); im.onload=()=>res(im); im.onerror=()=>rej(new Error('图集加载失败 '+file));
+    try{ im.src=SRC.urlOf(file); }catch(e){ rej(e); }
+  }));
+  return pageImgs.get(file);
+}
+function pageUrl(file){ return SRC.urlOf(file); }
+const urlCache=new Map();
+function cachedUrl(file){ if(!urlCache.has(file+SRC.label)) urlCache.set(file+SRC.label,SRC.urlOf(file)); return urlCache.get(file+SRC.label); }
+
+function variantKeys(){ return ATLAS.variants?Object.keys(ATLAS.variants).sort():[]; }
+function variantMap(v){
+  if(!varMaps[v]){ const m=new Map(); for(const it of ATLAS.variants[v]||[]) m.set(it.name+'|'+(it.frame??0),it); varMaps[v]=m; }
+  return varMaps[v];
+}
+// 取某图项在指定换色套下的实际图项(无该套则回落基础)
+function resolve(it,v){
+  if(v&&v!=='0'&&ATLAS.variants&&ATLAS.variants[v]){ const r=variantMap(v).get(it.name+'|'+(it.frame??0)); if(r) return r; }
+  return it;
+}
+function itemFile(it){ return it.page||it.file; }
+
+// ------------------------------------------------------------------ 载入后
+function afterLoad(){
+  // 兼容旧版 atlas.json: 独立大图只有 file(无 page/x/y)
+  const fix=it=>{ if(it.x==null){ it.x=0; it.y=0; } if(!it.page&&it.file) it.page=it.file; };
+  (ATLAS.images||[]).forEach(fix); Object.values(ATLAS.variants||{}).forEach(a=>a.forEach(fix));
+  urlCache.clear();
+  $('#drop').classList.add('hide');
+  $('#log').textContent='';
+  const st=Object.entries(ATLAS.stats||{}).map(([k,v])=>k+':'+v).join(' ');
+  $('#info').textContent=`${SRC.label} · ${ATLAS.source} · 记录 ${ATLAS.count} · 图项 ${(ATLAS.images||[]).length} · ${st}`+(ATLAS.palFile?` · pal=${ATLAS.palFile}`:'');
+  const vs=variantKeys();
+  for(const sel of ['#gVar','#cVarAll']){
+    $(sel).innerHTML='<option value="0">0 默认</option>'+vs.map(v=>`<option value="${v}">${v}</option>`).join('');
+  }
+  const kinds=[...new Set((ATLAS.images||[]).map(i=>i.kind))];
+  $('#gKind').innerHTML='<option value="">全部类型</option>'+kinds.map(k=>`<option>${k}</option>`).join('');
+  initGrid(); initCompose(); initSheet();
+  const hasCp=(ATLAS.images||[]).some(i=>i.kind==='cp'), hasR=(ATLAS.images||[]).some(i=>i.kind==='rle6');
+  showTab(hasCp?'compose':'grid');
+  $('[data-tab=compose]').style.opacity=hasCp?1:.4; $('[data-tab=sheet]').style.opacity=hasR?1:.4;
+}
+function showTab(t){
+  document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));
+  for(const n of ['grid','compose','sheet']) $('#tab-'+n).classList.toggle('hide',n!==t);
+  if(t==='compose') drawCompose();
+  if(t==='sheet') drawSheet();
+}
+document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{ if(ATLAS) showTab(b.dataset.tab); });
+
+// ------------------------------------------------------------------ 1) 缩略网格
+const PAGE_N=200; let gPage=0, gList=[];
+function initGrid(){ gPage=0; ['#gFilter','#gKind','#gVar','#gScale'].forEach(s=>$(s).oninput=()=>{gPage=0;drawGrid();}); drawGrid(); }
+$('#gPrev').onclick=()=>{ if(gPage>0){gPage--;drawGrid();} };
+$('#gNext').onclick=()=>{ if((gPage+1)*PAGE_N<gList.length){gPage++;drawGrid();} };
+function drawGrid(){
+  const q=$('#gFilter').value.toLowerCase(), k=$('#gKind').value, v=$('#gVar').value, sc=+$('#gScale').value;
+  gList=(ATLAS.images||[]).filter(i=>(!k||i.kind===k)&&(!q||i.name.toLowerCase().includes(q)));
+  const pages=Math.max(1,Math.ceil(gList.length/PAGE_N)); if(gPage>=pages) gPage=pages-1;
+  $('#gPage').textContent=` ${gPage+1}/${pages} (${gList.length}) `;
+  const frag=document.createDocumentFragment();
+  for(const base of gList.slice(gPage*PAGE_N,(gPage+1)*PAGE_N)){
+    const it=resolve(base,v);
+    const d=document.createElement('div'); d.className='cell';
+    const fit=Math.min(sc,120/it.w,92/it.h); // 缩略: 不放大超过 sc，必要时缩小
+    const th=document.createElement('div'); th.className='thumb';
+    const i=document.createElement('i');
+    // 用 CSS 精灵图: 整张图集作背景(浏览器共享解码), 无需每格 canvas
+    const pg=itemFile(it);
+    i.style.width=it.w*fit+'px'; i.style.height=it.h*fit+'px';
+    i.style.backgroundImage=`url("${cachedUrl(pg)}")`;
+    i.style.backgroundPosition=`${-it.x*fit}px ${-it.y*fit}px`;
+    i.style.backgroundSize=''; // 需要整页尺寸才能缩放背景 -> 异步补
+    th.appendChild(i);
+    getPage(pg).then(im=>{ i.style.backgroundSize=`${im.naturalWidth*fit}px ${im.naturalHeight*fit}px`; });
+    const nm=document.createElement('div'); nm.className='nm'; nm.textContent=it.name+(it.kind==='cp'?`  #${it.frame}`:'');
+    const sz=document.createElement('div'); sz.className='sz';
+    sz.textContent=`${it.w}×${it.h} ${it.kind}`+(it.kind==='cp'?` o(${it.ox},${it.oy})`:'')+(it.kind==='rle6'?` c${it.cw}×${it.ch}`:'');
+    d.append(th,nm,sz);
+    d.onclick=()=>{ if(it.kind==='cp') { jumpCompose(it); } else if(it.kind==='rle6'){ jumpSheet(it);} };
+    frag.appendChild(d);
+  }
+  $('#grid').replaceChildren(frag);
+}
+
+// ------------------------------------------------------------------ 2) role 叠加
+// 层序猜测: 阴影 < 身体 < 头(M) < 衣(P) < 武器(W) < 其他
+function stemOf(name){ return name.replace(/^.*[\\/]/,'').replace(/\.[^.]*$/,''); }
+function cpTag(name){ const m=/\.(cp\d*)$/i.exec(name); return m?m[1].toUpperCase():''; }
+function layerRank(stem){
+  const s=stem.toUpperCase();
+  if(/^[A-Z]\d+S$/.test(s)) return 0;            // B50S 阴影
+  if(/^[A-Z]\d+0000$/.test(s)) return 1;         // M50000 身体
+  const m=/^[A-Z]\d+([A-Z])/.exec(s);
+  if(m){ return {M:2,P:3,W:4}[m[1]]??5; }
+  return 6;
+}
+let C={groups:null,cur:null,layers:[],playing:false,timer:null};
+function initCompose(){
+  // 按 CPn 后缀分组 (没有后缀的 .cp 单独成各自组 key='')
+  const g=new Map();
+  for(const it of ATLAS.images||[]){
+    if(it.kind!=='cp') continue;
+    const tag=cpTag(it.name);
+    if(!g.has(tag)) g.set(tag,new Map());
+    const st=stemOf(it.name); const sm=g.get(tag);
+    if(!sm.has(st)) sm.set(st,{name:it.name,frames:new Map()});
+    sm.get(st).frames.set(it.frame,it);
+  }
+  C.groups=g;
+  C.stemsByTag=g;
+  // 角色模式: 把所有 CPn 同时显示 (每个 tag 一个 canvas)
+  C.tags=[...g.keys()].sort();
+  // 层: 以 stem 去重, 每个 stem 一个层 (跨 tag 共享启用/换色设置)
+  const stems=new Map();
+  for(const t of C.tags) for(const st of g.get(t).keys()) stems.set(st,layerRank(st));
+  const arr=[...stems.entries()].sort((a,b)=>a[1]-b[1]||(a[0]<b[0]?-1:1));
+  const seenRank={};
+  C.layers=arr.map(([st,r])=>{ const first=!seenRank[r]; seenRank[r]=1; return {stem:st,rank:r,on:r>=5||first,v:'0'}; }); // 同类只开第一个; 非标准命名(如 npc 单记录)全开
+  $('#cGroup').innerHTML=`<option>${SRC.label}（${C.tags.map(t=>t||'无后缀').join(' ')}）</option>`;
+  const maxF=Math.max(0,...[...g.values()].flatMap(sm=>[...sm.values()].flatMap(o=>[...o.frames.keys()])));
+  $('#cFrame').max=maxF; $('#cFrame').value=0; C.frame=0;
+  $('#cSheetTag').innerHTML=C.tags.map(t=>`<option value="${t}">${t||'(无后缀)'}</option>`).join('');
+  buildLayerUI(); buildStage();
+}
+function buildLayerUI(){
+  const box=$('#layers'); box.replaceChildren();
+  const vs=variantKeys();
+  C.layers.forEach((l,i)=>{
+    const d=document.createElement('div'); d.className='ly';
+    const cb=document.createElement('input'); cb.type='checkbox'; cb.checked=l.on; cb.onchange=()=>{l.on=cb.checked;drawCompose();};
+    const n=document.createElement('span'); n.className='n';
+    n.textContent=`${i}. ${l.stem}  ${['阴影','身体','头/发','衣服','武器','其他'][Math.min(l.rank,5)]||''}`;
+    const sel=document.createElement('select');
+    sel.innerHTML='<option value="0">换色0</option>'+vs.map(v=>`<option value="${v}">换色${v}</option>`).join('');
+    sel.value=l.v; sel.onchange=()=>{l.v=sel.value;drawCompose();}; l._sel=sel;
+    const up=document.createElement('button'); up.textContent='↑'; up.onclick=()=>{ if(i>0){[C.layers[i-1],C.layers[i]]=[C.layers[i],C.layers[i-1]];buildLayerUI();drawCompose();}};
+    const dn=document.createElement('button'); dn.textContent='↓'; dn.onclick=()=>{ if(i<C.layers.length-1){[C.layers[i+1],C.layers[i]]=[C.layers[i],C.layers[i+1]];buildLayerUI();drawCompose();}};
+    d.append(cb,n,sel,up,dn); box.appendChild(d);
+  });
+}
+function buildStage(){
+  const st=$('#stage'); st.replaceChildren(); C.cvs={};
+  for(const t of C.tags){
+    const w=document.createElement('div'); w.className='cv';
+    const c=document.createElement('canvas'); c.width=C.W=240; c.height=C.H=240;
+    const lab=document.createElement('div'); lab.textContent=t||'(无后缀)';
+    w.append(lab,c); st.appendChild(w); C.cvs[t]={c,lab};
+  }
+  applyScale();
+}
+function applyScale(){ const s=+$('#cScale').value; for(const t in C.cvs){ C.cvs[t].c.style.width=C.W*s+'px'; C.cvs[t].c.style.height=C.H*s+'px'; } }
+$('#cScale').onchange=()=>{applyScale();};
+['#cAnchor','#cBox'].forEach(s=>$(s).onchange=drawCompose);
+$('#cVarAll').onchange=()=>{ C.layers.forEach(l=>{ l.v=$('#cVarAll').value; if(l._sel) l._sel.value=l.v; }); drawCompose(); };
+$('#cReset').onclick=()=>{ initCompose(); drawCompose(); };
+$('#cFrame').oninput=()=>{ C.frame=+$('#cFrame').value; drawCompose(); };
+$('#cGsz').oninput=$('#cGrp').oninput=()=>{ const g=+$('#cGsz').value||1, k=+$('#cGrp').value||0; setFrame(k*g); };
+function setFrame(f){ C.frame=f; $('#cFrame').value=f; drawCompose(); }
+$('#cPlay').onclick=()=>{
+  C.playing=!C.playing; $('#cPlay').textContent=C.playing?'⏸ 暂停':'▶ 播放'; clearInterval(C.timer);
+  if(C.playing) C.timer=setInterval(()=>{
+    const max=+$('#cFrame').max, g=+$('#cGsz').value||1;
+    let f=C.frame+1;
+    if($('#cLoopGrp').checked){ const base=Math.floor(C.frame/g)*g; f=base+((C.frame-base+1)%g); }
+    if(f>max) f=0; setFrame(f);
+  },1000/(+$('#cFps').value||8));
+};
+$('#cFps').onchange=()=>{ if(C.playing){ $('#cPlay').click(); $('#cPlay').click(); } };
+$('#cSheetBtn').onclick=async()=>{
+  const t=$('#cSheetTag').value, cols=+$('#cGsz').value||8, max=+$('#cFrame').max, n=max+1;
+  // 单元大小: 所有开启层、所有帧的包围框并集 (以锚点为原点)
+  let x0=0,y0=0,x1=0,y1=0, first=true; const per=[];
+  for(let f=0;f<n;f++){
+    const jobs=[];
+    for(const l of C.layers){ if(!l.on) continue; const rec=C.groups.get(t).get(l.stem); const b=rec&&rec.frames.get(f); if(!b) continue;
+      const it=resolve(b,l.v); jobs.push({it,p:getPage(itemFile(it))});
+      if(first){x0=it.ox;y0=it.oy;x1=it.ox+it.w;y1=it.oy+it.h;first=false;} else {x0=Math.min(x0,it.ox);y0=Math.min(y0,it.oy);x1=Math.max(x1,it.ox+it.w);y1=Math.max(y1,it.oy+it.h);} }
+    per.push(jobs);
+  }
+  const cw=x1-x0+2, ch=y1-y0+2, rows=Math.ceil(n/cols), cv=$('#cSheet');
+  cv.width=cw*cols; cv.height=ch*rows; const x=cv.getContext('2d'); x.imageSmoothingEnabled=false;
+  x.fillStyle='#2c3038'; x.fillRect(0,0,cv.width,cv.height);
+  for(let f=0;f<n;f++){
+    const ox=(f%cols)*cw, oy=Math.floor(f/cols)*ch; const pages=await Promise.all(per[f].map(j=>j.p));
+    x.strokeStyle='#3d434d'; x.strokeRect(ox+.5,oy+.5,cw-1,ch-1);
+    per[f].forEach((j,i)=>x.drawImage(pages[i],j.it.x,j.it.y,j.it.w,j.it.h,ox+1-x0+j.it.ox,oy+1-y0+j.it.oy,j.it.w,j.it.h));
+    x.fillStyle='#ff0'; x.font='10px sans-serif'; x.fillText(f,ox+2,oy+10);
+  }
+};
+function jumpCompose(it){ showTab('compose'); setFrame(it.frame||0); }
+
+async function drawCompose(){
+  if(!ATLAS||!C.layers||$('#tab-compose').classList.contains('hide')) return;
+  const f=C.frame, ax=C.W/2, ay=C.H-70, token=(C.token=(C.token||0)+1);
+  const anchor=$('#cAnchor').checked, box=$('#cBox').checked;
+  $('#cFrameN').textContent=f+(+$('#cGsz').value?` (组${Math.floor(f/(+$('#cGsz').value))}·${f%(+$('#cGsz').value)})`:'');
+  for(const t of C.tags){
+    const {c,lab}=C.cvs[t]; const x=c.getContext('2d'); x.imageSmoothingEnabled=false;
+    x.clearRect(0,0,C.W,C.H);
+    const jobs=[];
+    for(const l of C.layers){
+      if(!l.on) continue;
+      const rec=C.groups.get(t).get(l.stem); if(!rec) continue;
+      const base=rec.frames.get(f); if(!base) continue;
+      const it=resolve(base,l.v);
+      jobs.push({l,it,p:getPage(itemFile(it))});
+    }
+    const pages=await Promise.all(jobs.map(j=>j.p));
+    if(token!==C.token) return;                  // 已有更新的一次重绘
+    jobs.forEach((j,i)=>{
+      const it=j.it; // 画法: draw(锚点x+ox, 锚点y+oy)
+      x.drawImage(pages[i],it.x,it.y,it.w,it.h,ax+it.ox,ay+it.oy,it.w,it.h);
+      if(box){ x.strokeStyle=['#f44','#4f4','#48f','#fc0','#f0f','#0ff','#fff'][Math.min(j.l.rank,6)]; x.lineWidth=1;
+        x.strokeRect(ax+it.ox+.5,ay+it.oy+.5,it.w-1,it.h-1); }
+    });
+    if(anchor){ x.strokeStyle='rgba(255,60,60,.9)'; x.beginPath(); x.moveTo(ax-6,ay+.5); x.lineTo(ax+7,ay+.5); x.moveTo(ax+.5,ay-6); x.lineTo(ax+.5,ay+7); x.stroke(); }
+    lab.textContent=(t||'(无后缀)')+`  层:${jobs.length}`;
+  }
+}
+
+// ------------------------------------------------------------------ 3) rle6 精灵表
+let S={timer:null,playing:false,list:[],it:null,cell:0};
+function initSheet(){
+  S.list=(ATLAS.images||[]).filter(i=>i.kind==='rle6'||i.kind==='raw565');
+  $('#sImg').innerHTML=S.list.map((i,k)=>`<option value="${k}">${i.name}  ${i.w}×${i.h} ${i.kind}${i.kind==='rle6'?' c'+i.cw+'×'+i.ch:''}</option>`).join('');
+  selectSheet(0);
+}
+function selectSheet(k){
+  const it=S.list[k]; S.it=it; if(!it) return;
+  // 默认 1×1: 实测 json 的 cw/ch 并不是动画单元尺寸(见 README), 需要时点“按 cw,ch 切分”或手填列/行
+  $('#sCols').value=1; $('#sRows').value=1; S.cell=0; updSheetCell(); drawSheet();
+}
+$('#sByCw').onclick=()=>{ const it=S.it; if(!it||!it.cw||!it.ch) return;
+  $('#sCols').value=Math.max(1,Math.floor(it.w/it.cw)); $('#sRows').value=Math.max(1,Math.floor(it.h/it.ch)); S.cell=0; updSheetCell(); drawSheet(); };
+function updSheetCell(){ const n=(+$('#sCols').value||1)*(+$('#sRows').value||1); $('#sCell').max=n-1; $('#sCell').value=S.cell; $('#sCellN').textContent=S.cell+'/'+n; }
+$('#sImg').onchange=()=>selectSheet(+$('#sImg').value);
+['#sCols','#sRows','#sScale'].forEach(s=>$(s).oninput=()=>{S.cell=0;updSheetCell();drawSheet();});
+$('#sCell').oninput=()=>{ S.cell=+$('#sCell').value; updSheetCell(); drawSheet(); };
+$('#sPlay').onclick=()=>{
+  S.playing=!S.playing; $('#sPlay').textContent=S.playing?'⏸ 暂停':'▶ 播放'; clearInterval(S.timer);
+  if(S.playing) S.timer=setInterval(()=>{ const n=(+$('#sCols').value||1)*(+$('#sRows').value||1); S.cell=(S.cell+1)%n; updSheetCell(); drawSheet(); },1000/(+$('#sFps').value||8));
+};
+function jumpSheet(it){ showTab('sheet'); const k=S.list.indexOf(ATLAS.images.find(i=>i.name===it.name&&i.index===it.index)); if(k>=0){ $('#sImg').value=k; selectSheet(k);} }
+async function drawSheet(){
+  const it=S.it; if(!it||$('#tab-sheet').classList.contains('hide')) return;
+  const sc=+$('#sScale').value, cols=+$('#sCols').value||1, rows=+$('#sRows').value||1;
+  const cw=Math.floor(it.w/cols), ch=Math.floor(it.h/rows);
+  $('#sMeta').textContent=`${it.name} ${it.w}×${it.h}  json: cw=${it.cw??'-'} ch=${it.ch??'-'}  → 当前切分 ${cols}×${rows}, 单元 ${cw}×${ch}`;
+  const im=await getPage(itemFile(it));
+  const W=$('#sWhole'); W.width=it.w; W.height=it.h; W.style.width=it.w*sc+'px'; W.style.height=it.h*sc+'px';
+  let x=W.getContext('2d'); x.imageSmoothingEnabled=false; x.clearRect(0,0,it.w,it.h); x.drawImage(im,it.x,it.y,it.w,it.h,0,0,it.w,it.h);
+  x.strokeStyle='rgba(255,60,60,.6)'; x.lineWidth=1;
+  for(let c=0;c<=cols;c++){ x.beginPath(); x.moveTo(c*cw+.5,0); x.lineTo(c*cw+.5,it.h); x.stroke(); }
+  for(let r=0;r<=rows;r++){ x.beginPath(); x.moveTo(0,r*ch+.5); x.lineTo(it.w,r*ch+.5); x.stroke(); }
+  const cx=S.cell%cols, cy=Math.floor(S.cell/cols);
+  x.strokeStyle='#ff0'; x.strokeRect(cx*cw+.5,cy*ch+.5,cw-1,ch-1);
+  const O=$('#sOne'); O.width=cw; O.height=ch; O.style.width=cw*sc+'px'; O.style.height=ch*sc+'px';
+  x=O.getContext('2d'); x.imageSmoothingEnabled=false; x.clearRect(0,0,cw,ch);
+  x.drawImage(im,it.x+cx*cw,it.y+cy*ch,cw,ch,0,0,cw,ch);
+}
+
+// ------------------------------------------------------------------ 目录选择 / 拖拽 / ../out 列表
+$('#btnPick').onclick=()=>$('#picker').click();
+$('#picker').onchange=e=>{ if(e.target.files.length) loadFromFiles([...e.target.files]).catch(err=>log('错误:',err.message)); };
+$('#btnLoad').onclick=()=>{ const v=$('#dirSel').value; if(v) loadFromHttp(v).catch(err=>log('错误:',err.message)); };
+$('#dirSel').onchange=$('#btnLoad').onclick;
+async function walkEntry(entry,prefix,out){
+  if(entry.isFile){ await new Promise(r=>entry.file(f=>{ Object.defineProperty(f,'webkitRelativePath',{value:prefix+entry.name}); out.push(f); r(); })); }
+  else if(entry.isDirectory){
+    const rd=entry.createReader(); let all=[];
+    for(;;){ const b=await new Promise(r=>rd.readEntries(r)); if(!b.length)break; all=all.concat(b); }
+    for(const e of all) await walkEntry(e,prefix+entry.name+'/',out);
+  }
+}
+window.addEventListener('dragover',e=>{e.preventDefault();$('#drop').classList.add('over');});
+window.addEventListener('dragleave',()=>$('#drop').classList.remove('over'));
+window.addEventListener('drop',async e=>{
+  e.preventDefault(); $('#drop').classList.remove('over');
+  const items=[...e.dataTransfer.items].map(i=>i.webkitGetAsEntry&&i.webkitGetAsEntry()).filter(Boolean);
+  const files=[]; for(const en of items) await walkEntry(en,'',files);
+  if(files.length) loadFromFiles(files).catch(err=>log('错误:',err.message));
+});
+// 若通过 http 打开: 读 ../out/ 的目录列表 (python http.server 会给出带 href 的 HTML)
+(async()=>{
+  if(location.protocol==='file:'){ log('file:// 下无法 fetch，请用拖拽/选择目录，或在 资源解析 目录运行: python -m http.server 8000 然后打开 http://localhost:8000/viewer/'); return; }
+  try{
+    const r=await fetch('../out/'); if(!r.ok) return;
+    const html=await r.text(); const dirs=[...html.matchAll(/href="([^"?#]+)\/"/g)].map(m=>decodeURIComponent(m[1])).filter(x=>x&&!x.includes('/')&&x!=='..');
+    $('#dirSel').innerHTML='<option value="">选择 ../out/ 下的目录…</option>'+dirs.map(d=>`<option value="../out/${encodeURIComponent(d)}">${d}</option>`).join('');
+    const q=new URLSearchParams(location.search).get('dir'); // ?dir=boy05
+    if(q){ $('#dirSel').value='../out/'+encodeURIComponent(q); if($('#dirSel').value) $('#btnLoad').onclick(); else loadFromHttp('../out/'+encodeURIComponent(q)).catch(e=>log(e.message)); }
+  }catch(e){ log('读取 ../out/ 目录列表失败:',e.message); }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+# 部署包（体积大，且带原版资源）
+客户端/dist/
+服务端/dist/
+
+# 由原版资源生成或导出的图与数据（只在本机用，不进仓库）
+客户端/web/sprites/
+客户端/web/objects/
+客户端/资源解析/out/
+客户端/动作表/strips/
+*.bin
+
+# 抓包（含账号 ID）与角色库（含明文密码）
+服务端/captures/
+*.sqlite
+
+# 临时文件、备份、日志
+服务端/scratch/
+服务端/backups/
+*.out
+*.err
+__pycache__/
+*.pyc

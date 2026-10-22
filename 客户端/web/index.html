@@ -1,0 +1,1389 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>网金网页客户端</title>
+<style>
+:root {
+  --ink: #f1e9d8; --muted: #b3a78f; --gold: #d7b46a; --gold-d: #8f6f2e; --panel: rgba(24, 20, 16, .84); --panel2: rgba(255, 244, 220, .07);
+  --line: rgba(215, 180, 106, .35); --accent: #c8402c; --good: #7bc58c; --bad: #ec7a68;
+  --jing: #e0a82e; --xue: #d9473a; --shen: #8b6fd6; --nei: #3f9bd6;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: #14110e; color: var(--ink);
+  font: 14px/1.45 "Microsoft YaHei", "PingFang SC", system-ui, sans-serif; user-select: none; }
+canvas#map { position: fixed; inset: 0; width: 100vw; height: 100vh; display: block; cursor: crosshair; }
+#mapMsg { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; color: #cfc6b4; pointer-events: none; text-align: center; padding: 8px; text-shadow: 0 1px 3px #000; }
+.glass { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; backdrop-filter: blur(6px); box-shadow: 0 6px 24px rgba(0, 0, 0, .45); }
+input, button, select { font: inherit; color: inherit; }
+input[type=text], input[type=number], input[type=password], select { background: rgba(0, 0, 0, .35); border: 1px solid var(--line); border-radius: 6px; padding: 5px 9px; min-width: 0; color: var(--ink); user-select: text; }
+select option { background: #241f19; color: var(--ink); }
+input:focus-visible, button:focus-visible, select:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+button { background: linear-gradient(#c8402c, #9c2f20); color: #fff; border: 1px solid #e2705e; border-radius: 6px; padding: 5px 14px; cursor: pointer; }
+button:hover:not(:disabled) { filter: brightness(1.12); }
+button.ghost { background: rgba(255, 255, 255, .06); border: 1px solid var(--line); color: var(--ink); }
+button.sm { padding: 1px 9px; font-size: 12px; }
+button:disabled { opacity: .4; cursor: default; }
+
+/* 顶栏 */
+#top { position: fixed; top: 10px; left: 10px; right: 10px; display: flex; gap: 10px; align-items: center; padding: 6px 10px; pointer-events: auto; }
+#top .logo { font-size: 17px; letter-spacing: .15em; color: var(--gold); font-weight: 700; text-shadow: 0 1px 2px #000; }
+#loginForm { display: flex; gap: 6px; align-items: center; }
+#jyid { width: 120px; }
+#tabs { display: flex; gap: 4px; margin-left: 8px; }
+#tabs button { background: transparent; border: 1px solid transparent; color: var(--ink); padding: 4px 12px; border-radius: 6px; }
+#tabs button.on { background: var(--panel2); border-color: var(--line); color: var(--gold); }
+#conn { margin-left: auto; font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+#conn b { width: 8px; height: 8px; border-radius: 50%; background: #777; display: inline-block; }
+#conn.on b { background: var(--good); }
+
+/* 角色小面板 */
+#hud { position: fixed; top: 64px; left: 10px; width: 250px; padding: 10px 12px; }
+#hud .nm { font-size: 17px; font-weight: 700; color: var(--gold); text-shadow: 0 1px 2px #000; }
+#hud .sub { font-size: 12px; color: var(--muted); }
+.bar { position: relative; height: 15px; margin: 5px 0; background: rgba(0, 0, 0, .5); border-radius: 8px; overflow: hidden; border: 1px solid rgba(255, 255, 255, .08); }
+.bar i { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--c); transition: width .25s; }
+.bar span { position: absolute; inset: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 7px; font-size: 11px; text-shadow: 0 1px 2px #000; font-variant-numeric: tabular-nums; }
+
+/* 聊天 */
+#chat { position: fixed; left: 10px; bottom: 10px; width: min(460px, calc(100vw - 20px)); padding: 8px; display: flex; flex-direction: column; gap: 6px; }
+#log { height: 150px; overflow-y: auto; font-size: 13px; padding: 2px 4px; user-select: text; }
+#log p { margin: 0 0 3px; word-break: break-all; text-shadow: 0 1px 2px #000; }
+#log .t { color: var(--muted); font-size: 11px; margin-right: 5px; }
+#log .who { color: var(--gold); font-weight: 600; margin-right: 3px; }
+#log .self .who { color: #ffb4a4; }
+#log .sys { color: #e9a27c; }
+#log .dbg { color: var(--muted); font: 11px/1.4 Consolas, monospace; }
+#say { display: flex; gap: 6px; }
+#say input { flex: 1; }
+
+/* 小地图 + 缩放 */
+#mini { position: fixed; right: 10px; bottom: 10px; padding: 6px; }
+#mini canvas { display: block; border-radius: 6px; cursor: pointer; }
+#mini .zoom { display: flex; gap: 4px; margin-top: 6px; align-items: center; justify-content: flex-end; font-size: 12px; color: var(--muted); }
+#mini .zoom button { padding: 0 9px; }
+
+/* 侧栏 */
+#side { position: fixed; top: 64px; right: 10px; bottom: 210px; width: 380px; max-width: calc(100vw - 20px); padding: 10px 12px; overflow-y: auto; }
+#side section[hidden] { display: none; }
+#side h3 { margin: 12px 0 6px; font-size: 12px; font-weight: 600; letter-spacing: .15em; color: var(--gold); }
+#side h3:first-child { margin-top: 0; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px 12px; }
+.grid div { display: flex; justify-content: space-between; border-bottom: 1px dotted rgba(255, 255, 255, .15); padding: 1px 0; }
+.grid span { color: var(--muted); white-space: nowrap; margin-right: 4px; }
+.grid b { font-variant-numeric: tabular-nums; }
+ul.items { list-style: none; margin: 0; padding: 0; }
+ul.items li { display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 3px 0; border-bottom: 1px dotted rgba(255, 255, 255, .12); }
+ul.items .nm { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+ul.items .k { color: var(--muted); font-size: 12px; }
+ul.items .ops { display: flex; gap: 4px; align-items: center; flex: none; }
+ul.items select { font-size: 12px; padding: 1px 2px; }
+ul.items input { width: 56px; padding: 1px 4px; }
+ul.items li.banned { opacity: .45; }
+form.row { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin: 6px 0; }
+form.row input[type=number] { width: 84px; }
+.empty { color: var(--muted); font-size: 12px; }
+label.chk { display: flex; gap: 8px; align-items: center; margin: 8px 0; }
+#near { font-size: 12px; color: var(--muted); }
+#toast { position: fixed; left: 50%; top: 70px; transform: translateX(-50%); padding: 6px 14px; border-radius: 16px; background: rgba(0, 0, 0, .7); border: 1px solid var(--line); opacity: 0; transition: opacity .2s; pointer-events: none; }
+#toast.on { opacity: 1; }
+#dlg { position: fixed; left: 50%; bottom: 96px; transform: translateX(-50%); width: min(680px, calc(100vw - 24px)); padding: 12px 16px 10px; z-index: 20; cursor: pointer; }
+#dlg[hidden] { display: none; }
+#dlgWho { font-weight: 700; color: #ffd98a; margin-bottom: 4px; }
+#dlg.me #dlgWho { color: #9fd3ff; }
+#dlgText { font-size: 16px; line-height: 1.6; white-space: pre-wrap; min-height: 2.6em; }
+#dlgOpts { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+#dlgOpts button { text-align: left; }
+#dlgHint { margin-top: 6px; font-size: 12px; color: var(--muted); text-align: right; }
+#create { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(460px, calc(100vw - 24px)); padding: 14px 18px; z-index: 30; }
+#create[hidden] { display: none; }
+#create h3 { margin: 0 0 8px; color: var(--gold); letter-spacing: .15em; }
+#create .attrs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px 10px; margin: 8px 0; }
+#create .attrs label { display: flex; flex-direction: column; font-size: 12px; color: var(--muted); }
+#create .attrs input { width: 100%; }
+#create .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 6px 0; }
+#chan, #wto { max-width: 92px; }
+#side .sub { font-size: 12px; color: var(--muted); margin: 2px 0; }
+#tabs button { font-size: 13px; }
+#tabs button { white-space: nowrap; padding: 4px 9px; }
+#fight { position: fixed; inset: 0; z-index: 25; background: #0d0a07; }
+#fight[hidden] { display: none; }
+#fcv { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: crosshair; }
+#fTop { position: absolute; top: 10px; left: 14px; right: 300px; display: flex; gap: 14px; align-items: center; pointer-events: none; }
+#fTop b { color: var(--gold); font-size: 20px; letter-spacing: .12em; text-shadow: 0 2px 4px #000; }
+#fTop button { pointer-events: auto; }
+#fBanner { font-weight: 700; font-size: 18px; text-shadow: 0 2px 4px #000; }
+#fSide { position: absolute; top: 10px; right: 10px; bottom: 150px; width: 276px; padding: 10px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+#fSide .fcmd { display: flex; flex-direction: column; gap: 6px; margin-top: auto; }
+#fSide .fcmd2 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
+#fSide .fcmd2 button { padding: 5px 0; }
+#fAtk { padding: 9px; font-size: 16px; letter-spacing: .3em; }
+#fLogBox { position: absolute; left: 10px; bottom: 10px; right: 300px; height: 130px; padding: 6px 8px; }
+#fLog { height: 100%; overflow-y: auto; font-size: 13px; user-select: text; }
+#fLog p { margin: 0 0 2px; } #fLog .hurt { color: #ff9a8a; } #fLog .loot { color: #ffe08a; }
+#fEnemies li { cursor: pointer; } #fEnemies li.sel { background: rgba(255, 215, 120, .12); } #fEnemies li.dead { opacity: .4; text-decoration: line-through; } #fEnemies li.me { cursor: default; }
+#fEnemies .hp { width: 90px; height: 8px; background: rgba(0, 0, 0, .5); border-radius: 4px; overflow: hidden; flex: none; } #fEnemies .hp i { display: block; height: 100%; background: var(--xue, #c33); }
+@media (max-width: 760px) { #fSide { width: 190px; bottom: 140px; } #fTop { right: 210px; } #fLogBox { right: 10px; bottom: 10px; width: auto; } #fEnemies .hp { width: 50px; } }#dutyList details { margin: 4px 0; } #dutyList summary { cursor: pointer; color: var(--gold); font-weight: 600; padding: 3px 0; } #dutyList .q { padding: 4px 0 4px 10px; border-bottom: 1px dotted rgba(255,255,255,.12); } #dutyList .q b { color: var(--ink); } #dutyList .q i { color: var(--muted); font-style: normal; font-size: 12px; margin-left: 6px; } #dutyList .q p { margin: 2px 0 0; font-size: 12px; color: var(--muted); }
+@media (max-width: 1100px) {
+  #top { flex-wrap: wrap; row-gap: 4px; }
+  #tabs { margin-left: 0; flex-wrap: wrap; }
+  #hud { top: 104px; }
+  #side { top: 104px; }
+}
+@media (max-width: 760px) {
+  #hud { width: 200px; }
+  #side { bottom: 200px; width: calc(100vw - 20px); }
+  #tabs button { padding: 4px 7px; }
+  #log { height: 100px; }
+}
+</style>
+</head>
+<body>
+<canvas id="map"></canvas>
+<div id="mapMsg"></div>
+
+<div id="top" class="glass">
+  <span class="logo">网金</span>
+  <form id="loginForm">
+    <input id="jyid" type="number" min="1" placeholder="账号 jyid" inputmode="numeric" required>
+    <input id="pw" type="password" placeholder="密码（默认 = 账号）" autocomplete="off" style="width:130px">
+    <button id="loginBtn">登录</button>
+    <button id="delBtn" class="ghost" type="button" title="删除这个账号的角色（要账号密码；删了再登录会重新建角色）">删角色</button>
+    <button id="logoutBtn" class="ghost" type="button" hidden>退出</button>
+  </form>
+  <nav id="tabs" hidden>
+    <button data-tab="char">角色</button><button data-tab="bag">背包</button><button data-tab="skills">技能</button>
+    <button data-tab="shop">商店</button><button data-tab="bank">钱庄</button><button data-tab="soc">社交</button><button data-tab="trade">交易</button><button data-tab="kf">武功</button><button data-tab="fight">战斗</button><button data-tab="duty">任务</button><button data-tab="acct">账号</button><button data-tab="tele">导航</button><button data-tab="set">设置</button>
+  </nav>
+  <div id="conn"><b></b><span>未连接</span></div>
+</div>
+
+<div id="hud" class="glass" hidden>
+  <div class="nm" id="nm"></div>
+  <div class="sub" id="nick"></div>
+  <div class="bar" style="--c:var(--jing)"><i id="b_jing"></i><span><em>精</em><em id="v_jing"></em></span></div>
+  <div class="bar" style="--c:var(--xue)"><i id="b_xue"></i><span><em>血</em><em id="v_xue"></em></span></div>
+  <div class="bar" style="--c:var(--shen)"><i id="b_shen"></i><span><em>神</em><em id="v_shen"></em></span></div>
+  <div class="bar" style="--c:var(--nei)"><i id="b_nei"></i><span><em>内</em><em id="v_nei"></em></span></div>
+  <div class="sub" id="where"></div>
+  <div class="sub" id="clk" title="游戏时钟：服务端心跳每格约 75 秒，一天 96 格"></div>
+</div>
+
+<div id="chat" class="glass">
+  <div id="log" role="log" aria-live="polite"></div>
+  <form id="say">
+    <select id="chan" title="聊天频道"><option value="public">公共</option><option value="party">队伍</option><option value="org">组织</option><option value="whisper">私聊</option></select>
+    <select id="wto" hidden title="私聊对象"></select>
+    <input id="text" type="text" maxlength="60" placeholder="回车说话（公共频道）" autocomplete="off" disabled>
+    <button id="sayBtn" disabled>发送</button>
+  </form>
+</div>
+
+<div id="mini" class="glass" hidden>
+  <canvas id="miniCv" width="210" height="140"></canvas>
+  <div class="zoom"><span id="mapName"></span><button class="ghost sm" id="zOut" title="缩小">−</button><button class="ghost sm" id="zIn" title="放大">＋</button></div>
+</div>
+
+<aside id="side" class="glass" hidden>
+  <section data-p="char">
+    <h3>属性</h3><div class="grid" id="attrs"></div>
+    <h3>状态</h3><div class="grid" id="stats"></div>
+  </section>
+  <section data-p="bag" hidden>
+    <h3>装备</h3><ul class="items" id="equip"></ul>
+    <h3 id="bagH">背包</h3><ul class="items" id="bag"></ul>
+    <h3>地上的东西（点地图上的小方块也能捡）</h3><ul class="items" id="ground"></ul>
+  </section>
+  <section data-p="bank" hidden>
+    <h3>随身钱庄</h3>
+    <div class="empty">只存物品，不存钱。背包页的"存"把东西放进来；这里"取"出来。</div>
+    <ul class="items" id="bankItems"></ul>
+  </section>
+  <section data-p="skills" hidden>
+    <h3>武功 / 技能</h3><ul class="items" id="skills"></ul>
+    <h3>生活技能（伐木 / 捕魚 / 採礦）</h3>
+    <div class="sub">背包里要有对应的工具（斧头 / 钓竿 / 十字镐）。开始后每 8 秒一轮，精 −1，精低于 10 自动停；有收获会进背包（VIP 号自动进钱庄）。需要原版服务端（新服务端没有这套）。</div>
+    <div class="row" style="display:flex;gap:6px;margin:4px 0;flex-wrap:wrap"><button type="button" class="ghost sm" id="wkWood">伐木</button><button type="button" class="ghost sm" id="wkFish">捕魚</button><button type="button" class="ghost sm" id="wkMine">採礦</button><button type="button" class="ghost sm" id="wkStop">停止</button></div>
+    <div class="row" style="display:flex;gap:6px;margin:4px 0;flex-wrap:wrap;align-items:center"><select id="fmSeed" title="背包里的种子"></select><button type="button" class="ghost sm" id="wkFarm">農夫（播種→耕種→收成）</button></div>
+    <div class="sub" id="wkState">没有在工作</div>
+    <h3>消点（学习点 → 武功经验）</h3>
+    <div class="sub" id="msInfo">要先走到师傅所在的地图（师傅.csv）；站错地图 / 门派不对 / 师傅不教这门武功，原版会随机掉你一级武功，这里先拦下。需要原版服务端。</div>
+    <div class="row" style="display:flex;gap:6px;margin:4px 0;flex-wrap:wrap;align-items:center"><button type="button" class="ghost sm" id="msRefresh">这张图的师傅</button><select id="msMaster"></select><select id="msKf"></select><input id="msPts" type="number" min="1" value="1" style="width:5em" title="点数"><button type="button" class="ghost sm" id="msGo">消点</button><button type="button" class="ghost sm" id="msBetray" title="发 @bpsm：清掉门派，所有武功等级减半">背叛师门</button></div>
+  </section>
+  <section data-p="shop" hidden>
+    <h3>商店</h3>
+    <form class="row" id="shopForm"><select id="merchant" disabled></select><button class="ghost" id="shopBtn" disabled>打开</button></form>
+    <ul class="items" id="shopItems"></ul>
+  </section>
+  <section data-p="soc" hidden>
+    <h3>同图玩家</h3><ul class="items" id="socPlayers"></ul>
+    <h3>队伍</h3><div class="sub" id="partyInfo">没有队伍</div>
+    <div class="row" style="display:flex;gap:6px;margin:4px 0"><button type="button" class="ghost sm" id="pCreate">创建队伍</button><button type="button" class="ghost sm" id="pLeave">离队</button><button type="button" class="ghost sm" id="pDisband">解散</button></div>
+    <ul class="items" id="partyInv"></ul>
+    <h3>组织</h3><div class="sub" id="orgInfo">没有组织</div>
+    <form class="row" id="orgForm"><input id="orgName" type="text" maxlength="12" placeholder="组织名"><button class="ghost sm">创立</button><button type="button" class="ghost sm" id="oQuit">退出</button><button type="button" class="ghost sm" id="oList">刷新成员</button></form>
+    <form class="row" id="kickForm"><input id="kickName" type="text" maxlength="12" placeholder="踢出（对方名字）"><button class="ghost sm">踢</button></form>
+    <ul class="items" id="orgInv"></ul>
+  </section>
+  <section data-p="trade" hidden>
+    <h3>交易</h3><div class="sub" id="tradeInfo">没有进行中的交易（在"社交"页对同图玩家点"交易"）</div>
+    <div id="tradeBody" hidden>
+      <h3>我放的</h3><ul class="items" id="tMine"></ul>
+      <h3>对方放的</h3><ul class="items" id="tTheirs"></ul>
+      <form class="row" id="tItemForm"><select id="tItem"></select><button class="ghost sm">放入物品</button></form>
+      <form class="row" id="tMoneyForm"><input id="tMoney" type="number" min="0" placeholder="金钱"><button class="ghost sm">放入金钱</button></form>
+      <div class="sub" id="tState"></div>
+      <div style="display:flex;gap:6px;margin:6px 0"><button type="button" id="tLock">锁定</button><button type="button" id="tConfirm">确认成交</button><button type="button" class="ghost" id="tCancel">取消</button></div>
+    </div>
+    <h3>鏢局（託鏢）</h3>
+    <div class="sub">把背包里的打工物品（镖局的包裹 / 运镖车）託给别的玩家：背包页点"託鏢"，收件人名字填这里。对方在这里查看存放。</div>
+    <form class="row" id="bjForm"><input id="bjName" type="text" maxlength="12" placeholder="收件人名字（託鏢用）"><button type="button" class="ghost sm" id="bjQuery">查看我的鏢局存放</button></form>
+    <ul class="items" id="bjList"></ul>
+  </section>
+  <section data-p="kf" hidden>
+    <h3>武功</h3><div class="sub">装备只是告诉服务端（原版不存装备状态）；删除要账号密码，原版只把等级清零，下线才真消失。</div>
+    <input id="kfPw" type="password" placeholder="账号密码（删除用）" autocomplete="off" style="margin:4px 0;width:100%">
+    <ul class="items" id="kfList"></ul>
+  </section>
+  <section data-p="fight" hidden>
+    <h3>战斗</h3>
+    <div class="sub">遭遇一只怪物进入战斗。战斗协议见 战斗协议_客户端侧.md；怪物出招和胜负判定由本页（客户端）负责，伤害 / 掉落由服务端算。</div>
+    <form class="row" id="fightForm"><select id="fMob"><option value="38166">倭寇（38166）</option><option value="38268">野蛮人（38268）</option></select><input id="fMobId" type="number" min="1" max="99999" placeholder="或输入怪物编号" style="width:130px"><button class="ghost sm" id="fGo">遭遇</button></form>
+    <div class="sub" id="fStatus">还没有战斗</div>
+  </section>  <section data-p="duty" hidden>
+    <h3 id="qH">我的任务进度</h3>
+    <div class="sub">原版没有任务日志：做到哪一步由服务端用「标记」记在你身上（NPC 事件给 / 收标记）。这里把你身上的标记按任务名归在一起；标记名来自服务端的 标记.csv，没有统一写法，所以有些会归在「其它」。</div>
+    <div id="questList"></div>
+    <h3>任务手册</h3>
+    <div class="sub">原版"我的任务"里的任务说明（主线 / 江湖 / 各门派打工任务），只有说明文字，和上面的进度没有对应关系。</div>
+    <input id="dutyQ" type="text" placeholder="搜索任务名 / 说明" style="width:100%;margin:6px 0">
+    <div id="dutyList"></div>
+  </section>  <section data-p="acct" hidden>
+    <h3>外号</h3>
+    <form class="row" id="nickForm"><input id="nickText" type="text" maxlength="10" placeholder="新外号（空 = 清除）"><button class="ghost sm">修改</button></form>
+    <h3>自宫（不可逆）</h3>
+    <div class="sub">输入账号密码确认。原版的这个按钮（0x98 0D）密码对就会自宫，是读葵花宝典 / 太玄经的前提；别当成"验证密码"点。背叛师门走聊天框 <code>@bpsm</code>。</div>
+    <form class="row" id="pwForm"><input id="pw2" type="password" placeholder="账号密码" autocomplete="off"><button class="ghost sm">自宫</button></form>
+    <h3>物品信息</h3>
+    <form class="row" id="infoForm"><select id="infoItem"></select><button class="ghost sm">查询</button></form>
+    <h3>其它</h3><div class="sub" id="acctInfo"></div>
+  </section>
+  <section data-p="tele" hidden>
+    <h3>去哪里</h3>
+    <div class="sub" id="gdHint">游戏自带的 NPC 目录：任务、师傅（消点）、买卖、传送……各在哪张图，点「前往」直接过去。新手先找「新手指導員」，听他说话、接任务。</div>
+    <div class="row" style="display:flex;gap:6px;margin:4px 0;flex-wrap:wrap;align-items:center"><select id="gdKind"></select><input id="gdQ" type="text" placeholder="搜 NPC 名字" style="width:9em"><label class="chk"><input type="checkbox" id="gdHere"> 只看本图</label></div>
+    <ul class="items" id="gdList"></ul>
+    <details><summary>手动输入地图 / 坐标</summary>
+    <form class="row" id="tpForm"><input id="tmap" type="number" min="0" max="65535" placeholder="地图"><input id="tx" type="number" min="0" max="65535" placeholder="x"><input id="ty" type="number" min="0" max="65535" placeholder="y"><button class="ghost" id="tpBtn">传送</button></form>
+    <div class="sub">走到坐标（本图内）</div>
+    <form class="row" id="moveForm"><input id="mx" type="number" min="0" max="65535" placeholder="x"><input id="my" type="number" min="0" max="65535" placeholder="y"><button class="ghost" id="moveBtn">移动</button></form>
+    </details>
+    <h3>新手教学（游戏自带）</h3><div id="gdTut" class="empty">载入中 …</div>
+    <h3>同图玩家</h3><div id="near" class="empty">无</div>
+  </section>
+  <section data-p="set" hidden>
+    <h3>显示</h3>
+    <label class="chk"><input type="checkbox" id="optWalk"> 显示碰撞格（红 = 不能走）</label>
+    <label class="chk"><input type="checkbox" id="optNames" checked> 显示名字</label>
+    <label class="chk"><input type="checkbox" id="optNpc" checked> 显示 NPC</label>
+    <label class="chk"><input type="checkbox" id="optMob" checked> 显示怪物（点它走过去开战）</label>
+    <label class="chk"><input type="checkbox" id="dbg"> 聊天框里显示收到的帧</label>
+    <h3>操作</h3>
+    <div class="empty">点击地图或小地图：自动绕开建筑走过去。滚轮缩放。回车：说话。</div>
+  </section>
+</aside>
+<div id="create" class="glass" hidden>
+  <h3>新建角色</h3>
+  <div class="row"><input id="cName" type="text" maxlength="8" placeholder="名字（最多 8 个字）"><button type="button" class="ghost sm" id="cCheck">检查重名</button><span id="cNameMsg" class="empty"></span></div>
+  <div class="row"><label>出生地 <select id="cMap"></select></label><label>头像 <select id="cHead"></select></label><label>生日 <input id="cMonth" type="number" min="1" max="12" value="1" style="width:56px">月 <input id="cDay" type="number" min="1" max="31" value="1" style="width:56px">日</label></div>
+  <div class="attrs" id="cAttrs"></div>
+  <div class="row"><button type="button" class="ghost sm" id="cRoll">摇点</button><span class="empty" id="cSum">总和 0 / 145</span></div>
+  <div class="row"><button type="button" id="cGo">创建并进入</button><button type="button" class="ghost" id="cCancel">放弃</button></div>
+</div>
+<div id="fight" hidden>
+  <canvas id="fcv"></canvas>
+  <div id="fTop"><b id="fTitle">战斗</b><span id="fBanner"></span><button class="ghost" id="fClose" hidden>离开战场</button></div>
+  <div id="fSide" class="glass">
+    <ul class="items" id="fEnemies"></ul>
+    <div class="fcmd">
+      <select id="fKf" title="出招用的武功（空 = 基本攻击）"><option value="">基本攻击</option></select>
+      <button id="fAtk">攻　击</button>
+      <div class="fcmd2">
+        <button class="ghost sm" id="fDef" title="防禦（G）：命令 7，C2S 0xDE">防</button>
+        <button class="ghost sm" id="fDodge" title="閃躲：命令 8，C2S 0xDE">闪</button>
+        <button class="ghost sm" id="fRest" title="養精蓄銳（R）：命令 9，C2S 0xDE；原版精或神不足时提示「精或神不足無法休息」">休</button>
+        <button class="ghost sm" id="fEquip" title="裝備：只打开装备界面，不发包">装</button>
+        <button class="ghost sm" id="fEsc" title="逃跑（E）：C2S 0xF9（空载荷）。原版只有站在「逃離點」上才发，否则提示「此處非逃離點」；这里直接发，成败由服务端决定">逃</button>
+      </div>
+      <div class="sub" id="fHint"></div>
+    </div>
+  </div>
+  <div id="fLogBox" class="glass"><div id="fLog"></div></div>
+</div>
+<div id="dlg" class="glass" hidden><div id="dlgWho"></div><div id="dlgText"></div><div id="dlgOpts"></div><div id="dlgHint"></div></div>
+<div id="toast"></div>
+
+<script src="/sprites.js"></script>
+<script>
+"use strict";
+const $ = (id) => document.getElementById(id);
+const LABEL = {
+  attrs: [["str", "臂力"], ["crg", "胆识"], ["wint", "悟性"], ["luk", "富源"], ["dex", "定力"], ["agi", "机敏"], ["vit", "根骨"]],
+  stats: [["jy_money", "金钱"], ["fame_val", "名声"], ["exp_val", "历练"], ["combat_exp", "实战"], ["kill_val", "杀气"], ["pk_val", "PK值"],
+          ["evil_val", "善恶"], ["diet_val", "饱食"], ["water_val", "饮水"], ["study_count", "学点"], ["online_time", "在线"]],
+  slot: { toukui: "头盔", xianglian: "项链", yifu: "衣服", pifeng: "披风", wuqi: "武器", huwan: "护腕", jiezhi: "戒指", xiezi: "鞋子" },
+  wugong: { daofa: "刀法", qiangfa: "枪法", jianfa: "剑法", bianfa: "鞭法", gunfa: "棍法", neigong: "内功", shenfa: "身法", dushu: "毒术",
+            yishu: "医术", zhenfa: "阵法", boji: "搏击", shanduo: "闪躲", anqi: "暗器", chaizhao: "拆招", dushushizi: "读书识字", jiaoyi: "交易" },
+  jineng: { famu: "伐木", gongjiang: "工匠", zhibu: "织布", caifeng: "裁缝", lieren: "猎人", caikuang: "采矿", datie: "打铁", zhujian: "筑建", nongfu: "农夫", buyu: "捕鱼", chushi: "厨师" },
+};
+const SLOT_NO = { 1: "头盔", 2: "项链", 3: "衣服", 4: "披风", 6: "武器", 7: "护腕", 8: "戒指", 9: "鞋子" };
+let ws = null, me = null, loggedIn = false;
+let ZOOM = 1.25;                                   // 地图缩放（滚轮 / 按钮），默认 1.25：人物约 140 像素高
+
+// ---------------------------------------------------------------- 通用界面
+function setConn(on, text) { $("conn").className = on ? "on" : ""; $("conn").lastChild.textContent = text; }
+function toast(t) { const e = $("toast"); e.textContent = t; e.classList.add("on"); clearTimeout(toast.h); toast.h = setTimeout(() => e.classList.remove("on"), 1800); }
+function line(cls, who, text, t) {
+  const log = $("log"), p = document.createElement("p");
+  const stick = log.scrollTop + log.clientHeight >= log.scrollHeight - 30;
+  p.className = cls;
+  const ts = document.createElement("span"); ts.className = "t"; ts.textContent = (t || new Date()).toTimeString().slice(0, 5); p.appendChild(ts);
+  if (who) { const w = document.createElement("span"); w.className = "who"; w.textContent = who + "："; p.appendChild(w); }
+  p.appendChild(document.createTextNode(text));
+  log.appendChild(p);
+  while (log.childElementCount > 300) log.removeChild(log.firstChild);
+  if (stick) log.scrollTop = log.scrollHeight;
+}
+function enable(on) {
+  loggedIn = on;
+  for (const id of ["text", "sayBtn", "merchant", "shopBtn"]) $(id).disabled = !on;
+  $("loginBtn").hidden = on; $("jyid").disabled = on; $("logoutBtn").hidden = !on;
+  $("tabs").hidden = !on; $("hud").hidden = !on; $("mini").hidden = !on;
+  if (!on) $("side").hidden = true;
+}
+function renderQuests() {                                                  // 任务进度：me.quests = [{quest, steps:[{id, step, what, n, name}]}]（网关按 标记.csv 分好组）
+  const box = $("questList"); if (!box) return; box.replaceChildren();
+  const qs = (me && me.quests) || [], total = qs.reduce((a, g) => a + g.steps.length, 0);
+  $("qH").textContent = "我的任务进度（" + qs.filter((g) => g.quest !== "其它").length + " 个任务，" + total + " 个标记）";
+  if (!qs.length) { const p = document.createElement("div"); p.className = "sub"; p.textContent = "身上还没有任务标记。找 NPC 对话、接任务后会出现。"; box.appendChild(p); return; }
+  for (const g of qs) {
+    const d = document.createElement("details"); d.open = qs.length <= 4;
+    const s = document.createElement("summary"); s.textContent = g.quest + "（" + g.steps.length + "）"; d.appendChild(s);
+    for (const st of g.steps) {
+      const div = document.createElement("div"); div.className = "q";
+      const b = document.createElement("b"); b.textContent = (st.step ? st.step + "　" : "") + (st.what || st.name);
+      const i = document.createElement("i"); i.textContent = "标记 " + st.id + (st.n > 1 ? " ×" + st.n : "");
+      div.append(b, i); d.appendChild(div);
+    }
+    box.appendChild(d);
+  }
+}
+let DUTY = null;
+function renderDuty() {
+  const box = $("dutyList"), q = $("dutyQ").value.trim(); box.replaceChildren();
+  if (!DUTY) { box.textContent = "载入中 …"; return; }
+  const KIND = { main: "主线", side: "支线", job: "打工" };
+  for (const c of DUTY) {
+    const es = c.entries.filter((e) => !q || e.title.includes(q) || e.desc.includes(q));
+    if (!es.length) continue;
+    const d = document.createElement("details"); d.open = !!q || c.name === "主線任務";
+    const s = document.createElement("summary"); s.textContent = c.name + "（" + es.length + "）"; d.appendChild(s);
+    for (const e of es) {
+      const div = document.createElement("div"); div.className = "q";
+      const b = document.createElement("b"); b.textContent = e.title; const lv = document.createElement("i"); lv.textContent = [KIND[e.kind] || "", e.level].filter(Boolean).join(" · ");
+      const p = document.createElement("p"); p.textContent = e.desc || "（没有说明）";
+      div.append(b, lv, p); d.appendChild(div);
+    }
+    box.appendChild(d);
+  }
+  if (!box.childElementCount) box.textContent = "没有匹配的任务";
+}
+function loadDuty() { if (DUTY) { renderDuty(); return; } renderDuty(); fetch("/duty.json").then((r) => (r.ok ? r.json() : [])).then((d) => { DUTY = d; renderDuty(); }).catch(() => { DUTY = []; renderDuty(); }); }
+$("dutyQ").addEventListener("input", renderDuty);
+// 导航：游戏自带的 NPC 目录（cityportals.dat）+ 新手教学（newbie.dat），网关 /guide.json
+let GUIDE = null;
+const KIND_LABEL = { 1: "传送", 2: "功能", 3: "师傅", 4: "任务", 5: "活动", 6: "技能", 7: "买卖", 8: "其他", 9: "地点（MAP.csv）" };
+function renderGuide() {
+  const ul = $("gdList"); ul.replaceChildren();
+  if (!GUIDE) { ul.textContent = "载入中 …"; return; }
+  const kind = +$("gdKind").value || 0, q = $("gdQ").value.trim(), here = $("gdHere").checked, cur = MAP && MAP.id;
+  let list = GUIDE.npcs.filter((n) => (!kind || n.kind === kind) && (!q || n.name.includes(q)) && (!here || n.map === cur));
+  list.sort((a, b) => (b.map === cur) - (a.map === cur) || a.map - b.map || a.id - b.id);
+  const total = list.length; list = list.slice(0, 150);
+  if (!list.length) { const li = document.createElement("li"); li.className = "empty"; li.textContent = "没有匹配的 NPC"; ul.appendChild(li); return; }
+  for (const n of list) actRow(ul, n.name, (n.cat || (KIND_LABEL[n.kind] || "").split("（")[0]) + " · 地图 " + n.map + (n.map === cur ? "（本图）" : ""), [btn(n.map === cur ? "走过去" : "前往", () => goNpc(n))], n.map === cur ? "here" : "");
+  if (total > list.length) { const li = document.createElement("li"); li.className = "empty"; li.textContent = "还有 " + (total - list.length) + " 个，请缩小范围（选类型 / 搜名字）"; ul.appendChild(li); }
+}
+function goNpc(n) {
+  ROUTE = [];
+  if (MAP && n.map === MAP.id) send({ op: "move", x: n.x, y: n.y });
+  else send({ op: "teleport", map: n.map, x: n.x, y: n.y });
+}
+function renderTutorial() {
+  const box = $("gdTut"); box.replaceChildren();
+  if (!GUIDE || !GUIDE.tutorial.length) { box.textContent = "没有教学数据"; return; }
+  for (const t of GUIDE.tutorial) {
+    const d = document.createElement("details"); const s = document.createElement("summary"); s.textContent = t.title; d.appendChild(s);
+    const p = document.createElement("p"); p.style.whiteSpace = "pre-wrap"; p.textContent = t.text.replace(/\n{2,}/g, "\n").replace(/([^\n])\n(?=[^\n])/g, "$1"); d.appendChild(p); box.appendChild(d);
+  }
+}
+function loadGuide() {
+  if (GUIDE) { renderGuide(); return; }
+  renderGuide();
+  fetch("/guide.json").then((r) => (r.ok ? r.json() : null)).then((d) => {
+    GUIDE = d || { kinds: {}, npcs: [], tutorial: [] };
+    const sel = $("gdKind"); sel.replaceChildren();
+    const all = document.createElement("option"); all.value = 0; all.textContent = "全部类型"; sel.appendChild(all);
+    for (const k of Object.keys(KIND_LABEL)) { const o = document.createElement("option"); o.value = k; o.textContent = KIND_LABEL[k]; sel.appendChild(o); }
+    sel.value = "4";                                     // 默认先看任务 NPC：新手要的是"下一步去哪"
+    renderGuide(); renderTutorial();
+  }).catch(() => { GUIDE = { kinds: {}, npcs: [], tutorial: [] }; renderGuide(); renderTutorial(); });
+}
+$("gdKind").addEventListener("change", renderGuide); $("gdQ").addEventListener("input", renderGuide); $("gdHere").addEventListener("change", renderGuide);
+function openTab(name) {
+  const same = !$("side").hidden && $("side").dataset.tab === name;
+  if (name === "tele" && !same) loadGuide();
+  if (name === "bank" && !same && loggedIn) send({ op: "bank_open" });
+  if (name === "duty" && !same) loadDuty();
+  if (name === "soc" && !same) { renderSocPlayers(); if (SOC === null && loggedIn) send({ op: "org", a: "list" }); }
+  $("side").hidden = same; $("side").dataset.tab = same ? "" : name;
+  for (const b of document.querySelectorAll("#tabs button")) b.classList.toggle("on", !same && b.dataset.tab === name);
+  for (const s of document.querySelectorAll("#side section")) s.hidden = s.dataset.p !== name;
+}
+for (const b of document.querySelectorAll("#tabs button")) b.addEventListener("click", () => openTab(b.dataset.tab));
+function bar(key, cur, max) {
+  $("b_" + key).style.width = max > 0 ? Math.max(0, Math.min(100, cur * 100 / max)) + "%" : "0";
+  $("v_" + key).textContent = cur + " / " + max;
+}
+function btn(text, fn, cls) { const b = document.createElement("button"); b.type = "button"; b.className = "sm " + (cls || ""); b.textContent = text; b.addEventListener("click", fn); return b; }
+function actRow(ul, name, right, ops, cls) {
+  const li = document.createElement("li"), n = document.createElement("span"), r = document.createElement("span"), o = document.createElement("span");
+  li.className = cls || ""; n.className = "nm"; n.textContent = name; n.title = name; r.className = "k"; r.textContent = right || ""; o.className = "ops"; o.append(...ops);
+  li.append(n, r, o); ul.appendChild(li);
+}
+function renderAcct() {
+  if (me) fillSelect($("infoItem"), me.bag.map((b) => [b.id, b.name]), true);
+  if (me) fillSelect($("fmSeed"), me.bag.filter((b) => /种子$/.test(b.name)).map((b) => [b.id, b.name + (b.n > 1 ? " ×" + b.n : "")]), true);
+}
+function renderEquip() {
+  const ul = $("equip"); ul.replaceChildren();
+  for (const e of me.equip) actRow(ul, LABEL.slot[e.slot] + "　" + (e.name || "（空）"), "", e.id ? [btn("脱下", () => send({ op: "unequip", slot: e.no }), "ghost")] : []);
+}
+function renderBag() {
+  const ul = $("bag"); ul.replaceChildren();
+  if (!me.bag.length) { actRow(ul, "（空）", "", []); return; }
+  for (const b of me.bag) {
+    const ops = [];
+    if (b.use) ops.push(btn("使用", () => send({ op: "use", item: b.id })));
+    if (b.equip) {
+      const sel = document.createElement("select"); sel.title = "装备槽（默认按物品编号推测，服务端不校验类型）";
+      for (const [no, nm] of Object.entries(SLOT_NO)) { const o = document.createElement("option"); o.value = no; o.textContent = nm; sel.appendChild(o); }
+      sel.value = b.slot || 6;
+      ops.push(sel, btn("穿", () => send({ op: "equip", slot: +sel.value, item: b.id })));
+    }
+    const q = document.createElement("input"); q.type = "number"; q.min = 1; q.max = Math.max(1, b.n); q.value = 1; q.title = "存入钱庄 / VIP 回收（卖）的数量";
+    ops.push(q, btn("存", () => send({ op: "bank_put", item: b.id, n: Math.max(1, Math.min(b.n, +q.value || 1)) }), "ghost"), btn("丢", () => send({ op: "discard", item: b.id }), "ghost"), btn("卖", () => send({ op: "recycle", item: b.id, n: Math.max(1, Math.min(b.n, +q.value || 1)) }), "ghost"));
+    if (b.book) ops.push(btn("读", () => send({ op: "read_book", item: b.id }), "ghost"));
+    if (b.job) ops.push(btn("託鏢", () => { const nm = $("bjName").value.trim(); if (!nm) { toast("先在「交易」页填收件人名字"); openTab("trade"); return; } send({ op: "biaoju_send", name: nm, item: b.id, n: Math.max(1, Math.min(b.n, +q.value || 1)) }); }, "ghost"));
+    actRow(ul, b.name, b.n > 1 ? "×" + b.n : "", ops);
+  }
+}
+function renderBank(items) {
+  BANK = items; const ul = $("bankItems"); ul.replaceChildren();
+  if (!items.length) { actRow(ul, "（钱庄是空的）", "", []); return; }
+  for (const it of items) {
+    const q = document.createElement("input"); q.type = "number"; q.min = 1; q.max = it.n; q.value = 1;
+    actRow(ul, it.name, "×" + it.n, [q, btn("取", () => send({ op: "bank_get", item: it.id, n: Math.max(1, Math.min(it.n, +q.value || 1)) }))]);
+  }
+}
+function renderBiaoju(list) {
+  const ul = $("bjList"); ul.replaceChildren();
+  if (!list.length) { actRow(ul, "（鏢局里没有别人託给你的东西）", "", []); return; }
+  list.forEach((r, i) => {
+    const cb = document.createElement("input"); cb.type = "checkbox"; cb.dataset.row = i + 1; cb.title = "选中要取的";
+    actRow(ul, r.name, "来自 " + r.from + "　耐久 " + r.dur, [cb]);
+  });
+  const row = document.createElement("li");
+  row.append(btn("取出所选", () => {
+    const rows = [...ul.querySelectorAll("input[type=checkbox]:checked")].map(c => +c.dataset.row);
+    if (!rows.length) { toast("先勾选要取的"); return; }
+    send({ op: "biaoju_claim", rows });
+  }));
+  ul.appendChild(row);
+}
+$("bjQuery").onclick = () => send({ op: "biaoju_query" });
+$("wkWood").onclick = () => send({ op: "work_start", job: 1 });
+$("wkFish").onclick = () => send({ op: "work_start", job: 2 });
+$("wkMine").onclick = () => send({ op: "work_start", job: 3 });
+$("wkStop").onclick = () => send({ op: "work_stop" });
+$("wkFarm").onclick = () => { const s = parseInt($("fmSeed").value, 10); send(Number.isInteger(s) ? { op: "farm_start", seed: s } : { op: "farm_start" }); };
+let MASTERS = [];
+$("msRefresh").onclick = () => send({ op: "masters" });
+$("msBetray").onclick = () => { if (confirm("背叛师门（@bpsm）：门派清零，所有武功等级减半，不可逆。确定？")) send({ op: "say", text: "@bpsm" }); };
+$("msMaster").onchange = renderMsKf;
+$("msGo").onclick = () => {
+  const master = parseInt($("msMaster").value, 10), kf = parseInt($("msKf").value, 10), points = parseInt($("msPts").value, 10);
+  if (!Number.isInteger(master) || !Number.isInteger(kf)) return toast("这张图上没有师傅");
+  if (!Number.isInteger(points) || points < 1) return toast("請輸入大於1的正整數");
+  send({ op: "study", master, kf, points });
+};
+function renderMsKf() {
+  const m = MASTERS.find((x) => String(x.master) === $("msMaster").value);
+  fillSelect($("msKf"), m ? m.kfs.map((k) => [k.kf, k.name + (k.lv == null ? "（没学过）" : " Lv" + k.lv) + "/" + k.cap + (k.ok ? "" : "（门派 " + k.school + "）")]) : [["", "（无）"]], true);
+}
+function showMasters(m) {
+  MASTERS = m.list;
+  $("msInfo").textContent = "地图 " + m.map + "，学习点 " + m.study + "，门派 " + m.school + "；" + (m.list.length ? "这里有 " + m.list.length + " 位师傅。" : "这张图上没有师傅。");
+  fillSelect($("msMaster"), m.list.length ? m.list.map((x) => [x.master, x.name]) : [["", "（没有师傅）"]], true);
+  renderMsKf();
+  if (m.study > 0 && !$("msPts").dataset.touched) $("msPts").max = m.study;
+}
+function showWork(m) { $("wkState").textContent = m.on ? "正在" + m.name + "（工具：" + m.tool + (m.seed ? "，种子：" + m.seed : "") + "）…" : "没有在工作" + (m.text ? "：" + m.text : ""); }
+function renderGround() {
+  const ul = $("ground"); ul.replaceChildren();
+  if (!GROUND.length) { actRow(ul, "（没有）", "", []); return; }
+  for (const g of GROUND) actRow(ul, g.name + (g.mine ? "（我丢的）" : ""), g.n > 1 ? "×" + g.n : "", [btn("捡", () => send({ op: "pickup", i: g.i }))]);
+}
+function renderShop(items) {
+  const ul = $("shopItems"); ul.replaceChildren();
+  for (const it of items) {
+    const q = document.createElement("input"); q.type = "number"; q.min = 1; q.max = 9999; q.value = 1;
+    actRow(ul, it.name, it.ok ? "" : "不可买", [q, btn("购买", () => send({ op: "buy", items: [{ item: it.id, n: Math.max(1, Math.min(9999, +q.value || 1)) }] }))], it.ok ? "" : "banned");
+  }
+}
+function pairs(box, spec, f) {
+  box.replaceChildren();
+  for (const [k, name] of spec) {
+    const d = document.createElement("div"), a = document.createElement("span"), b = document.createElement("b");
+    a.textContent = name; b.textContent = f[k] ?? "-"; b.dataset.k = k; d.append(a, b); box.appendChild(d);
+  }
+}
+let gclock = null;        // 游戏时钟校时点 {t, at}：t = 服务端心跳计数，一格 75 秒，距校时每满一格 +1（最多 +3，同原版）
+const SHICHEN = "子丑寅卯辰巳午未申酉戌亥";
+function setClock(t) { gclock = t == null ? null : { t, at: Date.now() }; showClock(); }
+function showClock() {
+  const el = $("clk");
+  if (!gclock) { el.textContent = ""; return; }
+  const t = gclock.t + Math.min(3, Math.floor((Date.now() - gclock.at) / 75000));
+  el.textContent = "第" + (Math.floor(t / 34560) + 1) + "年 " + (Math.floor(t % 34560 / 2880) + 1) + "月" + (Math.floor(t % 2880 / 96) + 1) + "日 " + SHICHEN[(t % 96) >> 3] + "時" + ((t & 7) + 1) + "刻";
+}
+setInterval(showClock, 10000);
+function showWhere() { const f = me.f; $("where").textContent = "地图 " + f.map + "　(" + f.x + ", " + f.y + ")　金 " + f.jy_money; }
+function render(first) {
+  const f = me.f;
+  $("nm").textContent = me.name; $("nick").textContent = (me.nickname ? "外号 " + me.nickname + "　" : "") + "账号 " + me.jyid;
+  showWhere();
+  bar("jing", f.dangqianjing, f.zuidajing); bar("xue", f.dangqianxue, f.zuidaxue); bar("shen", f.dangqianshen, f.zuidashen); bar("nei", f.dangqiannei, f.zuidanei);
+  pairs($("attrs"), LABEL.attrs, f); pairs($("stats"), LABEL.stats, f);
+  renderEquip(); renderBag(); renderKf(); renderAcct(); renderQuests(); if (SOC) renderSocial(SOC);
+  $("bagH").textContent = "背包（容量 " + me.bag_cap + "，共 " + me.bag.reduce((a, b) => a + b.n, 0) + " 件）";
+  const sk = Object.entries(me.wugong).map(([k, v]) => [LABEL.wugong[k] || k, "Lv." + v]).concat(Object.entries(me.jineng).map(([k, v]) => [LABEL.jineng[k] || k, "Lv." + v]));
+  const ul = $("skills"); ul.replaceChildren();
+  if (!sk.length) actRow(ul, "（还没有）", "", []);
+  for (const [a, b] of sk) actRow(ul, a, b, []);
+  if (first) { actors.clear(); others = []; ROUTE = []; }
+  loadMap(f.map); syncActors();
+  if (first) { $("mx").value = f.x; $("my").value = f.y; $("tmap").value = f.map; $("tx").value = f.x; $("ty").value = f.y; }
+}
+
+// ---------------------------------------------------------------- 地图 / 碰撞 / 寻路
+// 背景：原版 SceneBG*.mrg 里以地图编号命名的整张 JPEG；角色坐标 = 这张图上的像素坐标。
+// 碰撞：dat\WSG*.dat 里每张图一个 20×20 像素的格子位图（1 = 不能走），网关 /walk/<地图>.json 给出；没有就直接走。
+const MAP = { id: null, img: null, state: "none", mini: null }, cv = $("map"), ctx = cv.getContext("2d"), mcv = $("miniCv"), mctx = mcv.getContext("2d");
+let DLG = null, PENDING = null, GROUND = [], BANK = null, SOC = null, LASTW = null, ROLL = null;
+const CH = { public: "", whisper: "[私聊] ", org: "[组织] ", party: "[队伍] " };
+const ATTR_NAMES = ["臂力", "胆识", "悟性", "富源", "定力", "机敏", "根骨"];
+function fillSelect(sel, items, keep) {
+  const old = sel.value; sel.replaceChildren();
+  for (const [v, t] of items) { const o = document.createElement("option"); o.value = v; o.textContent = t; sel.appendChild(o); }
+  if (keep && items.some(([v]) => String(v) === old)) sel.value = old;
+}
+function renderWhisperTargets() {
+  const items = others.map((p) => [p.jyid, p.name]);
+  if (LASTW && !items.some(([v]) => v === LASTW.jyid)) items.push([LASTW.jyid, LASTW.name]);
+  fillSelect($("wto"), items.length ? items : [["", "（没有人）"]], true);
+}
+function renderSocPlayers() {
+  const ul = $("socPlayers"); ul.replaceChildren();
+  if (!others.length) { actRow(ul, "（同图没有别人）", "", []); return; }
+  for (const p of others) actRow(ul, p.name, "", [
+    btn("私聊", () => { LASTW = { jyid: p.jyid, name: p.name }; renderWhisperTargets(); $("chan").value = "whisper"; $("wto").value = p.jyid; $("wto").hidden = false; $("text").focus(); }, "ghost"),
+    btn("组队", () => send({ op: "party", a: "invite", jyid: p.jyid }), "ghost"),
+    btn("招收", () => send({ op: "org", a: "recruit", jyid: p.jyid }), "ghost"),
+    btn("交易", () => { send({ op: "trade", a: "request", jyid: p.jyid }); openTab("trade"); }, "ghost")]);
+}
+function renderSocial(m) {
+  SOC = m;
+  const pm = m.party.members;
+  $("partyInfo").textContent = pm.length ? "队伍：" + pm.map((x, i) => (i ? "" : "★") + x.name).join("、") : "没有队伍（在本页创建，或接受别人的邀请）";
+  const inv = $("partyInv"); inv.replaceChildren();
+  for (const i of m.party.invites) actRow(inv, i.name + " 邀请你组队", "", [btn("接受", () => send({ op: "party", a: "answer", jyid: i.jyid, accept: true })), btn("拒绝", () => send({ op: "party", a: "answer", jyid: i.jyid, accept: false }), "ghost")]);
+  $("orgInfo").textContent = m.org ? "组织：" + (m.org.name || "#" + m.org.id) + (m.org.online.length ? "　在线成员：" + m.org.online.join("、") : "") : "没有组织";
+  const oi = $("orgInv"); oi.replaceChildren();
+  for (const i of m.org_invites) actRow(oi, i.cname + " 招收你加入「" + i.name + "」", "", [btn("加入", () => send({ op: "org", a: "join", jyid: i.creator }))]);
+  const t = m.trade;
+  $("tradeInfo").textContent = t ? "与 " + t.with.name + " 交易中（" + (t.stage === "confirm" ? "确认阶段" : "放东西 / 锁定") + "）" : "没有进行中的交易（在“社交”页对同图玩家点“交易”）";
+  $("tradeBody").hidden = !t;
+  if (t) {
+    for (const [id, list] of [["tMine", t.mine], ["tTheirs", t.theirs]]) { const ul = $(id); ul.replaceChildren(); if (!list.length) actRow(ul, "（空）", "", []); for (const it of list) actRow(ul, it.name, "", []); }
+    $("tState").textContent = "我放的金钱 " + t.money_mine + "　对方放的金钱 " + (t.money_theirs || "（原版第一次放钱时对方收不到通知）") + "　" + (t.i_locked ? "我已锁定　" : "") + (t.they_locked ? "对方已锁定" : "");
+    if (me) fillSelect($("tItem"), me.bag.map((b) => [b.id, b.name + (b.n > 1 ? " ×" + b.n : "")]), true);
+  }
+  if (m.points != null) $("acctInfo").textContent = "商城点数：" + m.points;
+}
+function renderKf() {
+  const ul = $("kfList"); ul.replaceChildren();
+  if (!me.kf || !me.kf.length) { actRow(ul, "（还没有武功）", "", []); return; }
+  for (const k of me.kf) {
+    const sel = document.createElement("select"); for (let i = 0; i < 15; i++) { const o = document.createElement("option"); o.value = i; o.textContent = "槽 " + i; sel.appendChild(o); }
+    actRow(ul, k.name, "Lv." + k.lv, [sel, btn("装备", () => send({ op: "kf", a: "equip", slot: +sel.value, id: k.id }), "ghost"), btn("删除", () => { if (!$("kfPw").value) { toast("要填账号密码"); return; } send({ op: "kf", a: "delete", ids: [k.id], password: $("kfPw").value }); }, "ghost")]);
+  }
+}
+function openCreate(births) {
+  fillSelect($("cMap"), births.map((b) => [b, "地图 " + b]));
+  fillSelect($("cHead"), [1, 2, 3, 4, 5, 6, 7, 8].map((h) => [h, "头像 " + h]));
+  const box = $("cAttrs"); box.replaceChildren();
+  ATTR_NAMES.forEach((n, i) => { const l = document.createElement("label"), inp = document.createElement("input"); l.textContent = n; inp.type = "number"; inp.min = 0; inp.max = 99; inp.value = 20; inp.dataset.i = i; inp.addEventListener("input", cSum); l.appendChild(inp); box.appendChild(l); });
+  $("cNameMsg").textContent = ""; cSum(); $("create").hidden = false; $("loginBtn").disabled = false; $("logoutBtn").hidden = false;
+}
+function cAttrs() { return [...$("cAttrs").querySelectorAll("input")].map((i) => Math.max(0, Math.min(99, +i.value || 0))); }
+function cSum() { const t = cAttrs().reduce((a, b) => a + b, 0); $("cSum").textContent = "总和 " + t + " / 145"; $("cSum").style.color = t > 145 ? "#ff8a7a" : ""; $("cGo").disabled = t > 145; }
+let WALK = null, OBJS = [], NPCS = [], DOORS = [], ROUTE = [], awaitEcho = false, awaitT = 0, others = [], raf = 0, lastT = 0;
+const actors = new Map();
+
+class Walk {
+  constructor(d) {
+    this.cols = d.cols; this.rows = d.rows; this.cell = d.cell; this.stride = d.stride; this.w = d.w; this.h = d.h;
+    const bin = atob(d.data); this.b = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) this.b[i] = bin.charCodeAt(i);
+  }
+  blocked(cx, cy) { if (cx < 0 || cy < 0 || cx >= this.cols || cy >= this.rows) return true; return ((this.b[cy * this.stride + (cx >> 3)] >> (cx & 7)) & 1) === 1; }
+  blockedAt(x, y) { return this.blocked(Math.floor(x / this.cell), Math.floor(y / this.cell)); }
+  nearestFree(cx, cy, R = 15) {
+    if (!this.blocked(cx, cy)) return [cx, cy];
+    let best = null, bd = 1e9;
+    for (let r = 1; r <= R; r++) {
+      for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++) {
+        if (Math.max(Math.abs(dx), Math.abs(dy)) !== r || this.blocked(cx + dx, cy + dy)) continue;
+        const d = dx * dx + dy * dy; if (d < bd) { bd = d; best = [cx + dx, cy + dy]; }
+      }
+      if (best) return best;
+    }
+    return null;
+  }
+  los(x1, y1, x2, y2) {                           // 线段穿过的格子是否都可走（每 2 像素取一个点，比网关的 4 像素更严）
+    const n = Math.max(1, Math.ceil(Math.hypot(x2 - x1, y2 - y1) / 2));
+    for (let k = 1; k <= n; k++) if (this.blockedAt(x1 + (x2 - x1) * k / n, y1 + (y2 - y1) * k / n)) return false;
+    return true;
+  }
+  // A*（8 方向，斜着走要求两侧都空），再用视线检查把路径拉直。返回 [[x,y],...]（像素），第一个点是起点；走不到返回 null
+  findPath(sx, sy, tx, ty) {
+    const C = this.cell, cols = this.cols, rows = this.rows;
+    let s = this.nearestFree(Math.floor(sx / C), Math.floor(sy / C)), g = this.nearestFree(Math.floor(tx / C), Math.floor(ty / C));
+    if (!s || !g) return null;
+    const N = cols * rows, gs = new Float32Array(N).fill(Infinity), par = new Int32Array(N).fill(-1), closed = new Uint8Array(N);
+    const heap = [];                              // 最小堆 [f, idx]
+    const push = (f, i) => { heap.push([f, i]); let k = heap.length - 1; while (k > 0) { const p = (k - 1) >> 1; if (heap[p][0] <= heap[k][0]) break; [heap[p], heap[k]] = [heap[k], heap[p]]; k = p; } };
+    const pop = () => { const top = heap[0], last = heap.pop(); if (heap.length) { heap[0] = last; let k = 0; for (;;) { let l = 2 * k + 1, r = l + 1, m = k; if (l < heap.length && heap[l][0] < heap[m][0]) m = l; if (r < heap.length && heap[r][0] < heap[m][0]) m = r; if (m === k) break; [heap[m], heap[k]] = [heap[k], heap[m]]; k = m; } } return top; };
+    const si = s[1] * cols + s[0], gi = g[1] * cols + g[0];
+    const h = (x, y) => { const dx = Math.abs(x - g[0]), dy = Math.abs(y - g[1]); return (dx + dy) + (Math.SQRT2 - 2) * Math.min(dx, dy); };
+    gs[si] = 0; push(h(s[0], s[1]), si);
+    const DIRS = [[1, 0, 1], [-1, 0, 1], [0, 1, 1], [0, -1, 1], [1, 1, Math.SQRT2], [1, -1, Math.SQRT2], [-1, 1, Math.SQRT2], [-1, -1, Math.SQRT2]];
+    let found = false;
+    while (heap.length) {
+      const [, i] = pop(); if (closed[i]) continue; closed[i] = 1;
+      if (i === gi) { found = true; break; }
+      const x = i % cols, y = (i / cols) | 0;
+      for (const [dx, dy, c] of DIRS) {
+        const nx = x + dx, ny = y + dy; if (this.blocked(nx, ny)) continue;
+        if (dx && dy && (this.blocked(x + dx, y) || this.blocked(x, y + dy))) continue;
+        const ni = ny * cols + nx, ng = gs[i] + c; if (ng < gs[ni]) { gs[ni] = ng; par[ni] = i; push(ng + h(nx, ny), ni); }
+      }
+    }
+    if (!found) return null;
+    const cells = []; for (let i = gi; i !== -1; i = par[i]) cells.push(i); cells.reverse();
+    const pts = cells.map((i) => [(i % cols) * C + C / 2, ((i / cols) | 0) * C + C / 2]);
+    pts[0] = [sx, sy];                             // 起点用实际位置
+    const exact = g[0] === Math.floor(tx / C) && g[1] === Math.floor(ty / C);
+    if (exact) pts[pts.length - 1] = [tx, ty];
+    const out = [pts[0]]; let i = 0;
+    while (i < pts.length - 1) {                   // 贪心拉直：从 i 出发找最远能直走到的点
+      let j = pts.length - 1;
+      while (j > i + 1 && !this.los(pts[i][0], pts[i][1], pts[j][0], pts[j][1])) j--;
+      out.push(pts[j]); i = j;
+    }
+    return out;
+  }
+}
+
+function loadMap(id) {
+  if (MAP.id === id) return;
+  actors.clear(); ROUTE = []; awaitEcho = false; WALK = null; OBJS = []; NPCS = []; DOORS = []; GROUND = []; renderGround();
+  MAP.id = id; MAP.img = null; MAP.mini = null; MAP.big = null; MAP.state = "loading"; $("mapName").textContent = id; $("mapMsg").textContent = "载入地图 " + id + " …";
+  const im = new Image();
+  im.onload = () => {
+    if (MAP.id !== id) return;
+    syncActors(); MAP.img = im; MAP.state = "ok"; $("mapMsg").textContent = ""; $("mapName").textContent = "地图 " + id;
+    const k = Math.min(mcv.width / im.naturalWidth, mcv.height / im.naturalHeight);       // 小地图的底图只画一次
+    const m = document.createElement("canvas"); m.width = Math.round(im.naturalWidth * k); m.height = Math.round(im.naturalHeight * k);
+    m.getContext("2d").drawImage(im, 0, 0, m.width, m.height); MAP.mini = { c: m, k };
+  };
+  im.onerror = () => {
+    if (MAP.id !== id) return;
+    // 不是城市图：试试大地图（野外，网关按 MapMrg 地块 + Pan_J 地面贴图现渲染，768 像素一块切片）
+    fetch("/bigmap/" + id + "/info.json").then((r) => (r.ok ? r.json() : null)).then((info) => {
+      if (MAP.id !== id) return;
+      if (!info) { loadRoom(id); return; }
+      MAP.big ={ id, tile: info.tile, tiles: new Map() };
+      MAP.img = { naturalWidth: info.w, naturalHeight: info.h, complete: true, big: true };
+      syncActors(); MAP.state = "ok"; $("mapMsg").textContent = ""; $("mapName").textContent = "地图 " + id + "（大地图）";
+      const mi = new Image();
+      mi.onload = () => {                                      // 小地图：每格一个色块的缩略图
+        if (MAP.id !== id) return;
+        const k = Math.min(mcv.width / info.w, mcv.height / info.h);
+        const m = document.createElement("canvas"); m.width = Math.round(info.w * k); m.height = Math.round(info.h * k);
+        m.getContext("2d").drawImage(mi, 0, 0, m.width, m.height); MAP.mini = { c: m, k };
+      };
+      mi.src = "/bigmap/" + id + "/mini.png";
+    }).catch(() => { if (MAP.id === id) { MAP.state = "missing"; $("mapMsg").textContent = "没有找到地图 " + id + " 的背景图"; } });
+  };
+  im.src = "/maps/" + id + ".jpg";
+  fetch("/walk/" + id + ".json").then((r) => (r.ok ? r.json() : null)).then((d) => { if (d && MAP.id === id) WALK = new Walk(d); }).catch(() => {});
+  // 前景物件（建筑 / 树的抠图）：人物走到它们后面时重画盖住人；贴图在网关第一次被请求时生成
+  fetch("/objects/" + id + ".json").then((r) => (r.ok ? r.json() : null)).then((d) => { if (d && MAP.id === id) OBJS = d; }).catch(() => {});
+  // NPC / 怪物摆放（原版 pic\NpcMrg*.Mrg）：只有位置和名字，人形 NPC 的精灵还没找到对应表，先画名牌
+  fetch("/npcs/" + id + ".json").then((r) => (r.ok ? r.json() : null)).then((d) => { if (d && MAP.id === id) NPCS = d; }).catch(() => {});
+  // 门 / 出入口（NpcMrg 里模型 0 的『進入點』触发区）：走进矩形就触发事件（多半是传送）
+  fetch("/zones/" + id + ".json").then((r) => (r.ok ? r.json() : null)).then((d) => { if (d && MAP.id === id) DOORS = d; }).catch(() => {});
+}
+// 缺背景图的地图（随客户端带的资源里约 2800 张：钱庄 / 农田 / 室内……）：NPC 和门的摆放还在，页面自己画一个占位房间——地板 + 格线 + 提示
+function loadRoom(id) {
+  fetch("/room/" + id + ".json").then((r) => (r.ok ? r.json() : null)).then((room) => {
+    if (MAP.id !== id) return;
+    if (!room) { MAP.state = "missing"; $("mapMsg").textContent = "没有找到地图 " + id + " 的背景图"; return; }
+    const c = document.createElement("canvas"); c.width = room.w; c.height = room.h;
+    const g = c.getContext("2d"), cs = room.cell;
+    g.fillStyle = "#3a3a30"; g.fillRect(0, 0, room.w, room.h);
+    for (let y = 0; y * cs < room.h; y++) for (let x = 0; x * cs < room.w; x++) { g.fillStyle = (x + y) % 2 ? "#44443a" : "#3d3d33"; g.fillRect(x * cs, y * cs, cs, cs); }
+    g.strokeStyle = "rgba(255,255,255,.05)"; g.lineWidth = 1;
+    for (let x = 0; x <= room.w; x += cs) { g.beginPath(); g.moveTo(x + .5, 0); g.lineTo(x + .5, room.h); g.stroke(); }
+    for (let y = 0; y <= room.h; y += cs) { g.beginPath(); g.moveTo(0, y + .5); g.lineTo(room.w, y + .5); g.stroke(); }
+    g.strokeStyle = "rgba(230,190,90,.35)"; g.lineWidth = 6; g.strokeRect(3, 3, room.w - 6, room.h - 6);
+    g.fillStyle = "rgba(255,255,255,.35)"; g.font = "bold 22px sans-serif"; g.textAlign = "center";
+    g.fillText("地图 " + id + "（占位房间：这张图的画面资源没有随客户端提供）", room.w / 2, 40);
+    c.naturalWidth = room.w; c.naturalHeight = room.h; c.complete = true;
+    syncActors(); MAP.img = c; MAP.state = "ok"; $("mapMsg").textContent = ""; $("mapName").textContent = "地图 " + id + "（占位）";
+    const k = Math.min(mcv.width / room.w, mcv.height / room.h);
+    const m = document.createElement("canvas"); m.width = Math.round(room.w * k); m.height = Math.round(room.h * k);
+    m.getContext("2d").drawImage(c, 0, 0, m.width, m.height); MAP.mini = { c: m, k };
+  }).catch(() => { if (MAP.id === id) { MAP.state = "missing"; $("mapMsg").textContent = "没有找到地图 " + id + " 的背景图"; } });
+}
+// 大地图切片：只画屏幕里看得到的，没到的块先画暗底，到了下一帧就补上
+function drawBig(v, W, H, sx, sy, ex, ey) {
+  const B = MAP.big; if (!B) return;
+  const T = B.tile;
+  ctx.fillStyle = "#1c2a1a"; ctx.fillRect((sx - v.ox) * v.s, (sy - v.oy) * v.s, (ex - sx) * v.s, (ey - sy) * v.s);
+  for (let ty = Math.floor(sy / T); ty <= Math.floor((ey - 1) / T); ty++) {
+    for (let tx = Math.floor(sx / T); tx <= Math.floor((ex - 1) / T); tx++) {
+      const key = tx + "_" + ty; let t = B.tiles.get(key);
+      if (!t) {
+        t = new Image(); t.src = "/bigmap/" + B.id + "/" + key + ".jpg"; B.tiles.set(key, t);
+        if (B.tiles.size > 160) B.tiles.delete(B.tiles.keys().next().value);          // 最旧的先扔
+      }
+      if (t.complete && t.naturalWidth) ctx.drawImage(t, (tx * T - v.ox) * v.s, (ty * T - v.oy) * v.s, t.naturalWidth * v.s + 0.5, t.naturalHeight * v.s + 0.5);
+    }
+  }
+}
+function doorAt(x, y) { return DOORS.find((d) => x >= d.x - 10 && x <= d.x + d.w + 10 && y >= d.y - 10 && y <= d.y + d.h + 10); }
+const HIDE = new Map();                             // 正在被打 / 刚打死的怪（npc id -> 隐藏到的时刻）；服务端没有"怪已死"的状态，打赢后隐藏 60 秒当刷新间隔
+function visibleNpcs() {
+  const npc = $("optNpc").checked, mob = $("optMob").checked;
+  const now = performance.now();
+  return NPCS.filter((n) => (n.kind === "mob" ? mob : npc) && !((HIDE.get(n.id) || 0) > now));
+}
+function npcAt(x, y, s) {
+  let best = null, bd = 24 / s;
+  for (const n of visibleNpcs()) { const d = Math.hypot(n.x - x, n.y - y); if (d < bd) { bd = d; best = n; } }
+  return best;
+}
+function view() {
+  const W = cv.clientWidth, H = cv.clientHeight, im = MAP.img;
+  if (!im) return { W, H, s: ZOOM, ox: 0, oy: 0 };
+  const s = ZOOM, vw = W / s, vh = H / s, self = actors.get("me");      // 镜头跟着角色当前的（补间中的）位置
+  const cx = self ? self.x : me ? me.f.x : im.naturalWidth / 2, cy = self ? self.y : me ? me.f.y : im.naturalHeight / 2;
+  const ox = im.naturalWidth <= vw ? (im.naturalWidth - vw) / 2 : Math.max(0, Math.min(im.naturalWidth - vw, cx - vw / 2));
+  const oy = im.naturalHeight <= vh ? (im.naturalHeight - vh) / 2 : Math.max(0, Math.min(im.naturalHeight - vh, cy - vh / 2));
+  return { W, H, s, ox, oy };
+}
+function syncActors() {
+  if (!me) { actors.clear(); return; }
+  const want = new Map();
+  want.set("me", { x: me.f.x, y: me.f.y, name: me.name, look: me.look || { layers: [] }, self: true });
+  for (const p of others) if (p.x != null) want.set(p.jyid, { x: p.x, y: p.y, name: p.name, look: p.look || { layers: [] } });
+  for (const k of [...actors.keys()]) if (!want.has(k)) actors.delete(k);
+  for (const [k, w] of want) {
+    let a = actors.get(k);
+    if (!a) { a = new Sprites.Actor(w.x, w.y); actors.set(k, a); } else a.goto(w.x, w.y);
+    a.name = w.name; a.look = w.look; a.self = !!w.self;
+  }
+}
+// 寻路走路：路径是一串拉直后的路点；每走到一个点才向服务端发下一段 0x06（原版也是边走边报位置）
+function goTo(x, y) {
+  const a = actors.get("me"); if (!a || !me || !MAP.img) return;
+  if (!WALK) { ROUTE = []; send({ op: "move", x: Math.round(x), y: Math.round(y) }); return; }       // 这张图没有碰撞数据：直接走
+  const path = WALK.findPath(a.x, a.y, x, y);
+  if (!path) { ROUTE = []; toast("走不到那里"); return; }
+  ROUTE = path.slice(1); awaitEcho = false;
+}
+function routeTick() {
+  if (PENDING) {
+    const a_ = actors.get("me");
+    if (performance.now() > PENDING.until || DLG) PENDING = null;
+    else if (a_ && !ROUTE.length && !awaitEcho && Math.hypot(a_.tx - a_.x, a_.ty - a_.y) < 0.5) {
+      const d = Math.hypot(a_.x - PENDING.x, a_.y - PENDING.y);
+      if (d < 380) send({ op: "talk", npc: PENDING.id }); else toast("走不到 NPC 旁边");
+      PENDING = null;
+    }
+  }
+  if (!ROUTE.length || awaitEcho) return;
+  const a = actors.get("me"); if (!a || Math.hypot(a.tx - a.x, a.ty - a.y) > 0.5) return;
+  const p = ROUTE.shift(); awaitEcho = true; clearTimeout(awaitT); awaitT = setTimeout(() => { awaitEcho = false; }, 1200);
+  send({ op: "move", x: Math.round(p[0]), y: Math.round(p[1]) });
+}
+
+// ---------------------------------------------------------------- 绘制
+function bubbleText(ctx2, text, x, y) {
+  ctx2.font = "13px sans-serif"; ctx2.textAlign = "center";
+  const lines = []; let cur = "";
+  for (const ch of text) { cur += ch; if (ctx2.measureText(cur).width > 150) { lines.push(cur); cur = ""; } }
+  if (cur) lines.push(cur);
+  const w = Math.max(...lines.map((l) => ctx2.measureText(l).width)) + 16, h = lines.length * 16 + 10, bx = x - w / 2, by = y - h;
+  ctx2.fillStyle = "rgba(255,250,235,.95)"; ctx2.strokeStyle = "rgba(60,40,10,.8)"; ctx2.lineWidth = 1.5;
+  ctx2.beginPath(); ctx2.roundRect(bx, by, w, h, 8); ctx2.fill(); ctx2.stroke();
+  ctx2.beginPath(); ctx2.moveTo(x - 6, by + h); ctx2.lineTo(x, by + h + 7); ctx2.lineTo(x + 6, by + h); ctx2.closePath(); ctx2.fill(); ctx2.stroke();
+  ctx2.fillStyle = "#2b2114"; lines.forEach((l, i) => ctx2.fillText(l, x, by + 17 + i * 16));
+}
+function frame(now) {
+  raf = requestAnimationFrame(frame);
+  const dt = lastT ? Math.min(0.5, (now - lastT) / 1000) : 0; lastT = now;
+  for (const a of actors.values()) a.update(now, dt);
+  routeTick();
+  const dpr = window.devicePixelRatio || 1, W = cv.clientWidth, H = cv.clientHeight;
+  if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(H * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.fillStyle = "#14110e"; ctx.fillRect(0, 0, W, H);
+  const v = view(), im = MAP.img;
+  if (im) {
+    ctx.imageSmoothingQuality = "high";
+    const sx = Math.max(0, v.ox), sy = Math.max(0, v.oy), ex = Math.min(im.naturalWidth, v.ox + W / v.s), ey = Math.min(im.naturalHeight, v.oy + H / v.s);
+    if (ex > sx && ey > sy) {
+      if (im.big) drawBig(v, W, H, sx, sy, ex, ey);
+      else ctx.drawImage(im, sx, sy, ex - sx, ey - sy, (sx - v.ox) * v.s, (sy - v.oy) * v.s, (ex - sx) * v.s, (ey - sy) * v.s);
+    }
+    if (WALK && $("optWalk").checked) {            // 碰撞层
+      ctx.fillStyle = "rgba(255,40,40,.28)"; const C = WALK.cell;
+      for (let cy = Math.max(0, Math.floor(v.oy / C)); cy <= Math.min(WALK.rows - 1, Math.floor((v.oy + H / v.s) / C)); cy++)
+        for (let cx = Math.max(0, Math.floor(v.ox / C)); cx <= Math.min(WALK.cols - 1, Math.floor((v.ox + W / v.s) / C)); cx++)
+          if (WALK.blocked(cx, cy)) ctx.fillRect((cx * C - v.ox) * v.s, (cy * C - v.oy) * v.s, C * v.s + 0.5, C * v.s + 0.5);
+    }
+    if (ROUTE.length && actors.get("me")) {          // 正在走的路线
+      const a = actors.get("me"); ctx.strokeStyle = "rgba(255,230,120,.85)"; ctx.lineWidth = 2; ctx.setLineDash([6, 5]); ctx.beginPath(); ctx.moveTo((a.tx - v.ox) * v.s, (a.ty - v.oy) * v.s);
+      for (const p of ROUTE) ctx.lineTo((p[0] - v.ox) * v.s, (p[1] - v.oy) * v.s); ctx.stroke(); ctx.setLineDash([]);
+      const e = ROUTE[ROUTE.length - 1]; ctx.beginPath(); ctx.arc((e[0] - v.ox) * v.s, (e[1] - v.oy) * v.s, 6, 0, 7); ctx.strokeStyle = "#ffe678"; ctx.stroke();
+    }
+  }
+  if (im && GROUND.length) {                        // 地上的物品：小方块，点一下捡
+    for (const g of GROUND) {
+      if (g.x == null) continue;
+      const px = (g.x - v.ox) * v.s, py = (g.y - v.oy) * v.s;
+      if (px < -20 || py < -20 || px > W + 20 || py > H + 20) continue;
+      ctx.fillStyle = "rgba(120,220,255,.95)"; ctx.strokeStyle = "#fff"; ctx.lineWidth = 1.5; ctx.fillRect(px - 5, py - 5, 10, 10); ctx.strokeRect(px - 5, py - 5, 10, 10);
+      if ($("optNames").checked) { ctx.font = "12px sans-serif"; ctx.textAlign = "center"; ctx.lineWidth = 3; ctx.strokeStyle = "rgba(0,0,0,.8)"; ctx.strokeText(g.name, px, py - 9); ctx.fillStyle = "#cdf3ff"; ctx.fillText(g.name, px, py - 9); }
+    }
+  }
+  if (im && DOORS.length) {                         // 门：半透明金框 + 「入口」，点一下走进去（走到矩形里就触发）
+    ctx.lineWidth = 2; ctx.font = "12px sans-serif"; ctx.textAlign = "center";
+    for (const d of DOORS) {
+      const dx = (d.x - v.ox) * v.s, dy = (d.y - v.oy) * v.s, dw = d.w * v.s, dh = d.h * v.s;
+      if (dx > W || dy > H || dx + dw < 0 || dy + dh < 0) continue;
+      ctx.fillStyle = "rgba(255,210,80,.13)"; ctx.strokeStyle = "rgba(255,210,80,.75)"; ctx.fillRect(dx, dy, dw, dh); ctx.strokeRect(dx, dy, dw, dh);
+      if ($("optNames").checked) { ctx.lineWidth = 3; ctx.strokeStyle = "rgba(0,0,0,.8)"; ctx.strokeText("入口", dx + dw / 2, dy - 4); ctx.fillStyle = "#ffe08a"; ctx.fillText("入口", dx + dw / 2, dy - 4); ctx.lineWidth = 2; }
+    }
+  }
+  if (im && NPCS.length) {                          // NPC 名牌：脚下一个标记 + 头顶名字（人形 NPC 的精灵没有对应表，见 客户端库说明）
+    const x0 = v.ox - 40, y0 = v.oy - 40, x1 = v.ox + W / v.s + 40, y1 = v.oy + H / v.s + 40, names = $("optNames").checked;
+    for (const n of visibleNpcs()) {
+      if (n.x < x0 || n.x > x1 || n.y < y0 || n.y > y1) continue;
+      const px = (n.x - v.ox) * v.s, py = (n.y - v.oy) * v.s, mob = n.kind === "mob";
+      ctx.beginPath(); ctx.moveTo(px, py - 9 * v.s); ctx.lineTo(px + 7 * v.s, py); ctx.lineTo(px, py + 9 * v.s); ctx.lineTo(px - 7 * v.s, py); ctx.closePath();
+      ctx.fillStyle = mob ? "rgba(220,60,50,.85)" : "rgba(240,190,60,.92)"; ctx.fill(); ctx.lineWidth = 1.5; ctx.strokeStyle = "#fff"; ctx.stroke();
+      if (names) {
+        ctx.font = "13px sans-serif"; ctx.textAlign = "center"; ctx.lineWidth = 3.5; ctx.strokeStyle = "rgba(0,0,0,.8)"; ctx.strokeText(n.name, px, py - 14 * v.s);
+        ctx.fillStyle = mob ? "#ffb8b0" : "#ffe9a0"; ctx.fillText(n.name, px, py - 14 * v.s);
+      }
+    }
+  }
+  if (me && im) {
+    const list = [...actors.values()].filter((a) => { const px = (a.x - v.ox) * v.s, py = (a.y - v.oy) * v.s; return !(px < -100 || py < -60 || px > W + 100 || py > H + 220); });
+    // 画家算法：人物按脚下 y、前景物件按"底边 y"一起排序。物件本来就画在背景里，只有"有人走在它后面"（脚比底边靠上、人物矩形和物件重叠）时才需要重画盖住人
+    const items = list.map((a) => ({ d: a.y, a }));
+    for (const n of visibleNpcs()) if (n.spr && n.x > v.ox - 120 && n.x < v.ox + W / v.s + 120 && n.y > v.oy - 40 && n.y < v.oy + H / v.s + 260) items.push({ d: n.y, n });
+    if (OBJS.length) {
+      const x0 = v.ox, y0 = v.oy, x1 = v.ox + W / v.s, y1 = v.oy + H / v.s;
+      for (const o of OBJS) {
+        if (o.x > x1 || o.x + o.w < x0 || o.y > y1 || o.y + o.h < y0) continue;
+        if (!list.some((a) => a.y < o.d && a.x + 70 > o.x && a.x - 70 < o.x + o.w && a.y + 10 > o.y && a.y - 170 < o.y + o.h)) continue;
+        if (!o.img) { o.img = new Image(); o.img.src = o.u; }
+        if (o.img.complete && o.img.naturalWidth) items.push({ d: o.d, o });
+      }
+    }
+    items.sort((p, q) => p.d - q.d);
+    for (const it of items) {
+      if (it.n) { const n = it.n, px = (n.x - v.ox) * v.s, py = (n.y - v.oy) * v.s; if (Sprites.npcReady(n.spr)) { ctx.fillStyle = "rgba(0,0,0,.28)"; ctx.beginPath(); ctx.ellipse(px, py, 20 * v.s, 8 * v.s, 0, 0, 7); ctx.fill(); Sprites.drawNpc(ctx, n.spr, "S", n.dir, Math.floor((now + n.id * 97) / 200), px, py, v.s); } continue; }
+      if (it.o) { const o = it.o; ctx.drawImage(o.img, (o.x - v.ox) * v.s, (o.y - v.oy) * v.s, o.w * v.s, o.h * v.s); continue; }
+      const a = it.a, px = (a.x - v.ox) * v.s, py = (a.y - v.oy) * v.s;
+      if (Sprites.ready(a.look)) {
+        if (a.self) { ctx.beginPath(); ctx.ellipse(px, py, 22 * v.s, 9 * v.s, 0, 0, 7); ctx.fillStyle = "rgba(217,64,43,.35)"; ctx.fill(); ctx.lineWidth = 1.5; ctx.strokeStyle = "#e0553f"; ctx.stroke(); }
+        Sprites.draw(ctx, a.look, a, px, py, v.s);
+      } else {
+        ctx.beginPath(); ctx.arc(px, py, 7, 0, 7); ctx.fillStyle = a.self ? "#d9402b" : "#2f78a8"; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = "#fff"; ctx.stroke();
+      }
+    }
+    const showNames = $("optNames").checked;
+    for (const a of list) {                      // 名字和气泡最后画，不被建筑盖住
+      const px = (a.x - v.ox) * v.s, py = (a.y - v.oy) * v.s, spr = Sprites.ready(a.look);
+      if (showNames) { ctx.font = "13px sans-serif"; ctx.textAlign = "center"; ctx.lineWidth = 3.5; ctx.strokeStyle = "rgba(0,0,0,.8)"; ctx.strokeText(a.name, px, py + (spr ? 18 : 20)); ctx.fillStyle = a.self ? "#ffd9d2" : "#fff"; ctx.fillText(a.name, px, py + (spr ? 18 : 20)); }
+      if (a.bubble && a.bubble.until > now) bubbleText(ctx, a.bubble.text, px, py - (spr ? 150 * v.s : 20));
+    }
+  }
+  drawMini(v);
+}
+function drawMini(v) {
+  mctx.clearRect(0, 0, mcv.width, mcv.height);
+  if (!MAP.mini || !me) return;
+  const { c, k } = MAP.mini; mctx.drawImage(c, 0, 0);
+  mctx.strokeStyle = "rgba(255,230,120,.9)"; mctx.lineWidth = 1.5; mctx.strokeRect(v.ox * k, v.oy * k, (v.W / v.s) * k, (v.H / v.s) * k);     // 当前视野
+  for (const n of visibleNpcs()) { mctx.fillStyle = n.kind === "mob" ? "rgba(220,60,50,.8)" : "#f0be3c"; mctx.fillRect(n.x * k - 1.5, n.y * k - 1.5, 3, 3); }
+  for (const a of actors.values()) { mctx.beginPath(); mctx.arc(a.x * k, a.y * k, a.self ? 3.5 : 2.5, 0, 7); mctx.fillStyle = a.self ? "#ff5a3c" : "#4aa8ff"; mctx.fill(); }
+}
+function screenToMap(e) { const r = cv.getBoundingClientRect(), v = view(); return [v.ox + (e.clientX - r.left) / v.s, v.oy + (e.clientY - r.top) / v.s]; }
+cv.addEventListener("click", (e) => {
+  if (!me || !MAP.img || !loggedIn) return;
+  const [x, y] = screenToMap(e); if (x < 0 || y < 0 || x >= MAP.img.naturalWidth || y >= MAP.img.naturalHeight) return;
+  const gi = GROUND.find((g) => g.x != null && Math.hypot(g.x - x, g.y - y) < 18 / view().s);
+  if (gi) { send({ op: "pickup", i: gi.i }); return; }
+  const n = npcAt(x, y, view().s);
+  if (n) {                                          // 点到 NPC：显示信息，并走到它旁边（对话 / 事件的 C2S 包还没封装）
+    line("sys", "", (n.kind === "mob" ? "怪物刷新点 " : "NPC ") + n.name + "　型号 " + n.model + "　位置 (" + n.x + "," + n.y + ")　事件 " + n.ev + " 个");
+    if ((n.kind === "npc" && n.ev > 0) || n.kind === "mob") {   // 有事件的 NPC / 怪物：走到旁边就自动开口说话（怪没有事件就直接开战）
+      const me_ = actors.get("me");
+      if (me_ && Math.hypot(me_.x - n.x, me_.y - n.y) < 150) send({ op: "talk", npc: n.id });
+      else { PENDING = { id: n.id, x: n.x, y: n.y, until: performance.now() + 30000 }; goTo(n.x, n.y + 40); }
+    } else goTo(n.x, n.y + 30);
+    return;
+  }
+  const door = doorAt(x, y);
+  if (door) { goTo(door.x + door.w / 2, door.y + door.h - 14); return; }     // 点门：走到门口里面，网关在到达时触发门的事件（传送 / 对话）
+  $("mx").value = Math.round(x); $("my").value = Math.round(y); goTo(x, y);
+});
+mcv.addEventListener("click", (e) => {
+  if (!me || !MAP.mini) return;
+  const r = mcv.getBoundingClientRect(), k = MAP.mini.k; goTo((e.clientX - r.left) / k, (e.clientY - r.top) / k);
+});
+cv.addEventListener("wheel", (e) => { e.preventDefault(); setZoom(ZOOM * (e.deltaY < 0 ? 1.1 : 1 / 1.1)); }, { passive: false });
+function setZoom(z) { ZOOM = Math.max(0.35, Math.min(3, z)); }
+$("zIn").addEventListener("click", () => setZoom(ZOOM * 1.2));
+$("zOut").addEventListener("click", () => setZoom(ZOOM / 1.2));
+
+// ---------------------------------------------------------------- NPC 对话（事件脚本由网关解释，这里只显示一页一页的话和选单）
+function showDialog(m) {
+  const box = $("dlg");
+  if (m.kind === "end") { DLG = null; box.hidden = true; return; }
+  DLG = m; box.hidden = false; box.className = "glass" + (m.side === "me" ? " me" : "");
+  $("dlgWho").textContent = m.who || ""; $("dlgText").textContent = m.text || "";
+  const opts = $("dlgOpts"); opts.replaceChildren();
+  if (m.kind === "menu") {
+    m.options.forEach((t, i) => { const b = document.createElement("button"); b.textContent = (i + 1) + ". " + t; b.addEventListener("click", (e) => { e.stopPropagation(); send({ op: "dlg", i }); }); opts.appendChild(b); });
+    $("dlgHint").textContent = "点选项或按数字键　Esc 离开";
+  } else $("dlgHint").textContent = "点击 / 回车 / 空格 继续　Esc 离开";
+}
+function dlgNext() { if (DLG && DLG.kind === "say") send({ op: "dlg" }); }
+function dlgClose() { if (DLG) { send({ op: "dlg_close" }); DLG = null; $("dlg").hidden = true; } }
+$("dlg").addEventListener("click", dlgNext);
+
+// ---------------------------------------------------------------- 消息
+// ---------------------------------------------------------------- 战斗（协议：战斗协议_客户端侧.md）
+// ---------------------------------------------------------------- 战斗（协议：战斗协议_客户端侧.md）
+// 战场 = 玩家当前所在的那张地图：背景、碰撞（挡格）、前景物件（遮挡）都用地图自己的；战斗格 (col,row) 对齐到地图像素：
+// 以进战时玩家站的位置为锚点，一格 = 等距菱形（半宽 64、半高 32 像素，约等于地图一块地砖）。
+let FIGHT = null, FSEL = null, FSEEN = 0, FHIDE = false;
+let FL = null, FHOVER = null, FSTART = 0, FLASTACT = 0, FSHAKE = 0, FDEAD = new Map();
+const FACT = new Map(), FFLASH = new Map(), FLUNGE = new Map(), FFX = [];
+const FCELL = { ok: false, img: new Image() }; FCELL.img.onload = () => { FCELL.ok = true; }; FCELL.img.src = "sprites/fight_cells.png";
+const MOVE_RANGE = 4, HW = 48, HH = 16, FH = 112;                       // 移动范围（自拟）/ 菱形半宽半高（原版：一格 96×32）/ 人物精灵高度
+function fName(id) { const e = FIGHT && FIGHT.ents.find((x) => x.id === id); return e ? e.name : String(id); }
+// ---- 武功动画（逆向：dat\KKF*.dat 以技能 id 为键，记录里每帧 = 图片名 + 矩形；图片 = pic\KongFu*.mrg 的竖排帧序列；离线预生成到 web/sprites/fx/）
+let FXIDX = null;
+const FXIMG = new Map();
+function fxImg(name) { let im = FXIMG.get(name); if (!im) { im = new Image(); im.src = "sprites/fx/" + name + ".png"; FXIMG.set(name, im); } return im; }
+function fxLoad() { if (FXIDX === null) { FXIDX = false; fetch("sprites/fx/index.json").then((r) => r.ok ? r.json() : null).then((j) => { FXIDX = j && j.skills ? j.skills : false; }).catch(() => { FXIDX = false; }); } }
+function fxStart(skill, from, to) {                                      // 成功返回 true；没有这个技能的动画就让调用方画通用刀光（from 暂时用不上，留给以后按朝向/锚点）
+  fxLoad(); const s = FXIDX && FXIDX[String(skill)]; if (!s || !s.fr.length) return false;
+  const fr = s.fr;                                                       // KKF 的帧表是一条时间线：按顺序全播（记录里的 d = 第几段，不是朝向；帧时长、锚点偏移没解，这里是 70 ms/帧、居中）
+  fr.forEach((x) => fxImg(x[0]));
+  // 每帧时长：原版 = |速度参数 − 20| 毫秒（默认全局速度 10），但每次刷新最多前进一帧，所以取 max(刷新周期≈40, |sp−20|)（刷新周期是估计）
+  const ms = Math.max(40, Math.abs((s.sp == null ? 15 : s.sp) - 20));
+  FFX.push({ k: "fx", x: to[0], y: to[1], t0: performance.now(), dur: fr.length * ms, fr });
+  return true;
+}
+function fightLog(text, cls) {
+  const box = $("fLog"), p = document.createElement("p"); p.textContent = text; if (cls) p.className = cls; box.appendChild(p);
+  while (box.childElementCount > 120) box.removeChild(box.firstChild);
+  box.scrollTop = box.scrollHeight;
+}
+// 格 -> 像素（格子中心）。原版（loginp.exe 0x99bae0，逆向）：x = 48·(行−列) + W/2 − 96，y = 16·(行+列) − H/2，一格 96×32，网格 37×37；列加一向左下、行加一向右下。
+const fPos = (c, r) => [FL.ax + ((r - FL.r0) - (c - FL.c0)) * HW, FL.ay + ((c - FL.c0) + (r - FL.r0)) * HH];
+function fCell(x, y) { const dx = (x - FL.ax) / HW, dy = (y - FL.ay) / HH; return [Math.round((dy - dx) / 2 + FL.c0), Math.round((dy + dx) / 2 + FL.r0)]; }
+function myCell(m) { const e = m.ents.find((x) => x.id === m.me); return e && e.col != null ? [e.col, e.row] : m.cell; }
+function cellBlocked(c, r) {                                            // 地形挡格：地图碰撞层（20 像素格）
+  if (!WALK) return false; const [x, y] = fPos(c, r), C = WALK.cell, cx = Math.floor(x / C), cy = Math.floor(y / C);
+  return cx < 0 || cy < 0 || cx >= WALK.cols || cy >= WALK.rows || WALK.blocked(cx, cy);
+}
+function fightLayoutInit(m) {
+  const me0 = m.cell, ax = me ? me.f.x : 0, ay = me ? me.f.y : 0;
+  FL = { ax, ay, c0: me0[0], r0: me0[1], box: null, cam: null }; fxLoad();
+}
+function fightFit(m) {                                             // 战场别伸到地图外：整体平移锚点，让所有单位落在地图图片里（只做一次）
+  const im = MAP.img; if (!im || FL.fit || !m.ents.some((e) => e.team === 2 && e.col != null)) return; FL.fit = true;
+  const pts = m.ents.filter((e) => e.col != null).map((e) => fPos(e.col, e.row)).concat([fPos(...myCell(m))]);
+  const mn = [Math.min(...pts.map((p) => p[0])), Math.min(...pts.map((p) => p[1]))], mx = [Math.max(...pts.map((p) => p[0])), Math.max(...pts.map((p) => p[1]))];
+  const mX = 200, mTop = 230, mBot = 120;
+  FL.ax += Math.max(0, mX - mn[0]) - Math.max(0, mx[0] - (im.naturalWidth - mX)); FL.ay += Math.max(0, mTop - mn[1]) - Math.max(0, mx[1] - (im.naturalHeight - mBot));
+}
+function fightBox(m) {                                                  // 战场格范围：所有单位 ±3，至少 12×10，只扩不缩（场景不跳）
+  const pts = m.ents.filter((e) => e.col != null).map((e) => [e.col, e.row]).concat([m.cell]);
+  let c0 = Math.min(...pts.map((p) => p[0])) - 3, c1 = Math.max(...pts.map((p) => p[0])) + 3, r0 = Math.min(...pts.map((p) => p[1])) - 3, r1 = Math.max(...pts.map((p) => p[1])) + 3;
+  if (FL.box) { c0 = Math.min(c0, FL.box[0]); c1 = Math.max(c1, FL.box[1]); r0 = Math.min(r0, FL.box[2]); r1 = Math.max(r1, FL.box[3]); }
+  while (c1 - c0 < 11) { c0--; c1++; } while (r1 - r0 < 9) { r0--; r1++; }
+  FL.box = [c0, c1, r0, r1];
+}
+function fightCamera(m, W, H) {                                         // 镜头：框住所有单位，留出右侧命令栏，只平滑跟随
+  const pts = m.ents.filter((e) => e.col != null && (e.alive || e.team === 1)).map((e) => fPos(e.col, e.row)).concat([fPos(...myCell(m))]);
+  const x0 = Math.min(...pts.map((p) => p[0])) - 300, x1 = Math.max(...pts.map((p) => p[0])) + 300, y0 = Math.min(...pts.map((p) => p[1])) - 330, y1 = Math.max(...pts.map((p) => p[1])) + 180;
+  const usableW = Math.max(300, W - 300), s = Math.max(0.5, Math.min(1.3, Math.min(usableW / (x1 - x0), H / (y1 - y0)))), tx = (x0 + x1) / 2 + 150 / s, ty = (y0 + y1) / 2;
+  if (!FL.cam) FL.cam = { x: tx, y: ty, s }; else { FL.cam.x += (tx - FL.cam.x) * 0.08; FL.cam.y += (ty - FL.cam.y) * 0.08; FL.cam.s += (s - FL.cam.s) * 0.08; }
+  return FL.cam;
+}
+function renderFight(m) {
+  if (m.npc != null) { if (!m.over) HIDE.set(m.npc, Infinity); else if (m.result === 0x16 && m.srv_result !== 2) HIDE.set(m.npc, performance.now() + 60000); else HIDE.delete(m.npc); }
+  const live = m.ents.some((e) => e.team === 2);
+  if (m.events.length && m.events[m.events.length - 1].n < FSEEN) { FSEEN = 0; $("fLog").replaceChildren(); FSEL = null; FHIDE = false; FL = null; FACT.clear(); FLUNGE.clear(); FFX.length = 0; FDEAD.clear(); }
+  m.recvT = performance.now();
+  FIGHT = m;
+  $("fStatus").textContent = !live ? "还没有战斗" : m.over ? "战斗结束" : m.result ? (m.result === 6 ? "逃跑成功，" : m.result === 0x16 ? "胜利，" : "战败，") + (m.end_sent ? "已上报，等服务端结算 …" : "等待结算 …") : "战斗中";
+  if (!live) return;
+  if (live && !FHIDE && $("fight").hidden) { $("fight").hidden = false; FSTART = performance.now(); }
+  if (!FL) fightLayoutInit(m);
+  fightFit(m);
+  fightBox(m);
+  const enemies = m.ents.filter((e) => e.team === 2);
+  if (!FSEL || !enemies.some((e) => e.id === FSEL && e.alive)) FSEL = (enemies.find((e) => e.alive) || {}).id || null;
+  $("fTitle").textContent = enemies.map((e) => e.name).filter((v, i, a) => a.indexOf(v) === i).join("、") + (enemies.length > 1 ? " ×" + enemies.length : "");
+  $("fBanner").textContent = m.over ? (m.srv_result === 2 ? "你倒下了" : m.result === 6 ? "逃跑成功" : m.result === 0x16 ? "战斗胜利" : "战斗结束") : m.result ? (m.result === 6 ? "逃跑成功" : m.result === 0x16 ? "战斗胜利" : "战败") : "";
+  $("fBanner").style.color = m.result === 0x0b || m.srv_result === 2 ? "#ff8a7a" : "#9fe0a0";
+  $("fClose").hidden = !m.over;
+  const now = performance.now();
+  for (const ev of m.events) {
+    if (ev.n <= FSEEN) continue;
+    FSEEN = ev.n;
+    if (ev.k === "act" && [7, 8, 9, 11].includes(ev.cmd)) {                // 命令栏的原地命令（服务端按"出招转发"回的 D7，cmd = 命令号）：不冲向目标、不放刀光，只记一行
+      fightLog(fName(ev.id) + " " + ({ 7: "防禦", 8: "閃躲", 9: "養精蓄銳", 11: "自動" })[ev.cmd]);
+    } else if (ev.k === "escape") {                                          // 逃跑应答（S2C F9：01 成功 / 00 失败）；成功后网关立刻替我们发 E5
+      fightLog(ev.ok ? "逃跑成功" : "逃跑失败，再试一次吧", ev.ok ? "" : "hurt");
+    } else if (ev.k === "act") {
+      const a = m.ents.find((e) => e.id === ev.id), tgt = m.ents.find((e) => e.col === ev.col && e.row === ev.row && e.id !== ev.id);
+      FLUNGE.set(ev.id, { t0: now, tx: ev.col, ty: ev.row });
+      const from = a ? (a.team === 2 ? [a.col, a.row] : myCell(m)) : null;
+      setTimeout(() => { if (!fxStart(ev.skill, from, [ev.col, ev.row])) FFX.push({ k: "slash", x: ev.col, y: ev.row, t0: performance.now() }); if (tgt) FFLASH.set(tgt.id, performance.now() + 220); }, 260);
+      fightLog(fName(ev.id) + " 出招" + (a && a.team === 1 ? "（武功 " + ev.skill + "）" : ""));
+    } else if (ev.k === "hp" && ev.delta > 0) {
+      const e = m.ents.find((x) => x.id === ev.id);
+      FFX.push({ k: "num", id: ev.id, text: "-" + ev.delta, color: e && e.team === 1 ? "#ff6a5a" : "#ffe27a", t0: now + 300 });
+      if (e && e.team === 1) FSHAKE = now + 260;
+      fightLog(fName(ev.id) + " 气血 -" + ev.delta + "（剩 " + ev.hp + "）", e && e.team === 1 ? "hurt" : "");
+    } else if (ev.k === "hp" && ev.hp === 0 && ev.delta === 0) fightLog(fName(ev.id) + " 倒下");
+    else if (ev.k === "drop") fightLog("(" + ev.col + "," + ev.row + ") 掉落 " + (ev.item_name || ev.item), "loot");
+    else if (ev.k === "pick") fightLog(fName(ev.id) + " 拾获 " + (ev.item_name || ev.item || ""), "loot");
+    else if (ev.k === "leave") fightLog(fName(ev.id) + " 离场");
+  }
+  for (const e of m.ents) if (!e.alive && !FDEAD.has(e.id)) FDEAD.set(e.id, now); else if (e.alive) FDEAD.delete(e.id);
+  const ul = $("fEnemies"); ul.replaceChildren();
+  for (const e of m.ents) {
+    const li = document.createElement("li"); li.className = (e.alive ? "" : "dead ") + (e.id === FSEL ? "sel" : "") + (e.team === 1 ? " me" : "");
+    const n = document.createElement("span"); n.className = "nm"; n.textContent = e.name;
+    const hp = document.createElement("span"); hp.className = "hp"; const i = document.createElement("i"); i.style.width = (e.maxhp ? Math.max(0, Math.min(100, e.hp * 100 / e.maxhp)) : 0) + "%"; hp.appendChild(i);
+    const k = document.createElement("span"); k.className = "k"; k.textContent = e.hp == null ? "?" : e.hp + (e.maxhp ? " / " + e.maxhp : "");
+    li.append(n, hp, k); if (e.team === 2 && e.alive) li.addEventListener("click", () => { FSEL = e.id; renderFight(FIGHT); }); ul.appendChild(li);
+  }
+  if (me) { const sel = $("fKf"), cur = sel.value; sel.replaceChildren(new Option("基本攻击", "")); for (const r of (me.kf || [])) if (r.lv > 0) sel.appendChild(new Option(r.name + " Lv" + r.lv, r.id)); sel.value = cur; }
+  $("fAtk").disabled = !!m.result || m.over || !FSEL;
+  for (const id of ["fDef", "fDodge", "fRest", "fEsc"]) $(id).disabled = !!m.result || m.over || !!m.end_sent;
+  $("fHint").textContent = m.over ? "" : m.end_sent ? "已上报结算" : m.result ? "约 15 秒后上报结算" : "点地面格子移动；点怪选目标；空格出招";
+}
+function drawFight() {
+  const m = FIGHT, cv = $("fcv"); if (!m || !FL) return;
+  const dpr = window.devicePixelRatio || 1, W = cv.clientWidth, H = cv.clientHeight;
+  if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(H * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
+  const g = cv.getContext("2d"), t = performance.now();
+  g.setTransform(dpr, 0, 0, dpr, 0, 0); g.fillStyle = "#0d0a07"; g.fillRect(0, 0, W, H);
+  const cam = fightCamera(m, W, H), shake = FSHAKE > t ? (Math.random() - .5) * 8 : 0;
+  const s = cam.s, offx = W / 2 - cam.x * s + shake, offy = H / 2 - cam.y * s + shake;
+  g.setTransform(dpr * s, 0, 0, dpr * s, dpr * offx, dpr * offy);
+  const im = MAP.img;
+  if (im) g.drawImage(im, 0, 0);
+  g.fillStyle = "rgba(0,0,0,.18)"; if (im) g.fillRect(0, 0, im.naturalWidth, im.naturalHeight);
+  // ---- 网格：挡格（红）/ 可走（淡蓝）/ 鼠标所在格 / 掉落
+  const mine = myCell(m), occ = new Set(m.ents.filter((e) => e.alive && e.col != null).map((e) => e.col + "," + e.row)), [bc0, bc1, br0, br1] = FL.box, canMove = !m.over && !m.result && !m.end_sent;
+  // 原版格子高亮图：share\pic\FightN.mrg（nBArt1–6 = 黄/紫/绿/蓝/红/灰 6 色，每条 6 个 96×33 状态），web/sprites/fight_cells.png
+  const tile = (c, r, col, st, a) => { if (!FCELL.ok) return false; const [x, y] = fPos(c, r); g.globalAlpha = a == null ? 1 : a; g.drawImage(FCELL.img, col * 577 + st * 96, 0, 96, 33, x - 48, y - 16.5, 96, 33); g.globalAlpha = 1; return true; };
+  const dia = (c, r, fill, stroke) => { const [x, y] = fPos(c, r); g.beginPath(); g.moveTo(x, y - HH); g.lineTo(x + HW, y); g.lineTo(x, y + HH); g.lineTo(x - HW, y); g.closePath(); if (fill) { g.fillStyle = fill; g.fill(); } if (stroke) { g.strokeStyle = stroke; g.stroke(); } };
+  g.lineWidth = 1 / s;
+  for (let c = bc0; c <= bc1; c++) for (let r = br0; r <= br1; r++) {
+    const bl = cellBlocked(c, r), near = Math.max(Math.abs(c - mine[0]), Math.abs(r - mine[1])) <= MOVE_RANGE && !bl && !occ.has(c + "," + r);
+    if (bl) { if (!tile(c, r, 4, 3, .55)) dia(c, r, "rgba(200,40,30,.16)", "rgba(255,90,70,.22)"); }
+    else if (canMove && near) { if (!tile(c, r, 2, 3, .8)) dia(c, r, "rgba(120,200,255,.10)", "rgba(255,255,255,.14)"); }
+    else if (!tile(c, r, 5, 4, .25)) dia(c, r, null, "rgba(255,255,255,.14)");
+  }
+  if (canMove && FHOVER && FHOVER[0] >= bc0 && FHOVER[0] <= bc1 && FHOVER[1] >= br0 && FHOVER[1] <= br1) {
+    const ok = Math.max(Math.abs(FHOVER[0] - mine[0]), Math.abs(FHOVER[1] - mine[1])) <= MOVE_RANGE && !cellBlocked(...FHOVER) && !occ.has(FHOVER.join(","));
+    if (!tile(FHOVER[0], FHOVER[1], ok ? 0 : 4, 0)) dia(FHOVER[0], FHOVER[1], ok ? "rgba(255,230,120,.30)" : "rgba(255,80,60,.22)", ok ? "rgba(255,230,120,.9)" : "rgba(255,80,60,.7)");
+  }
+  for (const it of m.items) { dia(it.col, it.row, "rgba(243,201,105,.35)", "#f3c969"); const [x, y] = fPos(it.col, it.row), bob = Math.sin(t / 300) * 3; g.fillStyle = "#ffe08a"; g.beginPath(); g.moveTo(x, y - 14 + bob); g.lineTo(x + 7, y - 7 + bob); g.lineTo(x, y + bob); g.lineTo(x - 7, y - 7 + bob); g.fill(); }
+  // ---- 单位（按脚下 y 排序，前景物件遮挡）
+  const look = me && me.look && me.look.layers && me.look.layers.length ? me.look : null, foes = m.ents.filter((e) => e.team === 2 && e.alive && e.col != null);
+  const units = m.ents.filter((e) => e.team === 2 ? e.col != null : e.id === m.me).map((e) => {
+    let [wx, wy] = fPos(...(e.team === 2 ? [e.col, e.row] : mine));
+    const lg = FLUNGE.get(e.id); let lunging = false;
+    if (lg) { const p = (t - lg.t0) / 620; if (p >= 1) FLUNGE.delete(e.id); else { const [tx, ty] = fPos(lg.tx, lg.ty), k = 0.55 * Math.sin(Math.PI * p); wx += (tx - wx) * k; wy += (ty - wy) * k; lunging = true; } }
+    return { e, wx, wy, lunging };
+  });
+  const nearest = (u) => foes.length ? foes.reduce((p, q) => (Math.hypot(q.col - mine[0], q.row - mine[1]) < Math.hypot(p.col - mine[0], p.row - mine[1]) ? q : p)) : null;
+  for (const u of units) {                                              // 玩家：行走动画（Actor 追着目标点走）
+    if (u.e.team === 1 && look) { let a = FACT.get(u.e.id); if (!a) { a = new Sprites.Actor(u.wx, u.wy); a.dir = 7; FACT.set(u.e.id, a); } a.goto(u.wx, u.wy); a.update(t, 0.016); u.a = a; u.wx = a.x; u.wy = a.y; }
+  }
+  const items = units.map((u) => ({ d: u.wy, u }));
+  if (OBJS.length) for (const o of OBJS) {
+    if (!o.img) { o.img = new Image(); o.img.src = o.u; }
+    if (o.img.complete && o.img.naturalWidth && units.some((u) => u.wy < o.d && u.wx + 70 > o.x && u.wx - 70 < o.x + o.w && u.wy + 10 > o.y && u.wy - 170 < o.y + o.h)) items.push({ d: o.d, o });
+  }
+  items.sort((p, q) => p.d - q.d);
+  const fix = [];
+  for (const it of items) {
+    if (it.o) { g.drawImage(it.o.img, it.o.x, it.o.y, it.o.w, it.o.h); continue; }
+    const { e, wx, wy, lunging } = it.u, dead = !e.alive, dt = dead ? Math.min(1, (t - (FDEAD.get(e.id) || t)) / 800) : 0;
+    g.globalAlpha = dead ? Math.max(0, 1 - dt) : 1;
+    g.fillStyle = "rgba(0,0,0,.38)"; g.beginPath(); g.ellipse(wx, wy, 30, 12, 0, 0, 7); g.fill();
+    if (e.id === FSEL) { const pulse = 1 + Math.sin(t / 180) * .06; g.strokeStyle = "#ffd98a"; g.lineWidth = 2.5 / s; g.beginPath(); g.ellipse(wx, wy, 40 * pulse, 17 * pulse, 0, 0, 7); g.stroke(); }
+    const flash = (FFLASH.get(e.id) || 0) > t, sinkY = dead ? dt * 14 : 0;
+    if (flash) g.filter = "brightness(1.7) saturate(2.5) hue-rotate(-20deg)";
+    if (e.team === 2) {
+      const dir = Sprites.dirFromMove(...(() => { const [px, py] = fPos(...mine); return [px - wx, py - wy]; })());
+      if (e.spr && Sprites.npcReady(e.spr)) Sprites.drawNpc(g, e.spr, lunging ? "A" : "S", dir, Math.floor(t / (lunging ? 110 : 200)), wx, wy + sinkY, 1);
+      else if (look && Sprites.ready(look)) { if (!flash) g.filter = "sepia(1) saturate(3) hue-rotate(-35deg) brightness(.95)"; let a = FACT.get(e.id); if (!a) { a = new Sprites.Actor(wx, wy); FACT.set(e.id, a); } a.snap(wx, wy); a.dir = dir; a.update(t, 0.016); Sprites.draw(g, look, a, wx, wy + sinkY, 1); }
+      else { g.fillStyle = "#c8402c"; g.beginPath(); g.arc(wx, wy - 40, 22, 0, 7); g.fill(); }
+    } else if (look && Sprites.ready(look) && it.u.a) {
+      const a = it.u.a, moving = Math.hypot(a.tx - a.x, a.ty - a.y) > 0.5 || lunging, n = nearest();
+      if (!moving && n) a.dir = Sprites.dirFromMove(...(() => { const [px, py] = fPos(n.col, n.row); return [px - wx, py - wy]; })());
+      Sprites.draw(g, look, a, wx, wy + sinkY, 1);
+    } else { g.fillStyle = "#4a90d9"; g.beginPath(); g.arc(wx, wy - 40, 22, 0, 7); g.fill(); }
+    g.filter = "none"; g.globalAlpha = 1;
+    fix.push({ e, wx, wy, dead });
+  }
+  // ---- 特效：刀光、飘字（世界坐标）
+  for (let i = FFX.length - 1; i >= 0; i--) {
+    const f = FFX[i], p = (t - f.t0) / (f.k === "slash" ? 260 : f.k === "fx" ? f.dur : 1000);
+    if (p < 0) continue; if (p >= 1) { FFX.splice(i, 1); continue; }
+    if (f.k === "fx") {                                                  // 武功动画：KKF 帧表 + KongFu*.mrg 的竖排帧图，叠加混合（黑 = 透明）
+      const fr = f.fr[Math.min(f.fr.length - 1, Math.floor(p * f.fr.length))], im = fxImg(fr[0]);
+      if (im && im.complete && im.naturalWidth) {
+        // 原版：左上角 = 锚点 + (a,b) − (图宽/2, 帧高/2)，即以锚点为中心；锚点取目标格中心上方（原版一类特效是格子顶端上移 50 像素 ≈ 中心上 66）
+        const [x, y] = fPos(f.x, f.y), w = fr[3] - fr[1] + 1, h = fr[4] - fr[2] + 1;
+        g.save(); g.globalCompositeOperation = "lighter"; g.drawImage(im, fr[1], fr[2], w, h, x + (fr[6] || 0) - w / 2, y - 66 + (fr[7] || 0) - h / 2, w, h); g.restore();
+      }
+    } else if (f.k === "slash") {
+      const [x, y] = fPos(f.x, f.y); g.save(); g.translate(x, y - 46); g.rotate(-0.6); g.globalAlpha = 1 - p; g.lineCap = "round";
+      for (const [w, col, rr] of [[10, "rgba(255,255,255,.9)", 44], [4, "rgba(255,235,160,1)", 40]]) { g.lineWidth = w; g.strokeStyle = col; g.beginPath(); g.arc(0, 0, rr * (0.6 + p * .6), -1.1, 1.1 * Math.min(1, p * 2.4 + .2)); g.stroke(); }
+      g.restore();
+    }
+  }
+  g.setTransform(dpr, 0, 0, dpr, 0, 0);                                  // ---- 屏幕坐标：名牌、血条、集气条、飘字
+  const toS = (wx, wy) => [wx * s + offx, wy * s + offy];
+  for (const f of FFX) if (f.k === "num") {
+    const p = (t - f.t0) / 1000; if (p < 0 || p >= 1) continue;
+    const u = fix.find((q) => q.e.id === f.id); if (!u) continue; const [sx, sy] = toS(u.wx, u.wy);
+    g.globalAlpha = 1 - p * p; g.font = "bold " + Math.round(22 + 8 * (1 - p)) + "px sans-serif"; g.textAlign = "center"; g.lineWidth = 4; g.strokeStyle = "#000"; g.fillStyle = f.color;
+    const yy = sy - 130 * s - p * 46; g.strokeText(f.text, sx, yy); g.fillText(f.text, sx, yy); g.globalAlpha = 1;
+  }
+  g.textAlign = "center";
+  fightHud.cells = [];
+  for (const { e, wx, wy, dead } of fix) {
+    const [sx, sy] = toS(wx, wy); if (dead) continue;
+    const bw = 74, bx = sx - bw / 2, by = sy + 12 * s + 6;
+    g.font = "12px sans-serif"; g.lineWidth = 3; g.strokeStyle = "#000"; g.fillStyle = e.id === FSEL ? "#ffe9a0" : "#fff";
+    const nm = e.name.replace("（我）", ""); g.strokeText(nm, sx, by + 11 + 12); g.fillText(nm, sx, by + 11 + 12);
+    g.fillStyle = "rgba(0,0,0,.65)"; g.fillRect(bx, by, bw, 6); g.fillStyle = e.team === 2 ? "#d65a3a" : "#68c868"; if (e.maxhp) g.fillRect(bx, by, bw * Math.max(0, e.hp) / e.maxhp, 6);
+    const gauge = e.team === 1 ? Math.max(0, Math.min(1, (t - FLASTACT) / 1300)) : (e.rem == null ? null : Math.max(0, Math.min(1, 1 - (e.rem - (t - (m.recvT || t)) / 1000) / (m.itv || 4))));   // 集气条：我 = 出招冷却；怪 = 离下次出手
+    if (gauge != null) { g.fillStyle = "rgba(0,0,0,.65)"; g.fillRect(bx, by + 8, bw, 4); g.fillStyle = gauge >= 1 ? "#ffe27a" : "#6aa8ff"; g.fillRect(bx, by + 8, bw * gauge, 4); }
+    fightHud.cells.push({ id: e.id, team: e.team, x: sx - 38 * s - 6, y: sy - FH * s - 8, w: 76 * s + 12, h: FH * s + 60 });
+  }
+  const fadeIn = Math.min(1, (t - FSTART) / 500); if (fadeIn < 1) { g.fillStyle = "rgba(0,0,0," + (1 - fadeIn) + ")"; g.fillRect(0, 0, W, H); }
+  if (m.result) {                                                        // 胜负大字
+    const p = Math.min(1, (t - (FL.resT || (FL.resT = t))) / 600), esc = m.result === 6, win = (m.result === 0x16 && m.srv_result !== 2) || esc;
+    g.globalAlpha = p; g.font = "bold " + Math.round(54 * (0.8 + 0.2 * p)) + "px sans-serif"; g.textAlign = "center"; g.lineWidth = 8; g.strokeStyle = "#000"; g.fillStyle = esc ? "#9fe0a0" : win ? "#ffe27a" : "#ff8a7a";
+    const txt = esc ? "逃跑成功" : win ? "战斗胜利" : "战  败", cx = (W - 290) / 2; g.strokeText(txt, cx, H * 0.34); g.fillText(txt, cx, H * 0.34); g.globalAlpha = 1;
+  }
+  fightHud.geom = { s, offx, offy };
+}
+const fightHud = { cells: [], geom: null };
+(function fightAnim() { if (FIGHT && !$("fight").hidden) drawFight(); requestAnimationFrame(fightAnim); })();
+function fightWorld(ev) { const r = $("fcv").getBoundingClientRect(), sx = ev.clientX - r.left, sy = ev.clientY - r.top, g = fightHud.geom; return [sx, sy, g ? (sx - g.offx) / g.s : 0, g ? (sy - g.offy) / g.s : 0]; }
+$("fcv").addEventListener("mousemove", (ev) => { if (FIGHT && FL && fightHud.geom) { const [, , wx, wy] = fightWorld(ev); FHOVER = fCell(wx, wy); } });
+$("fcv").addEventListener("mouseleave", () => { FHOVER = null; });
+$("fcv").addEventListener("click", (ev) => {
+  if (!FIGHT || !FL || !fightHud.geom) return;
+  const [sx, sy, wx, wy] = fightWorld(ev);
+  const hit = fightHud.cells.filter((c) => c.team === 2 && sx >= c.x && sx < c.x + c.w && sy >= c.y && sy < c.y + c.h).pop();
+  if (hit) { FSEL = hit.id; renderFight(FIGHT); return; }
+  if (FIGHT.over || FIGHT.result || FIGHT.end_sent) return;
+  const [c, r] = fCell(wx, wy), mine = myCell(FIGHT), [bc0, bc1, br0, br1] = FL.box;
+  if (c < bc0 || c > bc1 || r < br0 || r > br1) return;
+  if (cellBlocked(c, r)) { toast("那里过不去（地形挡住了）"); return; }
+  if (Math.max(Math.abs(c - mine[0]), Math.abs(r - mine[1])) > MOVE_RANGE) { toast("太远了，一次最多走 " + MOVE_RANGE + " 格"); return; }
+  if (FIGHT.ents.some((e) => e.alive && e.col === c && e.row === r)) return;
+  send({ op: "fight_move", col: c, row: r });
+});
+$("fAtk").addEventListener("click", () => { if (FSEL) { FLASTACT = performance.now(); } if (FSEL) send({ op: "fight_act", target: FSEL, kf: +$("fKf").value || undefined }); });
+// 命令栏（命令号 = 原版命令表下标，见 jyfight.CMD）：防禦 7 / 閃躲 8 / 養精蓄銳 9 → C2S 0xDE；逃跑 → C2S 0xF9；裝備只开窗口
+const fPose = (cmd) => { FLASTACT = performance.now(); send({ op: "fight_pose", cmd }); };
+$("fDef").addEventListener("click", () => fPose(7));
+$("fDodge").addEventListener("click", () => fPose(8));
+$("fRest").addEventListener("click", () => fPose(9));
+$("fEsc").addEventListener("click", () => { FLASTACT = performance.now(); send({ op: "fight_escape" }); });
+$("fEquip").addEventListener("click", () => toast("装备请在「背包」页更换，战斗界面里没有单独的装备窗口"));
+window.addEventListener("keydown", (ev) => {                              // 原版快捷键：G 防禦、R 養精蓄銳、E 逃跑
+  if (!FIGHT || $("fight").hidden || ev.ctrlKey || ev.altKey || ev.metaKey || /INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)) return;
+  const b = { KeyG: "fDef", KeyR: "fRest", KeyE: "fEsc" }[ev.code]; if (b) { ev.preventDefault(); $(b).click(); }
+});
+$("fClose").addEventListener("click", () => { FHIDE = true; $("fight").hidden = true; });
+$("fightForm").addEventListener("submit", (ev) => { ev.preventDefault(); const mob = +$("fMobId").value || +$("fMob").value; FHIDE = false; FSEEN = 0; FIGHT = null; FL = null; FACT.clear(); $("fLog").replaceChildren(); send({ op: "fight_start", mob }); });
+window.addEventListener("keydown", (ev) => { if (ev.code === "Space" && FIGHT && !$("fight").hidden && !/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)) { ev.preventDefault(); $("fAtk").click(); } });
+function onMsg(m) {
+  switch (m.ev) {
+    case "dialog": showDialog(m); break;
+    case "social": renderSocial(m); break;
+    case "fight": renderFight(m); break;
+    case "need_create": openCreate(m.births); break;
+    case "roll": ROLL = m.attrs; if (m.attrs) { [...$("cAttrs").querySelectorAll("input")].forEach((inp, i) => { inp.value = m.attrs[i]; }); cSum(); } break;
+    case "name_result": $("cNameMsg").textContent = m.ok ? "“" + m.name + "”可以用" : "“" + m.name + "”已被占用"; $("cNameMsg").style.color = m.ok ? "var(--good)" : "#ff8a7a"; break;
+    case "bank": renderBank(m.items); break;
+    case "biaoju": renderBiaoju(m.list); break;
+    case "masters": showMasters(m); break;
+    case "work": showWork(m); if (!m.on && m.text) toast(m.text); break;
+    case "ground": GROUND = m.list; renderGround(); break;
+    case "hello": {
+      line("sys", "", "已连到网关，游戏服务端 " + m.server);
+      if (m.look_fallback) line("sys", "", "外观兜底已开启：表里没有的武器按类型画（不是原版行为）");
+      const sel = $("merchant"); sel.replaceChildren();
+      for (const mc of m.merchants || []) { const o = document.createElement("option"); o.value = mc.id; o.textContent = mc.name + " (" + mc.id + ")"; sel.appendChild(o); }
+      break;
+    }
+    case "shop": renderShop(m.items); if ($("side").hidden || $("side").dataset.tab !== "shop") openTab("shop"); break;      // 商店页已经开着时不要再点一次把它收起来
+    case "status": line("sys", "", m.text); break;
+    case "error": line("sys", "", "⚠ " + m.msg); toast(m.msg); $("loginBtn").disabled = false; if (m.msg.includes("地形")) { ROUTE = []; awaitEcho = false; } break;
+    case "clock": setClock(m.t); break;
+    case "me": { $("create").hidden = true; const first = !me; me = m; setClock(m.clock); render(first); enable(true); $("loginBtn").disabled = false; if (first) line("sys", "", "提示：点顶栏「导航」，能看到任务 / 师傅 / 买卖 / 传送 NPC 各在哪张图并一键过去；新手先找「新手指導員」说话。"); break; }
+    case "patch": if (me) { Object.assign(me.f, m); const b = document.querySelector('#stats b[data-k="' + Object.keys(m).find(k => k !== "ev") + '"]'); if (b) b.textContent = m[b.dataset.k]; showWhere(); } break;
+    case "pos": if (me) {
+      const changed = me.f.map !== m.map;
+      me.f.map = m.map; me.f.x = m.x; me.f.y = m.y; showWhere(); awaitEcho = false;
+      if (changed || m.tp) ROUTE = [];             // 换图 / 被传送：路线作废
+      loadMap(m.map); syncActors(); if (changed) others = [];
+      if (m.tp) { const me_ = actors.get("me"); if (me_) me_.snap(m.x, m.y); }        // 传送：直接出现在新位置，不"走"过去
+    } break;
+    case "players": { others = m.list; renderWhisperTargets(); renderSocPlayers(); syncActors(); $("near").textContent = m.list.length ? m.list.map(p => p.name + (p.x != null ? "(" + p.x + "," + p.y + ")" : "")).join("　") : "无"; break; }
+    case "chat": {
+      if (m.ch === "whisper" && !m.self) LASTW = { jyid: m.jyid, name: m.name };
+      line(m.self ? "self" : "", (CH[m.ch] || "") + m.name, m.text);
+      if (m.ch && m.ch !== "public") break;
+      const a = actors.get(me && m.jyid === me.jyid ? "me" : m.jyid); if (a) a.bubble = { text: m.text.slice(0, 40), until: performance.now() + 6000 };
+      break;
+    }
+    case "notice": line("sys", "", m.text); break;
+    case "frame": line("dbg", "", "S2C 0x" + m.type.toString(16).padStart(2, "0") + "  " + m.n + " 字节"); break;
+    case "closed": FIGHT = null; FSEL = null; $("fight").hidden = true; DLG = null; PENDING = null; GROUND = []; BANK = null; SOC = null; LASTW = null; $("create").hidden = true; $("dlg").hidden = true; line("sys", "", "与游戏服务端的连接已断开"); enable(false); me = null; others = []; actors.clear(); ROUTE = []; WALK = null; OBJS = []; NPCS = []; MAP.id = null; MAP.img = null; MAP.mini = null; $("mapMsg").textContent = ""; break;
+  }
+}
+function connect() {
+  ws = new WebSocket((location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/ws");
+  ws.onopen = () => setConn(true, "网关已连接");
+  ws.onclose = () => { setConn(false, "网关断开，3 秒后重连"); enable(false); setTimeout(connect, 3000); };
+  ws.onmessage = (e) => { try { onMsg(JSON.parse(e.data)); } catch (x) { console.error(x); } };
+}
+function send(o) { if (ws && ws.readyState === 1) ws.send(JSON.stringify(o)); }
+$("loginForm").addEventListener("submit", (e) => { e.preventDefault(); const v = parseInt($("jyid").value, 10); if (!(v > 0)) return; $("loginBtn").disabled = true; send({ op: "login", jyid: v, password: $("pw").value || undefined }); });
+$("delBtn").addEventListener("click", () => {
+  const v = parseInt($("jyid").value, 10), pw = $("pw").value;
+  if (!(v > 0) || !pw) { toast("先填账号和密码"); return; }
+  if (confirm("确定删除账号 " + v + " 的角色？这会清掉角色、背包、武功和钱庄，账号保留，下次登录重新建角色。")) send({ op: "delete_role", jyid: v, password: pw });
+});
+$("chan").addEventListener("change", () => { $("wto").hidden = $("chan").value !== "whisper"; if (!$("wto").hidden) renderWhisperTargets(); });
+$("pCreate").addEventListener("click", () => send({ op: "party", a: "create" }));
+$("pLeave").addEventListener("click", () => send({ op: "party", a: "leave" }));
+$("pDisband").addEventListener("click", () => send({ op: "party", a: "disband" }));
+$("orgForm").addEventListener("submit", (e) => { e.preventDefault(); const n = $("orgName").value.trim(); if (n) send({ op: "org", a: "create", name: n }); });
+$("oQuit").addEventListener("click", () => send({ op: "org", a: "quit" }));
+$("oList").addEventListener("click", () => send({ op: "org", a: "list" }));
+$("kickForm").addEventListener("submit", (e) => { e.preventDefault(); const n = $("kickName").value.trim(); if (n) send({ op: "org", a: "kick", name: n }); });
+$("tItemForm").addEventListener("submit", (e) => { e.preventDefault(); if ($("tItem").value) send({ op: "trade", a: "item", item: +$("tItem").value }); });
+$("tMoneyForm").addEventListener("submit", (e) => { e.preventDefault(); send({ op: "trade", a: "money", money: Math.max(0, +$("tMoney").value || 0) }); });
+$("tLock").addEventListener("click", () => send({ op: "trade", a: "lock" }));
+$("tConfirm").addEventListener("click", () => send({ op: "trade", a: "confirm" }));
+$("tCancel").addEventListener("click", () => send({ op: "trade", a: "cancel" }));
+$("nickForm").addEventListener("submit", (e) => { e.preventDefault(); send({ op: "nick", text: $("nickText").value.trim() }); });
+$("pwForm").addEventListener("submit", (e) => { e.preventDefault(); if ($("pw2").value && confirm("自宫不可逆（只能改数据库恢复）。确定？")) send({ op: "pw", a: "zigong", password: $("pw2").value, confirm: true }); });
+$("infoForm").addEventListener("submit", (e) => { e.preventDefault(); if ($("infoItem").value) send({ op: "item_info", item: +$("infoItem").value }); });
+$("cRoll").addEventListener("click", () => send({ op: "roll" }));
+$("cCheck").addEventListener("click", () => { const n = $("cName").value.trim(); if (n) send({ op: "create_name", name: n }); });
+$("cGo").addEventListener("click", () => {
+  const n = $("cName").value.trim(); if (!n) { toast("先起个名字"); return; }
+  send({ op: "create_name", name: n });
+  setTimeout(() => send({ op: "create_enter", name: n, map: +$("cMap").value, head: +$("cHead").value, mode: 1, month: +$("cMonth").value || 1, day: +$("cDay").value || 1, attrs: cAttrs() }), 700);
+});
+$("cCancel").addEventListener("click", () => { $("create").hidden = true; send({ op: "logout" }); });
+$("logoutBtn").addEventListener("click", () => send({ op: "logout" }));
+$("say").addEventListener("submit", (e) => {
+  e.preventDefault(); const t = $("text").value.trim(); if (!t) return;
+  const ch = $("chan").value;
+  if (ch === "whisper") { const to = +$("wto").value; if (!to) { toast("先选私聊对象"); return; } send({ op: "say", text: t, ch, to }); }
+  else send({ op: "say", text: t, ch });
+  $("text").value = "";
+});
+$("moveForm").addEventListener("submit", (e) => { e.preventDefault(); goTo(+$("mx").value, +$("my").value); });
+$("tpForm").addEventListener("submit", (e) => { e.preventDefault(); ROUTE = []; send({ op: "teleport", map: +$("tmap").value, x: +$("tx").value, y: +$("ty").value }); });
+$("shopForm").addEventListener("submit", (e) => { e.preventDefault(); if ($("merchant").value) send({ op: "shop_open", merchant: +$("merchant").value }); });
+$("dbg").addEventListener("change", () => send({ op: "debug", on: $("dbg").checked }));
+window.addEventListener("keydown", (e) => {
+  if (DLG) {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); dlgNext(); }
+    else if (e.key === "Escape") dlgClose();
+    else if (DLG.kind === "menu" && /^[1-9]$/.test(e.key) && +e.key <= DLG.options.length) send({ op: "dlg", i: +e.key - 1 });
+    return;
+  }
+  if (e.key === "Enter" && loggedIn && document.activeElement !== $("text") && !["INPUT", "SELECT"].includes(document.activeElement.tagName)) { e.preventDefault(); $("text").focus(); }
+  else if (e.key === "Escape") document.activeElement.blur();
+});
+connect();
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

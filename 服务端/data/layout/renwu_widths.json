@@ -1,0 +1,490 @@
+{
+ "table": "renwu",
+ "baseline_stream": [
+  [
+   0,
+   "0x01",
+   30,
+   "S"
+  ],
+  [
+   1,
+   "0x1e",
+   1388,
+   "L"
+  ],
+  [
+   2,
+   "0x44",
+   0,
+   "L"
+  ],
+  [
+   3,
+   "0x14",
+   114,
+   "L"
+  ],
+  [
+   4,
+   "0x14",
+   113,
+   "L"
+  ],
+  [
+   5,
+   "0x14",
+   113,
+   "L"
+  ],
+  [
+   6,
+   "0xbc",
+   113,
+   "L"
+  ],
+  [
+   7,
+   "0x32",
+   5,
+   "L"
+  ],
+  [
+   8,
+   "0x14",
+   19,
+   "L"
+  ],
+  [
+   9,
+   "0x14",
+   18,
+   "L"
+  ],
+  [
+   10,
+   "0x08",
+   7,
+   "L"
+  ],
+  [
+   11,
+   "0x02",
+   0,
+   "L"
+  ],
+  [
+   12,
+   "0x6d",
+   0,
+   "L"
+  ],
+  [
+   13,
+   "0x3d",
+   0,
+   "L"
+  ],
+  [
+   14,
+   "0x31",
+   0,
+   "L"
+  ],
+  [
+   15,
+   "0x2f",
+   5,
+   "S"
+  ],
+  [
+   16,
+   "0x32",
+   3,
+   "S"
+  ],
+  [
+   17,
+   "0x14",
+   302,
+   "L"
+  ],
+  [
+   18,
+   "0xa9",
+   10,
+   "S"
+  ]
+ ],
+ "columns": {
+  "diet_val": {
+   "value": "2",
+   "changes": [
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 0,
+     "width": 1,
+     "old": "43",
+     "new": "44"
+    },
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 282,
+     "width": 1,
+     "old": "64",
+     "new": "02"
+    }
+   ]
+  },
+  "water_val": {
+   "value": "2",
+   "changes": [
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 0,
+     "width": 1,
+     "old": "43",
+     "new": "44"
+    },
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 285,
+     "width": 1,
+     "old": "64",
+     "new": "02"
+    }
+   ]
+  },
+  "pk_val": {
+   "value": "2",
+   "changes": [
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 0,
+     "width": 1,
+     "old": "43",
+     "new": "45"
+    },
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 290,
+     "width": 1,
+     "old": "00",
+     "new": "02"
+    },
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 349,
+     "width": 1,
+     "old": "50",
+     "new": "5a"
+    }
+   ]
+  },
+  "school": {
+   "value": "2",
+   "changes": [
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 0,
+     "width": 1,
+     "old": "43",
+     "new": "45"
+    },
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 349,
+     "width": 1,
+     "old": "50",
+     "new": "5a"
+    },
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 358,
+     "width": 1,
+     "old": "00",
+     "new": "02"
+    }
+   ]
+  },
+  "school_skill_lv": {
+   "value": "2",
+   "changes": [
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 0,
+     "width": 1,
+     "old": "43",
+     "new": "45"
+    },
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 349,
+     "width": 1,
+     "old": "50",
+     "new": "5a"
+    },
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 378,
+     "width": 1,
+     "old": "00",
+     "new": "02"
+    }
+   ]
+  },
+  "toukuizhuangtai": {
+   "value": "2",
+   "changes": [
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 0,
+     "width": 1,
+     "old": "43",
+     "new": "46"
+    },
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 125,
+     "width": 1,
+     "old": "00",
+     "new": "02"
+    },
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 349,
+     "width": 1,
+     "old": "50",
+     "new": "5a"
+    }
+   ]
+  },
+  "xianglianzhuangtai": {
+   "value": "2",
+   "changes": [
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 0,
+     "width": 1,
+     "old": "43",
+     "new": "46"
+    },
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 130,
+     "width": 1,
+     "old": "00",
+     "new": "02"
+    },
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 349,
+     "width": 1,
+     "old": "50",
+     "new": "5a"
+    }
+   ]
+  },
+  "wuqizhuangtai": {
+   "value": "2",
+   "changes": [
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 0,
+     "width": 1,
+     "old": "43",
+     "new": "47"
+    },
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 145,
+     "width": 1,
+     "old": "00",
+     "new": "02"
+    },
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 150,
+     "width": 1,
+     "old": "00",
+     "new": "02"
+    },
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 349,
+     "width": 1,
+     "old": "50",
+     "new": "5a"
+    }
+   ]
+  },
+  "yifuzhuangtai": {
+   "value": "2",
+   "changes": [
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 0,
+     "width": 1,
+     "old": "43",
+     "new": "47"
+    },
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 135,
+     "width": 1,
+     "old": "00",
+     "new": "02"
+    },
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 349,
+     "width": 1,
+     "old": "50",
+     "new": "5a"
+    }
+   ]
+  },
+  "pifengzhuangtai": {
+   "value": "2",
+   "changes": [
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 0,
+     "width": 1,
+     "old": "43",
+     "new": "47"
+    },
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 140,
+     "width": 1,
+     "old": "00",
+     "new": "02"
+    },
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 349,
+     "width": 1,
+     "old": "50",
+     "new": "5a"
+    }
+   ]
+  },
+  "jiezhizhuangtai": {
+   "value": "2",
+   "changes": [
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 0,
+     "width": 1,
+     "old": "43",
+     "new": "48"
+    },
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 160,
+     "width": 1,
+     "old": "00",
+     "new": "02"
+    },
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 349,
+     "width": 1,
+     "old": "50",
+     "new": "5a"
+    }
+   ]
+  },
+  "xiezizhuangtai": {
+   "value": "2",
+   "changes": [
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 0,
+     "width": 1,
+     "old": "43",
+     "new": "48"
+    },
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 165,
+     "width": 1,
+     "old": "00",
+     "new": "02"
+    },
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 349,
+     "width": 1,
+     "old": "50",
+     "new": "5a"
+    }
+   ]
+  },
+  "huwanzhuangtai": {
+   "value": "2",
+   "changes": [
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 0,
+     "width": 1,
+     "old": "43",
+     "new": "48"
+    },
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 155,
+     "width": 1,
+     "old": "00",
+     "new": "02"
+    },
+    {
+     "frame": 1,
+     "opcode": "0x1e",
+     "offset": 349,
+     "width": 1,
+     "old": "50",
+     "new": "5a"
+    }
+   ]
+  }
+ }
+}

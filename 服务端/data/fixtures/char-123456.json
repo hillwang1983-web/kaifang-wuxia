@@ -1,0 +1,1115 @@
+{
+ "jyid": 123456,
+ "rows": {
+  "renwu": [
+   {
+    "jyid": "123456",
+    "name": "游戏者之家",
+    "nickname": "二狗",
+    "sex": "1",
+    "head_image": "1",
+    "mode": "1",
+    "b_month": "1",
+    "b_day": "1",
+    "str": "23",
+    "crg": "18",
+    "wint": "21",
+    "luk": "20",
+    "dex": "18",
+    "agi": "19",
+    "vit": "21",
+    "map": "2801",
+    "x": "4242",
+    "y": "1742",
+    "dangqianjing": "210",
+    "zuidajing": "210",
+    "dangqianshen": "210",
+    "zuidashen": "210",
+    "dangqianxue": "1",
+    "zuidaxue": "2000",
+    "dangqiannei": "1",
+    "zuidanei": "1",
+    "study_count": "600",
+    "combat_exp": "1200",
+    "diet_val": "100",
+    "water_val": "100",
+    "kill_val": "80",
+    "pk_val": "0",
+    "jy_money": "120200",
+    "fame_val": "4000",
+    "online_time": "1010",
+    "school": "0",
+    "master": "0",
+    "exp_val": "0",
+    "evil_val": "2400",
+    "school_skill_lv": "0",
+    "school_skill_exp": "0",
+    "jmkey": "125",
+    "wuqiqiangdu": "0",
+    "fangjuqiangdu": "0",
+    "toukui": "25091",
+    "toukuizhuangtai": "50",
+    "xianglian": "24075",
+    "xianglianzhuangtai": "50",
+    "wuqi": "12498",
+    "wuqizhuangtai": "50",
+    "yifu": "27181",
+    "yifuzhuangtai": "50",
+    "pifeng": "20092",
+    "pifengzhuangtai": "50",
+    "jiezhi": "23074",
+    "jiezhizhuangtai": "50",
+    "xiezi": "26108",
+    "xiezizhuangtai": "50",
+    "huwan": "22102",
+    "huwanzhuangtai": "50",
+    "daofa": "0",
+    "daofaexp": "0",
+    "qiangfa": "0",
+    "qiangfaexp": "0",
+    "jianfa": "0",
+    "jianfaexp": "0",
+    "bianfa": "0",
+    "bianfaexp": "0",
+    "gunfa": "0",
+    "gunfaexp": "0",
+    "neigong": "0",
+    "neigongexp": "0",
+    "cishu": "0",
+    "cishuexp": "0",
+    "shenfa": "0",
+    "shenfaexp": "0",
+    "dushu": "0",
+    "dushuexp": "0",
+    "yishu": "0",
+    "yishuexp": "0",
+    "zhenfa": "0",
+    "zhenfaexp": "0",
+    "boji": "0",
+    "bojiexp": "0",
+    "shanduo": "0",
+    "shanduoexp": "0",
+    "chaizhao": "0",
+    "chaizhaoexp": "0",
+    "anqi": "0",
+    "anqiexp": "0",
+    "dushushizi": "0",
+    "dushushiziexp": "0",
+    "jiaoyi": "0",
+    "jiaoyiexp": "0",
+    "ysgengu": "21",
+    "yswuxing": "21",
+    "ysbili": "23",
+    "ysjimin": "19",
+    "zigong": "0",
+    "neidanshuxing": "0",
+    "neidandengji": "0",
+    "neidanzhi": "0",
+    "zongxiaofei": "99999999",
+    "shengwang": "0",
+    "xueshidian": "0"
+   }
+  ],
+  "char_equip": [
+   {
+    "jyid": "123456",
+    "dao": "0",
+    "qiang": "0",
+    "jian": "0",
+    "bian": "0",
+    "gun": "0",
+    "xin": "0",
+    "ci": "0",
+    "qing": "0",
+    "du": "0",
+    "yi": "0",
+    "zhen": "0",
+    "quan": "0",
+    "shan": "0",
+    "ge": "0",
+    "no": "0"
+   }
+  ],
+  "jineng": [
+   {
+    "jyid": "123456",
+    "famu": "0",
+    "famuexp": "0",
+    "gongjiang": "0",
+    "gongjiangexp": "0",
+    "zhibu": "0",
+    "zhibuexp": "0",
+    "caifeng": "0",
+    "caifengexp": "0",
+    "lieren": "0",
+    "lirenexp": "0",
+    "caikuang": "0",
+    "caikuangexp": "0",
+    "datie": "0",
+    "datieexp": "0",
+    "zhujian": "0",
+    "zhujianexp": "0",
+    "nongfu": "0",
+    "nongfuexp": "0",
+    "buyu": "0",
+    "buyuexp": "0",
+    "chushi": "0",
+    "chushiexp": "0"
+   }
+  ],
+  "kf": [],
+  "account": [
+   {
+    "jyid": "123456",
+    "super_password": "",
+    "old_password": "",
+    "reg_timecount": "2023年10月9日23时10分34秒",
+    "reg_ip": "1",
+    "state": "1",
+    "gm_lvl": "0",
+    "shangchengdianshu": "100088242"
+   }
+  ],
+  "item": [
+   {
+    "id": "60713794",
+    "jyid": "123456",
+    "item_id": "22077",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713795",
+    "jyid": "123456",
+    "item_id": "58181",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713796",
+    "jyid": "123456",
+    "item_id": "37958",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713797",
+    "jyid": "123456",
+    "item_id": "57746",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713798",
+    "jyid": "123456",
+    "item_id": "24102",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713799",
+    "jyid": "123456",
+    "item_id": "11600",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713800",
+    "jyid": "123456",
+    "item_id": "12493",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713801",
+    "jyid": "123456",
+    "item_id": "12492",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713802",
+    "jyid": "123456",
+    "item_id": "12491",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713803",
+    "jyid": "123456",
+    "item_id": "12496",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713804",
+    "jyid": "123456",
+    "item_id": "12497",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713805",
+    "jyid": "123456",
+    "item_id": "12498",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713806",
+    "jyid": "123456",
+    "item_id": "12499",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713807",
+    "jyid": "123456",
+    "item_id": "12500",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713808",
+    "jyid": "123456",
+    "item_id": "41119",
+    "state": "200",
+    "shuliang": "2"
+   },
+   {
+    "id": "60713809",
+    "jyid": "123456",
+    "item_id": "24075",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713810",
+    "jyid": "123456",
+    "item_id": "26107",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713811",
+    "jyid": "123456",
+    "item_id": "25090",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713812",
+    "jyid": "123456",
+    "item_id": "23074",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713813",
+    "jyid": "123456",
+    "item_id": "20091",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713814",
+    "jyid": "123456",
+    "item_id": "22102",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713815",
+    "jyid": "123456",
+    "item_id": "27179",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713816",
+    "jyid": "123456",
+    "item_id": "26108",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713817",
+    "jyid": "123456",
+    "item_id": "25091",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713818",
+    "jyid": "123456",
+    "item_id": "20092",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713819",
+    "jyid": "123456",
+    "item_id": "27180",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713820",
+    "jyid": "123456",
+    "item_id": "27003",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713821",
+    "jyid": "123456",
+    "item_id": "27181",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713822",
+    "jyid": "123456",
+    "item_id": "44254",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713823",
+    "jyid": "123456",
+    "item_id": "40759",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713824",
+    "jyid": "123456",
+    "item_id": "48237",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713825",
+    "jyid": "123456",
+    "item_id": "18072",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713826",
+    "jyid": "123456",
+    "item_id": "15080",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713827",
+    "jyid": "123456",
+    "item_id": "14056",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713828",
+    "jyid": "123456",
+    "item_id": "13066",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713829",
+    "jyid": "123456",
+    "item_id": "48022",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713830",
+    "jyid": "123456",
+    "item_id": "48631",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713831",
+    "jyid": "123456",
+    "item_id": "12130",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713832",
+    "jyid": "123456",
+    "item_id": "11047",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713833",
+    "jyid": "123456",
+    "item_id": "27058",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713834",
+    "jyid": "123456",
+    "item_id": "26028",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713835",
+    "jyid": "123456",
+    "item_id": "58182",
+    "state": "200",
+    "shuliang": "130"
+   },
+   {
+    "id": "60713836",
+    "jyid": "123456",
+    "item_id": "40145",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713837",
+    "jyid": "123456",
+    "item_id": "40515",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713838",
+    "jyid": "123456",
+    "item_id": "22103",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60713839",
+    "jyid": "123456",
+    "item_id": "24076",
+    "state": "200",
+    "shuliang": "1"
+   }
+  ]
+ },
+ "rows_before_login": {
+  "renwu": [
+   {
+    "jyid": "123456",
+    "name": "游戏者之家",
+    "nickname": "二狗",
+    "sex": "1",
+    "head_image": "1",
+    "mode": "1",
+    "b_month": "1",
+    "b_day": "1",
+    "str": "23",
+    "crg": "18",
+    "wint": "21",
+    "luk": "20",
+    "dex": "18",
+    "agi": "19",
+    "vit": "21",
+    "map": "2801",
+    "x": "4242",
+    "y": "1742",
+    "dangqianjing": "210",
+    "zuidajing": "210",
+    "dangqianshen": "210",
+    "zuidashen": "210",
+    "dangqianxue": "1",
+    "zuidaxue": "2000",
+    "dangqiannei": "1",
+    "zuidanei": "1",
+    "study_count": "600",
+    "combat_exp": "1200",
+    "diet_val": "100",
+    "water_val": "100",
+    "kill_val": "80",
+    "pk_val": "0",
+    "jy_money": "120200",
+    "fame_val": "4000",
+    "online_time": "1010",
+    "school": "0",
+    "master": "0",
+    "exp_val": "0",
+    "evil_val": "2400",
+    "school_skill_lv": "0",
+    "school_skill_exp": "0",
+    "jmkey": "125",
+    "wuqiqiangdu": "0",
+    "fangjuqiangdu": "0",
+    "toukui": "25091",
+    "toukuizhuangtai": "50",
+    "xianglian": "24075",
+    "xianglianzhuangtai": "50",
+    "wuqi": "12498",
+    "wuqizhuangtai": "50",
+    "yifu": "27181",
+    "yifuzhuangtai": "50",
+    "pifeng": "20092",
+    "pifengzhuangtai": "50",
+    "jiezhi": "23074",
+    "jiezhizhuangtai": "50",
+    "xiezi": "26108",
+    "xiezizhuangtai": "50",
+    "huwan": "22102",
+    "huwanzhuangtai": "50",
+    "daofa": "0",
+    "daofaexp": "0",
+    "qiangfa": "0",
+    "qiangfaexp": "0",
+    "jianfa": "0",
+    "jianfaexp": "0",
+    "bianfa": "0",
+    "bianfaexp": "0",
+    "gunfa": "0",
+    "gunfaexp": "0",
+    "neigong": "0",
+    "neigongexp": "0",
+    "cishu": "0",
+    "cishuexp": "0",
+    "shenfa": "0",
+    "shenfaexp": "0",
+    "dushu": "0",
+    "dushuexp": "0",
+    "yishu": "0",
+    "yishuexp": "0",
+    "zhenfa": "0",
+    "zhenfaexp": "0",
+    "boji": "0",
+    "bojiexp": "0",
+    "shanduo": "0",
+    "shanduoexp": "0",
+    "chaizhao": "0",
+    "chaizhaoexp": "0",
+    "anqi": "0",
+    "anqiexp": "0",
+    "dushushizi": "0",
+    "dushushiziexp": "0",
+    "jiaoyi": "0",
+    "jiaoyiexp": "0",
+    "ysgengu": "21",
+    "yswuxing": "21",
+    "ysbili": "23",
+    "ysjimin": "19",
+    "zigong": "0",
+    "neidanshuxing": "0",
+    "neidandengji": "0",
+    "neidanzhi": "0",
+    "zongxiaofei": "99999999",
+    "shengwang": "0",
+    "xueshidian": "0"
+   }
+  ],
+  "char_equip": [
+   {
+    "jyid": "123456",
+    "dao": "0",
+    "qiang": "0",
+    "jian": "0",
+    "bian": "0",
+    "gun": "0",
+    "xin": "0",
+    "ci": "0",
+    "qing": "0",
+    "du": "0",
+    "yi": "0",
+    "zhen": "0",
+    "quan": "0",
+    "shan": "0",
+    "ge": "0",
+    "no": "0"
+   }
+  ],
+  "jineng": [
+   {
+    "jyid": "123456",
+    "famu": "0",
+    "famuexp": "0",
+    "gongjiang": "0",
+    "gongjiangexp": "0",
+    "zhibu": "0",
+    "zhibuexp": "0",
+    "caifeng": "0",
+    "caifengexp": "0",
+    "lieren": "0",
+    "lirenexp": "0",
+    "caikuang": "0",
+    "caikuangexp": "0",
+    "datie": "0",
+    "datieexp": "0",
+    "zhujian": "0",
+    "zhujianexp": "0",
+    "nongfu": "0",
+    "nongfuexp": "0",
+    "buyu": "0",
+    "buyuexp": "0",
+    "chushi": "0",
+    "chushiexp": "0"
+   }
+  ],
+  "kf": [],
+  "account": [
+   {
+    "jyid": "123456",
+    "super_password": "",
+    "old_password": "",
+    "reg_timecount": "2023年10月9日23时10分34秒",
+    "reg_ip": "1",
+    "state": "1",
+    "gm_lvl": "0",
+    "shangchengdianshu": "100088242"
+   }
+  ],
+  "item": [
+   {
+    "id": "60712785",
+    "jyid": "123456",
+    "item_id": "22077",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712786",
+    "jyid": "123456",
+    "item_id": "58181",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712787",
+    "jyid": "123456",
+    "item_id": "37958",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712788",
+    "jyid": "123456",
+    "item_id": "57746",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712789",
+    "jyid": "123456",
+    "item_id": "24102",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712790",
+    "jyid": "123456",
+    "item_id": "11600",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712791",
+    "jyid": "123456",
+    "item_id": "12493",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712792",
+    "jyid": "123456",
+    "item_id": "12492",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712793",
+    "jyid": "123456",
+    "item_id": "12491",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712794",
+    "jyid": "123456",
+    "item_id": "12496",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712795",
+    "jyid": "123456",
+    "item_id": "12497",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712796",
+    "jyid": "123456",
+    "item_id": "12498",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712797",
+    "jyid": "123456",
+    "item_id": "12499",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712798",
+    "jyid": "123456",
+    "item_id": "12500",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712799",
+    "jyid": "123456",
+    "item_id": "41119",
+    "state": "200",
+    "shuliang": "2"
+   },
+   {
+    "id": "60712800",
+    "jyid": "123456",
+    "item_id": "24075",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712801",
+    "jyid": "123456",
+    "item_id": "26107",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712802",
+    "jyid": "123456",
+    "item_id": "25090",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712803",
+    "jyid": "123456",
+    "item_id": "23074",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712804",
+    "jyid": "123456",
+    "item_id": "20091",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712805",
+    "jyid": "123456",
+    "item_id": "22102",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712806",
+    "jyid": "123456",
+    "item_id": "27179",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712807",
+    "jyid": "123456",
+    "item_id": "26108",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712808",
+    "jyid": "123456",
+    "item_id": "25091",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712809",
+    "jyid": "123456",
+    "item_id": "20092",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712810",
+    "jyid": "123456",
+    "item_id": "27180",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712811",
+    "jyid": "123456",
+    "item_id": "27003",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712812",
+    "jyid": "123456",
+    "item_id": "27181",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712813",
+    "jyid": "123456",
+    "item_id": "44254",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712814",
+    "jyid": "123456",
+    "item_id": "40759",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712815",
+    "jyid": "123456",
+    "item_id": "48237",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712816",
+    "jyid": "123456",
+    "item_id": "18072",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712817",
+    "jyid": "123456",
+    "item_id": "15080",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712818",
+    "jyid": "123456",
+    "item_id": "14056",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712819",
+    "jyid": "123456",
+    "item_id": "13066",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712820",
+    "jyid": "123456",
+    "item_id": "48022",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712821",
+    "jyid": "123456",
+    "item_id": "48631",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712822",
+    "jyid": "123456",
+    "item_id": "12130",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712823",
+    "jyid": "123456",
+    "item_id": "11047",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712824",
+    "jyid": "123456",
+    "item_id": "27058",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712825",
+    "jyid": "123456",
+    "item_id": "26028",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712826",
+    "jyid": "123456",
+    "item_id": "58182",
+    "state": "200",
+    "shuliang": "130"
+   },
+   {
+    "id": "60712827",
+    "jyid": "123456",
+    "item_id": "40145",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712828",
+    "jyid": "123456",
+    "item_id": "40515",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712829",
+    "jyid": "123456",
+    "item_id": "22103",
+    "state": "200",
+    "shuliang": "1"
+   },
+   {
+    "id": "60712830",
+    "jyid": "123456",
+    "item_id": "24076",
+    "state": "200",
+    "shuliang": "1"
+   }
+  ]
+ },
+ "frames": [
+  {
+   "opcode": 1,
+   "key": 159,
+   "wide": false,
+   "payload": "01a2bc283706a6bfab6eadb70aa7daac4fd8e6d8e6ae4011171413141415"
+  },
+  {
+   "opcode": 30,
+   "key": 125,
+   "wide": true,
+   "payload": "52010000b1003d5600006445e30000c846940000c892e1000005265e000032502d000032cd30000032cc30000032cb30000032d030000032d130000032d230000032d330000032d4300000329fa00000c89fa00000c80b5e000032fb650000320262000032225a0000327b4e00003256560000322b6a000032fc6500003203620000327c4e0000322c6a0000327b690000c82d6a000032deac000028379f0000c86dbc0000c89846000014e83a000014e8360000140a3300001496bb000064f7bd0000c8622f000014272b000014b2690000c8ac650000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c846e30000c8d19c0000c8439e0000c857560000c80c5e0000c8000000000003620000320b5e0000322d6a0000327c4e000032d230000032d2300000325656000032225a000032fc6500003240e201000ab4e5c0b8aacca4a7ae610000000000000956375a302da447aaaf00000000000000f10a000092100000ce060000d200d200d007000001000000d200d2000100000001000000171215141213150058020000000000000000b00400000000000000000000000000004a06ba228a000000649b006450000000000f0000000000000088d50100a00f0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f2030000010103170100000000000000000000000000006009000000000000000000d007000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010100000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+  },
+  {
+   "opcode": 68,
+   "key": 125,
+   "wide": true,
+   "payload": ""
+  },
+  {
+   "opcode": 20,
+   "key": 125,
+   "wide": true,
+   "payload": "01a5bbb4e5c0b8a662b25ec45fa152b4e5c0b8aacca4a7ae61a141abf7a668a668a152b4b8a4d1bcc6bd5878b4e5c0b8aacca4a7ae61a141a7ddadb5b4b8a4d1bcc6bd5878b4e5c0b8aacca4a7ae6120b0e2bde6a141a8e4a54ca7a1acb0adcbbde6a141bdd0c170a874bde6ae61b068b4da"
+  },
+  {
+   "opcode": 20,
+   "key": 125,
+   "wide": true,
+   "payload": "03a5bbb4e5c0b8a662b25ec45fa152b4e5c0b8aacca4a7ae61a141abf7a668a668a152b4b8a4d1bcc6bd5878b4e5c0b8aacca4a7ae61a141a7ddadb5b4b8a4d1bcc6bd5878b4e5c0b8aacca4a7ae61b0e2bde6a141a8e4a54ca7a1acb0adcbbde6a141bdd0c170a874bde6ae61b068b4da"
+  },
+  {
+   "opcode": 20,
+   "key": 125,
+   "wide": true,
+   "payload": "08a5bbb4e5c0b8a662b25ec45fa152b4e5c0b8aacca4a7ae61a141abf7a668a668a152b4b8a4d1bcc6bd5878b4e5c0b8aacca4a7ae61a141a7ddadb5b4b8a4d1bcc6bd5878b4e5c0b8aacca4a7ae61b0e2bde6a141a8e4a54ca7a1acb0adcbbde6a141bdd0c170a874bde6ae61b068b4da"
+  },
+  {
+   "opcode": 188,
+   "key": 125,
+   "wide": true,
+   "payload": "42a5bbb4e5c0b8a662b25ec45fa152b4e5c0b8aacca4a7ae61a141abf7a668a668a152b4b8a4d1bcc6bd5878b4e5c0b8aacca4a7ae61a141a7ddadb5b4b8a4d1bcc6bd5878b4e5c0b8aacca4a7ae61b0e2bde6a141a8e4a54ca7a1acb0adcbbde6a141bdd0c170a874bde6ae61b068b4da"
+  },
+  {
+   "opcode": 50,
+   "key": 125,
+   "wide": true,
+   "payload": "6fb239f705"
+  },
+  {
+   "opcode": 20,
+   "key": 125,
+   "wide": true,
+   "payload": "03c078adc8c249bcc6a152313030303838323432c249a154"
+  },
+  {
+   "opcode": 20,
+   "key": 125,
+   "wide": true,
+   "payload": "03c160c3d9a755c249bcc6a1523939393939393939c249a154"
+  },
+  {
+   "opcode": 8,
+   "key": 125,
+   "wide": true,
+   "payload": "f10a9210ce0609"
+  },
+  {
+   "opcode": 2,
+   "key": 125,
+   "wide": true,
+   "payload": ""
+  },
+  {
+   "opcode": 109,
+   "key": 125,
+   "wide": true,
+   "payload": ""
+  },
+  {
+   "opcode": 61,
+   "key": 125,
+   "wide": true,
+   "payload": ""
+  },
+  {
+   "opcode": 49,
+   "key": 125,
+   "wide": true,
+   "payload": ""
+  },
+  {
+   "opcode": 47,
+   "key": 125,
+   "wide": false,
+   "payload": "0940e20100"
+  },
+  {
+   "opcode": 20,
+   "key": 125,
+   "wide": true,
+   "payload": "0ea5bbaa41c3d9a755a4fda152b4e5c0b8aacca4a7ae61a457bd75b0d5a154a141c3d9a755c249bcc6acb0a1523939393939393939"
+  },
+  {
+   "opcode": 50,
+   "key": 125,
+   "wide": false,
+   "payload": "463200"
+  },
+  {
+   "opcode": 20,
+   "key": 125,
+   "wide": true,
+   "payload": "03a74bb364c16ea9faa152a5bbb36ea5f3a5d1b25ec45fb4e5c0b8aacca4a7ae61a6acb6b0bee3b27aa141b6c8adada5cea45fbec7b2dfa94dace3a873a5d8aabaa151a67da4a3b16fb14eb8d3b36ea5f3a5cea45fb0d3b77ea9ceaaccab44aa6ba5ceb37ea141a75fab68a141a440a4c1a65aaa47a5d1a8cfa5ceaacca6dbad74a143b36ea5f3a54ebd58a7a1a8d3b7bda45fca49b5b8a141aaa9c576aaa7c4b3c94fa740aaccb54cc3f6a143b17aa5b2b6b7a662a455b8fca65aaaba3234add3a470aec9a4a7a4baa141b171b17aaabab971b8a3a4a4b9fda9b3a752b0a3b8d3b57ba7c7a143a670aa47b17ab3dfc577b8d3b4e5c0b8a141bdd0a4e4abf9a5bfaaa9a141aab1a978a4e8b4e5c0b8a141b16fa8eca7f3a66eaabaa5bfaaa9aa41b0c8a143627920a6d1b978b5a3"
+  },
+  {
+   "opcode": 169,
+   "key": 125,
+   "wide": false,
+   "payload": "96000000000000000000"
+  }
+ ]
+}

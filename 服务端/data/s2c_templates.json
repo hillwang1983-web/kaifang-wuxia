@@ -1,0 +1,1244 @@
+[
+ {
+  "va": "0x9d65ea",
+  "hex": "F4 44 04 E5",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0xe5",
+    "wide": false,
+    "length": 4,
+    "payload": ""
+   }
+  ]
+ },
+ {
+  "va": "0x9d6b68",
+  "hex": "F4 44 05 F9 00",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0xf9",
+    "wide": false,
+    "length": 5,
+    "payload": "00"
+   }
+  ]
+ },
+ {
+  "va": "0x9d6b77",
+  "hex": "F4 44 05 F9 01",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0xf9",
+    "wide": false,
+    "length": 5,
+    "payload": "01"
+   }
+  ]
+ },
+ {
+  "va": "0x9d6bb2",
+  "hex": "F4 44 05 81 02",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x81",
+    "wide": false,
+    "length": 5,
+    "payload": "02"
+   }
+  ]
+ },
+ {
+  "va": "0x9d6be9",
+  "hex": "F4 44 10 5D 06 0B D2 00 C2 01 07 08 00 00 00 6F",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x5d",
+    "wide": false,
+    "length": 16,
+    "payload": "06 0b d2 00 c2 01 07 08 00 00 00 6f"
+   }
+  ]
+ },
+ {
+  "va": "0x9d6c6e",
+  "hex": "F5 B3 06 00 81 01",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x81",
+    "wide": true,
+    "length": 6,
+    "payload": "01"
+   }
+  ]
+ },
+ {
+  "va": "0x9d6c80",
+  "hex": "F5 B3 06 00 81 02",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x81",
+    "wide": true,
+    "length": 6,
+    "payload": "02"
+   }
+  ]
+ },
+ {
+  "va": "0x9d7001",
+  "hex": "F4 44 08 E6 1B 27 00 00",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0xe6",
+    "wide": false,
+    "length": 8,
+    "payload": "1b 27 00 00"
+   }
+  ]
+ },
+ {
+  "va": "0x9d7105",
+  "hex": "F4 44 04 3D",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x3d",
+    "wide": false,
+    "length": 4,
+    "payload": ""
+   }
+  ]
+ },
+ {
+  "va": "0x9d7111",
+  "hex": "F4 44 04 42",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x42",
+    "wide": false,
+    "length": 4,
+    "payload": ""
+   }
+  ]
+ },
+ {
+  "va": "0x9d711d",
+  "hex": "F4 44 05 B9 01",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0xb9",
+    "wide": false,
+    "length": 5,
+    "payload": "01"
+   }
+  ]
+ },
+ {
+  "va": "0x9d712c",
+  "hex": "F4 44 04 31",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x31",
+    "wide": false,
+    "length": 4,
+    "payload": ""
+   }
+  ]
+ },
+ {
+  "va": "0x9d7138",
+  "hex": "F4 44 07 32 6D 00 00",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x32",
+    "wide": false,
+    "length": 7,
+    "payload": "6d 00 00"
+   }
+  ]
+ },
+ {
+  "va": "0x9d7d5e",
+  "hex": "F4 44 07 A9 2E 02 02",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0xa9",
+    "wide": false,
+    "length": 7,
+    "payload": "2e 02 02"
+   }
+  ]
+ },
+ {
+  "va": "0x9d7d73",
+  "hex": "F4 44 0B 08 37 19 B0 04 D0 07 01 F5 B3 05 00 02 F5 B3 05 00 6D F5 B3 05 00 3D F5 B3 05 00 31",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x08",
+    "wide": false,
+    "length": 11,
+    "payload": "37 19 b0 04 d0 07 01"
+   },
+   {
+    "opcode": "0x02",
+    "wide": true,
+    "length": 5,
+    "payload": ""
+   },
+   {
+    "opcode": "0x6d",
+    "wide": true,
+    "length": 5,
+    "payload": ""
+   },
+   {
+    "opcode": "0x3d",
+    "wide": true,
+    "length": 5,
+    "payload": ""
+   },
+   {
+    "opcode": "0x31",
+    "wide": true,
+    "length": 5,
+    "payload": ""
+   }
+  ]
+ },
+ {
+  "va": "0x9d7dd0",
+  "hex": "F4 44 07 32 6D 00 00",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x32",
+    "wide": false,
+    "length": 7,
+    "payload": "6d 00 00"
+   }
+  ]
+ },
+ {
+  "va": "0x9d7de6",
+  "hex": "F4 44 07 A9 2E 03 02",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0xa9",
+    "wide": false,
+    "length": 7,
+    "payload": "2e 03 02"
+   }
+  ]
+ },
+ {
+  "va": "0x9d7dfb",
+  "hex": "F4 44 0A 77 9E CA 00 00 30 01",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x77",
+    "wide": false,
+    "length": 10,
+    "payload": "9e ca 00 00 30 01"
+   }
+  ]
+ },
+ {
+  "va": "0x9d7e4f",
+  "hex": "F5 B3 0C 00 08 58 1B 89 11 ED 1B 0A F5 B3 05 00 02 F5 B3 05 00 6D F5 B3 05 00 3D F5 B3 05 00 31",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x08",
+    "wide": true,
+    "length": 12,
+    "payload": "58 1b 89 11 ed 1b 0a"
+   },
+   {
+    "opcode": "0x02",
+    "wide": true,
+    "length": 5,
+    "payload": ""
+   },
+   {
+    "opcode": "0x6d",
+    "wide": true,
+    "length": 5,
+    "payload": ""
+   },
+   {
+    "opcode": "0x3d",
+    "wide": true,
+    "length": 5,
+    "payload": ""
+   },
+   {
+    "opcode": "0x31",
+    "wide": true,
+    "length": 5,
+    "payload": ""
+   }
+  ]
+ },
+ {
+  "va": "0x9d7eaf",
+  "hex": "F4 44 1C 14 06 B7 CF AB 42 BC D3 BE D4 A7 D0 A5 FE AF 75 A4 43 A4 6C C0 F2 B3 D3 21",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x14",
+    "wide": false,
+    "length": 28,
+    "payload": "06 b7 cf ab 42 bc d3 be d4 a7 d0 a5 fe af 75 a4 43 a4 6c c0 f2 b3 d3 21",
+    "big5": "\u0006煙雨樓戰役全真七子獲勝!"
+   }
+  ]
+ },
+ {
+  "va": "0x9d7f5a",
+  "hex": "F4 44 0A 77 F1 CA 00 00 30 01",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x77",
+    "wide": false,
+    "length": 10,
+    "payload": "f1 ca 00 00 30 01"
+   }
+  ]
+ },
+ {
+  "va": "0x9d8038",
+  "hex": "F4 44 0A 77 DE CA 00 00 30 01",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x77",
+    "wide": false,
+    "length": 10,
+    "payload": "de ca 00 00 30 01"
+   }
+  ]
+ },
+ {
+  "va": "0x9d8077",
+  "hex": "F4 44 0A 77 0D FA 00 00 30 01",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x77",
+    "wide": false,
+    "length": 10,
+    "payload": "0d fa 00 00 30 01"
+   }
+  ]
+ },
+ {
+  "va": "0x9d80ab",
+  "hex": "F4 44 0A 77 92 CA 00 00 30 01",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x77",
+    "wide": false,
+    "length": 10,
+    "payload": "92 ca 00 00 30 01"
+   }
+  ]
+ },
+ {
+  "va": "0x9d80f3",
+  "hex": "F4 44 0A 77 EE FB 00 00 30 01",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x77",
+    "wide": false,
+    "length": 10,
+    "payload": "ee fb 00 00 30 01"
+   }
+  ]
+ },
+ {
+  "va": "0x9dced7",
+  "hex": "F4 44 05 EB 01",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0xeb",
+    "wide": false,
+    "length": 5,
+    "payload": "01"
+   }
+  ]
+ },
+ {
+  "va": "0x9dcfd1",
+  "hex": "F4 44 05 16 06",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x16",
+    "wide": false,
+    "length": 5,
+    "payload": "06"
+   }
+  ]
+ },
+ {
+  "va": "0xca75f6",
+  "hex": "F4 44 0D 1A 64 A8 F8 AB 6C A6 A8 A5 5C",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x1a",
+    "wide": false,
+    "length": 13,
+    "payload": "64 a8 f8 ab 6c a6 a8 a5 5c",
+    "big5": "d卸勁成功"
+   }
+  ]
+ },
+ {
+  "va": "0xca765e",
+  "hex": "F4 44 09 99 04 29 62 3E B6",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x99",
+    "wide": false,
+    "length": 9,
+    "payload": "04 29 62 3e b6"
+   }
+  ],
+  "key_change": {
+   "seed": "29 62 3e b6",
+   "key": "0x52"
+  }
+ },
+ {
+  "va": "0xca7679",
+  "hex": "F4 44 09 99 04 0E AE A5 31",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x99",
+    "wide": false,
+    "length": 9,
+    "payload": "04 0e ae a5 31"
+   }
+  ],
+  "key_change": {
+   "seed": "0e ae a5 31",
+   "key": "0x0e"
+  }
+ },
+ {
+  "va": "0xca7694",
+  "hex": "F4 44 09 99 04 21 3D B0 96",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x99",
+    "wide": false,
+    "length": 9,
+    "payload": "04 21 3d b0 96"
+   }
+  ],
+  "key_change": {
+   "seed": "21 3d b0 96",
+   "key": "0x41"
+  }
+ },
+ {
+  "va": "0xca76af",
+  "hex": "F4 44 09 99 04 0E AE A5 32",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x99",
+    "wide": false,
+    "length": 9,
+    "payload": "04 0e ae a5 32"
+   }
+  ],
+  "key_change": {
+   "seed": "0e ae a5 32",
+   "key": "0x5c"
+  }
+ },
+ {
+  "va": "0xca76ca",
+  "hex": "F4 44 09 99 04 0E AE A5 33",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x99",
+    "wide": false,
+    "length": 9,
+    "payload": "04 0e ae a5 33"
+   }
+  ],
+  "key_change": {
+   "seed": "0e ae a5 33",
+   "key": "0xaa"
+  }
+ },
+ {
+  "va": "0xca76e5",
+  "hex": "F4 44 09 99 04 0E AE A5 34",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x99",
+    "wide": false,
+    "length": 9,
+    "payload": "04 0e ae a5 34"
+   }
+  ],
+  "key_change": {
+   "seed": "0e ae a5 34",
+   "key": "0x1f"
+  }
+ },
+ {
+  "va": "0xca7700",
+  "hex": "F4 44 09 99 04 0E AE A5 35",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x99",
+    "wide": false,
+    "length": 9,
+    "payload": "04 0e ae a5 35"
+   }
+  ],
+  "key_change": {
+   "seed": "0e ae a5 35",
+   "key": "0x6d"
+  }
+ },
+ {
+  "va": "0xca771b",
+  "hex": "F4 44 09 99 04 0E AE A5 36",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x99",
+    "wide": false,
+    "length": 9,
+    "payload": "04 0e ae a5 36"
+   }
+  ],
+  "key_change": {
+   "seed": "0e ae a5 36",
+   "key": "0xbb"
+  }
+ },
+ {
+  "va": "0xca7736",
+  "hex": "F4 44 09 99 04 0E AE A5 37",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x99",
+    "wide": false,
+    "length": 9,
+    "payload": "04 0e ae a5 37"
+   }
+  ],
+  "key_change": {
+   "seed": "0e ae a5 37",
+   "key": "0x30"
+  }
+ },
+ {
+  "va": "0xca7751",
+  "hex": "F4 44 09 99 04 0E AE A5 38",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x99",
+    "wide": false,
+    "length": 9,
+    "payload": "04 0e ae a5 38"
+   }
+  ],
+  "key_change": {
+   "seed": "0e ae a5 38",
+   "key": "0x7e"
+  }
+ },
+ {
+  "va": "0xca8a93",
+  "hex": "F4 44 10 08 3D 1D 00 00 B7 0D AB 01 F7 01 07 6A",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x08",
+    "wide": false,
+    "length": 16,
+    "payload": "3d 1d 00 00 b7 0d ab 01 f7 01 07 6a"
+   }
+  ]
+ },
+ {
+  "va": "0xca8f34",
+  "hex": "F4 44 0D D8 01 3A 37 F6 05 40 42 0F 00",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0xd8",
+    "wide": false,
+    "length": 13,
+    "payload": "01 3a 37 f6 05 40 42 0f 00"
+   }
+  ]
+ },
+ {
+  "va": "0xca932e",
+  "hex": "F4 44 04 C6",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0xc6",
+    "wide": false,
+    "length": 4,
+    "payload": ""
+   }
+  ]
+ },
+ {
+  "va": "0xca9702",
+  "hex": "F4 44 07 BC 40 01 01",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0xbc",
+    "wide": false,
+    "length": 7,
+    "payload": "40 01 01"
+   }
+  ]
+ },
+ {
+  "va": "0xcaa98a",
+  "hex": "F4 44 04 1B",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x1b",
+    "wide": false,
+    "length": 4,
+    "payload": ""
+   }
+  ]
+ },
+ {
+  "va": "0xcaa9ed",
+  "hex": "F5 B3 0E 00 1B C9 AF 00 00 3C 0C 00 00 00",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x1b",
+    "wide": true,
+    "length": 14,
+    "payload": "c9 af 00 00 3c 0c 00 00 00"
+   }
+  ]
+ },
+ {
+  "va": "0xcaaba7",
+  "hex": "F4 44 21 01 01 A2 BC 08 5F 0C 25 26 77 65 6E 21 65 6C 6F 72 2A 32 03 2E 2E 2E 17 12 15 14 12 13 15",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x01",
+    "wide": false,
+    "length": 33,
+    "payload": "01 a2 bc 08 5f 0c 25 26 77 65 6e 21 65 6c 6f 72 2a 32 03 2e 2e 2e 17 12 15 14 12 13 15"
+   }
+  ]
+ },
+ {
+  "va": "0xcaac4d",
+  "hex": "F4 44 06 01 00 00",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x01",
+    "wide": false,
+    "length": 6,
+    "payload": "00 00"
+   }
+  ]
+ },
+ {
+  "va": "0xcaac5f",
+  "hex": "F4 44 22 01 01 A2 BC 28 37 6 A6 BF AB 6E AD B7 A A7 DA AC 4F D8 E6 D8 E6 AE 40 11 17 14 13 14 14 15 9F",
+  "complete": false,
+  "frames": [
+   {
+    "opcode": "0x01",
+    "wide": false,
+    "length": 34,
+    "payload": "01 a2 bc 28 37 06 a6 bf ab 6e ad b7 0a a7 da ac 4f d8 e6 d8 e6 ae 40 11 17 14 13 14 14 15",
+    "big5": "\u0001Ⅳ(7\u0006江南風\n我是崽崽哦\u0011\u0017\u0014\u0013\u0014\u0014\u0015"
+   }
+  ]
+ },
+ {
+  "va": "0xcaad04",
+  "hex": "F4 44 05 25 01",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x25",
+    "wide": false,
+    "length": 5,
+    "payload": "01"
+   }
+  ]
+ },
+ {
+  "va": "0xcaad13",
+  "hex": "F4 44 05 25 00",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x25",
+    "wide": false,
+    "length": 5,
+    "payload": "00"
+   }
+  ]
+ },
+ {
+  "va": "0xcac012",
+  "hex": "F5 B3 05 00 02 F5 B3 05 00 6D F5 B3 05 00 3D F5 B3 05 00 31",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x02",
+    "wide": true,
+    "length": 5,
+    "payload": ""
+   },
+   {
+    "opcode": "0x6d",
+    "wide": true,
+    "length": 5,
+    "payload": ""
+   },
+   {
+    "opcode": "0x3d",
+    "wide": true,
+    "length": 5,
+    "payload": ""
+   },
+   {
+    "opcode": "0x31",
+    "wide": true,
+    "length": 5,
+    "payload": ""
+   }
+  ]
+ },
+ {
+  "va": "0xcac1a4",
+  "hex": "F4 44 07 32 46 32 00",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x32",
+    "wide": false,
+    "length": 7,
+    "payload": "46 32 00"
+   }
+  ]
+ },
+ {
+  "va": "0xcb3ab4",
+  "hex": "F4 44 10 5D 3C 19 D2 00 C2 01 07 08 00 00 00 6F",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x5d",
+    "wide": false,
+    "length": 16,
+    "payload": "3c 19 d2 00 c2 01 07 08 00 00 00 6f"
+   }
+  ]
+ },
+ {
+  "va": "0xcb4abd",
+  "hex": "F4 44 06 32 79 00",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x32",
+    "wide": false,
+    "length": 6,
+    "payload": "79 00"
+   }
+  ]
+ },
+ {
+  "va": "0xcb4c5d",
+  "hex": "F4 44 0A 77 8F BB 00 00 C8 01",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x77",
+    "wide": false,
+    "length": 10,
+    "payload": "8f bb 00 00 c8 01"
+   }
+  ]
+ },
+ {
+  "va": "0xcb4c7b",
+  "hex": "F4 44 0A 0B 8F BB 00 00 C8 01",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x0b",
+    "wide": false,
+    "length": 10,
+    "payload": "8f bb 00 00 c8 01"
+   }
+  ]
+ },
+ {
+  "va": "0xcb4e3f",
+  "hex": "F4 44 08 C7 04 40 74 77 00",
+  "complete": false,
+  "frames": [
+   {
+    "opcode": "0xc7",
+    "wide": false,
+    "length": 8,
+    "payload": "04 40 74 77"
+   }
+  ]
+ },
+ {
+  "va": "0xcb4e73",
+  "hex": "F4 44 08 C7 04 40 74 77 01",
+  "complete": false,
+  "frames": [
+   {
+    "opcode": "0xc7",
+    "wide": false,
+    "length": 8,
+    "payload": "04 40 74 77"
+   }
+  ]
+ },
+ {
+  "va": "0xcb4e8e",
+  "hex": "F4 44 0A C7 04 40 6B 61 6C 65",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0xc7",
+    "wide": false,
+    "length": 10,
+    "payload": "04 40 6b 61 6c 65"
+   }
+  ]
+ },
+ {
+  "va": "0xcb4eb9",
+  "hex": "F4 44 0A C7 04 40 63 78 77 67",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0xc7",
+    "wide": false,
+    "length": 10,
+    "payload": "04 40 63 78 77 67"
+   }
+  ]
+ },
+ {
+  "va": "0xcb4f35",
+  "hex": "F4 44 0A C7 04 40 73 71 73 71",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0xc7",
+    "wide": false,
+    "length": 10,
+    "payload": "04 40 73 71 73 71"
+   }
+  ]
+ },
+ {
+  "va": "0xcb4f53",
+  "hex": "F4 44 08 C7 04 40 62 6A 00",
+  "complete": false,
+  "frames": [
+   {
+    "opcode": "0xc7",
+    "wide": false,
+    "length": 8,
+    "payload": "04 40 62 6a"
+   }
+  ]
+ },
+ {
+  "va": "0xcb4f87",
+  "hex": "F4 44 0B C7 04 40 77 68 65 72 65",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0xc7",
+    "wide": false,
+    "length": 11,
+    "payload": "04 40 77 68 65 72 65"
+   }
+  ]
+ },
+ {
+  "va": "0xcb5265",
+  "hex": "F4 44 09 C7 04 40 63 70 77",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0xc7",
+    "wide": false,
+    "length": 9,
+    "payload": "04 40 63 70 77"
+   }
+  ]
+ },
+ {
+  "va": "0xcb529a",
+  "hex": "F4 44 0A C7 04 40 62 70 73 6D",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0xc7",
+    "wide": false,
+    "length": 10,
+    "payload": "04 40 62 70 73 6d"
+   }
+  ]
+ },
+ {
+  "va": "0xcb530c",
+  "hex": "F4 44 0A C7 04 40 63 78 67 87",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0xc7",
+    "wide": false,
+    "length": 10,
+    "payload": "04 40 63 78 67 87"
+   }
+  ]
+ },
+ {
+  "va": "0xcb532a",
+  "hex": "F4 44 0A C7 04 40 63 78 67 88",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0xc7",
+    "wide": false,
+    "length": 10,
+    "payload": "04 40 63 78 67 88"
+   }
+  ]
+ },
+ {
+  "va": "0xcb5356",
+  "hex": "F4 44 0A C7 04 40 63 78 67 89",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0xc7",
+    "wide": false,
+    "length": 10,
+    "payload": "04 40 63 78 67 89"
+   }
+  ]
+ },
+ {
+  "va": "0xcb57f3",
+  "hex": "F4 44 06 BC 64 01",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0xbc",
+    "wide": false,
+    "length": 6,
+    "payload": "64 01"
+   }
+  ]
+ },
+ {
+  "va": "0xcb6c08",
+  "hex": "F4 44 07 B0 A8 38 CA",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0xb0",
+    "wide": false,
+    "length": 7,
+    "payload": "a8 38 ca"
+   }
+  ]
+ },
+ {
+  "va": "0xcb6d2f",
+  "hex": "F5 B3 09 00 28 00 00 00 00",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x28",
+    "wide": true,
+    "length": 9,
+    "payload": "00 00 00 00"
+   }
+  ]
+ },
+ {
+  "va": "0xcb6d67",
+  "hex": "F5 B3 09 00 8B 01 00 00 00",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x8b",
+    "wide": true,
+    "length": 9,
+    "payload": "01 00 00 00"
+   }
+  ]
+ },
+ {
+  "va": "0xcb6d82",
+  "hex": "F5 B3 0B 00 5F 01 01 63 6C 0D 00",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x5f",
+    "wide": true,
+    "length": 11,
+    "payload": "01 01 63 6c 0d 00"
+   }
+  ]
+ },
+ {
+  "va": "0xcb79bd",
+  "hex": "F4 44 0A 6B CD AF 00 00 C8 01",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x6b",
+    "wide": false,
+    "length": 10,
+    "payload": "cd af 00 00 c8 01"
+   }
+  ]
+ },
+ {
+  "va": "0xcbbbd4",
+  "hex": "F4 44 05 BE 02",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0xbe",
+    "wide": false,
+    "length": 5,
+    "payload": "02"
+   }
+  ]
+ },
+ {
+  "va": "0xcbbbf3",
+  "hex": "F4 44 09 B9 19 00 00 00 00",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0xb9",
+    "wide": false,
+    "length": 9,
+    "payload": "19 00 00 00 00"
+   }
+  ]
+ },
+ {
+  "va": "0xcbbcfe",
+  "hex": "F4 44 18 1A 64 A4 BA A4 A6 AD C8 A4 A3 A8 AC 2C BB 45 AB 6C A5 A2 B1 D1",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x1a",
+    "wide": false,
+    "length": 24,
+    "payload": "64 a4 ba a4 a6 ad c8 a4 a3 a8 ac 2c bb 45 ab 6c a5 a2 b1 d1",
+    "big5": "d內丹值不足,聚勁失敗"
+   }
+  ]
+ },
+ {
+  "va": "0xcbbd46",
+  "hex": "F4 44 11 1A 64 A4 BA A4 A6 BB 45 AB 6C A6 A8 A5 5C",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x1a",
+    "wide": false,
+    "length": 17,
+    "payload": "64 a4 ba a4 a6 bb 45 ab 6c a6 a8 a5 5c",
+    "big5": "d內丹聚勁成功"
+   }
+  ]
+ },
+ {
+  "va": "0xcbbef8",
+  "hex": "F4 44 09 32 6F BB 00 00 00",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x32",
+    "wide": false,
+    "length": 9,
+    "payload": "6f bb 00 00 00"
+   }
+  ]
+ },
+ {
+  "va": "0xcbc7c7",
+  "hex": "F4 44 05 23 04",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x23",
+    "wide": false,
+    "length": 5,
+    "payload": "04"
+   }
+  ]
+ },
+ {
+  "va": "0xcbc850",
+  "hex": "F4 44 04 22",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x22",
+    "wide": false,
+    "length": 4,
+    "payload": ""
+   }
+  ]
+ },
+ {
+  "va": "0xcbce6f",
+  "hex": "F4 44 05 1A 10",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x1a",
+    "wide": false,
+    "length": 5,
+    "payload": "10"
+   }
+  ]
+ },
+ {
+  "va": "0xcbd3f1",
+  "hex": "F4 44 05 1A 12",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x1a",
+    "wide": false,
+    "length": 5,
+    "payload": "12"
+   }
+  ]
+ },
+ {
+  "va": "0xcbd91b",
+  "hex": "F4 44 05 B8 10",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0xb8",
+    "wide": false,
+    "length": 5,
+    "payload": "10"
+   }
+  ]
+ },
+ {
+  "va": "0xcbd92a",
+  "hex": "F4 44 05 75 06",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x75",
+    "wide": false,
+    "length": 5,
+    "payload": "06"
+   }
+  ]
+ },
+ {
+  "va": "0xcbd94a",
+  "hex": "F4 44 09 4D 04 88 13 00 00",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x4d",
+    "wide": false,
+    "length": 9,
+    "payload": "04 88 13 00 00"
+   }
+  ]
+ },
+ {
+  "va": "0xcbd9c5",
+  "hex": "F4 44 05 1A 15",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x1a",
+    "wide": false,
+    "length": 5,
+    "payload": "15"
+   }
+  ]
+ },
+ {
+  "va": "0xcbdb90",
+  "hex": "F4 44 05 36 01",
+  "complete": true,
+  "frames": [
+   {
+    "opcode": "0x36",
+    "wide": false,
+    "length": 5,
+    "payload": "01"
+   }
+  ]
+ }
+]

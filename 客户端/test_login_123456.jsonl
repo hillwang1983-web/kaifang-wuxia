@@ -1,0 +1,7 @@
+{"ev": "open", "conn": 1, "t": 1792161219.4207451, "peer": "test_client -> 127.0.0.1:6731"}
+{"ev": "chunk", "conn": 1, "dir": "C2S", "t": 1792161220.444701, "hex": "f611016ada8c9fde7c9f9e69629b9eafacadaaaba8"}
+{"ev": "frame", "dir": "C2S", "fmt": "A", "type": 1, "total": 18, "key": 158, "mode": "normal", "payload": "40e20100f7fc0500313233343536", "seq": 1, "expected_key": 158, "conn": 1, "t": 1792161220.445}
+{"ev": "chunk", "conn": 1, "dir": "S2C", "t": 1792161220.452977, "hex": "6bdbbd9e9e3d23b7a899392034f1322895384533d04779477931df8e888b8c8b8b8a00"}
+{"ev": "frame", "dir": "S2C", "fmt": "A", "type": 1, "total": 34, "key": 159, "mode": "hs", "payload": "01a2bc283706a6bfab6eadb70aa7daac4fd8e6d8e6ae4011171413141415", "expected_key": 159, "conn": 1, "t": 1792161220.4531538}
+{"ev": "seed", "where": "handshake", "seed": "a2bc2837", "key": 125, "conn": 1, "t": 1792161220.453568}
+{"ev": "unframed", "dir": "S2C", "why": "idle", "len": 1, "hex": "00", "conn": 1, "t": 1792161220.666045}

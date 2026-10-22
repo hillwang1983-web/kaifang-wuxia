@@ -1,0 +1,1021 @@
+{
+ "_readme": "loginp.exe 角色(role\\*.mrg 里 .cp)动作表。详见同目录 动作表说明.md。所有地址为 loginp.exe 虚拟地址(ImageBase 0x400000)。置信度: verified=反汇编+渲染都核对; code=只从反编译读出; guess=推测。",
+ "cpFileLayout": {
+  "frameOrder": "一个 .cp 的 n 帧 = 8 个方向块 * (n/8) 帧；帧号 = dir*(n/8) + f，f 为方向内帧号(从0起)",
+  "framesPerDir": "n/8 (见 availability)",
+  "evidence": "0x51fa4c 0x521025-0x5210eb: iVar5=n>>3; 取 [param_6*iVar5, +iVar5) 这一块帧; 绘制 0x5253c8 用 slot+8+f*12 取 (ox,oy,w,h)",
+  "confidence": "verified (渲染 boy01 CP1/CP7 条带，8 方向排布与方向公式一致)",
+  "cpNumberInName": "mrg 内记录名 ROLE\\<层名>.CP<n>，n 即动作号(action)；加载器按 'role\\m50000.cp' + n 拼名(0x5202d1..0x520316，n 来自 0x51fa4c 的 ECX 参数；confidence=code)",
+  "playedFramesPerDir": 8,
+  "playedFramesNote": "世界场景里所有状态的帧数计数器上限都是 8(0x768370 的 count 参数/构造函数 0x76702c 设 8)；CP4/5/6 在 boy01 有 15 帧/方向、CP2/3 有 12 帧/方向，多出的帧世界场景没用到，可能战斗(0x954808)用，未追"
+ },
+ "directions": {
+  "index": {
+   "0": "up(N,背对镜头)",
+   "1": "up-left(NW)",
+   "2": "left(W)",
+   "3": "down-left(SW)",
+   "4": "down(S,面向镜头)",
+   "5": "down-right(SE)",
+   "6": "right(E)",
+   "7": "up-right(NE)"
+  },
+  "fromMovement": "设位移 (mx,my)=新位置-旧位置(屏幕坐标, y向下)，X=-mx, Y=my; 用 tan(22.5°)=0.41421356 的 8 扇区判定 -> 扇区 s(0..7) -> dir=(s+4)%8。结果: 上(0,-1)->0, 左上->1, 左->2, 左下->3, 下->4, 右下->5, 右->6, 右上->7",
+  "evidence": "0x767a50(扇区->dir 映射), 0x767994(扇区判定), 0x767814/0x767874/0x7678d4/0x767934(系数 ±tan22.5 在 0x767864/0x7678c4/0x767924/0x767984, 80位Extended)",
+  "defaultDirOnLogin": 4,
+  "mirroring": "无镜像，8 个方向各有独立帧",
+  "confidence": "公式 code，方位已用渲染核对 d0=背面 d4=正面(verified)，左/右为按公式推(code)"
+ },
+ "actions": {
+  "1": {
+   "name": "walk/run 行走",
+   "framesPerDir": 8,
+   "world": "状态1 -> action 1",
+   "intervalMs": "obj+0xc (构造默认100，其它写入点未追)",
+   "verified": "渲染 boy01 CP1: 摆臂循环"
+  },
+  "7": {
+   "name": "idle 站立(呼吸)",
+   "framesPerDir": 8,
+   "world": "状态0 -> action 7",
+   "intervalMs": 150,
+   "verified": "渲染 boy01 CP7: 微小起伏",
+   "intervalNote": "obj+0x60(100)+0x32(50)"
+  },
+  "4": {
+   "name": "attack 普通攻击(世界场景)",
+   "framesPerDir": "15(boy01,02,girl)/8(其它)",
+   "world": "obj+0xd4 !=0 且未骑乘 -> action 4, 帧==7 时清 obj+0xd4",
+   "playedFrames": "0..7",
+   "note": "boy01 的 CP4 8..14 帧为收招(世界场景不播)",
+   "verified": "渲染 boy01 CP4: 挥刀"
+  },
+  "2": {
+   "name": "attack/skill 招式A(战斗)",
+   "framesPerDir": "12(boy01,02,girl)/8(其它)",
+   "battle": "战斗状态3 且 子状态(+0x8c45b)=1 -> action 2",
+   "confidence": "code; 渲染确认是挥武器动作"
+  },
+  "3": {
+   "name": "attack/skill 招式C(战斗)",
+   "framesPerDir": "12(boy01,02,girl)/8",
+   "battle": "战斗状态3 子状态=3 -> action 3; 部分模型(6,7,8,0x84..0x86)被 0x5253c8 折到 2",
+   "confidence": "code; 渲染确认挥动"
+  },
+  "5": {
+   "name": "战斗动作5(挥/蓄力类)",
+   "framesPerDir": "15(boy01,02,girl)/8",
+   "battle": "战斗状态2 -> action 5; 非模型1/2/0x80 时 0x5253c8 把 5、6 折到 4",
+   "confidence": "code; 语义只是'攻击类', 具体名未定(guess)"
+  },
+  "6": {
+   "name": "战斗动作6",
+   "framesPerDir": "15(boy01,02,girl)/8",
+   "battle": "没找到把 6 传进来的位置; 折到 4(非模型1/2/0x80)",
+   "confidence": "guess"
+  },
+  "8": {
+   "name": "骑乘+移动",
+   "framesPerDir": 8,
+   "world": "mounted(obj+0x18c!=0) 且基础动作为1 -> 8",
+   "source": "models 1-4/G1-3 在 Horse.mrg(骑乘合成体), 6-8/G5-7 在自己的 mrg",
+   "confidence": "code; 渲染 boy10 CP8 看到骑马"
+  },
+  "9": {
+   "name": "骑乘+站立",
+   "framesPerDir": 8,
+   "world": "mounted 且基础动作为7 -> 9",
+   "confidence": "code; 渲染 boy10 CP9"
+  },
+  "10": {
+   "name": "?(B/F 系列专有大幅度动作)",
+   "framesPerDir": 8,
+   "confidence": "guess; 渲染 boy10 CP10 是大幅度前冲/出招,没在已读的绘制路径里看到传入 action=10"
+  }
+ },
+ "actionClamp(0x5253c8)": [
+  "模型 ∈ {1,2,0x80}: 不折叠(7 个 CP 都有)",
+  "其它模型: action 3 且 模型∈{6,7,8,0x84,0x85,0x86} -> 2; action 5,6 -> 4",
+  "B/F 系列(模型 0x14..0x19, 0x92..0x97): action 2,3 -> 4 (它们只有 1,4,7,8,9,10)",
+  "模型 11..18/0x8a..0x91 或 0xfa 走 0x5294a0(另一套)，action 7->2",
+  "注意: boy05/girl04 没有 CP3 但也不在折叠名单里(原版缺陷, 世界场景用不到)"
+ ],
+ "worldStateMachine": {
+  "objectFields": {
+   "+0x5c": "状态 state",
+   "+0x5d": "方向 dir(0..7)",
+   "+0x5e": "当前帧(方向内)",
+   "+0x5f": "帧数上限(默认8)",
+   "+0x60": "基础帧间隔 ms(默认100)",
+   "+0x54": "上次翻帧时刻(tick)",
+   "+0x50": "状态开始时刻",
+   "+0xc": "行走状态下的帧间隔 ms(默认100)",
+   "+0xd4": "攻击中标志",
+   "+0x18c": "骑乘标志"
+  },
+  "setState": "FUN_00768370(obj,state,startFrame,intervalMs,frameCount): 状态变化时才写 +0x5c/+0x5e/+0x60/+0x5f",
+  "stateToAction(0x769fa4, 0x769c2c, 0x77208c)": {
+   "0": 7,
+   "1": 1,
+   "2": 7,
+   "4": "tick-obj[+0x50] > obj[+0xd0] ? 7 : 1",
+   "other": 7
+  },
+  "overrides": [
+   "obj+0x18c!=0: 1->8, 7->9",
+   "obj+0x18c==0 且 obj+0xd4!=0: action=4(攻击), 当 +0x5e==7 清 +0xd4"
+  ],
+  "stepRule(0x76ca9c)": "若 +0x60!=0: interval = state0? +0x60+50 : state1? +0xc : state4? 50 : state5? +0x60+50 : +0x60; 若 (tick - +0x54) > interval: +0x54=tick; frame=(frame+1) %(+0x5f)",
+  "setStateCallers": "0x769498/0x7691ec/0x76925c/0x7692d8/0x768aa8/0x768d5c/0x76900c/0x76d768 SetState(0,0,100,8) 站立; 0x769894/0x769a1c/0x769a9c SetState(1,0,100,8) 行走; 都是 帧间隔100 8帧",
+  "tickUnit": "全局 tick = *PTR_DAT_00a27314, 推测为 ms(GetTickCount 类)，未直接验证"
+ },
+ "model": {
+  "idToFiles": {
+   "1..8": "boy01..boy08.mrg: 身体 M<n>0000, 阴影 B<n>0S (model 9=boy09 为空)",
+   "0x14..0x19": "boy10..boy15.mrg: 身体 B<1..6>0000 (无阴影文件)",
+   "0x80..0x86": "girl.mrg,girl02..girl07.mrg: 身体 G<1..7>0000, 阴影 G<n>0S (0x87=girl08 为空)",
+   "0x92..0x97": "girl09..girl14.mrg: 身体 F<1..5,7>0000 (F6 跳过)"
+  },
+  "layerOrderDraw(0x5253c8,0x5252f8)": "阴影(1) -> 身体 -> 装备槽; 每次 4 个槽 order[4]: 模型3..9: [0,2,1,3]; 其它: [0,1,2,3]; 值0=身体, k>0 画 equip[k-1] (param_12[k-1])。方向 0..3 与 4..7 的 order 相同",
+  "shadowLayer": "阴影 = 0x51fa4c 的第5参数=1, 名字 b<n>0s / g<n>0s; 调色板 0x1863 半透明",
+  "anchorYAdjust": "y_draw = y + (model3:6, model4:9, model0x81:9, model0x82:10, 其它0) - 56(0x38); 然后各帧再加 (ox,oy)",
+  "equipNameTable": "0x521be4: 装备 id -> 名字取自内存表 self+0x281058 (每 id 14 字节=2个7字节串, 按性别/槽选一个), 来源(哪个 dat 填的)未追"
+ },
+ "battle": {
+  "drawFn": "0x954808",
+  "stateToAction": {
+   "0": 7,
+   "1": 1,
+   "2": 5,
+   "3": "子状态(+0x8c45b) 1->2, 2->4(帧=字段%12), 3->3",
+   "4": 4,
+   "5": 4,
+   "6": 4,
+   "0x11/0x13/0x14/0xab..0xb0": "同3"
+  },
+  "remap": "0x953c5c 按模式再改写 action (例如玩家自己的 3->5, 模式0x13 时改成 {0:2,1:1,2:3,3:3,4:3,5:3,6:3})",
+  "confidence": "code; 战斗状态号的语义(哪个是受击/防御)没追"
+ },
+ "availability": {
+  "Horse.mrg": {
+   "cp8": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 56
+   },
+   "cp9": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 56
+   }
+  },
+  "boy01.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 14
+   },
+   "cp2": {
+    "totalFrames": 96,
+    "framesPerDir": 12,
+    "layersHavingIt": 14
+   },
+   "cp3": {
+    "totalFrames": 96,
+    "framesPerDir": 12,
+    "layersHavingIt": 14
+   },
+   "cp4": {
+    "totalFrames": 120,
+    "framesPerDir": 15,
+    "layersHavingIt": 14
+   },
+   "cp5": {
+    "totalFrames": 120,
+    "framesPerDir": 15,
+    "layersHavingIt": 14
+   },
+   "cp6": {
+    "totalFrames": 120,
+    "framesPerDir": 15,
+    "layersHavingIt": 14
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 14
+   }
+  },
+  "boy02.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 14
+   },
+   "cp2": {
+    "totalFrames": 96,
+    "framesPerDir": 12,
+    "layersHavingIt": 14
+   },
+   "cp3": {
+    "totalFrames": 96,
+    "framesPerDir": 12,
+    "layersHavingIt": 14
+   },
+   "cp4": {
+    "totalFrames": 120,
+    "framesPerDir": 15,
+    "layersHavingIt": 14
+   },
+   "cp5": {
+    "totalFrames": 120,
+    "framesPerDir": 15,
+    "layersHavingIt": 14
+   },
+   "cp6": {
+    "totalFrames": 120,
+    "framesPerDir": 15,
+    "layersHavingIt": 14
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 14
+   }
+  },
+  "boy03.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 14
+   },
+   "cp2": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 14
+   },
+   "cp3": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 14
+   },
+   "cp4": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 14
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 14
+   }
+  },
+  "boy04.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 14
+   },
+   "cp2": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 14
+   },
+   "cp3": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 14
+   },
+   "cp4": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 14
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 14
+   }
+  },
+  "boy05.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 9
+   },
+   "cp2": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 9
+   },
+   "cp4": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 9
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 9
+   }
+  },
+  "boy06.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 16
+   },
+   "cp2": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 16
+   },
+   "cp4": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 16
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 16
+   },
+   "cp8": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 9
+   },
+   "cp9": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 9
+   }
+  },
+  "boy07.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 16
+   },
+   "cp2": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 16
+   },
+   "cp4": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 16
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 16
+   },
+   "cp8": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 9
+   },
+   "cp9": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 9
+   }
+  },
+  "boy08.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 16
+   },
+   "cp2": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 16
+   },
+   "cp4": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 16
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 16
+   },
+   "cp8": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 9
+   },
+   "cp9": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 9
+   }
+  },
+  "boy10.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp4": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp8": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 1
+   },
+   "cp9": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 1
+   },
+   "cp10": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   }
+  },
+  "boy11.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp4": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp8": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 1
+   },
+   "cp9": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 1
+   },
+   "cp10": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   }
+  },
+  "boy12.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp4": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp8": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 1
+   },
+   "cp9": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 1
+   },
+   "cp10": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   }
+  },
+  "boy13.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp4": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp8": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 1
+   },
+   "cp9": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 1
+   },
+   "cp10": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   }
+  },
+  "boy14.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp4": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp8": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 1
+   },
+   "cp9": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 1
+   },
+   "cp10": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   }
+  },
+  "boy15.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp4": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp8": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 1
+   },
+   "cp9": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 1
+   },
+   "cp10": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   }
+  },
+  "girl.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 14
+   },
+   "cp2": {
+    "totalFrames": 96,
+    "framesPerDir": 12,
+    "layersHavingIt": 14
+   },
+   "cp3": {
+    "totalFrames": 96,
+    "framesPerDir": 12,
+    "layersHavingIt": 14
+   },
+   "cp4": {
+    "totalFrames": 120,
+    "framesPerDir": 15,
+    "layersHavingIt": 14
+   },
+   "cp5": {
+    "totalFrames": 120,
+    "framesPerDir": 15,
+    "layersHavingIt": 14
+   },
+   "cp6": {
+    "totalFrames": 120,
+    "framesPerDir": 15,
+    "layersHavingIt": 14
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 14
+   }
+  },
+  "girl02.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 14
+   },
+   "cp2": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 14
+   },
+   "cp3": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 14
+   },
+   "cp4": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 14
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 14
+   }
+  },
+  "girl03.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 14
+   },
+   "cp2": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 14
+   },
+   "cp3": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 14
+   },
+   "cp4": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 14
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 14
+   }
+  },
+  "girl04.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 9
+   },
+   "cp2": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 9
+   },
+   "cp4": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 9
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 9
+   }
+  },
+  "girl05.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 16
+   },
+   "cp2": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 16
+   },
+   "cp4": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 16
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 16
+   },
+   "cp8": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 9
+   },
+   "cp9": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 9
+   }
+  },
+  "girl06.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 16
+   },
+   "cp2": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 16
+   },
+   "cp4": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 16
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 16
+   },
+   "cp8": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 9
+   },
+   "cp9": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 9
+   }
+  },
+  "girl07.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 16
+   },
+   "cp2": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 16
+   },
+   "cp4": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 16
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 16
+   },
+   "cp8": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 9
+   },
+   "cp9": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 9
+   }
+  },
+  "girl09.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp4": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp8": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 1
+   },
+   "cp9": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 1
+   },
+   "cp10": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   }
+  },
+  "girl10.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp4": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp8": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 1
+   },
+   "cp9": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 1
+   },
+   "cp10": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   }
+  },
+  "girl11.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp4": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp8": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 1
+   },
+   "cp9": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 1
+   },
+   "cp10": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   }
+  },
+  "girl12.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp4": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp8": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 1
+   },
+   "cp9": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 1
+   },
+   "cp10": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   }
+  },
+  "girl13.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp4": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp8": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 1
+   },
+   "cp9": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 1
+   },
+   "cp10": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   }
+  },
+  "girl14.mrg": {
+   "cp1": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp4": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp7": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   },
+   "cp8": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 1
+   },
+   "cp9": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 1
+   },
+   "cp10": {
+    "totalFrames": 64,
+    "framesPerDir": 8,
+    "layersHavingIt": 7
+   }
+  }
+ },
+ "unresolved": [
+  "0x768370 的其它调用者 0x6cb488/0x762ba0/0x762f34/0x7a2b98 未看(可能是 5/6 状态的 SetState 参数)",
+  "世界场景 walk 状态的帧间隔 obj+0xc 是否随速度变化(默认100)；下一步查所有写 [obj+0xc] 的方法, 或 FUN_00769890(取速度)",
+  "受伤/死亡/防御对应的 CP: 没有独立 CP 被确认; 战斗绘制 0x954808 传入的 param_5(帧)和状态号语义没追, 下一步查写 +0x8c3cd(战斗状态)的函数以及 FUN_00953dec",
+  "CP10 何处使用",
+  "boy10-15/girl09-14 的 equip 命名及 NPC/怪物(role\\npc*.mrg, 单文件 .cp)的动作: 走 FUN_005294a0 -> FUN_0052817c, 动作 1/2/3, 方向 param_12; 未追",
+  "装备层名字表(self+0x281058)的数据来源",
+  "tick 单位 ms 为推测"
+ ]
+}

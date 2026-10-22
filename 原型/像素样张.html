@@ -1,0 +1,754 @@
+<meta charset="utf-8">
+<title>渡口失药 像素样张</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500;700&family=Noto+Serif+SC:wght@700&family=Silkscreen:wght@400;700&display=swap">
+<style>
+/* 布局：单列长页。先看三张 846×390 的游戏画面（按容器宽度等比缩放），再依次看角色、地块与物件、界面组件 */
+:root {
+  --bg: #15120F;
+  --bg2: #1D1915;
+  --ink: #EFE6D2;
+  --muted: #B9AD98;
+  --line: #3A3029;
+  --gold: #D8B66A;
+  --cin: #E0603F;
+  --jade: #5FB3A1;
+  --paper-ink: #2A2018;
+  --serif: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+  --sans: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --pix: 'Silkscreen', 'Noto Sans SC', monospace;
+  color-scheme: dark;
+}
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); }
+main { max-width: 1040px; margin: 0 auto; padding-block: 36px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 48px; }
+canvas, .ic, .pxbg { image-rendering: pixelated; image-rendering: crisp-edges; }
+header { display: flex; flex-direction: column; gap: 10px; }
+.eyebrow { font: 700 13px var(--pix); letter-spacing: 2px; color: var(--gold); text-transform: uppercase; }
+h1 { margin: 0; font: 700 40px/1.2 var(--serif); letter-spacing: 3px; text-wrap: balance; }
+h2 { margin: 0; font: 700 24px/1.3 var(--serif); text-wrap: balance; }
+p { margin: 0; line-height: 1.75; color: var(--muted); max-width: 40em; }
+section { display: flex; flex-direction: column; gap: 16px; }
+.lede { color: var(--ink); }
+
+/* 游戏画面 */
+.scenes { display: flex; flex-direction: column; gap: 22px; }
+figure { margin: 0; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+figcaption { font-size: 14px; line-height: 1.6; color: var(--muted); }
+figcaption b { color: var(--ink); font-family: var(--serif); margin-right: 6px; }
+.scene { position: relative; width: 100%; max-width: 100%; aspect-ratio: 846 / 390; overflow: hidden; background: #000; border: 3px solid #000; box-sizing: border-box; }
+.stage { position: absolute; left: 0; top: 0; width: 846px; height: 390px; transform-origin: 0 0; color: var(--ink); }
+.world { position: absolute; left: 0; top: 0; width: 846px; height: 390px; }
+.dim { position: absolute; inset: 0; background: rgba(10, 8, 6, 0.45); }
+
+/* 像素框（border-image 由脚本生成，3 倍放大） */
+.px-dark, .px-paper, .px-gold, .px-opt, .px-optsel { border: 12px solid transparent; border-image-slice: 4 fill; border-image-width: 12px; border-image-repeat: stretch; box-sizing: border-box; image-rendering: pixelated; }
+.px-dark { border-image-source: var(--fDark); }
+.px-paper { border-image-source: var(--fPaper); color: var(--paper-ink); }
+.px-gold { border-image-source: var(--fGold); }
+.px-opt { border-image-source: var(--fOpt); color: var(--paper-ink); }
+.px-optsel { border-image-source: var(--fOptSel); color: var(--paper-ink); }
+.ic { width: 36px; height: 36px; flex: none; display: block; }
+.ic.s { width: 30px; height: 30px; }
+.pnum { font: 700 18px var(--pix); font-variant-numeric: tabular-nums; }
+
+.h-status { position: absolute; left: 12px; top: 10px; width: 270px; display: flex; gap: 10px; align-items: center; padding: 2px 4px; }
+.portrait { width: 54px; height: 54px; flex: none; padding: 0; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; }
+.portrait canvas { width: 48px; height: 36px; }
+.bars { flex: 1; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.brow { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--muted); }
+.brow > span { width: 28px; flex: none; }
+.brow .pnum { font-size: 14px; color: var(--ink); min-width: 30px; text-align: right; }
+.pbar { flex: 1; height: 15px; background: #1C1612; border: 3px solid #0E0B09; box-sizing: border-box; position: relative; overflow: hidden; }
+.pbar > i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--c); box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.28), inset 0 -3px 0 rgba(0, 0, 0, 0.25); }
+.pbar > i::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 12px, rgba(0, 0, 0, 0.4) 12px 15px); }
+.h-quest { position: absolute; left: 12px; top: 92px; width: 270px; display: flex; flex-direction: column; gap: 2px; padding: 0 4px; }
+.h-quest .eb { font-size: 12px; color: var(--gold); font-weight: 700; letter-spacing: 1px; }
+.h-quest .qt { font: 700 17px/1.35 var(--serif); }
+.h-quest .qs { font-size: 13px; color: var(--muted); line-height: 1.45; }
+.h-res { position: absolute; right: 12px; top: 10px; display: flex; gap: 6px; align-items: center; }
+.chip { height: 54px; display: flex; align-items: center; gap: 6px; padding: 0 4px; white-space: nowrap; }
+.chip small { font-size: 12px; color: var(--muted); font-weight: 700; }
+.sq { width: 54px; height: 54px; padding: 0; display: flex; align-items: center; justify-content: center; background: none; cursor: pointer; }
+.stick { position: absolute; left: 26px; bottom: 20px; width: 126px; height: 126px; background: var(--iStick) center / 100% 100% no-repeat; image-rendering: pixelated; }
+.stick i { position: absolute; left: 36px; top: 36px; width: 54px; height: 54px; background: var(--iKnob) center / 100% 100% no-repeat; image-rendering: pixelated; }
+.pad { position: absolute; right: 16px; bottom: 12px; width: 252px; height: 216px; }
+.rb { position: absolute; border: 0; padding: 0; background: var(--btn) center / 100% 100% no-repeat; image-rendering: pixelated; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0; color: var(--ink); font: 700 15px var(--sans); cursor: pointer; }
+.rb.atk { right: 0; bottom: 6px; width: 96px; height: 96px; font-size: 17px; --btn: var(--bRed); }
+.rb.sk { right: 106px; bottom: 96px; width: 78px; height: 78px; --btn: var(--bJade); }
+.rb.dg { right: 114px; bottom: 0; width: 72px; height: 72px; --btn: var(--bGray); }
+.rb.hot { --btn: var(--bHot); }
+.tag { position: absolute; padding: 0 8px; height: 24px; display: flex; align-items: center; font-size: 13px; font-weight: 700; white-space: nowrap; background: #3A2F27; border: 3px solid #0E0B09; box-shadow: inset 0 0 0 3px #8A6A3A; color: var(--ink); }
+.tag.red { background: var(--cin); box-shadow: inset 0 0 0 3px #F08A6A; color: #14110E; }
+.pad .tag { right: 100px; bottom: 182px; }
+.interact { position: absolute; left: 50%; bottom: 16px; transform: translateX(-50%); height: 60px; display: flex; align-items: center; gap: 8px; padding: 0 12px; font: 700 17px var(--sans); color: var(--ink); background: none; cursor: pointer; white-space: nowrap; }
+.wlabel { position: absolute; transform: translate(-50%, -100%); padding: 0 6px; height: 22px; display: flex; align-items: center; font: 700 13px var(--serif); background: rgba(14, 11, 9, 0.82); border: 3px solid #0E0B09; white-space: nowrap; }
+.dmg { position: absolute; transform: translate(-50%, -100%); font: 700 20px var(--pix); color: var(--ink); text-shadow: 3px 0 #0E0B09, -3px 0 #0E0B09, 0 3px #0E0B09, 0 -3px #0E0B09; }
+.h-boss { position: absolute; left: 294px; top: 10px; width: 320px; display: flex; flex-direction: column; gap: 4px; padding: 0 4px 2px; }
+.h-boss .top { display: flex; justify-content: space-between; align-items: center; }
+.h-boss .nm { font: 700 18px var(--serif); }
+.h-boss .tag { position: static; }
+.thin { height: 9px; }
+.dlg { position: absolute; left: 12px; right: 12px; bottom: 10px; height: 190px; display: flex; gap: 14px; padding: 4px 6px; }
+.dlg .who { display: flex; gap: 12px; flex: 1; min-width: 0; }
+.dlg .face { width: 72px; height: 72px; flex: none; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; }
+.dlg .face canvas { width: 64px; height: 48px; }
+.dlg .body { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.dlg .nm { font: 700 19px var(--serif); }
+.dlg .nm small { font: 500 13px var(--sans); color: #6A5A48; margin-left: 8px; }
+.dlg .tx { font: 700 18px/1.65 var(--serif); }
+.dlg .nt { margin-top: auto; font-size: 13px; color: #6A5A48; font-weight: 700; }
+.dlg .opts { width: 344px; flex: none; display: flex; flex-direction: column; gap: 6px; justify-content: center; }
+.opt { min-height: 72px; display: flex; flex-direction: column; justify-content: center; gap: 1px; padding: 0 8px; text-align: left; background: none; font: 700 17px var(--sans); cursor: pointer; }
+.opt small { font-size: 13px; font-weight: 500; color: #6A5A48; }
+
+/* 角色 */
+.cast { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+.card { background: var(--bg2); border: 3px solid #0E0B09; box-shadow: inset 0 0 0 3px var(--line); padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.card canvas { width: 100%; max-width: 252px; aspect-ratio: 84 / 22; background: #2A332C; }
+.card .nm { font: 700 18px var(--serif); }
+.card .nm small { font: 500 13px var(--sans); color: var(--muted); margin-left: 8px; }
+.card p { font-size: 13px; line-height: 1.6; }
+.sw { display: flex; gap: 4px; }
+.sw i { width: 18px; height: 18px; border: 3px solid #0E0B09; }
+
+/* 地块与物件 */
+.tiles, .objs, .icons { display: flex; flex-wrap: wrap; gap: 14px 18px; align-items: flex-end; }
+.it { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; font-size: 13px; color: var(--muted); }
+.it canvas, .it img { display: block; }
+.it b { color: var(--ink); font-weight: 700; }
+
+/* 界面组件 */
+.kit { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+.box { background: var(--bg2); border: 3px solid #0E0B09; box-shadow: inset 0 0 0 3px var(--line); padding: 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.box h3 { margin: 0; font: 700 16px var(--serif); }
+.demo { position: relative; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.pal { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
+.pal div { display: flex; gap: 8px; align-items: center; font: 400 12px var(--pix); color: var(--muted); }
+.pal i { width: 30px; height: 30px; border: 3px solid #0E0B09; flex: none; }
+.pal span { display: flex; flex-direction: column; }
+.pal span b { font: 700 13px var(--sans); color: var(--ink); }
+.minirb { position: relative; width: 78px; height: 78px; }
+.minirb .rb { right: auto; bottom: auto; left: 0; top: 0; }
+button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+@media (max-width: 520px) { h1 { font-size: 32px; } }
+</style>
+
+<main>
+  <header>
+    <div class="eyebrow">Pixel · 渡口失药</div>
+    <h1>像素风样张</h1>
+    <p class="lede">地块 16×16，人物 16×20，统一按 3 倍放大。三张画面分别是青石渡码头、山道匪营和交药对话；下面列出全部角色、地块、物件和界面组件。</p>
+    <p>所有图都是用代码一格一格画出来的，没有用任何原版素材，之后可以直接搬进试玩。界面里的中文暂时用普通黑体和宋体，数字用像素字。</p>
+  </header>
+
+  <section>
+    <h2>游戏画面</h2>
+    <div class="scenes">
+      <figure>
+        <div class="scene"><div class="stage">
+          <canvas class="world" data-scene="dock" width="282" height="130"></canvas>
+          <div class="h-status px-dark">
+            <div class="portrait px-dark"><canvas data-portrait="xia" width="16" height="12"></canvas></div>
+            <div class="bars">
+              <div class="brow"><span>生命</span><div class="pbar" style="--c:#D9553A"><i style="width:100%"></i></div><b class="pnum">100</b></div>
+              <div class="brow"><span>内力</span><div class="pbar" style="--c:#4FA898"><i style="width:100%"></i></div><b class="pnum">100</b></div>
+            </div>
+          </div>
+          <div class="h-quest px-dark">
+            <div class="eb">请求 · 渡口失药</div>
+            <div class="qt">取回药包，交给沈青</div>
+            <div class="qs">可选：找周砚做一件剑饰</div>
+          </div>
+          <div class="h-res">
+            <div class="chip px-dark"><img class="ic" data-ic="coin" alt=""><b class="pnum">30</b><small>铜钱</small></div>
+            <div class="chip px-dark"><img class="ic" data-ic="bandage" alt=""><b class="pnum">2</b><small>绷带</small></div>
+            <button class="sq px-dark" type="button" aria-label="江湖日志"><img class="ic s" data-ic="book" alt=""></button>
+          </div>
+          <div class="wlabel" data-at="dock:shen">沈青</div>
+          <div class="wlabel" data-at="dock:xu">许舟</div>
+          <div class="wlabel" data-at="dock:lu">陆平</div>
+          <div class="wlabel" data-at="dock:zhou">周砚</div>
+          <div class="stick"><i></i></div>
+          <div class="pad">
+            <span class="tag">破势</span>
+            <button class="rb sk" type="button"><img class="ic s" data-ic="skill" alt="">剑招</button>
+            <button class="rb dg" type="button"><img class="ic s" data-ic="dodge" alt="">闪避</button>
+            <button class="rb atk" type="button"><img class="ic" data-ic="atk" alt="">普攻</button>
+          </div>
+          <button class="interact px-gold" type="button"><img class="ic s" data-ic="talk" alt="">交谈 · 沈青</button>
+        </div></div>
+        <figcaption><b>青石渡</b>青石板路沿着河岸，许舟守在渡船旁的码头上，沈青在路边等药，周砚的铁匠铺门口堆着木料。</figcaption>
+      </figure>
+
+      <figure>
+        <div class="scene"><div class="stage">
+          <canvas class="world" data-scene="camp" width="282" height="130"></canvas>
+          <div class="h-status px-dark">
+            <div class="portrait px-dark"><canvas data-portrait="xia" width="16" height="12"></canvas></div>
+            <div class="bars">
+              <div class="brow"><span>生命</span><div class="pbar" style="--c:#D9553A"><i style="width:72%"></i></div><b class="pnum">72</b></div>
+              <div class="brow"><span>内力</span><div class="pbar" style="--c:#4FA898"><i style="width:58%"></i></div><b class="pnum">58</b></div>
+            </div>
+          </div>
+          <div class="h-boss px-dark">
+            <div class="top"><span class="nm">匪首</span><span class="tag red">蓄力 · 可打断</span></div>
+            <div class="pbar" style="--c:#B9AE98"><i style="width:64%"></i></div>
+            <div class="pbar thin" style="--c:#E0603F"><i style="width:60%"></i></div>
+          </div>
+          <div class="h-res">
+            <div class="chip px-dark"><img class="ic" data-ic="bandage" alt=""><b class="pnum">2</b><small>绷带</small></div>
+            <button class="sq px-dark" type="button" aria-label="暂停"><img class="ic s" data-ic="pause" alt=""></button>
+          </div>
+          <div class="tag red" data-at="camp:boss" style="transform:translate(-50%,-100%)">可打断</div>
+          <div class="dmg" data-at="camp:dmg">-26</div>
+          <div class="stick"><i style="left:12px;top:44px"></i></div>
+          <div class="pad">
+            <span class="tag red">破势 · 现在出招</span>
+            <button class="rb sk hot" type="button"><img class="ic s" data-ic="skill" alt="">剑招</button>
+            <button class="rb dg" type="button"><img class="ic s" data-ic="dodge" alt="">闪避</button>
+            <button class="rb atk" type="button"><img class="ic" data-ic="atk" alt="">普攻</button>
+          </div>
+        </div></div>
+        <figcaption><b>山道匪营</b>匪首正在蓄力，地上的红色斜格是攻击范围，越往里越实表示快出手了；装着破势时头顶会标「可打断」。</figcaption>
+      </figure>
+
+      <figure>
+        <div class="scene"><div class="stage">
+          <canvas class="world" data-scene="talk" width="282" height="130"></canvas>
+          <div class="dim"></div>
+          <div class="h-res">
+            <div class="chip px-dark"><img class="ic" data-ic="coin" alt=""><b class="pnum">20</b><small>铜钱</small></div>
+            <div class="chip px-dark"><img class="ic" data-ic="bandage" alt=""><b class="pnum">1</b><small>绷带</small></div>
+            <div class="chip px-dark"><img class="ic" data-ic="med" alt=""><small>药包</small></div>
+          </div>
+          <div class="dlg px-paper">
+            <div class="who">
+              <div class="face px-opt"><canvas data-portrait="shen" width="16" height="12"></canvas></div>
+              <div class="body">
+                <div class="nm">沈青<small>青石渡药师</small></div>
+                <div class="tx">药包……真的拿回来了。山道上，还顺利吗？</div>
+                <div class="nt">两个选择的奖励相同：铜钱 +20 · 绷带 +1</div>
+              </div>
+            </div>
+            <div class="opts">
+              <button class="opt px-optsel" type="button">交出药包，并讲述经过<small>告诉她：你用药草 2 与匪首换回了药包</small></button>
+              <button class="opt px-opt" type="button">只交出药包，不提山道细节<small>沈青只会确认收到了药</small></button>
+            </div>
+          </div>
+        </div></div>
+        <figcaption><b>交药</b>对话框换成纸色木框，和深色的战斗界面一眼分开；选中的选项用金框。</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <h2>角色</h2>
+    <p>每个角色四个朝向（下、左、右、上），走路三帧循环；左朝向是右朝向的镜像。匪首比常人宽两格，手里多一把大刀。</p>
+    <div class="cast" id="cast"></div>
+  </section>
+
+  <section>
+    <h2>地块与物件</h2>
+    <p>水面三帧流动，营火三帧跳动。物件统一加一圈墨色描边，站到房子后面的人会被屋檐挡住。</p>
+    <div class="tiles" id="tiles"></div>
+    <div class="objs" id="objs"></div>
+  </section>
+
+  <section>
+    <h2>界面组件</h2>
+    <div class="kit">
+      <div class="box">
+        <h3>面板</h3>
+        <div class="row">
+          <div class="px-dark" style="padding:6px 10px;font-weight:700">深色面板 · 战斗界面</div>
+          <div class="px-paper" style="padding:6px 10px;font-weight:700">纸色面板 · 对话</div>
+          <div class="px-gold" style="padding:6px 10px;font-weight:700">金框 · 可交互</div>
+        </div>
+      </div>
+      <div class="box">
+        <h3>选项</h3>
+        <div class="px-paper" style="padding:4px;display:flex;flex-direction:column;gap:6px">
+          <button class="opt px-optsel" type="button">选中的选项<small>金框，表示当前焦点</small></button>
+          <button class="opt px-opt" type="button">普通选项<small>说明文字用浅一号的褐色</small></button>
+        </div>
+      </div>
+      <div class="box">
+        <h3>状态条</h3>
+        <div class="brow"><span>生命</span><div class="pbar" style="--c:#D9553A"><i style="width:80%"></i></div><b class="pnum">80</b></div>
+        <div class="brow"><span>内力</span><div class="pbar" style="--c:#4FA898"><i style="width:45%"></i></div><b class="pnum">45</b></div>
+        <div class="brow"><span>匪首</span><div class="pbar" style="--c:#B9AE98"><i style="width:64%"></i></div><b class="pnum">128</b></div>
+      </div>
+      <div class="box">
+        <h3>战斗键与摇杆</h3>
+        <div class="row">
+          <div class="minirb" style="width:96px;height:96px"><button class="rb atk" type="button"><img class="ic" data-ic="atk" alt="">普攻</button></div>
+          <div class="minirb"><button class="rb sk" type="button"><img class="ic s" data-ic="skill" alt="">剑招</button></div>
+          <div class="minirb"><button class="rb sk hot" type="button"><img class="ic s" data-ic="skill" alt="">可打断</button></div>
+          <div class="minirb" style="width:72px;height:72px"><button class="rb dg" type="button"><img class="ic s" data-ic="dodge" alt="">闪避</button></div>
+        </div>
+      </div>
+      <div class="box" style="grid-column:1/-1">
+        <h3>图标</h3>
+        <div class="icons" id="icons"></div>
+      </div>
+      <div class="box" style="grid-column:1/-1">
+        <h3>色板</h3>
+        <div class="pal" id="pal"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+(() => {
+'use strict';
+// ================================================================ 基础
+const cnv = (w, h) => { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; };
+const RNG = (seed) => { let s = seed % 2147483647; if (s <= 0) s += 2147483646; return () => (s = (s * 16807) % 2147483647) / 2147483647; };
+const hash = (str) => { let h = 7; for (const ch of str) h = (h * 31 + ch.charCodeAt(0)) % 1000003; return h + 1; };
+const R = (g, x, y, w, h, c) => { g.fillStyle = c; g.fillRect(x, y, w, h); };
+const P = (g, x, y, c) => { g.fillStyle = c; g.fillRect(x, y, 1, 1); };
+function fc(g, cx, cy, r, c) { g.fillStyle = c; for (let y = -r; y <= r; y++) for (let x = -r; x <= r; x++) if (x * x + y * y <= r * r + r * 0.6) g.fillRect(cx + x, cy + y, 1, 1); }
+function fe(g, cx, cy, rx, ry, c) { g.fillStyle = c; for (let y = -ry; y <= ry; y++) for (let x = -rx; x <= rx; x++) if ((x * x) / (rx * rx) + (y * y) / (ry * ry) <= 1.05) g.fillRect(cx + x, cy + y, 1, 1); }
+function line(g, x0, y0, x1, y1, c) { const dx = Math.abs(x1 - x0), dy = -Math.abs(y1 - y0), sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1; let e = dx + dy; for (;;) { P(g, x0, y0, c); if (x0 === x1 && y0 === y1) break; const e2 = 2 * e; if (e2 >= dy) { e += dy; x0 += sx; } if (e2 <= dx) { e += dx; y0 += sy; } } }
+const INK = '#1C1612';
+function outline(c, col) {
+  const g = c.getContext('2d'), w = c.width, h = c.height, d = g.getImageData(0, 0, w, h).data;
+  const solid = (x, y) => x >= 0 && y >= 0 && x < w && y < h && d[(y * w + x) * 4 + 3] > 40;
+  g.fillStyle = col || INK;
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) if (!solid(x, y) && (solid(x - 1, y) || solid(x + 1, y) || solid(x, y - 1) || solid(x, y + 1))) g.fillRect(x, y, 1, 1);
+  return c;
+}
+
+// ================================================================ 人物
+const PAL = { k: INK, K: '#3B2F28', s: '#F0C8A0', S: '#D29E78', h: '#2B2320', H: '#4D3D34', w: '#F0E8D6', W: '#BDB2A0', e: INK, p: '#3A3644', f: '#221B19', r: '#777777', R: '#555555', b: '#C9A45C', a: '#C8402C', A: '#8A3A2A', c: '#3A2A22', g: '#D8B66A', G: '#A8864A', m: '#5A4436', M: '#43332A' };
+const BODY_DOWN = [
+  '................', '.....kkkkkk.....', '....khhhhhhk....', '...khhhhhhhhk...', '...khHhhhhHhk...',
+  '...khsssssshk...', '...ksessssesk...', '...kssssssssk...', '....kSssssSk....', '....krrwwrrk....',
+  '...krrrwwrrrk...', '..krrrrrrrrrrk..', '..krRrrrrrrRrk..', '..ksbbbbbbbbsk..', '...krrrrrrrrk...',
+  '...krRrrrrRrk...', '...kRrrrrrrRk...'];
+const BODY_UP = BODY_DOWN.slice(0, 5).concat([
+  '...khhhhhhhhk...', '...khhHhhHhhk...', '...khhhhhhhhk...', '....khhhhhhk....', '....krrrrrrk....',
+  '...krrrrrrrrk...']).concat(BODY_DOWN.slice(11));
+const LEGS_FB = {
+  idle: ['...kpppkkpppk...', '...kppk..kppk...', '...kffk..kffk...'],
+  w1: ['...kpppkkpppk...', '...kffk..kppk...', '.........kffk...'],
+  w2: ['...kpppkkpppk...', '...kppk..kffk...', '...kffk.........'],
+};
+const BODY_SIDE = [
+  '................', '.....kkkkkk.....', '....khhhhhhk....', '...khhhhhhhhk...', '...khhhhhHhhk...',
+  '...khhhsssssk...', '...khhhsssesk...', '...khhssssssk...', '....khSssssk....', '.....krrwrk.....',
+  '....krrrrrrk....', '....krrrrrrk....', '....krRrrrsk....', '....kbbbbbbk....', '....krrrrrrk....',
+  '....krrrrrrk....', '....kRrrrrRk....'];
+const LEGS_SIDE = {
+  idle: ['.....kppppk.....', '.....kpkkpk.....', '.....kfk.kfk....'],
+  w1: ['....kppppppk....', '...kpk....kpk...', '..kfk......kfk..'],
+  w2: ['.....kppppk.....', '......kppk......', '......kffk......'],
+};
+function baseGrid(dir, frame) {
+  const body = dir === 'down' ? BODY_DOWN : dir === 'up' ? BODY_UP : BODY_SIDE;
+  const legs = (dir === 'right' ? LEGS_SIDE : LEGS_FB)[frame];
+  return body.concat(legs).map((r) => r.split(''));
+}
+const set = (g, x, y, c) => { if (g[y] && x >= 0 && x < g[y].length) g[y][x] = c; };
+const row = (g, y, x, s) => { for (let i = 0; i < s.length; i++) if (s[i] !== '.') set(g, x + i, y, s[i]); };
+const full = (g, y, s) => { g[y] = s.split(''); };
+const widen = (g, from) => g.map((r, y) => (y >= from ? r.slice(0, 8).concat([r[7], r[8]], r.slice(8)) : ['.'].concat(r, ['.'])));
+
+const CHARS = [
+  { id: 'xia', name: '少侠', role: '玩家', note: '青衫、发髻系红绳，背上斜挎长剑。', pal: { r: '#3D5A80', R: '#2B405E', b: '#C9A45C' },
+    mod(g, d) {
+      row(g, 0, 6, 'khhk'); set(g, 7, 1, 'h'); set(g, 8, 1, 'h');
+      if (d === 'down') { set(g, 10, 1, 'a'); set(g, 13, 7, 'W'); set(g, 13, 8, 'K'); set(g, 12, 9, 'K'); }
+      if (d === 'up') { set(g, 10, 1, 'a'); for (let i = 0; i < 6; i++) set(g, 11 - i, 10 + i, 'W'); set(g, 12, 9, 'K'); set(g, 13, 8, 'K'); }
+      if (d === 'right') { set(g, 5, 1, 'a'); set(g, 3, 7, 'W'); set(g, 4, 8, 'K'); }
+    } },
+  { id: 'shen', name: '沈青', role: '青石渡药师', note: '淡青衣、长发、发簪，腰间挂药囊。', pal: { r: '#86AB8E', R: '#62876C', b: '#EFE6D2' },
+    mod(g, d) {
+      if (d === 'down') {
+        for (let y = 7; y <= 10; y++) { set(g, 3, y, 'h'); set(g, 12, y, 'h'); set(g, 2, y, 'k'); set(g, 13, y, 'k'); }
+        row(g, 0, 9, 'kkk'); set(g, 9, 1, 'h'); set(g, 10, 1, 'h'); set(g, 11, 1, 'k'); set(g, 12, 0, 'a');
+        row(g, 14, 12, 'GG'); row(g, 15, 12, 'GG'); set(g, 14, 14, 'k'); set(g, 14, 15, 'k');
+      }
+      if (d === 'up') { row(g, 0, 6, 'khhk'); set(g, 7, 1, 'h'); set(g, 8, 1, 'h'); set(g, 10, 0, 'a'); row(g, 9, 5, 'hhhhhh'); row(g, 10, 5, 'hhhhhh'); row(g, 11, 6, 'hhhh'); row(g, 12, 7, 'hh'); }
+      if (d === 'right') { for (let y = 8; y <= 10; y++) { set(g, 4, y, 'h'); set(g, 3, y, 'k'); } row(g, 1, 3, 'kh'); row(g, 2, 2, 'khh'); set(g, 2, 1, 'a'); set(g, 11, 14, 'G'); set(g, 11, 15, 'G'); }
+    } },
+  { id: 'xu', name: '许舟', role: '渡口船工', note: '斗笠、短褐，常年撑船，裤脚挽起。', pal: { r: '#8C6C4A', R: '#6B5236', b: '#3A3644', p: '#4B4A55' },
+    mod(g, d) {
+      ['......kkkk......', '....kkggggkk....', '..kkggggggggkk..', '.kGGGGGGGGGGGGk.'].forEach((s, i) => full(g, i, s));
+    } },
+  { id: 'lu', name: '陆平', role: '渡口管事', note: '黑幞头、灰蓝长衫，两撇胡子。', pal: { r: '#5D677A', R: '#454D5C', b: '#2B2320' },
+    mod(g, d) {
+      ['....kkkkkkkk....', '...kKKKKKKKKk...', '.kkkKKKKKKKKkkk.'].forEach((s, i) => full(g, i, s));
+      if (d === 'down') row(g, 7, 6, 'hhhh');
+      if (d === 'right') row(g, 7, 9, 'hh');
+    } },
+  { id: 'zhou', name: '周砚', role: '铁匠', note: '白头巾、皮围裙、挽着袖子，手里拎锤。', pal: { r: '#9A6440', R: '#73472B', b: '#3A2A20' },
+    mod(g, d) {
+      row(g, 4, 4, 'WWWWWWWW');
+      if (d === 'up') { set(g, 8, 5, 'W'); set(g, 9, 6, 'W'); }
+      if (d === 'down') { for (let y = 11; y <= 16; y++) row(g, y, 6, 'mmmm'); row(g, 10, 7, 'mm'); set(g, 3, 11, 's'); set(g, 12, 11, 's'); set(g, 3, 12, 'S'); set(g, 12, 12, 'S'); }
+      if (d === 'right') { for (let y = 11; y <= 16; y++) row(g, y, 8, 'mmm'); row(g, 10, 11, 'kWWk'); set(g, 12, 11, 'K'); set(g, 12, 12, 'K'); }
+    } },
+  { id: 'bandit', name: '匪徒', role: '山道', note: '红头巾、蒙面，手持短刀。', pal: { r: '#5E4130', R: '#44301F', b: '#2B2320', a: '#B8452F' },
+    mod(g, d) {
+      row(g, 4, 4, 'aaaaaaaa');
+      if (d === 'down') { row(g, 7, 4, 'cccccccc'); row(g, 8, 5, 'cccccc'); set(g, 14, 10, 'W'); set(g, 14, 11, 'W'); set(g, 13, 12, 'K'); }
+      if (d === 'right') { row(g, 7, 7, 'ccccc'); row(g, 8, 6, 'ccccc'); set(g, 3, 4, 'a'); set(g, 2, 5, 'a'); row(g, 12, 12, 'KWW'); }
+      if (d === 'up') { set(g, 7, 5, 'a'); set(g, 8, 5, 'a'); set(g, 8, 6, 'a'); }
+    } },
+  { id: 'boss', name: '匪首', role: '匪营', note: '光头、络腮胡、身形宽两格，扛一把大刀。', pal: { r: '#6E3A28', R: '#4F281B', b: '#C9A45C' },
+    mod(g, d) {
+      const last = d === 'up' ? 8 : 5;
+      for (let y = 1; y <= last; y++) g[y] = g[y].map((c) => (c === 'h' ? 's' : c === 'H' ? 'S' : c));
+      row(g, 0, 7, 'kk'); set(g, 7, 1, 'h'); set(g, 8, 1, 'h');
+      if (d === 'down') { row(g, 5, 5, 'hh'); row(g, 5, 9, 'hh'); row(g, 7, 5, 'hhhhhh'); row(g, 8, 5, 'hhhhhh'); row(g, 9, 6, 'hhhh'); }
+      if (d === 'right') { row(g, 5, 9, 'hh'); row(g, 7, 8, 'hhhh'); row(g, 8, 7, 'hhhh'); }
+    },
+    post(g, d) {
+      g = widen(g, 9);
+      if (d === 'down') { for (let y = 6; y <= 13; y++) { set(g, 16, y, 'w'); set(g, 17, y, 'k'); } set(g, 16, 5, 'k'); set(g, 16, 14, 'K'); set(g, 16, 15, 'K'); }
+      if (d === 'up') { for (let y = 4; y <= 10; y++) set(g, 1, y, 'w'); set(g, 1, 11, 'K'); set(g, 1, 12, 'K'); }
+      if (d === 'right') { set(g, 12, 13, 'K'); set(g, 13, 12, 'w'); set(g, 14, 11, 'w'); set(g, 15, 10, 'w'); set(g, 16, 9, 'w'); set(g, 17, 8, 'w'); }
+      return g;
+    } },
+];
+const CH = Object.fromEntries(CHARS.map((c) => [c.id, c]));
+const SPR = {};
+function gridToCanvas(g, pal) {
+  const h = g.length, w = g[0].length, c = cnv(w, h), x = c.getContext('2d');
+  for (let y = 0; y < h; y++) for (let i = 0; i < w; i++) { const k = g[y][i]; if (k !== '.') P(x, i, y, pal[k] || PAL[k] || '#FF00FF'); }
+  return c;
+}
+for (const ch of CHARS) {
+  SPR[ch.id] = {};
+  for (const d of ['down', 'up', 'right']) {
+    SPR[ch.id][d] = {};
+    for (const f of ['idle', 'w1', 'w2']) {
+      let g = baseGrid(d, f);
+      ch.mod(g, d);
+      if (ch.post) g = ch.post(g, d);
+      SPR[ch.id][d][f] = gridToCanvas(g, ch.pal);
+    }
+  }
+}
+const WALK = ['w1', 'idle', 'w2', 'idle'];
+function drawChar(g, id, dir, frame, x, y, shadow) {
+  const d = dir === 'left' ? 'right' : dir, s = SPR[id][d][frame], w = s.width;
+  if (shadow !== false) { g.fillStyle = 'rgba(0,0,0,0.32)'; g.fillRect(x - 5, y - 1, 10, 2); g.fillRect(x - 4, y + 1, 8, 1); }
+  if (dir === 'left') { g.save(); g.translate(x + Math.ceil(w / 2), 0); g.scale(-1, 1); g.drawImage(s, 0, y - 19); g.restore(); }
+  else g.drawImage(s, x - Math.floor(w / 2), y - 19);
+}
+
+// ================================================================ 地块（16×16）
+const TILE = {};
+function tile(kind, v, f) {
+  const key = kind + v + '_' + f; if (TILE[key]) return TILE[key];
+  const c = cnv(16, 16), g = c.getContext('2d'), rnd = RNG(hash(kind) * 13 + v * 97 + 3);
+  const speck = (n, col) => { for (let i = 0; i < n; i++) P(g, (rnd() * 16) | 0, (rnd() * 16) | 0, col); };
+  const water = (h) => {
+    R(g, 0, 0, 16, h, '#2C5768');
+    for (let i = 0; i < 26; i++) P(g, (rnd() * 16) | 0, (rnd() * h) | 0, '#264C5B');
+    const wr = RNG(hash('wave') + v * 7);
+    for (let i = 0; i < 3; i++) { const wy = (wr() * (h - 2)) | 0, wx = ((wr() * 16) | 0) + f * 2; for (let k = 0; k < 4; k++) P(g, (wx + k) % 16, wy, k === 1 ? '#8FC0C8' : '#5D93A2'); }
+  };
+  switch (kind) {
+    case 'grass':
+      R(g, 0, 0, 16, 16, '#4E6A3C'); speck(40, '#5B7A45'); speck(18, '#42593A');
+      for (let i = 0; i < 4; i++) { const x = (rnd() * 15) | 0, y = 2 + ((rnd() * 13) | 0); P(g, x, y, '#6F8F50'); P(g, x, y - 1, '#6F8F50'); }
+      if (v === 1) { P(g, 5, 6, '#EFE6D2'); P(g, 4, 6, '#EFE6D2'); P(g, 6, 6, '#EFE6D2'); P(g, 5, 5, '#EFE6D2'); P(g, 5, 7, '#EFE6D2'); P(g, 5, 6, '#D8B66A'); P(g, 11, 11, '#D9553A'); P(g, 12, 11, '#D9553A'); }
+      break;
+    case 'dirt':
+      R(g, 0, 0, 16, 16, '#8A7152'); speck(32, '#7A6346'); speck(20, '#9B8263'); speck(3, '#B3A58C'); break;
+    case 'camp':
+      R(g, 0, 0, 16, 16, '#6C5843'); speck(32, '#5D4B39'); speck(20, '#7B6650'); speck(2, '#9A8A72'); break;
+    case 'stone': {
+      R(g, 0, 0, 16, 16, '#6F797D'); speck(16, '#646E72'); speck(8, '#7D878B');
+      R(g, 0, 0, 16, 1, '#4C5457'); R(g, 0, 8, 16, 1, '#4C5457');
+      const vx = v % 2 ? [3, 11] : [6, 14];
+      R(g, vx[0], 1, 1, 7, '#4C5457'); R(g, (vx[0] + 5) % 16, 9, 1, 7, '#4C5457'); R(g, vx[1], 9, 1, 7, '#4C5457');
+      R(g, 0, 1, 16, 1, '#869094'); R(g, 0, 9, 16, 1, '#869094');
+      break;
+    }
+    case 'water': water(16); break;
+    case 'shore':
+      water(9); R(g, 0, 9, 16, 7, '#C4B087');
+      for (let i = 0; i < 14; i++) P(g, (rnd() * 16) | 0, 10 + ((rnd() * 6) | 0), '#AE9A70');
+      for (let x = 0; x < 16; x++) if ((x + f) % 3 !== 0) P(g, x, 8 + ((x + f) % 2), '#DCE8E4');
+      break;
+    case 'plank':
+      R(g, 0, 0, 16, 16, '#7C5A3C');
+      for (const y of [0, 4, 8, 12]) { R(g, 0, y, 16, 1, '#5A3F29'); R(g, 0, y + 1, 16, 1, '#93704E'); }
+      P(g, 2, 2, '#3A2A1D'); P(g, 13, 6, '#3A2A1D'); P(g, 2, 10, '#3A2A1D'); P(g, 13, 14, '#3A2A1D');
+      R(g, 0, 0, 1, 16, '#5A3F29'); R(g, 15, 0, 1, 16, '#5A3F29');
+      break;
+  }
+  TILE[key] = c; return c;
+}
+const CODE = { '~': ['water', 0], '_': ['shore', 0], ',': ['grass', 0], "'": ['grass', 1], '.': ['grass', 2], '=': ['stone', 0], ':': ['dirt', 0], '#': ['plank', 0], c: ['camp', 0] };
+
+// ================================================================ 物件（描边）
+function mkHouse(roof, roofD, sign) {
+  const c = cnv(50, 47), g = c.getContext('2d'), o = 1;
+  for (let y = 0; y < 15; y++) {
+    const inset = y < 3 ? 10 - y * 2 : Math.max(0, 6 - Math.floor((y - 3) / 2));
+    R(g, o + inset, o + y, 48 - inset * 2, 1, y === 0 ? roofD : y >= 13 ? '#6A737B' : roof);
+    if (y >= 2 && y <= 12) for (let x = inset + 2; x < 48 - inset; x += 4) P(g, o + x, o + y, roofD);
+  }
+  P(g, o, o + 10, roof); P(g, o + 47, o + 10, roof); P(g, o + 1, o + 11, roof); P(g, o + 46, o + 11, roof);
+  R(g, o + 4, o + 15, 40, 24, '#DCD2BD'); R(g, o + 40, o + 15, 4, 24, '#C4B9A3'); R(g, o + 4, o + 15, 40, 2, '#A99E8A');
+  R(g, o + 4, o + 15, 3, 24, '#6B4630'); R(g, o + 41, o + 15, 3, 24, '#6B4630');
+  R(g, o + 18, o + 23, 12, 16, '#6B4630'); R(g, o + 19, o + 24, 10, 15, '#4A3424'); R(g, o + 24, o + 25, 1, 14, '#3A2A1D'); P(g, o + 22, o + 31, '#C9A45C'); P(g, o + 26, o + 31, '#C9A45C');
+  for (const wx of [9, 33]) { R(g, o + wx - 1, o + 20, 9, 9, '#6B4630'); R(g, o + wx, o + 21, 7, 7, '#3A2F28'); R(g, o + wx, o + 24, 7, 1, '#8A6444'); R(g, o + wx + 3, o + 21, 1, 7, '#8A6444'); }
+  R(g, o + 20, o + 17, 8, 5, sign); P(g, o + 23, o + 19, '#D8B66A'); P(g, o + 24, o + 19, '#D8B66A');
+  R(g, o + 2, o + 39, 44, 5, '#8B8780'); R(g, o + 2, o + 39, 44, 1, '#A19D95');
+  return outline(c);
+}
+function mkTree() {
+  const c = cnv(30, 38), g = c.getContext('2d');
+  R(g, 13, 24, 4, 13, '#5A4030'); R(g, 13, 24, 1, 13, '#6E5039');
+  fc(g, 15, 14, 12, '#2F4A2E'); fc(g, 13, 12, 9, '#3D5E37'); fc(g, 11, 9, 5, '#4F7645'); fc(g, 10, 7, 2, '#6A9256');
+  for (let i = 0; i < 9; i++) P(g, 8 + ((i * 7) % 15), 18 + ((i * 3) % 6), '#26402A');
+  return outline(c);
+}
+function mkRock() { const c = cnv(24, 16), g = c.getContext('2d'); fe(g, 12, 9, 10, 5, '#5F5F5A'); fe(g, 11, 7, 8, 4, '#77776F'); fe(g, 8, 6, 3, 2, '#93938A'); return outline(c); }
+function mkTent() {
+  const c = cnv(36, 30), g = c.getContext('2d');
+  for (let y = 2; y < 28; y++) { const half = Math.floor((y - 2) * 0.62); R(g, 18 - half, y, half, 1, '#A08A66'); R(g, 18, y, half + 1, 1, '#7E6C4E'); }
+  for (let y = 15; y < 28; y++) { const half = Math.floor((y - 15) * 0.42); R(g, 18 - half, y, half * 2 + 1, 1, '#2B2320'); }
+  R(g, 17, 0, 2, 3, '#3B2F28'); P(g, 19, 0, '#C8402C'); P(g, 20, 0, '#C8402C'); P(g, 20, 1, '#C8402C');
+  return outline(c);
+}
+function mkWood() { const c = cnv(20, 15), g = c.getContext('2d'); for (const [x, y] of [[5, 10], [12, 10], [8, 5], [15, 5]]) { fc(g, x, y, 3, '#8A6040'); P(g, x, y, '#C8A070'); P(g, x - 1, y, '#A87850'); } return outline(c); }
+function mkHerb() { const c = cnv(16, 14), g = c.getContext('2d'); for (const x of [4, 8, 12]) { line(g, x, 12, x, 6, '#3F7A3A'); fe(g, x - 2, 9, 2, 1, '#64A659'); fe(g, x + 2, 8, 2, 1, '#64A659'); P(g, x, 4, '#EFE6D2'); P(g, x - 1, 5, '#EFE6D2'); P(g, x + 1, 5, '#EFE6D2'); P(g, x, 5, '#D8B66A'); } return outline(c); }
+function mkBoat() {
+  const c = cnv(48, 16), g = c.getContext('2d');
+  for (let y = 5; y < 14; y++) { const inset = Math.round(((y - 5) * (y - 5)) / 4) + (y === 5 ? 0 : 1); R(g, 1 + inset, y, 46 - inset * 2, 1, y === 5 ? '#8A6444' : y < 8 ? '#4E3422' : '#6B4A30'); }
+  R(g, 20, 1, 9, 4, '#8A7A5A'); R(g, 20, 1, 9, 1, '#A8986E');
+  return outline(c);
+}
+function mkLantern() { const c = cnv(9, 18), g = c.getContext('2d'); R(g, 4, 7, 1, 10, '#3B2F28'); R(g, 2, 1, 5, 1, '#3B2F28'); fe(g, 4, 4, 3, 3, '#C0452E'); P(g, 3, 3, '#E8845A'); P(g, 3, 4, '#E8845A'); R(g, 3, 8, 3, 1, '#3B2F28'); return outline(c); }
+function mkFence() { const c = cnv(18, 12), g = c.getContext('2d'); R(g, 2, 1, 2, 10, '#7A5A3C'); R(g, 14, 1, 2, 10, '#7A5A3C'); R(g, 1, 3, 16, 2, '#8A6848'); R(g, 1, 7, 16, 2, '#8A6848'); return outline(c); }
+const FIRE = [0, 1, 2].map((f) => {
+  const c = cnv(16, 18), g = c.getContext('2d');
+  line(g, 2, 16, 13, 13, '#5A4030'); line(g, 2, 13, 13, 16, '#4A3424');
+  const rnd = RNG(17 + f * 31);
+  for (let i = 0; i < 3; i++) { const cx = 6 + i * 2 + ((rnd() * 2) | 0) - 1; fe(g, cx, 10 - i, 2, 4 + ((rnd() * 2) | 0), '#E0603F'); }
+  fe(g, 8, 11, 2, 3, '#F2A03C'); fe(g, 8, 12, 1, 2, '#F8D878'); P(g, 6 + f, 3, '#F2A03C');
+  return outline(c);
+});
+const OBJ = {
+  house: mkHouse('#4A5159', '#363C43', '#2F6B5A'), forge: mkHouse('#5A4A3E', '#3E322A', '#A8402C'), tree: mkTree(), rock: mkRock(), tent: mkTent(),
+  wood: mkWood(), herb: mkHerb(), boat: mkBoat(), lantern: mkLantern(), fence: mkFence(),
+};
+
+// ================================================================ 场景
+const SCENES = {
+  dock: {
+    map: ['~~~~~~~~~~~##~~~~~~~', '~~~~~~~~~~~##~~~~~~~', '___________##_______', ",',,.,,,,:::::,,.,',", '====================',
+      '====================', ",,.,:,,',,,,.:,,,,.,", ',.,,::,,,.,,,::,,,,,', ",,,,::,'.,,,::,,,',", '.,,,,,,,,,,,,,,,,,,,'],
+    cam: [160, 84],
+    objs: [['house', 40, 100], ['forge', 200, 100], ['boat', 216, 10], ['lantern', 96, 46], ['lantern', 226, 46], ['tree', -2, 92], ['tree', 288, 96], ['wood', 252, 118], ['fence', 30, 44], ['fence', 48, 44]],
+    chars: [['xu', 'down', 192, 30], ['shen', 'right', 128, 78], ['lu', 'left', 198, 72], ['zhou', 'right', 186, 106], ['xia', 'left', 160, 84, true]],
+  },
+  camp: {
+    map: [",,.,,',,,,.,,,,,',,,", ',.,,,,,,.,,,,,.,,,,.', 'cccccccccccccccccccc', 'cccccccccccccccccccc', '::::::::cccccccccccc',
+      '::::::::::cccccccccc', 'cccccccccccccccccccc', 'cccccccccccccccccccc', ",,,.,,,,',,,,,.,,,,,", '.,,,,,,,,,,,,,,,,,,,'],
+    cam: [160, 84],
+    objs: [['tent', 196, 24], ['tent', 252, 98], ['rock', 34, 42], ['rock', 92, 120], ['tree', 4, -4], ['tree', 60, -8], ['tree', 140, -6], ['tree', 300, 110], ['herb', 52, 128]],
+    fire: [228, 64],
+    chars: [['bandit', 'left', 210, 52], ['bandit', 'left', 196, 116], ['boss', 'left', 186, 84], ['xia', 'right', 136, 86]],
+    cone: { x: 186, y: 82, face: Math.PI, half: 0.65, range: 48, prog: 0.6 },
+  },
+  talk: null,
+};
+SCENES.talk = { ...SCENES.dock, cam: [150, 80], chars: [['xu', 'down', 192, 30], ['shen', 'right', 136, 80], ['lu', 'left', 198, 72], ['zhou', 'right', 186, 106], ['xia', 'left', 156, 82]] };
+const angDiff = (a, b) => { let d = a - b; while (d > Math.PI) d -= Math.PI * 2; while (d < -Math.PI) d += Math.PI * 2; return Math.abs(d); };
+function drawCone(g, cn, ox, oy) {
+  const { x, y, face, half, range, prog } = cn;
+  for (let yy = -range; yy <= range; yy++) for (let xx = -range; xx <= range; xx++) {
+    const d = Math.hypot(xx, yy); if (d > range || d < 2) continue;
+    const ad = angDiff(Math.atan2(yy, xx), face); if (ad > half) continue;
+    const px = x + xx - ox, py = y + yy - oy;
+    const edge = d > range - 1.2 || ad > half - 1.2 / Math.max(d, 1);
+    if (edge) { if ((xx + yy) % 2 === 0 || true) P(g, px, py, '#E0603F'); continue; }
+    if (d <= range * prog) { g.fillStyle = (xx + yy) % 2 === 0 ? 'rgba(224,96,63,0.85)' : 'rgba(224,96,63,0.35)'; g.fillRect(px, py, 1, 1); }
+    else if ((xx + yy) % 2 === 0 && (yy % 2 === 0)) P(g, px, py, 'rgba(224,96,63,0.75)');
+  }
+}
+function drawBang(g, x, y) {
+  fc(g, x, y, 4, '#E0603F'); R(g, x, y - 2, 1, 3, '#14110E'); P(g, x, y + 2, '#14110E');
+  g.fillStyle = INK; for (let a = 0; a < 32; a++) { const t = (a / 32) * Math.PI * 2; g.fillRect(Math.round(x + Math.cos(t) * 5), Math.round(y + Math.sin(t) * 5), 1, 1); }
+}
+function renderScene(canvas, name, t) {
+  const S = SCENES[name], g = canvas.getContext('2d'), W = canvas.width, H = canvas.height;
+  const ox = S.cam[0] - Math.floor(W / 2), oy = S.cam[1] - Math.floor(H / 2);
+  g.imageSmoothingEnabled = false;
+  g.fillStyle = '#0E0B09'; g.fillRect(0, 0, W, H);
+  const wf = Math.floor(t * 2) % 3;
+  S.map.forEach((line, r) => {
+    for (let c = 0; c < line.length; c++) {
+      const [k, v0] = CODE[line[c]]; const v = k === 'stone' || k === 'water' ? (c + r) % 2 : v0;
+      g.drawImage(tile(k, v, k === 'water' || k === 'shore' ? wf : 0), c * 16 - ox, r * 16 - oy);
+    }
+  });
+  if (S.cone) drawCone(g, S.cone, ox, oy);
+  const items = [];
+  for (const [k, x, y] of S.objs) { const im = OBJ[k]; items.push({ y: y + im.height, d: () => g.drawImage(im, x - ox, y - oy) }); }
+  if (S.fire) { const im = FIRE[Math.floor(t * 8) % 3]; items.push({ y: S.fire[1] + 18, d: () => { g.fillStyle = 'rgba(242,160,60,0.18)'; for (let yy = -10; yy <= 10; yy++) for (let xx = -12; xx <= 12; xx++) if ((xx + yy) % 2 === 0 && xx * xx + yy * yy < 120) g.fillRect(S.fire[0] + 8 + xx - ox, S.fire[1] + 12 + yy - oy, 1, 1); g.drawImage(im, S.fire[0] - ox, S.fire[1] - oy); } }); }
+  for (const [id, dir, x, y, walk] of S.chars) {
+    const fr = walk ? WALK[Math.floor(t * 6) % 4] : 'idle';
+    items.push({ y, d: () => {
+      drawChar(g, id, dir, fr, x - ox, y - oy);
+      if (id === 'shen' && name === 'dock') { const dy = Math.floor(t * 2) % 2; R(g, x - ox - 1, y - oy - 27 - dy, 3, 1, '#D8B66A'); R(g, x - ox - 2, y - oy - 26 - dy, 5, 1, '#D8B66A'); R(g, x - ox - 1, y - oy - 25 - dy, 3, 1, '#D8B66A'); P(g, x - ox, y - oy - 28 - dy, '#D8B66A'); P(g, x - ox, y - oy - 24 - dy, '#D8B66A'); }
+    } });
+  }
+  items.sort((a, b) => a.y - b.y).forEach((it) => it.d());
+  if (S.cone) drawBang(g, S.cone.x - ox, S.cone.y - oy - 28);
+  for (const [k, x, y] of [['lantern', 96, 46], ['lantern', 226, 46]]) if (name !== 'camp') {
+    g.fillStyle = 'rgba(240,140,90,0.16)';
+    for (let yy = -6; yy <= 6; yy++) for (let xx = -6; xx <= 6; xx++) if ((xx + yy) % 2 === 0 && xx * xx + yy * yy < 36) g.fillRect(x + 4 + xx - ox, y + 4 + yy - oy, 1, 1);
+  }
+}
+const SPOT = {
+  'dock:shen': [128, 78, -31], 'dock:xu': [192, 30, -22], 'dock:lu': [198, 72, -22], 'dock:zhou': [186, 106, -22],
+  'camp:boss': [186, 84, -36], 'camp:dmg': [204, 84, -16],
+};
+function placeLabels() {
+  document.querySelectorAll('[data-at]').forEach((el) => {
+    const [scene] = el.dataset.at.split(':'); const s = SPOT[el.dataset.at], S = SCENES[scene];
+    const ox = S.cam[0] - 141, oy = S.cam[1] - 65;
+    el.style.left = (s[0] - ox) * 3 + 'px'; el.style.top = (s[1] - oy + s[2]) * 3 + 'px';
+  });
+}
+
+// ================================================================ 界面素材
+function frame(hi, mid, lo, fill) {
+  const c = cnv(12, 12), g = c.getContext('2d');
+  R(g, 1, 0, 10, 1, INK); R(g, 1, 11, 10, 1, INK); R(g, 0, 1, 1, 10, INK); R(g, 11, 1, 1, 10, INK);
+  R(g, 1, 1, 10, 10, mid); R(g, 1, 1, 10, 1, hi); R(g, 1, 1, 1, 10, hi); R(g, 1, 10, 10, 1, lo); R(g, 10, 1, 1, 10, lo);
+  g.clearRect(3, 3, 6, 6); R(g, 3, 3, 6, 6, fill);
+  return 'url(' + c.toDataURL() + ')';
+}
+function roundBtn(d, ring, ringLo, inner) {
+  const c = cnv(d, d), g = c.getContext('2d'), r = d / 2;
+  for (let y = 0; y < d; y++) for (let x = 0; x < d; x++) {
+    const dx = x + 0.5 - r, dy = y + 0.5 - r, dist = Math.hypot(dx, dy);
+    if (dist > r - 0.3) continue;
+    let col;
+    if (dist > r - 1.3) col = INK;
+    else if (dist > r - 3.3) col = dy < -dx * 0.2 ? ring : ringLo;
+    else col = inner || (dx + dy < -r * 0.7 ? '#2E2620' : '#1F1A16');
+    P(g, x, y, col);
+  }
+  return 'url(' + c.toDataURL() + ')';
+}
+function stickBase() {
+  const d = 42, c = cnv(d, d), g = c.getContext('2d'), r = d / 2;
+  for (let y = 0; y < d; y++) for (let x = 0; x < d; x++) { const dist = Math.hypot(x + 0.5 - r, y + 0.5 - r); if (dist > r - 0.3) continue; P(g, x, y, dist > r - 1.3 ? INK : dist > r - 2.3 ? 'rgba(240,232,214,0.45)' : 'rgba(240,232,214,0.07)'); }
+  return 'url(' + c.toDataURL() + ')';
+}
+const root = document.documentElement.style;
+root.setProperty('--fDark', frame('#5A4A3C', '#3B2F28', '#241C17', 'rgba(20,16,13,0.9)'));
+root.setProperty('--fPaper', frame('#B98A5A', '#8A5E3C', '#5E3E26', '#EADFC4'));
+root.setProperty('--fGold', frame('#F0D78F', '#D8B66A', '#9A7A3A', 'rgba(26,20,15,0.92)'));
+root.setProperty('--fOpt', frame('#D6C4A0', '#B49C74', '#86704E', '#F3EAD6'));
+root.setProperty('--fOptSel', frame('#F0D78F', '#D8B66A', '#9A7A3A', '#F7EEDA'));
+root.setProperty('--bRed', roundBtn(32, '#E0603F', '#A8402C'));
+root.setProperty('--bJade', roundBtn(26, '#5FB3A1', '#3F8576'));
+root.setProperty('--bGray', roundBtn(24, '#BDB2A0', '#7E7466'));
+root.setProperty('--bHot', roundBtn(26, '#F2A03C', '#E0603F', '#3A2218'));
+root.setProperty('--iStick', stickBase());
+root.setProperty('--iKnob', roundBtn(18, '#F0E8D6', '#BDB2A0', '#D8CFBC'));
+
+// 图标 16×16
+const ICONS = {
+  coin: ['铜钱', (g) => { fc(g, 8, 8, 6, '#A8823A'); fc(g, 7, 7, 5, '#D8B66A'); P(g, 5, 5, '#F0D78F'); P(g, 4, 6, '#F0D78F'); g.clearRect(6, 6, 4, 4); }],
+  bandage: ['绷带', (g) => { R(g, 2, 5, 11, 7, '#EFE6D2'); R(g, 2, 10, 11, 2, '#CFC4AE'); fc(g, 12, 8, 3, '#E0D6C0'); P(g, 12, 8, '#BDB2A0'); R(g, 6, 6, 1, 4, '#D9553A'); R(g, 5, 7, 3, 1, '#D9553A'); }],
+  wood: ['木料', (g) => { fe(g, 7, 8, 6, 3, '#8A6040'); R(g, 2, 7, 10, 1, '#A87850'); fc(g, 12, 8, 3, '#C8A070'); P(g, 12, 8, '#8A6040'); }],
+  iron: ['废铁', (g) => { for (let y = 6; y < 12; y++) R(g, 3 + (11 - y) / 2, y, 10 - (11 - y), 1, y < 8 ? '#B5BCC0' : '#8A9196'); R(g, 3, 11, 10, 1, '#6A7176'); }],
+  herb: ['止血草', (g) => { line(g, 8, 14, 8, 5, '#3F7A3A'); fe(g, 5, 10, 3, 1, '#64A659'); fe(g, 11, 8, 3, 1, '#64A659'); fe(g, 6, 6, 2, 1, '#64A659'); P(g, 8, 3, '#EFE6D2'); P(g, 7, 4, '#EFE6D2'); P(g, 9, 4, '#EFE6D2'); P(g, 8, 4, '#D8B66A'); }],
+  med: ['药包', (g) => { fc(g, 8, 10, 5, '#E8DCC0'); R(g, 4, 10, 9, 1, '#CFC2A4'); R(g, 6, 3, 4, 3, '#C8402C'); P(g, 5, 4, '#C8402C'); P(g, 10, 4, '#C8402C'); R(g, 7, 9, 2, 3, '#5FB3A1'); R(g, 6, 10, 4, 1, '#5FB3A1'); }],
+  book: ['江湖日志', (g) => { R(g, 3, 2, 10, 12, '#7A5236'); R(g, 5, 3, 7, 10, '#EFE6D2'); R(g, 3, 2, 2, 12, '#5A3B26'); R(g, 6, 5, 5, 1, '#8A7A6A'); R(g, 6, 7, 5, 1, '#8A7A6A'); R(g, 6, 9, 3, 1, '#8A7A6A'); }],
+  talk: ['交谈', (g) => { R(g, 2, 3, 12, 8, '#EFE6D2'); R(g, 3, 2, 10, 1, '#EFE6D2'); R(g, 3, 11, 10, 1, '#EFE6D2'); R(g, 4, 12, 2, 2, '#EFE6D2'); for (const x of [5, 8, 11]) P(g, x, 7, '#3B2F28'); }],
+  atk: ['普攻', (g) => { line(g, 3, 13, 12, 4, '#EFE6D2'); line(g, 4, 13, 13, 4, '#BDB2A0'); R(g, 3, 10, 4, 1, '#C9A45C'); R(g, 5, 8, 1, 4, '#C9A45C'); line(g, 2, 14, 3, 13, '#5A3B26'); }],
+  skill: ['剑招', (g) => { line(g, 3, 13, 11, 5, '#EFE6D2'); line(g, 4, 13, 12, 5, '#BDB2A0'); R(g, 10, 2, 4, 1, '#5FB3A1'); R(g, 13, 2, 1, 4, '#5FB3A1'); line(g, 7, 3, 13, 9, '#5FB3A1'); }],
+  dodge: ['闪避', (g) => { line(g, 2, 12, 6, 7, '#EFE6D2'); line(g, 6, 7, 12, 5, '#EFE6D2'); line(g, 3, 13, 7, 8, '#BDB2A0'); R(g, 11, 3, 1, 5, '#EFE6D2'); R(g, 9, 3, 3, 1, '#EFE6D2'); }],
+  pause: ['暂停', (g) => { R(g, 4, 3, 3, 10, '#EFE6D2'); R(g, 9, 3, 3, 10, '#EFE6D2'); }],
+};
+const ICON_URL = {};
+for (const [k, [, fn]] of Object.entries(ICONS)) { const c = cnv(16, 16); fn(c.getContext('2d')); outline(c); ICON_URL[k] = c.toDataURL(); }
+document.querySelectorAll('img[data-ic]').forEach((im) => { im.src = ICON_URL[im.dataset.ic]; });
+
+// 头像
+document.querySelectorAll('canvas[data-portrait]').forEach((c) => {
+  const s = SPR[c.dataset.portrait].down.idle, g = c.getContext('2d');
+  c.width = s.width; c.height = 12; g.drawImage(s, 0, 0);
+});
+
+// ================================================================ 样张区
+const cast = document.getElementById('cast');
+const castCanvases = [];
+for (const ch of CHARS) {
+  const card = document.createElement('div'); card.className = 'card';
+  const c = cnv(84, 22); c.setAttribute('role', 'img'); c.setAttribute('aria-label', ch.name + '四个朝向的走路动画');
+  const nm = document.createElement('div'); nm.className = 'nm'; nm.textContent = ch.name; const sm = document.createElement('small'); sm.textContent = ch.role; nm.appendChild(sm);
+  const p = document.createElement('p'); p.textContent = ch.note;
+  const sw = document.createElement('div'); sw.className = 'sw';
+  for (const k of ['r', 'R', 'b']) { const i = document.createElement('i'); i.style.background = ch.pal[k]; sw.appendChild(i); }
+  card.append(c, nm, p, sw); cast.appendChild(card); castCanvases.push([c, ch.id]);
+}
+function renderCast(t) {
+  const fr = WALK[Math.floor(t * 6) % 4];
+  for (const [c, id] of castCanvases) {
+    const g = c.getContext('2d'); g.clearRect(0, 0, c.width, c.height);
+    ['down', 'left', 'right', 'up'].forEach((d, i) => drawChar(g, id, d, fr, 10 + i * 21, 20));
+  }
+}
+function addItem(box, canvas, name, sub, scale) {
+  const it = document.createElement('div'); it.className = 'it';
+  canvas.style.width = canvas.width * scale + 'px'; canvas.style.height = canvas.height * scale + 'px';
+  const lb = document.createElement('div'); const b = document.createElement('b'); b.textContent = name; lb.appendChild(b);
+  if (sub) lb.append(' · ' + sub);
+  it.append(canvas, lb); box.appendChild(it); return canvas;
+}
+const tilesBox = document.getElementById('tiles');
+const tileList = [['grass', 0, '草地'], ['grass', 1, '草地', '带花'], ['dirt', 0, '土路'], ['stone', 0, '青石板'], ['plank', 0, '码头木板'], ['camp', 0, '营地'], ['water', 0, '河水', '三帧'], ['shore', 0, '河岸', '三帧']];
+const animTiles = [];
+for (const [k, v, n, s] of tileList) { const c = cnv(16, 16); c.getContext('2d').drawImage(tile(k, v, 0), 0, 0); addItem(tilesBox, c, n, s, 3); if (k === 'water' || k === 'shore') animTiles.push([c, k, v]); }
+const objBox = document.getElementById('objs');
+const objList = [['house', '民居'], ['forge', '铁匠铺'], ['boat', '渡船'], ['tree', '树'], ['tent', '帐篷'], ['rock', '山石'], ['wood', '木料堆'], ['herb', '止血草'], ['lantern', '灯笼'], ['fence', '篱笆']];
+for (const [k, n] of objList) { const c = cnv(OBJ[k].width, OBJ[k].height); c.getContext('2d').drawImage(OBJ[k], 0, 0); addItem(objBox, c, n, null, 3); }
+const fireC = addItem(objBox, cnv(16, 18), '营火', '三帧', 3);
+const iconBox = document.getElementById('icons');
+for (const [k, [n]] of Object.entries(ICONS)) { const it = document.createElement('div'); it.className = 'it'; const im = document.createElement('img'); im.src = ICON_URL[k]; im.alt = ''; im.className = 'ic'; im.style.width = im.style.height = '48px'; const b = document.createElement('b'); b.textContent = n; it.append(im, b); iconBox.appendChild(it); }
+const palBox = document.getElementById('pal');
+for (const [n, hex] of [['墨', INK], ['朱砂', '#E0603F'], ['青', '#5FB3A1'], ['金', '#D8B66A'], ['纸', '#EADFC4'], ['木', '#8A5E3C'], ['青石', '#6F797D'], ['河水', '#2C5768'], ['草', '#4E6A3C'], ['土', '#8A7152']]) {
+  const d = document.createElement('div'); const i = document.createElement('i'); i.style.background = hex; const s = document.createElement('span'); const b = document.createElement('b'); b.textContent = n; s.append(b, hex); d.append(i, s); palBox.appendChild(d);
+}
+
+// ================================================================ 缩放与动画
+const scenes = [...document.querySelectorAll('canvas[data-scene]')];
+function fit() { document.querySelectorAll('.scene').forEach((s) => { s.querySelector('.stage').style.transform = 'scale(' + s.clientWidth / 846 + ')'; }); }
+addEventListener('resize', fit);
+fit(); placeLabels();
+const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let lastStep = -1;
+function tick(now) {
+  const t = now / 1000, step = Math.floor(t * 8);
+  if (step !== lastStep) {
+    lastStep = step;
+    for (const c of scenes) renderScene(c, c.dataset.scene, t);
+    renderCast(t);
+    for (const [c, k, v] of animTiles) c.getContext('2d').drawImage(tile(k, v, Math.floor(t * 2) % 3), 0, 0);
+    const fg = fireC.getContext('2d'); fg.clearRect(0, 0, 16, 18); fg.drawImage(FIRE[Math.floor(t * 8) % 3], 0, 0);
+  }
+  if (!still) requestAnimationFrame(tick);
+}
+tick(performance.now());
+})();
+</script>

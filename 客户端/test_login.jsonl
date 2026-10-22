@@ -1,0 +1,3 @@
+{"ev": "open", "conn": 1, "t": 1792160282.418587, "peer": "test_client -> 127.0.0.1:6731"}
+{"ev": "chunk", "conn": 1, "dir": "C2S", "t": 1792160283.455343, "hex": "f611016ada8d9fdfca179e69629b9ea7aeaeaeaeaeaf"}
+{"ev": "frame", "dir": "C2S", "fmt": "A", "type": 1, "total": 19, "key": 158, "mode": "normal", "payload": "41548900f7fc050039303030303031", "seq": 1, "expected_key": 158, "conn": 1, "t": 1792160283.4556434}

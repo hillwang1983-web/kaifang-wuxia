@@ -1,0 +1,2610 @@
+{
+ "table": "renwu",
+ "columns": {
+  "sex": {
+   "kind": "structural",
+   "orig": "1",
+   "trials": [
+    {
+     "value": 1,
+     "changes": []
+    }
+   ]
+  },
+  "head_image": {
+   "kind": "structural",
+   "orig": "1",
+   "trials": [
+    {
+     "value": 1,
+     "changes": []
+    }
+   ]
+  },
+  "mode": {
+   "kind": "structural",
+   "orig": "1",
+   "trials": [
+    {
+     "value": 1,
+     "changes": []
+    }
+   ]
+  },
+  "b_month": {
+   "kind": "validate",
+   "orig": "1",
+   "trials": [
+    {
+     "value": 57,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 353,
+       "width": 1,
+       "old": "01",
+       "new": "39"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 353,
+       "width": 1,
+       "expected": "39",
+       "seen": "39",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "b_day": {
+   "kind": "validate",
+   "orig": "1",
+   "trials": [
+    {
+     "value": 57,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 354,
+       "width": 1,
+       "old": "01",
+       "new": "39"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 354,
+       "width": 1,
+       "expected": "39",
+       "seen": "39",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "str": {
+   "kind": "validate",
+   "orig": "23",
+   "trials": [
+    {
+     "value": 57,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 240,
+       "width": 1,
+       "old": "17",
+       "new": "39"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 240,
+       "width": 1,
+       "expected": "39",
+       "seen": "39",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "crg": {
+   "kind": "validate",
+   "orig": "18",
+   "trials": [
+    {
+     "value": 57,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 241,
+       "width": 1,
+       "old": "12",
+       "new": "39"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 241,
+       "width": 1,
+       "expected": "39",
+       "seen": "39",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "wint": {
+   "kind": "validate",
+   "orig": "21",
+   "trials": [
+    {
+     "value": 57,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 242,
+       "width": 1,
+       "old": "15",
+       "new": "39"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 242,
+       "width": 1,
+       "expected": "39",
+       "seen": "39",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "luk": {
+   "kind": "validate",
+   "orig": "20",
+   "trials": [
+    {
+     "value": 57,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 243,
+       "width": 1,
+       "old": "14",
+       "new": "39"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 243,
+       "width": 1,
+       "expected": "39",
+       "seen": "39",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "dex": {
+   "kind": "validate",
+   "orig": "18",
+   "trials": [
+    {
+     "value": 57,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 244,
+       "width": 1,
+       "old": "12",
+       "new": "39"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 244,
+       "width": 1,
+       "expected": "39",
+       "seen": "39",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "agi": {
+   "kind": "validate",
+   "orig": "19",
+   "trials": [
+    {
+     "value": 57,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 245,
+       "width": 1,
+       "old": "13",
+       "new": "39"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 245,
+       "width": 1,
+       "expected": "39",
+       "seen": "39",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "vit": {
+   "kind": "validate",
+   "orig": "21",
+   "trials": [
+    {
+     "value": 57,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 246,
+       "width": 1,
+       "old": "15",
+       "new": "39"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 246,
+       "width": 1,
+       "expected": "39",
+       "seen": "39",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "map": {
+   "kind": "validate",
+   "orig": "2200",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 204,
+       "width": 4,
+       "old": "98 08 00 00",
+       "new": "78 56 34 12"
+      },
+      {
+       "frame": 10,
+       "opcode": "0x08",
+       "offset": 0,
+       "width": 2,
+       "old": "98 08",
+       "new": "78 56"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 204,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      },
+      {
+       "frame": 10,
+       "offset": 0,
+       "width": 2,
+       "expected": "78 56",
+       "seen": "78 56",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "x": {
+   "kind": "validate",
+   "orig": "510",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 208,
+       "width": 4,
+       "old": "fe 01 00 00",
+       "new": "78 56 34 12"
+      },
+      {
+       "frame": 10,
+       "opcode": "0x08",
+       "offset": 2,
+       "width": 2,
+       "old": "fe 01",
+       "new": "78 56"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 208,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      },
+      {
+       "frame": 10,
+       "offset": 2,
+       "width": 2,
+       "expected": "78 56",
+       "seen": "78 56",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "y": {
+   "kind": "validate",
+   "orig": "410",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 212,
+       "width": 4,
+       "old": "9a 01 00 00",
+       "new": "78 56 34 12"
+      },
+      {
+       "frame": 10,
+       "opcode": "0x08",
+       "offset": 4,
+       "width": 2,
+       "old": "9a 01",
+       "new": "78 56"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 212,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      },
+      {
+       "frame": 10,
+       "offset": 4,
+       "width": 2,
+       "expected": "78 56",
+       "seen": "78 56",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "dangqianjing": {
+   "kind": "validate",
+   "orig": "210",
+   "trials": [
+    {
+     "value": 1234,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 219,
+       "width": 1,
+       "old": "00",
+       "new": "04"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 218,
+       "width": 2,
+       "expected": "d2 04",
+       "seen": "d2 04",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "zuidajing": {
+   "kind": "validate",
+   "orig": "210",
+   "trials": [
+    {
+     "value": 1234,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 217,
+       "width": 1,
+       "old": "00",
+       "new": "04"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 216,
+       "width": 2,
+       "expected": "d2 04",
+       "seen": "d2 04",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "dangqianshen": {
+   "kind": "validate",
+   "orig": "210",
+   "trials": [
+    {
+     "value": 1234,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 231,
+       "width": 1,
+       "old": "00",
+       "new": "04"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 230,
+       "width": 2,
+       "expected": "d2 04",
+       "seen": "d2 04",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "zuidashen": {
+   "kind": "validate",
+   "orig": "210",
+   "trials": [
+    {
+     "value": 1234,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 229,
+       "width": 1,
+       "old": "00",
+       "new": "04"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 228,
+       "width": 2,
+       "expected": "d2 04",
+       "seen": "d2 04",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "dangqianxue": {
+   "kind": "validate",
+   "orig": "2000",
+   "trials": [
+    {
+     "value": 123456,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 224,
+       "width": 3,
+       "old": "d0 07 00",
+       "new": "40 e2 01"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 224,
+       "width": 3,
+       "expected": "40 e2 01",
+       "seen": "40 e2 01",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "zuidaxue": {
+   "kind": "validate",
+   "orig": "2000",
+   "trials": [
+    {
+     "value": 123456,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 220,
+       "width": 3,
+       "old": "d0 07 00",
+       "new": "40 e2 01"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 220,
+       "width": 3,
+       "expected": "40 e2 01",
+       "seen": "40 e2 01",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "dangqiannei": {
+   "kind": "validate",
+   "orig": "1",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 232,
+       "width": 4,
+       "old": "01 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 232,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "zuidanei": {
+   "kind": "validate",
+   "orig": "1",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 236,
+       "width": 4,
+       "old": "01 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 236,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "study_count": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1234,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 248,
+       "width": 2,
+       "old": "00 00",
+       "new": "d2 04"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 248,
+       "width": 2,
+       "expected": "d2 04",
+       "seen": "d2 04",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "combat_exp": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 258,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 258,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "diet_val": {
+   "kind": "structural",
+   "orig": "100",
+   "trials": [
+    {
+     "value": 1,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 282,
+       "width": 1,
+       "old": "64",
+       "new": "01"
+      }
+     ]
+    }
+   ]
+  },
+  "water_val": {
+   "kind": "structural",
+   "orig": "100",
+   "trials": [
+    {
+     "value": 1,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 285,
+       "width": 1,
+       "old": "64",
+       "new": "01"
+      }
+     ]
+    }
+   ]
+  },
+  "kill_val": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 286,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 286,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "pk_val": {
+   "kind": "structural",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 290,
+       "width": 1,
+       "old": "00",
+       "new": "01"
+      }
+     ]
+    }
+   ]
+  },
+  "jy_money": {
+   "kind": "validate",
+   "orig": "100000",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 299,
+       "width": 4,
+       "old": "a0 86 01 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 299,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "fame_val": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 303,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 303,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "online_time": {
+   "kind": "validate",
+   "orig": "70",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 349,
+       "width": 4,
+       "old": "46 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 349,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "school": {
+   "kind": "structural",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 358,
+       "width": 1,
+       "old": "00",
+       "new": "01"
+      }
+     ]
+    }
+   ]
+  },
+  "master": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1234,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 360,
+       "width": 2,
+       "old": "00 00",
+       "new": "d2 04"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 360,
+       "width": 2,
+       "expected": "d2 04",
+       "seen": "d2 04",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "exp_val": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 368,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 368,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "evil_val": {
+   "kind": "validate",
+   "orig": "2000",
+   "trials": [
+    {
+     "value": 1234,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 372,
+       "width": 2,
+       "old": "d0 07",
+       "new": "d2 04"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 372,
+       "width": 2,
+       "expected": "d2 04",
+       "seen": "d2 04",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "school_skill_lv": {
+   "kind": "structural",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 378,
+       "width": 1,
+       "old": "00",
+       "new": "01"
+      }
+     ]
+    }
+   ]
+  },
+  "school_skill_exp": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 379,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 379,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "jmkey": {
+   "kind": "not-in-stream"
+  },
+  "wuqiqiangdu": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1234,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 274,
+       "width": 2,
+       "old": "00 00",
+       "new": "d2 04"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 274,
+       "width": 2,
+       "expected": "d2 04",
+       "seen": "d2 04",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "fangjuqiangdu": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1234,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 276,
+       "width": 2,
+       "old": "00 00",
+       "new": "d2 04"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 276,
+       "width": 2,
+       "expected": "d2 04",
+       "seen": "d2 04",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "toukui": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 121,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 121,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "toukuizhuangtai": {
+   "kind": "structural",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 125,
+       "width": 1,
+       "old": "00",
+       "new": "01"
+      }
+     ]
+    }
+   ]
+  },
+  "xianglian": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 126,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 126,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "xianglianzhuangtai": {
+   "kind": "structural",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 130,
+       "width": 1,
+       "old": "00",
+       "new": "01"
+      }
+     ]
+    }
+   ]
+  },
+  "wuqi": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 141,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      },
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 146,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 141,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      },
+      {
+       "frame": 1,
+       "offset": 146,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "wuqizhuangtai": {
+   "kind": "structural",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 145,
+       "width": 1,
+       "old": "00",
+       "new": "01"
+      },
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 150,
+       "width": 1,
+       "old": "00",
+       "new": "01"
+      }
+     ]
+    }
+   ]
+  },
+  "yifu": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 131,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 131,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "yifuzhuangtai": {
+   "kind": "structural",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 135,
+       "width": 1,
+       "old": "00",
+       "new": "01"
+      }
+     ]
+    }
+   ]
+  },
+  "pifeng": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 136,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 136,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "pifengzhuangtai": {
+   "kind": "structural",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 140,
+       "width": 1,
+       "old": "00",
+       "new": "01"
+      }
+     ]
+    }
+   ]
+  },
+  "jiezhi": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 156,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 156,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "jiezhizhuangtai": {
+   "kind": "structural",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 160,
+       "width": 1,
+       "old": "00",
+       "new": "01"
+      }
+     ]
+    }
+   ]
+  },
+  "xiezi": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 161,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 161,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "xiezizhuangtai": {
+   "kind": "structural",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 165,
+       "width": 1,
+       "old": "00",
+       "new": "01"
+      }
+     ]
+    }
+   ]
+  },
+  "huwan": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 151,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 151,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "huwanzhuangtai": {
+   "kind": "structural",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 155,
+       "width": 1,
+       "old": "00",
+       "new": "01"
+      }
+     ]
+    }
+   ]
+  },
+  "daofa": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1234,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 425,
+       "width": 2,
+       "old": "00 00",
+       "new": "d2 04"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 425,
+       "width": 2,
+       "expected": "d2 04",
+       "seen": "d2 04",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "daofaexp": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 427,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 427,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "qiangfa": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1234,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 431,
+       "width": 2,
+       "old": "00 00",
+       "new": "d2 04"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 431,
+       "width": 2,
+       "expected": "d2 04",
+       "seen": "d2 04",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "qiangfaexp": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 433,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 433,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "jianfa": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1234,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 437,
+       "width": 2,
+       "old": "00 00",
+       "new": "d2 04"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 437,
+       "width": 2,
+       "expected": "d2 04",
+       "seen": "d2 04",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "jianfaexp": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 439,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 439,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "bianfa": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1234,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 443,
+       "width": 2,
+       "old": "00 00",
+       "new": "d2 04"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 443,
+       "width": 2,
+       "expected": "d2 04",
+       "seen": "d2 04",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "bianfaexp": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 445,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 445,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "gunfa": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1234,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 449,
+       "width": 2,
+       "old": "00 00",
+       "new": "d2 04"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 449,
+       "width": 2,
+       "expected": "d2 04",
+       "seen": "d2 04",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "gunfaexp": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 451,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 451,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "neigong": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1234,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 455,
+       "width": 2,
+       "old": "00 00",
+       "new": "d2 04"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 455,
+       "width": 2,
+       "expected": "d2 04",
+       "seen": "d2 04",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "neigongexp": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 457,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 457,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "cishu": {
+   "kind": "structural",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 461,
+       "width": 1,
+       "old": "00",
+       "new": "01"
+      }
+     ]
+    }
+   ]
+  },
+  "cishuexp": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 463,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 463,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "shenfa": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1234,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 467,
+       "width": 2,
+       "old": "00 00",
+       "new": "d2 04"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 467,
+       "width": 2,
+       "expected": "d2 04",
+       "seen": "d2 04",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "shenfaexp": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 469,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 469,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "dushu": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1234,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 473,
+       "width": 2,
+       "old": "00 00",
+       "new": "d2 04"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 473,
+       "width": 2,
+       "expected": "d2 04",
+       "seen": "d2 04",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "dushuexp": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 475,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 475,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "yishu": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1234,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 479,
+       "width": 2,
+       "old": "00 00",
+       "new": "d2 04"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 479,
+       "width": 2,
+       "expected": "d2 04",
+       "seen": "d2 04",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "yishuexp": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 481,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 481,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "zhenfa": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1234,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 485,
+       "width": 2,
+       "old": "00 00",
+       "new": "d2 04"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 485,
+       "width": 2,
+       "expected": "d2 04",
+       "seen": "d2 04",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "zhenfaexp": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 487,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 487,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "boji": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1234,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 491,
+       "width": 2,
+       "old": "00 00",
+       "new": "d2 04"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 491,
+       "width": 2,
+       "expected": "d2 04",
+       "seen": "d2 04",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "bojiexp": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 493,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 493,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "shanduo": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1234,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 497,
+       "width": 2,
+       "old": "00 00",
+       "new": "d2 04"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 497,
+       "width": 2,
+       "expected": "d2 04",
+       "seen": "d2 04",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "shanduoexp": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 499,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 499,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "chaizhao": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1234,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 509,
+       "width": 2,
+       "old": "00 00",
+       "new": "d2 04"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 509,
+       "width": 2,
+       "expected": "d2 04",
+       "seen": "d2 04",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "chaizhaoexp": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 511,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 511,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "anqi": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1234,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 503,
+       "width": 2,
+       "old": "00 00",
+       "new": "d2 04"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 503,
+       "width": 2,
+       "expected": "d2 04",
+       "seen": "d2 04",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "anqiexp": {
+   "kind": "structural",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 505,
+       "width": 1,
+       "old": "00",
+       "new": "01"
+      }
+     ]
+    }
+   ]
+  },
+  "dushushizi": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1234,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 515,
+       "width": 2,
+       "old": "00 00",
+       "new": "d2 04"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 515,
+       "width": 2,
+       "expected": "d2 04",
+       "seen": "d2 04",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "dushushiziexp": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 517,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 517,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "jiaoyi": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1234,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 521,
+       "width": 2,
+       "old": "00 00",
+       "new": "d2 04"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 521,
+       "width": 2,
+       "expected": "d2 04",
+       "seen": "d2 04",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "jiaoyiexp": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 523,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 523,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "ysgengu": {
+   "kind": "not-in-stream"
+  },
+  "yswuxing": {
+   "kind": "not-in-stream"
+  },
+  "ysbili": {
+   "kind": "not-in-stream"
+  },
+  "ysjimin": {
+   "kind": "not-in-stream"
+  },
+  "zigong": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 57,
+     "changes": [
+      {
+       "frame": 1,
+       "opcode": "0x1e",
+       "offset": 247,
+       "width": 1,
+       "old": "00",
+       "new": "39"
+      }
+     ],
+     "check": [
+      {
+       "frame": 1,
+       "offset": 247,
+       "width": 1,
+       "expected": "39",
+       "seen": "39",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  },
+  "neidanshuxing": {
+   "kind": "not-in-stream"
+  },
+  "neidandengji": {
+   "kind": "not-in-stream"
+  },
+  "neidanzhi": {
+   "kind": "not-in-stream"
+  },
+  "zongxiaofei": {
+   "kind": "structural",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1,
+     "changes": [
+      {
+       "frame": 9,
+       "opcode": "0x14",
+       "offset": 13,
+       "width": 1,
+       "old": "30",
+       "new": "31"
+      }
+     ]
+    }
+   ]
+  },
+  "shengwang": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 1234567890,
+     "changes": [
+      {
+       "frame": 18,
+       "opcode": "0xa9",
+       "offset": 1,
+       "width": 5,
+       "old": "00 00 00 00 00",
+       "new": "d2 02 96 49 01"
+      }
+     ],
+     "check": [
+      {
+       "frame": 18,
+       "offset": 1,
+       "width": 5,
+       "expected": "d2 02 96 49 00",
+       "seen": "d2 02 96 49 01",
+       "identity": false
+      }
+     ]
+    }
+   ]
+  },
+  "xueshidian": {
+   "kind": "validate",
+   "orig": "0",
+   "trials": [
+    {
+     "value": 305419896,
+     "changes": [
+      {
+       "frame": 18,
+       "opcode": "0xa9",
+       "offset": 6,
+       "width": 4,
+       "old": "00 00 00 00",
+       "new": "78 56 34 12"
+      }
+     ],
+     "check": [
+      {
+       "frame": 18,
+       "offset": 6,
+       "width": 4,
+       "expected": "78 56 34 12",
+       "seen": "78 56 34 12",
+       "identity": true
+      }
+     ]
+    }
+   ]
+  }
+ }
+}
