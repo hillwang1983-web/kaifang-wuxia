@@ -12,8 +12,10 @@
   --gold: #D8B66A;
   --cin: #E0603F;
   --jade: #5FB3A1;
-  --paper-ink: #2A2018;
-  --paper-mute: #6A5A48;
+  --paper-ink: #EFE6D2;
+  --paper-mute: #B8AACE;
+  --plaque: #F0E2C4;
+  --plaque-ink: #3B2F28;
   --serif: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
   --sans: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   --pix: 'Silkscreen', 'Noto Sans SC', monospace;
@@ -45,22 +47,29 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 #stick { position: absolute; width: 126px; height: 126px; margin: -63px 0 0 -63px; background: var(--iStick) center / 100% 100% no-repeat; image-rendering: pixelated; pointer-events: none; z-index: 2; }
 #knob { position: absolute; left: 36px; top: 36px; width: 54px; height: 54px; background: var(--iKnob) center / 100% 100% no-repeat; image-rendering: pixelated; }
 
-#status { position: absolute; z-index: 2; left: calc(10px + var(--sl)); top: 8px; width: 272px; display: flex; gap: 8px; align-items: center; padding: 1px 4px; pointer-events: none; }
-.portrait { width: 54px; height: 54px; flex: none; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; }
-.portrait canvas { width: 48px; height: 36px; }
-.bars { flex: 1; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-.brow { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--muted); }
-.brow > span { width: 28px; flex: none; }
-.brow .pnum { font-size: 14px; color: var(--ink); min-width: 32px; text-align: right; }
+/* 左上只留两条细血条，数字压在条里（借鉴 Sephiria 的极简 HUD） */
+#status { position: absolute; z-index: 2; left: calc(10px + var(--sl)); top: 8px; width: 232px; display: flex; gap: 8px; align-items: center; padding: 0 2px; pointer-events: none; }
+.portrait { display: none; }
+.bars { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.brow { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--muted); }
+.brow > span { width: 26px; flex: none; }
+.brow .pbar { height: 18px; }
+.brow .pbar.mp { height: 15px; }
+.pbar > b { position: absolute; inset: 0; z-index: 1; display: flex; align-items: center; justify-content: center; font: 700 11px var(--pix); color: #FFFFFF; text-shadow: 1px 0 #0E0B09, -1px 0 #0E0B09, 0 1px #0E0B09, 0 -1px #0E0B09; }
+#banner { position: absolute; z-index: 4; left: 50%; top: 12px; transform: translateX(-50%); padding: 3px 22px; font: 700 18px var(--serif); letter-spacing: 6px; color: var(--plaque-ink); background: var(--plaque); border: 3px solid #0E0B09; box-shadow: inset 0 -3px 0 #C9B48E; pointer-events: none; white-space: nowrap; transition: opacity 0.5s; }
+#banner::before, #banner::after { content: ""; position: absolute; top: -3px; bottom: -3px; width: 8px; background: #8A5E3C; border: 3px solid #0E0B09; box-shadow: inset 0 3px 0 #B07C50; }
+#banner::before { left: -17px; }
+#banner::after { right: -17px; }
+#banner.out { opacity: 0; }
 .pbar { flex: 1; height: 15px; background: #1C1612; border: 3px solid #0E0B09; box-sizing: border-box; position: relative; overflow: hidden; }
 .pbar > i { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: var(--c); box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.28), inset 0 -3px 0 rgba(0, 0, 0, 0.25); }
 .pbar > i::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 12px, rgba(0, 0, 0, 0.4) 12px 15px); }
 .pbar.thin { height: 9px; }
 
-#quest { position: absolute; z-index: 2; left: calc(10px + var(--sl)); top: 90px; width: 272px; display: flex; flex-direction: column; gap: 2px; padding: 0 4px; pointer-events: none; }
-.eyebrow { font-size: 12px; color: var(--gold); font-weight: 700; letter-spacing: 1px; }
-#qt { font: 700 17px/1.35 var(--serif); text-wrap: balance; }
-#qs, #qo { font-size: 13px; color: var(--muted); line-height: 1.45; }
+#quest { position: absolute; z-index: 2; left: calc(10px + var(--sl)); top: 70px; width: 232px; display: flex; flex-direction: column; gap: 1px; padding: 0 2px; pointer-events: none; }
+.eyebrow { font-size: 11px; color: var(--gold); font-weight: 700; letter-spacing: 1px; }
+#qt { font: 700 15px/1.35 var(--serif); text-wrap: balance; }
+#qs, #qo { font-size: 12px; color: var(--muted); line-height: 1.45; }
 #qs.echo { color: var(--gold); }
 
 #res { position: absolute; z-index: 2; right: calc(10px + var(--sr)); top: 8px; display: flex; gap: 6px; align-items: center; }
@@ -106,8 +115,8 @@ button.chip, .sq { cursor: pointer; }
 #dFace { width: 72px; height: 72px; flex: none; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; }
 #dFace canvas { width: 64px; height: 48px; }
 #dBody { display: flex; flex-direction: column; gap: 6px; min-width: 0; overflow-y: auto; }
-#dWho { font: 700 19px var(--serif); }
-#dWho small { font: 500 13px var(--sans); color: var(--paper-mute); margin-left: 8px; }
+#dWho { align-self: flex-start; font: 700 17px var(--serif); color: var(--plaque-ink); background: var(--plaque); padding: 1px 12px; border: 3px solid #0E0B09; box-shadow: inset 0 -3px 0 #C9B48E; }
+#dWho small { font: 500 12px var(--sans); color: #6A5A48; margin-left: 8px; }
 #dText { font: 700 18px/1.65 var(--serif); }
 #dNote { margin-top: auto; font-size: 13px; color: var(--paper-mute); font-weight: 700; line-height: 1.5; }
 #dOpts { width: min(360px, 46%); flex: none; display: flex; flex-direction: column; gap: 4px; justify-content: center; overflow-y: auto; }
@@ -119,9 +128,9 @@ button.chip, .sq { cursor: pointer; }
 .lh b { font: 700 18px var(--serif); }
 #logx { width: 48px; height: 48px; }
 #logl { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 6px; font-size: 14px; line-height: 1.55; font-weight: 500; }
-#logl li::marker { color: #9A6A3A; }
+#logl li::marker { color: var(--gold); }
 .empty { font-size: 14px; color: var(--paper-mute); }
-.sec { margin-top: 12px; padding-top: 10px; border-top: 3px solid #B49C74; display: flex; flex-direction: column; gap: 8px; }
+.sec { margin-top: 12px; padding-top: 10px; border-top: 3px solid #4A3F63; display: flex; flex-direction: column; gap: 8px; }
 .sec b { font: 700 16px var(--serif); }
 #rec { margin: 0; white-space: pre-wrap; font: 500 13px/1.6 var(--sans); color: var(--paper-ink); }
 .mini { height: 48px; padding: 0 10px; background: none; font: 700 14px var(--sans); cursor: pointer; }
@@ -133,7 +142,7 @@ button.chip, .sq { cursor: pointer; }
 .card h2 { margin: 0; font: 700 26px/1.3 var(--serif); }
 .card p { margin: 0; font-size: 15px; line-height: 1.7; max-width: 36em; font-weight: 500; }
 .card .sub { color: var(--gold); font: 700 12px var(--pix); letter-spacing: 2px; text-transform: uppercase; }
-.px-paper .sub { color: #9A6A3A; }
+.px-paper .sub { color: var(--gold); }
 .cast { width: 100%; max-width: 440px; height: auto; aspect-ratio: 156 / 24; }
 .keys { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; font-size: 14px; line-height: 1.55; color: var(--muted); margin: 0; }
 .keys dt { color: var(--ink); font-weight: 700; }
@@ -142,7 +151,7 @@ button.chip, .sq { cursor: pointer; }
 .big { height: 58px; padding: 0 22px; font: 700 18px var(--sans); cursor: pointer; background: none; }
 .ghost { height: 58px; padding: 0 20px; font: 700 16px var(--sans); cursor: pointer; background: none; }
 .hint { font-size: 13px; color: var(--muted); }
-.echo-l { color: #8A4A2A !important; font-family: var(--serif) !important; font-weight: 700 !important; }
+.echo-l { color: #F2C66D !important; font-family: var(--serif) !important; font-weight: 700 !important; }
 .sum { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; font-size: 15px; margin: 0; }
 .sum dt { color: var(--paper-mute); font-weight: 500; }
 .sum dd { margin: 0; font-weight: 700; }
@@ -160,8 +169,8 @@ button.chip, .sq { cursor: pointer; }
   <div id="status" class="px-dark">
     <div class="portrait px-dark"><canvas id="myFace" width="16" height="12"></canvas></div>
     <div class="bars">
-      <div class="brow"><span>生命</span><div class="pbar" style="--c:#D9553A"><i id="hpf"></i></div><b class="pnum" id="hpn">100</b></div>
-      <div class="brow"><span>内力</span><div class="pbar" style="--c:#4FA898"><i id="mpf"></i></div><b class="pnum" id="mpn">100</b></div>
+      <div class="brow"><span>生命</span><div class="pbar" style="--c:#D9553A"><i id="hpf"></i><b id="hpn">100</b></div></div>
+      <div class="brow"><span>内力</span><div class="pbar mp" style="--c:#4A86C8"><i id="mpf"></i><b id="mpn">100</b></div></div>
     </div>
   </div>
 
@@ -182,6 +191,7 @@ button.chip, .sq { cursor: pointer; }
   <div id="perf" hidden></div>
 
   <div id="toasts" aria-live="polite"></div>
+  <div id="banner" hidden></div>
 
   <button id="interact" class="px-gold" type="button" hidden><img class="ic s" data-ic="talk" alt=""><span id="interactT"></span></button>
 
@@ -389,7 +399,7 @@ for (const ch of CHARS) {
   }
 }
 // 兵器：手里的刀剑单独画，跟着出招角度转
-const WEAPON = { xia: { len: 12, col: '#E8E2D2', hilt: '#C9A45C' }, bandit: { len: 8, col: '#C9C2B2', hilt: '#3B2F28' }, boss: { len: 15, col: '#D8D2C2', hilt: '#3B2F28', wide: true } };
+const WEAPON = { xia: { len: 15, col: '#E8E2D2', hilt: '#C9A45C' }, bandit: { len: 8, col: '#C9C2B2', hilt: '#3B2F28' }, boss: { len: 15, col: '#D8D2C2', hilt: '#3B2F28', wide: true } };
 const WALK = ['w1', 'idle', 'w2', 'idle'];
 const dirOf = (a) => { const c = Math.cos(a), s = Math.sin(a); return c > 0.7 ? 'right' : c < -0.7 ? 'left' : s > 0 ? 'down' : 'up'; };
 function drawChar(g, id, dir, frame, x, y, o) {
@@ -545,11 +555,12 @@ function stickBase() {
   return 'url(' + c.toDataURL() + ')';
 }
 const rs = document.documentElement.style;
-rs.setProperty('--fDark', frameImg('#5A4A3C', '#3B2F28', '#241C17', 'rgba(20,16,13,0.9)'));
-rs.setProperty('--fPaper', frameImg('#B98A5A', '#8A5E3C', '#5E3E26', '#EADFC4'));
-rs.setProperty('--fGold', frameImg('#F0D78F', '#D8B66A', '#9A7A3A', 'rgba(26,20,15,0.94)'));
-rs.setProperty('--fOpt', frameImg('#D6C4A0', '#B49C74', '#86704E', '#F3EAD6'));
-rs.setProperty('--fOptSel', frameImg('#F0D78F', '#D8B66A', '#9A7A3A', '#F7EEDA'));
+// 面板统一用深紫灰（借鉴 Sephiria 的菜单底色），选中项金框，地名和说话人用米色牌子
+rs.setProperty('--fDark', frameImg('#6B5E8A', '#4A3F63', '#2A2340', 'rgba(28,23,42,0.9)'));
+rs.setProperty('--fPaper', frameImg('#6B5E8A', '#4A3F63', '#2A2340', 'rgba(33,27,49,0.97)'));
+rs.setProperty('--fGold', frameImg('#F0D78F', '#D8B66A', '#9A7A3A', 'rgba(33,27,49,0.95)'));
+rs.setProperty('--fOpt', frameImg('#5A4F78', '#3B3352', '#231D33', '#2C2542'));
+rs.setProperty('--fOptSel', frameImg('#F0D78F', '#D8B66A', '#9A7A3A', '#3A3150'));
 rs.setProperty('--bRed', roundBtn(32, '#E0603F', '#A8402C'));
 rs.setProperty('--bJade', roundBtn(26, '#5FB3A1', '#3F8576'));
 rs.setProperty('--bGray', roundBtn(24, '#BDB2A0', '#7E7466'));
@@ -659,6 +670,10 @@ const MAP = (() => {
   }
   return m;
 })();
+// 台地：山道两侧和匪营背后抬高的草坡，南面露出土崖（地块坐标：列、行、宽、高）。人走不上去
+const PLATS = [[22, 0, 8, 2], [26, 17, 8, 2], [44, 0, 6, 2]];
+const CLIFF = 10;
+for (const [c, r, w, h] of PLATS) OBST.push({ x: c * 16 * U, y: r * 16 * U, w: w * 16 * U, h: (h * 16 + (r + h < MAP_H ? CLIFF : 0)) * U });
 const kindAt = (c, r) => (r < 0 || r >= MAP_H || c < 0 || c >= MAP_W ? (r < 3 && c >= -6 && c <= 17 ? (r === 2 ? 'shore' : 'water') : 'dark') : CODE[MAP[r][c]][0]);
 function tileAt(c, r, wf) {
   let code;
@@ -689,6 +704,28 @@ const MAPBG = [0, 1, 2].map((f) => {
       } else if (k === 'dirt' && nk === 'camp') {
         for (let i = 0; i < 16; i += 2) { const x = dc === 0 ? x0 + i + (r % 2) : dc < 0 ? x0 : x0 + 15, y = dr === 0 ? y0 + i : dr < 0 ? y0 : y0 + 15; P(g, x, y, '#6C5843'); }
       }
+    }
+  }
+  // 物件的落地阴影（静态，画进底图）
+  const shadowOf = { tree: [15, 36, 11, 3], tree2: [15, 36, 11, 3], rock: [13, 14, 11, 3], tent: [18, 28, 16, 3], house: [26, 48, 24, 3], home: [26, 48, 24, 3], forge: [26, 48, 24, 3], barrel: [6, 13, 6, 2], cart: [16, 19, 15, 2], board: [11, 23, 9, 2] };
+  for (const [k, x, y] of PROPS) { const s = shadowOf[k]; if (s) fe(g, x + s[0], y + s[1], s[2], s[3], 'rgba(10,8,20,0.22)'); }
+  // 台地：顶面草地稍亮，北沿一道亮边，南面土崖分层
+  const prnd = RNG(707);
+  for (const [pc, pr, pw, ph] of PLATS) {
+    const X = pc * 16, Y = pr * 16, Wd = pw * 16, Ht = ph * 16;
+    R(g, X, Y, Wd, Ht, 'rgba(255,250,210,0.07)');
+    for (let i = 0; i < Wd * Ht / 10; i++) P(g, X + ((prnd() * Wd) | 0), Y + ((prnd() * Ht) | 0), prnd() < 0.5 ? '#6F8F50' : '#3E5634');
+    if (Y > 0) { R(g, X, Y, Wd, 1, '#26341F'); R(g, X, Y + 1, Wd, 1, '#86A85E'); }
+    R(g, X, Y, 1, Ht, '#26341F'); R(g, X + Wd - 1, Y, 1, Ht, '#26341F');
+    if (pr + ph < MAP_H) {
+      const fy = Y + Ht;
+      R(g, X, fy - 1, Wd, 1, '#86A85E');
+      R(g, X, fy, Wd, CLIFF, '#7A5A3E');
+      for (let yy = 2; yy < CLIFF; yy += 3) R(g, X, fy + yy, Wd, 1, '#664A33');
+      for (let i = 0; i < Wd / 5; i++) { const cx = X + ((prnd() * Wd) | 0); R(g, cx, fy + 1, 1, 2 + ((prnd() * 5) | 0), '#5A4030'); }
+      R(g, X, fy, Wd, 1, '#2A1F16'); R(g, X, fy + CLIFF - 2, Wd, 2, '#3E2C20');
+      R(g, X, fy, 1, CLIFF, '#2A1F16'); R(g, X + Wd - 1, fy, 1, CLIFF, '#2A1F16');
+      fe(g, X + Wd / 2, fy + CLIFF + 2, Wd / 2, 2, 'rgba(10,8,20,0.2)');
     }
   }
   return c;
@@ -818,6 +855,7 @@ function strikeEnemies(range, half, dmg, isSkill, big) {
     e.hp -= dmg; e.flash = 0.12;
     fxText(e.x, e.y - 66, '-' + dmg, big || isSkill ? '#F2D27A' : '#EFE6D2', true);
     burst(e.x, e.y - 30, big ? 8 : 5, ['#FFFFFF', '#F2D27A', '#F2A03C'], 140, 40);
+    G.fx.push({ type: 'streak', x: e.x, y: e.y - 30, a: p.face + (Math.random() - 0.5) * 0.8, len: big || isSkill ? 22 : 15, t: 0, dur: 0.14 });
     const d = Math.hypot(e.x - p.x, e.y - p.y) || 1, kb = big ? 26 : isSkill ? 16 : 8;
     if (K.flinch || e.state === 'idle') move(e, ((e.x - p.x) / d) * kb, ((e.y - p.y) / d) * kb, K.r);
     if (e.state === 'idle') e.state = 'chase';
@@ -1501,14 +1539,46 @@ function updFx(dt) {
 // ---------------------------------------------------------------- 绘制：先画到低分辨率缓冲，再整数倍放大
 let DPR = 1, VW = 0, VH = 0, Z = 3;
 const BUF = cnv(1, 1), bg = BUF.getContext('2d');
+const LBUF = cnv(1, 1), lgc = LBUF.getContext('2d');
 const AMB = [];
+// 光照：越往山里越暗（青石渡傍晚、山道薄暮、匪营入夜），灯笼、营火、铁匠铺和人物身边各有一圈暖光
+function ambientAt(px) { return px < 240 ? 0.1 : px < 300 ? 0.1 + ((px - 240) / 60) * 0.14 : px < 560 ? 0.24 : px < 640 ? 0.24 + ((px - 560) / 80) * 0.26 : 0.5; }
+function lightPass(g, ox, oy, BW, BH, t) {
+  const lights = [];
+  for (const [k, x, y] of PROPS) if (k === 'lantern') lights.push({ x: x + 4, y: y + 4, r: 30, cut: 0.95, col: [255, 170, 90], a: 0.2 + 0.03 * Math.sin(t * 7 + x) });
+  lights.push({ x: FIREPOS[0] + 8, y: FIREPOS[1] + 10, r: 58 + Math.sin(t * 11) * 2, cut: 1, col: [255, 150, 70], a: 0.32 });
+  lights.push({ x: 153, y: 222, r: 22, cut: 0.7, col: [255, 140, 80], a: 0.16 });
+  lights.push({ x: Math.round(G.p.x / U), y: Math.round(G.p.y / U) - 8, r: 36, cut: 0.6 });
+  for (const e of G.enemies) if (e.alive && e.state === 'windup') lights.push({ x: e.x / U, y: e.y / U - 6, r: 26, cut: 0.5, col: [255, 80, 50], a: 0.28 * clamp(e.t / e.atk.tele, 0.3, 1) });
+  if (G.f.asked && !G.inv.med && G.f.branch === null) HERBS.forEach((h, i) => { if (!G.f.herbs[i]) lights.push({ x: h.x / U, y: h.y / U - 5, r: 14, cut: 0.5, col: [127, 208, 190], a: 0.22 }); });
+  lgc.globalCompositeOperation = 'source-over'; lgc.clearRect(0, 0, BW, BH);
+  const grad = lgc.createLinearGradient(0, 0, BW, 0);
+  for (let i = 0; i <= 8; i++) grad.addColorStop(i / 8, 'rgba(14,10,30,' + ambientAt(ox + (i / 8) * BW).toFixed(3) + ')');
+  lgc.fillStyle = grad; lgc.fillRect(0, 0, BW, BH);
+  lgc.globalCompositeOperation = 'destination-out';
+  for (const L of lights) {
+    const x = L.x - ox, y = L.y - oy; if (x < -L.r || y < -L.r || x > BW + L.r || y > BH + L.r) continue;
+    const rg = lgc.createRadialGradient(x, y, 0, x, y, L.r); rg.addColorStop(0, 'rgba(0,0,0,' + L.cut + ')'); rg.addColorStop(1, 'rgba(0,0,0,0)');
+    lgc.fillStyle = rg; lgc.fillRect(x - L.r, y - L.r, L.r * 2, L.r * 2);
+  }
+  g.drawImage(LBUF, 0, 0);
+  g.globalCompositeOperation = 'lighter';
+  for (const L of lights) {
+    if (!L.col) continue;
+    const x = L.x - ox, y = L.y - oy; if (x < -L.r || y < -L.r || x > BW + L.r || y > BH + L.r) continue;
+    const rg = g.createRadialGradient(x, y, 0, x, y, L.r * 0.8); rg.addColorStop(0, 'rgba(' + L.col.join(',') + ',' + L.a.toFixed(3) + ')'); rg.addColorStop(1, 'rgba(' + L.col.join(',') + ',0)');
+    g.fillStyle = rg; g.fillRect(x - L.r, y - L.r, L.r * 2, L.r * 2);
+  }
+  g.globalCompositeOperation = 'source-over';
+}
 let ambT = 0;
 function resize() {
   DPR = Math.min(2, window.devicePixelRatio || 1);
   VW = app.clientWidth; VH = app.clientHeight;
   cv.width = Math.max(1, Math.round(VW * DPR)); cv.height = Math.max(1, Math.round(VH * DPR));
-  Z = clamp(Math.round(VH / 130), 2, 8);
+  Z = clamp(Math.round(VH / 175), 2, 7);
   BUF.width = Math.ceil(VW / Z) + 1; BUF.height = Math.ceil(VH / Z) + 1;
+  LBUF.width = BUF.width; LBUF.height = BUF.height;
   if (stick.id === null) stickHome();
 }
 addEventListener('resize', resize);
@@ -1619,25 +1689,38 @@ function draw(realT) {
     drawChar(g, 'xia', dirOf(p.face), fr, p.x / U, p.y / U, { alpha: blink ? 0.45 : 1, red: p.hurt > 0, dx: ldx, dy: ldy });
     if (!behind) drawWeapon(g, 'xia', p.x / U + ldx, p.y / U + ldy, wang);
     if (sw >= 0) {
-      const r = p.swingKind === 'sk' ? 30 : p.swingKind === 'atk3' ? 23 : 19, col = p.swingKind === 'sk' ? (G.orn === '破势' ? '#F08A6A' : '#7FD0BE') : '#EFE6D2';
-      const lo = -half, hi = -half + sw * half * 2;
-      for (let layer = 0; layer < 3; layer++) {
-        g.fillStyle = layer === 0 ? col : layer === 1 ? 'rgba(239,230,210,0.55)' : 'rgba(239,230,210,0.25)';
-        const rr = r - layer;
-        for (let a = lo; a <= hi; a += 0.05) { const aa = p.combo === 1 && p.swingKind !== 'sk' ? p.face - a : p.face + a; g.fillRect(Math.round(p.x / U + Math.cos(aa) * rr), Math.round(p.y / U - 7 + Math.sin(aa) * rr * 0.8), 1, 1); }
+      // 月牙刀光：比人大一圈，中段最厚、两头收尖，挥完后整体淡出
+      const sk = p.swingKind === 'sk', r = sk ? 36 : p.swingKind === 'atk3' ? 28 : 24, maxT = sk ? 9 : p.swingKind === 'atk3' ? 8 : 6;
+      const edge = sk ? (G.orn === '破势' ? '#F08A6A' : '#7FD0BE') : '#BFD8F2';
+      const lo = -half, hi = -half + Math.min(1, sw * 1.4) * half * 2, fade = sw < 0.7 ? 1 : 1 - (sw - 0.7) / 0.3;
+      const rev = p.combo === 1 && !sk;
+      for (let a = lo; a <= hi; a += 0.025) {
+        const k = (a - lo) / Math.max(0.001, hi - lo), th = Math.max(1, Math.round(maxT * Math.sin(Math.PI * Math.min(1, k)) * fade));
+        const aa = rev ? p.face - a : p.face + a, cx = p.x / U, cy = p.y / U - 7;
+        for (let j = 0; j < th; j++) {
+          g.fillStyle = j === 0 ? edge : j < th - 1 ? 'rgba(255,255,255,' + (0.95 * fade).toFixed(2) + ')' : 'rgba(255,255,255,' + (0.4 * fade).toFixed(2) + ')';
+          const rr = r - j; g.fillRect(Math.round(cx + Math.cos(aa) * rr), Math.round(cy + Math.sin(aa) * rr * 0.8), 1, 1);
+        }
       }
     }
   } });
   items.sort((a, b) => a.y - b.y).forEach((it) => it.d());
   for (const fx of G.fx) if (fx.type === 'pt') { g.globalAlpha = Math.max(0, 1 - fx.t / fx.dur); g.fillStyle = fx.col; g.fillRect(Math.round(fx.x / U), Math.round(fx.y / U), 1, 1); }
   g.globalAlpha = 1;
+  // 命中闪光：两道交叉的黄白光条
+  for (const fx of G.fx) if (fx.type === 'streak') {
+    const k = fx.t / fx.dur, cx = Math.round(fx.x / U), cy = Math.round(fx.y / U), L = fx.len * (0.6 + 0.4 * k);
+    for (const [da, col] of [[0, '#FFF59A'], [1.9, '#F2A03C']]) {
+      const a = fx.a + da, dx = Math.cos(a) * L / 2, dy = Math.sin(a) * L / 2;
+      g.globalAlpha = 1 - k; line(g, cx - dx, cy - dy, cx + dx, cy + dy, col); if (da === 0) line(g, cx - dx, cy - dy + 1, cx + dx, cy + dy + 1, '#FFFFFF');
+    }
+    g.globalAlpha = 1;
+  }
   ambT += 1 / 60;
   if (ambT > 0.4) { ambT = 0; AMB.push({ x: 164 + Math.random() * 2, y: 189, t: 0, dur: 2.2, vx: 2 + Math.random() * 3 }); }
   for (let i = AMB.length - 1; i >= 0; i--) { const a = AMB[i]; a.t += 1 / 60; if (a.t > a.dur) { AMB.splice(i, 1); continue; } const k = a.t / a.dur; g.fillStyle = 'rgba(190,184,172,' + (0.45 * (1 - k)) + ')'; const s = 1 + Math.floor(k * 3); g.fillRect(Math.round(a.x + a.vx * a.t * 3), Math.round(a.y - a.t * 9), s, s); }
-  const flick = 0.12 + 0.04 * Math.sin(t * 7);
-  g.fillStyle = 'rgba(240,140,90,' + flick + ')';
-  for (const [k, x, y] of PROPS) if (k === 'lantern') for (let yy = -7; yy <= 7; yy++) for (let xx = -7; xx <= 7; xx++) if ((xx + yy) % 2 === 0 && xx * xx + yy * yy < 46) g.fillRect(x + 4 + xx, y + 4 + yy, 1, 1);
   g.setTransform(1, 0, 0, 1, 0, 0);
+  lightPass(g, ox, oy, BW, BH, t);
 
   ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.imageSmoothingEnabled = false;
   ctx.fillStyle = '#0E0B09'; ctx.fillRect(0, 0, cv.width, cv.height);
@@ -1681,7 +1764,7 @@ function questText() {
   if (f.asked) return ['取回药包，交给沈青', '采止血草 ' + inv.herb + '/2 交给匪首；或直接动手'];
   return ['取回药包，交给沈青', '药包在山道尽头的匪营'];
 }
-let toastKey = '';
+let toastKey = '', bannerRegion = null, bannerT = 0;
 function hud(dt) {
   const p = G.p, inv = G.inv;
   setStyle($('hpf'), 'width', (p.hp / p.maxHp * 100).toFixed(1) + '%');
@@ -1724,6 +1807,10 @@ function hud(dt) {
     toastKey = tk; const box = $('toasts'); box.textContent = '';
     for (const t of G.toasts) { const d = document.createElement('div'); d.className = 'toast px-dark'; d.textContent = t.text; box.appendChild(d); }
   }
+  // 进入新区域时，顶部弹出米色地名牌，停 2.6 秒后淡出
+  const region = p.x < 768 ? '青石渡' : p.x < 1728 ? '山道' : '匪营';
+  if (G.started && !paused() && region !== bannerRegion) { bannerRegion = region; bannerT = 2.6; const b = $('banner'); b.textContent = region; b.hidden = false; b.classList.remove('out'); }
+  if (bannerT > 0) { bannerT -= dt; if (bannerT <= 0) $('banner').classList.add('out'); }
   const pf = $('perf');
   if (G.ui.perf) { const ps = perfStats(); pf.hidden = false; setText('perf', ps ? Math.round(ps.fps) + ' FPS · P95 ' + ps.p95.toFixed(1) + 'MS · >100MS ' + ps.over100 : '...'); } else pf.hidden = true;
 }
