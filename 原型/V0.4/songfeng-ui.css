@@ -57,6 +57,9 @@ button:focus-visible { outline:3px solid #f0db9e; outline-offset:3px; }
 .eyebrow { font-size:10px; color:#e4cd92; letter-spacing:1px; }
 #qt { font:700 14px/1.4 var(--serif); }
 #qs,#qo { font-size:11px; line-height:1.5; color:#e0e4c8; }
+#quest { pointer-events:auto; cursor:pointer; }
+#quest.collapsed { padding-top:5px; padding-bottom:5px; }
+#quest.collapsed #qs,#quest.collapsed #qo { display:none; }
 #region { top:calc(15px + var(--st)); padding:0; border:0; background:none; text-shadow:0 2px 3px #163322; }
 #regionName { font:700 21px var(--serif); letter-spacing:4px; }
 #regionHint { display:block; font-size:10px; margin-top:4px; color:#e0e4c6; }
