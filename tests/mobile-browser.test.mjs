@@ -160,3 +160,43 @@ test('touch attacks stay in place without stick input, including after releasing
   await tapAttack(3);
   assert.deepEqual(await pos(), released, 'attacks after releasing the stick keep no leftover movement');
 });
+
+test('double taps on HUD info under the minimap are blocked from zooming without swallowing single taps or button clicks (#9)', async t => {
+  const context = await browser.newContext({ viewport: { width: 844, height: 390 }, isMobile: true, hasTouch: true });
+  t.after(() => context.close()); const page = await context.newPage();
+  await page.goto(base); await page.locator('#bStart').tap();
+  await page.evaluate(() => {
+    window.tapLog = [];
+    addEventListener('touchend', e => tapLog.push(e.defaultPrevented));
+    addEventListener('dblclick', e => tapLog.push('dbl:' + e.defaultPrevented));
+  });
+  const cdp = await context.newCDPSession(page);
+  const center = async (selector) => {
+    const b = await page.locator(selector).first().boundingBox(), x = b.x + b.width / 2, y = b.y + b.height / 2;
+    assert.ok(await page.evaluate(([s, x, y]) => document.elementFromPoint(x, y)?.closest(s) !== null, [selector, x, y]), selector + ' is the tap target');
+    return { x, y };
+  };
+  const tap = async (p, id) => {
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ id, ...p }] });
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+  };
+  const scale = await page.evaluate(() => visualViewport.scale);
+  // 铜钱信息条：真实触摸，单击放行、快速的第二下被拦
+  const chip = await center('#res .chip:not(button)');
+  await page.waitForTimeout(500); await page.evaluate(() => { tapLog.length = 0; });
+  await tap(chip, 1); await page.waitForTimeout(500); await tap(chip, 2); await page.waitForTimeout(80); await tap(chip, 3); await page.waitForTimeout(150);
+  assert.deepEqual(await page.evaluate(() => tapLog.filter(v => typeof v === 'boolean')), [false, false, true], 'coin chip');
+  // 小地图正下方 .songfeng-tools 的空白边距只有约 10px，真实触摸会被浏览器吸附到小地图按钮，这里直接在该元素上派发
+  const gap = await page.evaluate(async () => {
+    const el = document.querySelector('.songfeng-tools'), end = () => { const e = new TouchEvent('touchend', { bubbles: true, cancelable: true }); el.dispatchEvent(e); return e.defaultPrevented; };
+    await new Promise(r => setTimeout(r, 500)); const first = end(); await new Promise(r => setTimeout(r, 80)); return [first, end()];
+  });
+  assert.deepEqual(gap, [false, true], 'gap under the minimap');
+  assert.equal(await page.evaluate(() => visualViewport.scale), scale);
+  const sound = await center('#bSound'), before = await page.locator('#bSound span').innerText();
+  await tap(sound, 4); await page.waitForTimeout(80); await tap(sound, 5); await page.waitForTimeout(150);
+  assert.equal(await page.locator('#bSound span').innerText(), before, 'both quick taps on a button still click (toggled on then off)');
+  await page.evaluate(() => { tapLog.length = 0; document.querySelector('.songfeng-tools').dispatchEvent(new MouseEvent('dblclick', { bubbles: true, cancelable: true })); });
+  assert.deepEqual(await page.evaluate(() => tapLog), ['dbl:true']);
+  await page.locator('#bMap').tap(); assert.equal(await page.locator('#atlas').isVisible(), true);
+});
