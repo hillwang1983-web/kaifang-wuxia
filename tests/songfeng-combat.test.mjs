@@ -72,7 +72,7 @@ test('移动中挥剑固定本剑起点，闪避取消未完成的挥剑', async
   });
   await page.keyboard.down('d');
   const result = await page.evaluate(() => {
-    const d = __duko; d.attack(); d.step(.01, 18);
+    const d = __duko; Object.assign(d.G.p, { x: 900, y: 870 }); d.attack(); d.step(.01, 18);
     const before = { hp: d.G.enemies[0].hp, x: d.G.p.x, anchor: d.G.swings[0].x };
     d.dodge(); return { ...before, swings: d.G.swings.length, dodge: d.G.p.dodge };
   });
