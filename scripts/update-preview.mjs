@@ -6,9 +6,9 @@ import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 
-const assets = ['index.html', 'chapter.js', 'playtest.js', 'game.js'];
-// 素材图（Ninja Adventure）目录：服务启动时要读取它，发布时整目录带上
-const artDir = 'assets/na';
+const assets = ['index.html', 'chapter.js', 'playtest.js', 'game.js', 'songfeng-ui.css', 'combat-render.mjs', 'songfeng-render.mjs', 'songfeng-feedback.mjs', 'world-art.mjs'];
+// 发布目录包含历史CC0素材与松风原创图集，保持旧版可回退。
+const artDirs = ['assets/na', 'assets/songfeng'];
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const readJSON = path => JSON.parse(readFileSync(path, 'utf8'));
@@ -25,17 +25,17 @@ export async function withLock(home, task) {
 
 export async function testThenPublish(test, publish) { await test(); return publish(); }
 
-// 组装发布目录：public/ 放四个游戏资源和素材目录，lib/ 放服务库，server.mjs 是启动文件；返回每个文件的哈希
+// 组装发布目录：public/ 放游戏资源与美术目录，lib/ 放服务库；返回每个文件的哈希
 export function stageRelease(source, stage, commit) {
   mkdirSync(join(stage, 'public')); mkdirSync(join(stage, 'lib'));
   for (const name of assets) copyFileSync(join(source, '原型/V0.4', name), join(stage, 'public', name));
-  cpSync(join(source, '原型/V0.4', artDir), join(stage, 'public', artDir), { recursive: true });
+  for(const artDir of artDirs)cpSync(join(source, '原型/V0.4', artDir), join(stage, 'public', artDir), { recursive: true });
   copyFileSync(join(source, 'portal-integration/server.mjs'), join(stage, 'lib/server.mjs'));
   writeFileSync(join(stage, 'server.mjs'), `import { createQingshiServer } from './lib/server.mjs';\nconst server = createQingshiServer(new URL('./public/', import.meta.url), { commit: '${commit}' });\nserver.once('error', error => { console.error(error.message); process.exitCode = 1; });\nserver.listen(8793, '127.0.0.1');\nfor (const signal of ['SIGTERM', 'SIGINT']) process.once(signal, () => server.close());\n`);
   // A source without commit-aware health cannot produce a verifiable release.
   if (!readFileSync(join(stage, 'lib/server.mjs'), 'utf8').includes('release.commit')) throw Error('远端版本缺少提交号健康检查支持，请先合入发布脚本 PR');
-  const art = readdirSync(join(stage, 'public', artDir), { recursive: true, withFileTypes: true }).filter(entry => entry.isFile())
-    .map(entry => 'public/' + relative(join(stage, 'public'), join(entry.parentPath, entry.name)).split(sep).join('/')).sort();
+  const art = artDirs.flatMap(artDir=>readdirSync(join(stage,'public',artDir),{recursive:true,withFileTypes:true}).filter(entry=>entry.isFile())
+    .map(entry=>'public/'+relative(join(stage,'public'),join(entry.parentPath,entry.name)).split(sep).join('/'))).sort();
   return Object.fromEntries(['server.mjs', 'lib/server.mjs', ...assets.map(name => 'public/' + name), ...art].map(name => [name, hash(readFileSync(join(stage, name)))]));
 }
 
@@ -67,12 +67,13 @@ export async function verifyLocal(manifest, base = 'http://127.0.0.1:8793') {
   if (response.status !== 200) throw Error('本机健康接口不是 200');
   const health = await response.json();
   if (health.service !== 'qingshi-v04' || (manifest.commit ? health.commit !== manifest.commit : health.version !== manifest.version)) throw Error('本机运行版本不符');
-  for (const name of assets) {
+  // 回退到只有四个资源的旧版时，新增模块按该次发布清单决定是否校验。
+  for (const name of assets.filter((name,i)=>i<4||manifest.files?.['public/'+name]!==undefined)) {
     const response = await fetch(base + '/qingshi-v04/' + (name === 'index.html' ? '' : name), { signal: AbortSignal.timeout(3000) });
     if (response.status !== 200 || hash(Buffer.from(await response.arrayBuffer())) !== manifest.files['public/' + name]) throw Error('资源哈希不符：' + name);
   }
   for (const [path, digest] of Object.entries(manifest.files || {})) {
-    if (!path.startsWith('public/' + artDir + '/')) continue;
+    if (!artDirs.some(dir=>path.startsWith('public/'+dir+'/'))) continue;
     const response = await fetch(base + '/qingshi-v04/' + encodeURI(path.slice('public/'.length)), { signal: AbortSignal.timeout(3000) });
     if (response.status !== 200 || hash(Buffer.from(await response.arrayBuffer())) !== digest) throw Error('素材哈希不符：' + path.slice('public/'.length));
   }
@@ -109,7 +110,7 @@ async function main() {
     try {
       const archive = execFileSync('git', ['archive', commit], { cwd: repo, maxBuffer: 64 * 1024 * 1024 });
       execFileSync('tar', ['-xf', '-', '-C', source], { input: archive });
-      for (const file of ['package-lock.json', 'portal-integration/server.mjs', ...assets.map(name => '原型/V0.4/' + name), '原型/V0.4/' + artDir]) {
+      for (const file of ['package-lock.json', 'portal-integration/server.mjs', ...assets.map(name => '原型/V0.4/' + name), ...artDirs.map(dir=>'原型/V0.4/'+dir)]) {
         if (!existsSync(join(source, file))) throw Error('该分支缺少 V0.4 发布文件：' + file);
       }
       await testThenPublish(async () => {

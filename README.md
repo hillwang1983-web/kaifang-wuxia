@@ -6,7 +6,7 @@
 |---|---|
 | `服务端/` | 网金复刻 Python TCP 服务端，进度与命令见其 README |
 | `客户端/` | 原版协议库、WebSocket 网关、网页客户端及逆向工具 |
-| `原型/V0.4/` | 唯一试玩《青石渡风波》：第一幕《渡口失药》取药，第二幕查账与渡口冲突，三结局、三招选二；画面用 `assets/na/` 里的 Ninja Adventure 素材（CC0）；说明见该目录 README |
+| `原型/V0.4/` | 唯一试玩《青石渡风波》：第一幕《渡口失药》取药，第二幕查账与渡口冲突，三结局、四招选二；采用已确认的松风 clear1 界面、战斗动作与原生像素渲染；场景来源见 `assets/songfeng/`，历史 CC0 素材保留于 `assets/na/`；说明见该目录 README |
 | `武侠开放世界RPG游戏设计总纲_V0.4_草稿.md` | 20–30 分钟验证包的设计草稿，不能据此推定独立章节的完成状态 |
 | `tests/` | 独立 V0.4 章节、试玩记录、浏览器与手机模拟回归 |
 | `portal-integration/` | V0.4 白名单静态服务与 HTTP 测试；不包含线上账号、配置或部署状态 |
@@ -21,7 +21,7 @@
 npm run serve
 ```
 
-打开 http://127.0.0.1:8793/qingshi-v04/ 。此服务只发布四个游戏资源和 `assets/na/` 下的素材，不发布仓库、测试和记录。也可以用任意静态服务打开 `原型/V0.4/index.html`，素材按相对路径读取；素材读不到时退回代码绘制。
+打开 http://127.0.0.1:8793/qingshi-v04/ 。此服务只发布游戏 HTML/JS/MJS/CSS 白名单和 `assets/na/`、`assets/songfeng/` 下的素材，不发布仓库、测试和记录。也可以用任意静态服务打开 `原型/V0.4/index.html`，素材按相对路径读取；场景图集载入失败会明确提示并停止开始按钮，不以旧素材假装载入成功。
 
 ## 统一测试入口
 
@@ -31,7 +31,7 @@ npm run serve
 npm test                  # 章节规则、试玩记录采样、HTTP 资源边界，无浏览器依赖
 npm ci
 npx playwright install chromium
-npm run test:browser      # 六组剧情/恢复/存档失败/正常输入/触控检查 + 九项手机模拟
+npm run test:browser      # 剧情/恢复/存档失败/正常输入/触控、手机模拟与松风战斗/清晰度检查
 npm run test:all          # 上述 V0.4 测试的完整入口
 npm run test:server       # 网金服务端 unittest，环境与资源要求见 服务端/README.md
 ```
@@ -50,7 +50,7 @@ GitHub Actions 对相关 PR 和 main 的变更运行同一个 `npm run test:all`
 npm run update:preview
 ```
 
-默认抓取 `origin/main` 的最新提交，不切换或覆盖当前工作分支。在临时目录按该提交安装锁定依赖、准备 Chromium、运行 `npm run test:all`；只有成功后才备份旧版、发布四个资源、`assets/na/` 素材目录与服务代码、重启青石渡服务并检查提交号和全部资源、素材的哈希。测试失败不发布，发布检查失败自动恢复旧版并以非零状态报错。公网检查覆盖看板健康、登录入口与未登录拦截；不会将这些结果冒充登录后的公网试玩。
+默认抓取 `origin/main` 的最新提交，不切换或覆盖当前工作分支。在临时目录按该提交安装锁定依赖、准备 Chromium、运行 `npm run test:all`；只有成功后才备份旧版、发布九个游戏资源、`assets/na/` 和 `assets/songfeng/` 美术目录与服务代码、重启青石渡服务并检查提交号和全部资源、素材的哈希。测试失败不发布，发布检查失败自动恢复旧版并以非零状态报错。公网检查覆盖看板健康、登录入口与未登录拦截；不会将这些结果冒充登录后的公网试玩。
 
 ```sh
 npm run update:preview -- --check-only   # 只抓取、测试，不发布
@@ -71,4 +71,4 @@ npm run update:preview -- --remote fork --branch codex/preview-update-script
 5. PR 审阅后再合入 main。其他终端随后 fetch 并同步 main；干净的本地主分支可用 `git pull --ff-only`。运行中的部署由独立发布步骤更新，push 不等于上线。
 6. `.remember/`、浏览器存档、账号库、抓包、运行日志、备份和部署包留在各终端。依赖用 `package-lock.json` 与 `npm ci` 还原；原版数据资源按现有文档单独配置，不提交凭证和真实角色数据。
 
-新增或修改任务请先读 `AGENTS.md` 与 `CLAUDE.md`。独立章节的导入基线和文件快照见 `docs/本地V0.4同步清单.json`；其中测试/文档/静态服务为跨终端适配而有后续改动，四个游戏资源保留快照原样。
+新增或修改任务请先读 `AGENTS.md` 与 `CLAUDE.md`。独立章节的导入基线和文件快照见 `docs/本地V0.4同步清单.json`；其中测试/文档/静态服务为跨终端适配而有后续改动，历史快照仍可追溯；2026-10-23 松风 clear1 升级见 `docs/2026-10-23-松风clear1同步验收.md`。

@@ -22,7 +22,7 @@ async (page, base) => {
         const boss=d.G.enemies[2];go(boss);
         if(scenario.startsWith('A-public')){
           d.doAct('fight');
-          for(let n=0;n<40&&!d.G.f.branch;n++){const b=d.G.enemies[2];d.G.p.x=b.x-55;d.G.p.y=b.y;d.G.p.face=0;d.G.p.atkCd=0;d.attack();}
+          for(let n=0;n<40&&!d.G.f.branch;n++){const b=d.G.enemies[2];d.G.p.x=b.x-55;d.G.p.y=b.y;d.G.p.face=0;d.G.p.atkCd=0;d.attack();d.step(.01,50);}
           check(d.G.f.branch==='A','武力取药');
         }else{
           d.doAct('ask');close();for(const h of L.HERBS)go(h);
@@ -41,7 +41,7 @@ async (page, base) => {
           check(d.G.enemies.some(e=>e.final),'不同最终遭遇已生成');
           for(let n=0;n<150&&!d.G.chapter.finalResolved;n++){
             const e=d.G.enemies.find(e=>e.final&&e.hostile&&e.hp>0);if(!e)break;
-            d.G.p.x=e.x-50;d.G.p.y=e.y;d.G.p.face=0;d.G.p.atkCd=0;d.attack();d.updateChapter(0);
+            d.G.p.x=e.x-50;d.G.p.y=e.y;d.G.p.face=0;d.G.p.atkCd=0;d.attack();d.step(.01,50);d.updateChapter(0);
           }
         }
         check(d.G.chapter.finalResolved,'最终对峙可结算');check(d.G.inv.coin===before+25,'结局只加 25 铜钱');

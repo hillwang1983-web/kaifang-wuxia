@@ -5,21 +5,21 @@ import { fileURLToPath } from 'node:url';
 
 export function createQingshiServer(root, release = {}) {
   const routes = new Map();
-  for (const name of ['index.html', 'chapter.js', 'playtest.js', 'game.js']) {
-    const asset = { body: readFileSync(new URL(name, root)), type: name.endsWith('.js')
-      ? 'text/javascript; charset=utf-8' : 'text/html; charset=utf-8' };
+  for (const name of ['index.html', 'chapter.js', 'playtest.js', 'game.js', 'songfeng-ui.css', 'combat-render.mjs', 'songfeng-render.mjs', 'songfeng-feedback.mjs', 'world-art.mjs']) {
+    const type=name.endsWith('.html')?'text/html; charset=utf-8':name.endsWith('.css')?'text/css; charset=utf-8':'text/javascript; charset=utf-8';
+    const asset = { body: readFileSync(new URL(name, root)), type };
     routes.set('/qingshi-v04/' + name, asset);
     if (name === 'index.html') routes.set('/qingshi-v04/', asset);
   }
-  // 素材图（Ninja Adventure，CC0）：启动时列出 assets/na 下的文件，只发布这份清单
+  // 启动时列出两个美术目录，只发布图片与来源/许可证文件。
   const TYPES = { '.png': 'image/png', '.md': 'text/markdown; charset=utf-8', '.txt': 'text/plain; charset=utf-8' };
   const rootDir = fileURLToPath(root);
-  for (const entry of readdirSync(new URL('assets/na/', root), { recursive: true, withFileTypes: true })) {
+  for(const artDir of ['assets/na/','assets/songfeng/'])for (const entry of readdirSync(new URL(artDir, root), { recursive: true, withFileTypes: true })) {
     if (!entry.isFile()) continue;
     const name = relative(rootDir, join(entry.parentPath, entry.name)).split(sep).join('/'), type = TYPES[extname(name)];
     if (type) routes.set('/qingshi-v04/' + encodeURI(name), { body: readFileSync(new URL(name, root)), type });
   }
-  const health = { body: Buffer.from(JSON.stringify({ ok: true, service: 'qingshi-v04', version: 'V0.4-20261023-na', commit: release.commit || null })), type: 'application/json' };
+  const health = { body: Buffer.from(JSON.stringify({ ok: true, service: 'qingshi-v04', version: 'V0.4-20261023-songfeng-clear1', commit: release.commit || null })), type: 'application/json' };
   routes.set('/healthz', health); routes.set('/qingshi-v04/healthz', health);
   return http.createServer((req, res) => {
     const headers = { 'cache-control': 'no-store', 'x-content-type-options': 'nosniff' };

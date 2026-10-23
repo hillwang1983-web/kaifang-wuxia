@@ -13,7 +13,7 @@ async (page, base) => {
       assert(!d.G.chapter.finalStarted&&d.G.enemies.length===count,'写盘失败仍生成了最终遭遇');
       d.doAct('final_start');assert(d.G.chapter.finalStarted,'无法重试开启最终战');
       const e=d.G.enemies.find(e=>e.final),id=e.id;
-      for(let i=0;i<30&&d.G.enemies.find(x=>x.id===id).hostile;i++){const foe=d.G.enemies.find(x=>x.id===id);Object.assign(d.G.p,{x:foe.x-50,y:foe.y,face:0,atkCd:0});d.attack();}
+      for(let i=0;i<30&&d.G.enemies.find(x=>x.id===id).hostile;i++){const foe=d.G.enemies.find(x=>x.id===id);Object.assign(d.G.p,{x:foe.x-50,y:foe.y,face:0,atkCd:0});d.attack();d.step(.01,50);}
       assert(!d.G.enemies.find(x=>x.id===id).hostile,'无法击退一名拦路人');
       const total=d.G.enemies.length;d.hurtPlayer(1000,d.G.p.x-15,d.G.p.y);d.step(.05,45);
       assert(d.G.p.hp>0&&d.G.f.defeats===1,'败退未恢复');

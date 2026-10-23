@@ -80,6 +80,7 @@ test('发布目录带上素材，按发布结构启动的服务通过全部资�
   const art = Object.keys(files).filter(name => name.startsWith('public/assets/na/'));
   assert.ok(art.includes('public/assets/na/chars/player.png') && art.includes('public/assets/na/tiles/floor.png'), '清单缺少素材');
   assert.ok(existsSync(join(stage, 'public/assets/na/boss/idle.png')));
+  for(const name of ['songfeng-ui.css','combat-render.mjs','songfeng-render.mjs','songfeng-feedback.mjs','world-art.mjs','assets/songfeng/world-atlas.png'])assert.ok(files['public/'+name],name);
   const { createQingshiServer } = await import(pathToFileURL(join(stage, 'lib/server.mjs')).href);
   const server = createQingshiServer(pathToFileURL(join(stage, 'public') + '/'), { commit: 'abc123' });
   server.listen(0, '127.0.0.1'); await once(server, 'listening');
@@ -88,4 +89,15 @@ test('发布目录带上素材，按发布结构启动的服务通过全部资�
   await release.verifyLocal({ commit: 'abc123', files }, base);
   const broken = { ...files, 'public/assets/na/chars/player.png': 'not-the-hash' };
   await assert.rejects(release.verifyLocal({ commit: 'abc123', files: broken }, base), /素材哈希不符：assets\/na\/chars\/player\.png/);
+  await assert.rejects(release.verifyLocal({commit:'abc123',files:{...files,'public/world-art.mjs':'wrong'}},base),/资源哈希不符：world-art/);
+  await assert.rejects(release.verifyLocal({commit:'abc123',files:{...files,'public/assets/songfeng/world-atlas.png':'wrong'}},base),/素材哈希不符：assets\/songfeng/);
+});
+
+test('回退校验兼容只有四个静态资源的旧运行清单',async t=>{
+ const {createServer}=await import('node:http'),{once}=await import('node:events'),{createHash}=await import('node:crypto');
+ const files=Object.fromEntries(['index.html','chapter.js','playtest.js','game.js'].map(name=>['public/'+name,createHash('sha256').update(name).digest('hex')]));
+ const requests=[],server=createServer((req,res)=>{requests.push(req.url);if(req.url==='/healthz'){res.end(JSON.stringify({service:'qingshi-v04',commit:'legacy'}));return;}
+  const name=req.url==='/qingshi-v04/'?'index.html':req.url.slice('/qingshi-v04/'.length);if(files['public/'+name])res.end(name);else res.writeHead(404).end();});
+ server.listen(0,'127.0.0.1');await once(server,'listening');t.after(()=>new Promise(r=>server.close(r)));
+ await release.verifyLocal({commit:'legacy',files},'http://127.0.0.1:'+server.address().port);assert.equal(requests.some(p=>p.endsWith('.mjs')||p.endsWith('.css')),false);
 });
