@@ -278,3 +278,17 @@ button:focus-visible { outline:3px solid #f0db9e; outline-offset:3px; }
   #dFace { width:46px; height:46px; }
   #dFace canvas { width:42px; height:42px; }
 }
+
+/* 开始页在手机横屏放不下（#18）：触屏不显示键盘说明；矮屏收紧间距；仍超高时卡片内滚动，底部渐隐提示还有内容 */
+@media (pointer:coarse) { #start .keys .kb { display:none; } }
+@media (max-height:420px) {
+  .songfeng-intro-heading { padding:14px 20px; }
+  #start h1 { font-size:34px; margin:8px 0; }
+  .songfeng-intro-body { padding:14px 20px; gap:7px; }
+  #start .songfeng-lead { font-size:16px; line-height:1.4; }
+  #start p { font-size:12px; line-height:1.6; }
+  #start .row { gap:8px; }
+  #start .big,#start .ghost { min-height:40px; padding-top:0; padding-bottom:0; }
+}
+#start .songfeng-intro { overscroll-behavior:contain; }
+#start .songfeng-intro.more { -webkit-mask-image:linear-gradient(#000 calc(100% - 28px),#0004); mask-image:linear-gradient(#000 calc(100% - 28px),#0004); }

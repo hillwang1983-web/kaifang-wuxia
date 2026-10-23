@@ -1657,7 +1657,7 @@ function renderSound() {
   $('bSound').innerHTML='音<span>'+{off:'关',blocked:'停',on:'开'}[state]+'</span>';
   $('bSound').dataset.sound=state;
   $('bSound').setAttribute('aria-label',{off:'开启声音',blocked:'声音被浏览器暂停，点此恢复',on:'关闭声音'}[state]);
-  $('bStartSound').textContent=soundEnabled?'声音：开':'声音：关（点此开启）';
+  $('bStartSound').textContent=soundEnabled?'声音：开':'声音：关';
   $('bStartSound').setAttribute('aria-pressed',String(soundEnabled));
   $('soundHint').textContent=soundEnabled?'进入后播放出剑、预警与命中音效；右上角「音」可随时静音。':'当前静音。想听出剑、预警与命中音效，先点「声音」开启。';
 }
@@ -1670,6 +1670,10 @@ function begin() {
 }
 $('bStart').addEventListener('click', begin);
 renderSound();
+// 开始页卡片放不下时底部渐隐，提示可以往下滚（#18）
+const startCard=$('start').querySelector('.songfeng-intro');
+function updateStartMore(){startCard.classList.toggle('more',startCard.scrollHeight-startCard.scrollTop-startCard.clientHeight>4);}
+startCard.addEventListener('scroll',updateStartMore,{passive:true});
 let newArmed = false;
 $('bNew').addEventListener('click', () => {
   if (!newArmed) { newArmed = true; $('bNew').textContent = '确定清空进度？'; return; }
@@ -1680,7 +1684,7 @@ function fullscreenElement(){return document.fullscreenElement||document.webkitF
 function fullscreenRequest(){const el=document.documentElement;return el.requestFullscreen||el.webkitRequestFullscreen||el.webkitRequestFullScreen;}
 function fullscreenHelp(message){
   const hint=$('fullHint');hint.hidden=false;
-  hint.textContent=message+' iPhone / Chrome：点地址栏的「分享」→「添加到主屏幕」，如有「作为 Web App 打开」请保持开启；再从桌面图标打开并横屏使用，可隐藏浏览器地址栏。桌面模式可能需要重新登录，存档不保证与浏览器互通。';
+  hint.textContent=message+' iPhone / Chrome：点地址栏的「分享」→「添加到主屏幕」，如有「作为 Web App 打开」请保持开启；再从桌面图标打开并横屏使用，可隐藏浏览器地址栏。桌面模式可能需要重新登录，存档不保证与浏览器互通。';updateStartMore();
 }
 function syncFullscreen(){
   const standalone=standaloneMode();
@@ -1803,6 +1807,7 @@ function resize() {
   BUF.width=cv.width;BUF.height=cv.height;
   LBUF.width=Math.ceil(VW/Z)+1;LBUF.height=Math.ceil(VH/Z)+1;
   if (stick.id === null) stickHome();
+  updateStartMore();
 }
 addEventListener('resize', resize);
 window.visualViewport?.addEventListener('resize',resize);
