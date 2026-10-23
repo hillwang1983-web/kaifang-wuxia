@@ -30,9 +30,9 @@ export function createCombatAudio(audio) {
   master.connect(limiter); limiter.connect(audio.destination);
   const noise = audio.createBuffer(1, Math.ceil(audio.sampleRate * .3), audio.sampleRate), data = noise.getChannelData(0);
   for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
-  const voice = (source, duration, volume, filter) => {
+  const voice = (source, duration, volume, filter, delay = 0) => {
     if (voices.size >= 32) return;
-    const gain = audio.createGain(), t = audio.currentTime;
+    const gain = audio.createGain(), t = audio.currentTime + delay;
     gain.gain.setValueAtTime(.0001, t); gain.gain.exponentialRampToValueAtTime(volume, t + .002);
     gain.gain.exponentialRampToValueAtTime(.0001, t + duration);
     if (filter) { source.connect(filter); filter.connect(gain); } else source.connect(gain);
@@ -40,10 +40,10 @@ export function createCombatAudio(audio) {
     source.onended = () => { voices.delete(source); source.disconnect(); filter?.disconnect(); gain.disconnect(); };
     source.start(t); source.stop(t + duration + .005);
   };
-  const tone = (from, to, duration, volume, type = 'sine') => {
-    const source = audio.createOscillator(), t = audio.currentTime; source.type = type;
+  const tone = (from, to, duration, volume, type = 'sine', delay = 0) => {
+    const source = audio.createOscillator(), t = audio.currentTime + delay; source.type = type;
     source.frequency.setValueAtTime(from, t); source.frequency.exponentialRampToValueAtTime(to, t + duration);
-    voice(source, duration, volume);
+    voice(source, duration, volume, null, delay);
   };
   const air = (from, to, duration, volume, type = 'bandpass') => {
     const source = audio.createBufferSource(), filter = audio.createBiquadFilter(), t = audio.currentTime;
@@ -59,8 +59,19 @@ export function createCombatAudio(audio) {
     if (qi) air(2400, 350, .16, .15);
     if (event.killed) { tone(85, 38, .18, .13, 'triangle'); air(900, 180, .14, .08); }
   }
-  const cues = { ui:[740,740,.03,.016], coin:[1568,2093,.1,.025], heal:[660,990,.16,.03], tele:[170,340,.18,.025], interrupt:[988,1319,.1,.035], down:[330,160,.14,.025], evade:[1175,1175,.06,.025], dodge: [480, 950, .07, .018], cast: [320, 1100, .18, .035],
+  const cues = { ui:[740,740,.03,.016], coin:[1568,2093,.1,.025], heal:[660,990,.16,.03], tele:[340,680,.18,.1,'triangle'], interrupt:[988,1319,.1,.035], down:[330,160,.14,.025], evade:[1175,1175,.06,.025], dodge: [480, 950, .07, .018], cast: [320, 1100, .18, .035],
     wave: [420, 630, .25, .025], won: [560, 1120, .45, .04], lost: [220, 90, .4, .03] };
+  // 交互提示音（#7）：落在 D 五声音阶上，和背景音乐同调；[频率, 延迟] 依次拨出
+  const D5 = 587.3, F5 = 698.5, G5 = 784, A5 = 880, D6 = 1174.7;
+  const phrases = {
+    pickup: () => { tone(G5, G5, .07, .06, 'triangle'); tone(D6, D6, .1, .06, 'triangle', .06); },
+    buy: () => { tone(1568, 2093, .08, .045); tone(2093, 2637, .1, .045, 'sine', .07); },
+    craft: () => { for (const at of [0, .14]) { tone(1320, 1240, .22, .055, 'triangle', at); tone(2650, 2500, .12, .022, 'sine', at); } air(5200, 2400, .05, .12, 'highpass'); },
+    note: () => { tone(A5, A5, .12, .045, 'sine'); tone(D6, D6, .16, .045, 'sine', .08); },
+    done: () => { [D5, F5, A5, D6].forEach((f, i) => tone(f, f, .32, .06, 'triangle', i * .09)); },
+  };
+  // 防叠音：同一帧的重复提示音只播一次，同一提示音 60ms 内不重播（命中声本来就每帧只取最重的一下）
+  const lastAt = {};
   return {
     play(events) {
       const hits = events.filter(e => e?.name === 'impact');
@@ -68,8 +79,11 @@ export function createCombatAudio(audio) {
         const strongest = hits.reduce((a, b) => IMPACTS[b.kind].shake > IMPACTS[a.kind].shake ? b : a);
         impact({ ...strongest, killed: hits.some(e => e.killed) });
       }
-      for (const name of events) {
-        if (name === 'swing' || name === 'heavy') air(name === 'heavy' ? 1600 : 2400, 280, name === 'heavy' ? .12 : .075, name === 'heavy' ? .12 : .075);
+      for (const name of new Set(events.filter(e => typeof e === 'string'))) {
+        if (audio.currentTime - (lastAt[name] ?? -1) < .06) continue;
+        lastAt[name] = audio.currentTime;
+        if (phrases[name]) phrases[name]();
+        else if (name === 'swing' || name === 'heavy') air(name === 'heavy' ? 1600 : 2400, 280, name === 'heavy' ? .12 : .075, name === 'heavy' ? .12 : .075);
         else if (name === 'arrow') air(3100, 1200, .045, .045, 'highpass');
         else if (cues[name]) { tone(...cues[name]); if (name === 'cast') air(700, 2600, .18, .1); }
       }
