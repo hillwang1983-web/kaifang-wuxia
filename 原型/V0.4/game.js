@@ -1553,7 +1553,7 @@ addEventListener('pagehide',()=>{if(G.started){finishBattle('页面离开');save
 const heldActions=new Map(), pending={attack:0,skill:0,skill2:0,dodge:0};
 const actionCodes={attack:['KeyJ'],skill:['KeyK'],skill2:['KeyI'],dodge:['Space','KeyL']};
 const heldCombat=name=>[...heldActions.values()].includes(name)||actionCodes[name].some(code=>keys.has(code));
-function pauseGame(on=true){G.manualPaused=on;$('pauseMenu').hidden=!on;resetInput();}
+function pauseGame(on=true){G.manualPaused=on;if(on)music?.stop();$('pauseMenu').hidden=!on;resetInput();}
 $('bPause').onclick=()=>pauseGame();$('bResume').onclick=()=>{pauseGame(false);startAudio();};
 $('bPauseMap').onclick=()=>{if(inCombat()){let note=$('pauseMenu').querySelector('.battle-help');if(!note){note=document.createElement('p');note.className='battle-help';$('bPauseMap').after(note);}note.textContent='战斗中无法查看手记或换招，先脱身。';return;}pauseGame(false);toggleAtlas(true);};
 $('bPauseFull').onclick=()=>{
@@ -1565,7 +1565,7 @@ $('bPauseFull').onclick=()=>{
 $('bSound').onclick=()=>{if(soundEnabled&&AC&&AC.state!=='running')startAudio();else setSound(!soundEnabled);};
 $('bStartSound').onclick=()=>setSound(!soundEnabled);
 addEventListener('blur',()=>{if(G.started&&!paused())pauseGame();});
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)return;combatAudio?.stop();combatEvents.length=0;AC?.suspend().catch(()=>{});if(G.started)pauseGame();});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)return;combatAudio?.stop();music?.stop();combatEvents.length=0;AC?.suspend().catch(()=>{});if(G.started)pauseGame();});
 addEventListener('orientationchange',()=>{if(G.started&&innerHeight>innerWidth)pauseGame();});
 const stick = { id: null, ox: 0, oy: 0, dx: 0, dy: 0 };
 const zone = $('stickzone'), stickEl = $('stick'), knob = $('knob');
