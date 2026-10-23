@@ -7,6 +7,7 @@
     ledger: { name: '工钱账册', source: '匪营旧账箱', text: '账册列着六名船工的姓名与欠付月份，金额能和货车残单对上。这是船工自记的账，需要证词或运单印证。' },
   };
   const SKILLS = {
+    qi: { name: '松风剑气', tag: '剑气 · 贯穿来敌', cost: 25, cd: 3.8, dmg: 44, range: 470, half: .35, dash: 0, text: '向面前放出一道剑气，可贯穿多名来敌，遇到掩体消散。命中配回气仍只返还一次内力。' },
     thrust: { name: '追风刺', tag: '突进 · 追弓手', cost: 24, cd: 2.0, dmg: 24, range: 105, half: 0.55, dash: 100, text: '沿面向突进后刺击，适合逼近弓手；突进没有无敌，不能顶着重劈硬闯。' },
     break: { name: '截流剑', tag: '破招 · 压蓄力', cost: 30, cd: 2.6, dmg: 30, range: 112, half: 0.9, dash: 12, text: '命中可打断预兆时令敌人短暂失衡；装备破势会延长失衡，给反击留下窗口。' },
     sweep: { name: '回澜斩', tag: '横扫 · 解围', cost: 36, cd: 3.5, dmg: 22, range: 120, half: Math.PI, dash: 0, text: '环身横扫所有近敌，拉开被围攻的空间；配回气每次施放只返还一次内力。' },
@@ -18,7 +19,7 @@
   };
   const fail = msg => ({ ok: false, msg });
   function create() {
-    return { clues: [], decision: null, supplied: false, finalStarted: false, finalResolved: false, ending: null, peaceful: false, skills: ['thrust', 'break'], cooldowns: [0, 0], kills: 0, visited: [], allyHits: 0, arrowsBlocked: 0 };
+    return { clues: [], decision: null, supplied: false, finalStarted: false, finalResolved: false, ending: null, peaceful: false, skills: ['qi', 'break'], cooldowns: [0, 0], kills: 0, visited: [], allyHits: 0, arrowsBlocked: 0 };
   }
   function encounter(s) {
     const c = s.chapter, trusted = s.f.branch === 'B';

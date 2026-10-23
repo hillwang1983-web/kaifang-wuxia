@@ -1,3 +1,6 @@
+import { createChapterCombatRenderer, skillHead } from './combat-render.mjs';
+import { IMPACTS, createCombatAudio } from './songfeng-feedback.mjs';
+import { createWorldArt, WORLD_STYLE } from './world-art.mjs';
 (() => {
 'use strict';
 const Chapter = window.QingShiChapter;
@@ -5,6 +8,7 @@ const Playtest=window.QingShiPlaytest, DEBUG=location.search.includes('debug');
 const PAGE_SESSION=Date.now().toString(36)+Math.random().toString(36).slice(2,7);
 const $ = (id) => document.getElementById(id);
 const app = $('app'), cv = $('cv'), ctx = cv.getContext('2d');
+const worldArt=createWorldArt();
 const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
 const angDiff = (a, b) => { let d = a - b; while (d > Math.PI) d -= Math.PI * 2; while (d < -Math.PI) d += Math.PI * 2; return Math.abs(d); };
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
@@ -142,27 +146,9 @@ function footShadow(g, x, y, w) {
   if (IMG.shadow && w <= 8) { g.drawImage(IMG.shadow, x - 6, y - 4); return; }
   g.fillStyle = 'rgba(0,0,0,0.3)'; g.fillRect(x - w + 1, y - 2, w * 2 - 2, 3); g.fillRect(x - w + 3, y + 1, w * 2 - 6, 1);
 }
-function drawChar(g, id, dir, frame, x, y, o) {
-  o = o || {};
-  const sh = SHEET[id];
-  if (sh) {
-    x = Math.round(x + (o.dx || 0)); y = Math.round(y + (o.dy || 0));
-    if (!o.noShadow) footShadow(g, x, y, 6);
-    const sx = SHEET_COL[dir] * 16, sy = (SHEET_ROW[frame] || 0) * 16;
-    g.save(); if (o.alpha !== undefined) g.globalAlpha = o.alpha;
-    g.drawImage(o.white ? sh.white : sh.n, sx, sy, 16, 16, x - 8, y - 15, 16, 16);
-    if (o.red) { g.globalAlpha = (o.alpha === undefined ? 1 : o.alpha) * 0.55; g.drawImage(sh.red, sx, sy, 16, 16, x - 8, y - 15, 16, 16); }
-    g.restore(); return;
-  }
-  if (frame === 'atk') frame = 'idle';
-  const d = dir === 'left' ? 'right' : dir, set0 = SPR[id][d][frame], s = o.white ? set0.white : set0.n, w = s.width;
-  x = Math.round(x + (o.dx || 0)); y = Math.round(y + (o.dy || 0));
-  if (!o.noShadow) { g.fillStyle = 'rgba(0,0,0,0.34)'; g.fillRect(x - 5, y - 1, 10, 2); g.fillRect(x - 4, y + 1, 8, 1); }
-  g.save(); if (o.alpha !== undefined) g.globalAlpha = o.alpha;
-  const draw = (img) => { if (dir === 'left') { g.save(); g.translate(x + Math.ceil(w / 2), 0); g.scale(-1, 1); g.drawImage(img, 0, y - 19); g.restore(); } else g.drawImage(img, x - Math.floor(w / 2), y - 19); };
-  draw(s);
-  if (o.red) { g.globalAlpha = (o.alpha === undefined ? 1 : o.alpha) * 0.55; draw(set0.red); }
-  g.restore();
+function drawChar(g,id,dir,frame,x,y,o){
+  g.save();if(o?.alpha!==undefined)g.globalAlpha=o.alpha;
+  worldArt.npc(g,id,dir,x+(o?.dx||0),y+(o?.dy||0),G?.time||0,frame);g.restore();
 }
 function drawWeapon(g, id, x, y, ang, behind) {
   const w = WEAPON[id]; if (!w || (id === 'boss' && BOSS.idle)) return;
@@ -175,29 +161,7 @@ function drawWeapon(g, id, x, y, ang, behind) {
   P(g, hx, hy, w.hilt); P(g, Math.round(hx - Math.cos(ang) * 2), Math.round(hy - Math.sin(ang) * 2), w.hilt);
   g.restore();
 }
-// 首领：按状态挑动作条，蓄力 / 出招分左右；帧底到脚的距离 48 高的是 4、96 高的是 18
-function drawBoss(g, e, ex, ey, t) {
-  const side = Math.cos(e.face) >= 0 ? 'R' : 'L';
-  let a = 'idle', i = Math.floor(t * 8);
-  if (e.state === 'down') { a = 'hit'; i = 3; }
-  else if (e.state === 'windup') { a = 'charge' + side; i = Math.min(2, Math.floor((e.t / e.atk.tele) * 3)); }
-  else if (e.state === 'dash') { a = 'attack' + side; i = 0; }
-  else if (e.state === 'recover' && e.t < 0.32) { a = 'attack' + side; i = Math.floor(e.t / 0.08); }
-  else if (e.state === 'stagger' || e.state === 'flinch') { a = 'hit'; i = Math.floor(e.t * 10); }
-  else if (e.moving) { a = 'walk'; i = Math.floor(e.an * 10); }
-  const B = BOSS[a], x = Math.round(ex), y = Math.round(ey);
-  i = a === 'hit' && e.state === 'down' ? 3 : i % B.count;
-  fe(g, x, y, 12, 3, 'rgba(0,0,0,0.3)');
-  g.drawImage(e.flash > 0 ? B.white : B.n, i * 96, 0, 96, B.fh, x - 48, y - B.fh + (B.fh === 96 ? 18 : 4), 96, B.fh);
-}
-function portrait(canvas, id) {
-  const g = canvas.getContext('2d');
-  canvas.classList.toggle('face', !!FACE[id]);
-  if (FACE[id]) { canvas.width = 38; canvas.height = 38; g.clearRect(0, 0, 38, 38); g.drawImage(FACE[id], 0, 0); return; }
-  if (SPR[id]) { const s = SPR[id].down.idle.n; canvas.width = s.width; canvas.height = 12; g.clearRect(0, 0, s.width, 12); g.drawImage(s, 0, 0); return; }
-  const im = OBJ[id]; if (!im) return;
-  canvas.width = Math.max(16, im.width); canvas.height = Math.max(12, im.height); g.clearRect(0, 0, canvas.width, canvas.height); g.drawImage(im, 0, 0);
-}
+function portrait(canvas,id){worldArt.portrait(canvas,id);}
 
 // ---- 地块 16×16
 const TILE = {};
@@ -386,43 +350,17 @@ document.querySelectorAll('img[data-ic]').forEach((im) => { im.src = ICON_URL[im
 portrait($('myFace'), 'xia');
 
 // ================================================================ 声音（开始后才能出声）
-let AC = null, NOISE = null;
-function beep(freq, dur, type, vol, f2) {
-  if (!AC) return;
-  try {
-    const t = AC.currentTime, o = AC.createOscillator(), g = AC.createGain();
-    o.type = type || 'square'; o.frequency.setValueAtTime(freq, t); if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + dur);
-    g.gain.setValueAtTime(vol || 0.05, t); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    o.connect(g).connect(AC.destination); o.start(t); o.stop(t + dur + 0.02);
-  } catch (e) { /* 没有声音也能玩 */ }
+let AC = null, combatAudio = null, soundEnabled = false;
+const combatArt = createChapterCombatRenderer(), combatEvents = [];
+const cue = name => combatEvents.push(name);
+const SFX = { swing:()=>cue('swing'), swing3:()=>cue('heavy'), skill:()=>cue('cast'),
+  hit:()=>{}, hitBig:()=>{}, hurt:()=>{}, tele:()=>cue('tele'), teleS:()=>cue('tele'),
+  interrupt:()=>cue('interrupt'), dodge:()=>cue('dodge'), evade:()=>cue('evade'),
+  heal:()=>cue('heal'), coin:()=>cue('coin'), ui:()=>cue('ui'), down:()=>cue('down') };
+function impact(kind, face, killed=false) {
+  const event={name:'impact',kind,face,killed};combatEvents.push(event);
+  G.hitstop=Math.max(G.hitstop,IMPACTS[kind].stop+(killed ? .008 : 0));
 }
-function noise(dur, freq, q, vol, f2) {
-  if (!AC) return;
-  try {
-    if (!NOISE) { NOISE = AC.createBuffer(1, AC.sampleRate / 2, AC.sampleRate); const d = NOISE.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; }
-    const t = AC.currentTime, s = AC.createBufferSource(), fl = AC.createBiquadFilter(), g = AC.createGain();
-    s.buffer = NOISE; fl.type = 'bandpass'; fl.frequency.setValueAtTime(freq, t); if (f2) fl.frequency.exponentialRampToValueAtTime(f2, t + dur); fl.Q.value = q;
-    g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    s.connect(fl).connect(g).connect(AC.destination); s.start(t); s.stop(t + dur + 0.02);
-  } catch (e) { /* 没有声音也能玩 */ }
-}
-const SFX = {
-  swing: () => noise(0.1, 1800, 0.9, 0.09, 3200),
-  swing3: () => noise(0.14, 1200, 0.9, 0.12, 3600),
-  skill: () => { noise(0.16, 900, 0.7, 0.12, 4000); beep(520, 0.12, 'triangle', 0.03, 880); },
-  hit: () => { noise(0.07, 700, 1.4, 0.18); beep(150, 0.06, 'square', 0.04); },
-  hitBig: () => { noise(0.12, 500, 1.2, 0.22); beep(110, 0.1, 'square', 0.05); },
-  hurt: () => { noise(0.12, 400, 1, 0.2); beep(90, 0.14, 'sawtooth', 0.05); },
-  tele: () => beep(170, 0.34, 'square', 0.035, 340),
-  teleS: () => beep(300, 0.08, 'square', 0.03, 420),
-  interrupt: () => { beep(988, 0.07, 'square', 0.05); setTimeout(() => beep(1319, 0.12, 'square', 0.05), 70); },
-  dodge: () => noise(0.14, 2400, 0.6, 0.06, 900),
-  evade: () => beep(1175, 0.06, 'triangle', 0.04),
-  heal: () => { beep(660, 0.08, 'triangle', 0.04); setTimeout(() => beep(990, 0.12, 'triangle', 0.04), 80); },
-  coin: () => { beep(1568, 0.05, 'square', 0.025); setTimeout(() => beep(2093, 0.08, 'square', 0.025), 50); },
-  ui: () => beep(740, 0.03, 'square', 0.02),
-  down: () => { beep(330, 0.18, 'square', 0.05, 160); },
-};
 
 // ================================================================ 世界（1 个像素 = 3 个世界单位，1 格地块 = 16 像素 = 48 单位）
 const U = 3;
@@ -465,7 +403,9 @@ const OBST = [
 ];
 for (const [k, x, y] of PROPS) { const f = FOOT[k]; if (f) OBST.push({ x: (x + f[0]) * U, y: (y + f[1]) * U, w: f[2] * U, h: f[3] * U }); }
 for (const [c, r, w, h] of PLATS) OBST.push({ x: c * 16 * U, y: r * 16 * U, w: w * 16 * U, h: (h * 16 + (r + h < MAP_H ? CLIFF : 0)) * U });
-function propXY(k, x, y) { const im = OBJ[k], s = SIZE[k] || [im.width, im.height]; return [x + ((s[0] - im.width) >> 1), y + s[1] - im.height]; }
+const spriteW=im=>im.logicalWidth||im.width,spriteH=im=>im.logicalHeight||im.height;
+const drawArt=(g,im,x,y)=>g.drawImage(im,x,y,spriteW(im),spriteH(im));
+function propXY(k,x,y){const im=OBJ[k],s=SIZE[k]||[spriteW(im),spriteH(im)];return [x+((s[0]-spriteW(im))>>1),y+s[1]-spriteH(im)];}
 const MAP = (() => {
   const rnd = RNG(4242), m = [];
   const dist = (px, py, pts) => { let best = 1e9; for (let i = 0; i + 1 < pts.length; i++) { const [ax, ay] = pts[i], [bx, by] = pts[i + 1]; const vx = bx - ax, vy = by - ay, t = clamp(((px - ax) * vx + (py - ay) * vy) / (vx * vx + vy * vy), 0, 1); best = Math.min(best, Math.hypot(px - ax - vx * t, py - ay - vy * t)); } return best; };
@@ -546,17 +486,9 @@ function naTileAt(c, r, wf) {
   }
   TILE[key] = t; return t;
 }
-function tileAt(c, r, wf) {
-  if (IMG.floor && IMG.water) return naTileAt(c, r, wf);
-  let code;
-  if (r < 0 || r >= MAP_H || c < 0 || c >= MAP_W) code = r < 3 && c >= -6 && c <= 17 ? (r === 2 ? '_' : '~') : 'X';
-  else code = MAP[r][c];
-  const [k, v0] = CODE[code];
-  const v = k === 'stone' ? ((c * 3 + r) % 4 === 0 ? 1 : (c + r) % 2 ? 0 : 2) : k === 'water' ? ((c + r) % 2 + 2) % 2 : k === 'dark' ? ((c * 7 + r * 3) % 4 + 4) % 4 : k === 'dirt' ? (c + r * 2) % 3 === 0 ? 1 : 0 : k === 'camp' ? (c * 5 + r) % 7 === 0 ? 1 : 0 : v0;
-  return tile(k, v, k === 'water' || k === 'shore' ? wf : 0);
-}
+function tileAt(c,r,wf){return worldArt.tile(c,r,wf,kindAt);}
 // 整张地图预先画好三帧（水面流动），路和草地交界处补一圈草边
-let MAPBG = null;
+let MAPBG = null, MAPART = null;
 function buildMap() {
   if (IMG.floor && !STONE) STONE = stoneAtlas();
   MAPBG = [0, 1, 2].map((f) => {
@@ -587,7 +519,10 @@ function buildMap() {
     const w = sz[0]; fe(g, x + (w >> 1), y + sz[1] - 2, Math.round(w * 0.34), w >= 32 ? 3 : 2, 'rgba(10,8,20,0.2)');
   }
   return c;
-}); }
+});
+  MAPART=cnv(MAP_W*16,MAP_H*16);const overview=MAPART.getContext('2d');overview.drawImage(MAPBG[0],0,0);
+  for(const [k,x,y]of PROPS){const [dx,dy]=propXY(k,x,y);drawArt(overview,OBJ[k],dx,dy);}
+}
 const W3 = (x, y) => ({ x: x * U, y: y * U });
 const NPCS = [
   { id: 'shen', name: '沈青', ...W3(62, 152) },
@@ -620,16 +555,16 @@ KIND.archer={name:'弓手',hp:60,r:17,speed:90,aggro:340,leash:460,flinch:true};
 KIND.guard={...KIND.bandit,name:'护院',hp:90,aggro:360,leash:700,atks:[{id:'slash',shape:'cone',range:90,half:.8,tele:.85,dmg:14,rec:.7,inter:true,reach:70}]};
 KIND.captain={...KIND.guard,name:'护院头领',hp:180,flinch:false,atks:[{id:'heavy',shape:'cone',range:140,half:1,tele:1.3,dmg:24,rec:.85,inter:true,reach:105}]};
 WEAPON.guard=WEAPON.bandit; WEAPON.captain=WEAPON.boss;
-const P_ = { speed: 210, atkCd: 0.3, skCd: 0.9, skCost: 30, dgCd: 0.7, mpRegen: 6, combo: [{ dmg: 10, range: 60, half: 1.1 }, { dmg: 12, range: 62, half: 1.15 }, { dmg: 18, range: 72, half: 1.35, big: true }], skDmg: 26, qiBack: 18, bandageHeal: 0.4 };
+const P_ = { speed: 210, atkCd: 0.27, skCd: 0.9, skCost: 30, dgCd: 0.5, mpRegen: 6, combo: [{ dmg: 20, range: 112, half: 1.15 }, { dmg: 24, range: 112, half: 1.15 }, { dmg: 34, range: 136, half: 1.6, big: true }], skDmg: 26, qiBack: 18, bandageHeal: 0.4 };
 
 function mkEnemy(kind, x, y) {
   const K = KIND[kind];
-  return { id:uid(), kind, x, y, hx: x, hy: y, hp: K.hp, face: Math.PI, state: 'idle', t: 0, atk: null, plan: null, cnt: 0, hostile: kind !== 'boss', alive: true, flash: 0, defeated: false, an: 0, moving: false, dieT: 0, spar: false, strafeDir: 1, dashHit: false };
+  return { id:uid(), kind, x, y, hx: x, hy: y, hp: K.hp, maxHp: K.hp, face: Math.PI, state: 'idle', t: 0, atk: null, plan: null, cnt: 0, hostile: kind !== 'boss', alive: true, flash: 0, defeated: false, an: 0, moving: false, dieT: 0, spar: false, strafeDir: 1, dashHit: false };
 }
 function newGame() {
   const state = {
-    v: 4, chapter: Chapter.create(), arrows: [], ally: null, started: false, time: 0, deadT: 0, respawned: true, done: false, logOpen: false, dlg: null, echo: '', hitstop: 0, shake: 0,
-    p: { x: RESPAWN.x + 30, y: RESPAWN.y + 12, face: 0, hp: 100, maxHp: 100, mp: 100, maxMp: 100, atkCd: 0, skCd: 0, dgCd: 0, dodge: 0, inv: 0, dvx: 0, dvy: 0, swing: 0, swingDur: 0.15, swingKind: '', hurt: 0, trail: [], an: 0, moving: false, combo: 0, comboT: 0 },
+    v: 4, chapter: Chapter.create(), arrows: [], swings: [], qi: [], combatSerial: 0, manualPaused: false, ally: null, started: false, time: 0, deadT: 0, respawned: true, done: false, logOpen: false, dlg: null, echo: '', hitstop: 0, shake: 0,
+    p: { x: RESPAWN.x + 30, y: RESPAWN.y + 12, face: 0, hp: 100, maxHp: 100, mp: 100, maxMp: 100, sp: 100, atkCd: 0, skCd: 0, dgCd: 0, dodge: 0, inv: 0, dvx: 0, dvy: 0, swing: 0, swingDur: 0.15, swingKind: '', hurt: 0, trail: [], an: 0, moving: false, combo: 0, comboT: 0 },
     inv: { coin: 30, bandage: 2, wood: 0, iron: 0, herb: 0, med: false },
     orn: null,
     f: { accepted: false, matPicked: false, asked: false, branch: null, bought: false, delivered: false, told: null, fought: false, lostBoss: false, heardDebt: false, bossClaim: false, askedLu: false, zhouBuys: 0, herbs: [false, false], defeats: 0, bandagesUsed: 0, sparWins: 0, inspected: {} },
@@ -647,7 +582,7 @@ let G = newGame();
 // ================================================================ 存档：每个改动物品 / 剧情的动作都是一次提交，带操作号，重复提交只回原回执
 const SAVE_KEY = 'qingshi-chapter-v04';
 let SAVED_FLASH = 0;
-function snapshotState(source=G) { const s=JSON.parse(JSON.stringify(source)); s.fx=[]; s.toasts=[]; s.arrows=[]; s.dlg=null; s.logOpen=false; s.hitstop=0; s.shake=0; s.done=false; return s; }
+function snapshotState(source=G) { const s=JSON.parse(JSON.stringify(source)); settlePendingSkills(s); s.fx=[]; s.swings=[]; s.qi=[]; s.manualPaused=false; s.toasts=[]; s.arrows=[]; s.dlg=null; s.logOpen=false; s.hitstop=0; s.shake=0; s.done=false; return s; }
 function persist(state) { localStorage.setItem(SAVE_KEY,JSON.stringify({v:4,at:Date.now(),G:snapshotState(state)})); }
 function saveNow(flash) {
   try { persist(G); if(flash) SAVED_FLASH=1.4; return true; }
@@ -690,7 +625,7 @@ function inCombat() {
   const p = G.p;
   return G.enemies.some((e) => activeFoe(e) && ['chase', 'windup', 'recover', 'stagger', 'strafe', 'dash', 'flinch'].includes(e.state) && Math.hypot(e.x - p.x, e.y - p.y) < 460);
 }
-const paused = () => !!(G.dlg || G.done || G.logOpen || !$('atlas').hidden || document.hidden);
+const paused = () => !!(G.manualPaused || G.dlg || G.done || G.logOpen || !$('atlas').hidden || document.hidden);
 
 // ---------------------------------------------------------------- 玩家动作
 function aim(maxAng) {
@@ -701,73 +636,122 @@ function aim(maxAng) {
   if (best !== null) p.face = best;
 }
 function canAct() { return G.started && !paused() && G.deadT <= 0; }
-function inArc(x, y, r, range, half) { const p = G.p, d = Math.hypot(x - p.x, y - p.y); if (d > range + r) return false; return d <= r || angDiff(Math.atan2(y - p.y, x - p.x), p.face) <= half; }
-function strikeEnemies(range, half, dmg, isSkill, big) {
-  const p = G.p; let n = 0;
-  for (const old of G.enemies.slice()) {
-    const e=G.enemies.find(x=>x.id===old.id);
-    if (!activeFoe(e)) continue;
-    const K = KIND[e.kind];
-    if (!inArc(e.x, e.y, K.r, range, half)) continue;
-    n++;
-    const bonus=!isSkill&&G.orn==='破势'&&e.state==='stagger'&&e.opening?8:0;
-    if(bonus){e.opening=false;trackCombat('counters');fxText(e.x,e.y-100,'破势追击 +8','#F2D27A');}
-    e.hp -= dmg+bonus; e.flash = 0.12;
-    fxText(e.x, e.y - 66, '-' + (dmg+bonus), big || isSkill ? '#F2D27A' : '#EFE6D2', true);
-    burst(e.x, e.y - 30, big ? 8 : 5, ['#FFFFFF', '#F2D27A', '#F2A03C'], 140, 40);
-    G.fx.push({ type: 'streak', x: e.x, y: e.y - 30, a: p.face + (Math.random() - 0.5) * 0.8, len: big || isSkill ? 22 : 15, t: 0, dur: 0.14 });
-    const d = Math.hypot(e.x - p.x, e.y - p.y) || 1, kb = big ? 26 : isSkill ? 16 : 8;
-    if (K.flinch || e.state === 'idle') move(e, ((e.x - p.x) / d) * kb, ((e.y - p.y) / d) * kb, K.r);
-    if (e.state === 'idle') e.state = 'chase';
-    if (isSkill && (G.orn === '破势' || p.activeSkill === 'break') && e.state === 'windup' && e.atk.inter) {
-      e.state = 'stagger'; e.opening=G.orn==='破势';e.t = G.orn==='破势' ? -0.8 : 0; G.stats.interrupts++;trackCombat('interrupts');
-      fxText(e.x, e.y - 98, '打断！', '#F08A6A');
-      burst(e.x, e.y - 30, 12, ['#F08A6A', '#F2D27A'], 200, 60);
-      toast((G.orn==='破势'?'破势打断！接普攻可追击 +8：':'截流剑打断：')+K.name); SFX.interrupt(); G.hitstop = Math.max(G.hitstop, 0.12); G.shake = 3;
-    } else if (K.flinch && e.state !== 'windup' && e.state !== 'dash') { e.state = 'flinch'; e.t = 0; }
-    if (e.hp <= 0) kill(e);
+function inArc(x, y, r, range, half, p = G.p) { const d = Math.hypot(x - p.x, y - p.y); if (d > range + r) return false; return d <= r || angDiff(Math.atan2(y - p.y, x - p.x), p.face) <= half; }
+function damageFoe(e, dmg, isSkill, big, face, skillId) {
+  const K=KIND[e.kind], p=G.p;
+  const bonus=!isSkill&&G.orn==='破势'&&e.state==='stagger'&&e.opening?8:0;
+  if(bonus){e.opening=false;trackCombat('counters');fxText(e.x,e.y-100,'破势追击 +8','#F2D27A');}
+  e.hp-=dmg+bonus;e.flash=.12;e.sfHeavy=!!(big||isSkill);
+  fxText(e.x,e.y-66,'-'+(dmg+bonus),big||isSkill?'#F2D27A':'#EFE6D2',true);
+  G.fx.push({type:'songfengSpark',x:e.x,y:e.y-15,face,heavy:!!(big||isSkill),t:0,dur:.22});
+  const d=Math.hypot(e.x-p.x,e.y-p.y)||1,kb=big?26:isSkill?16:8;
+  if(K.flinch||e.state==='idle')move(e,(e.x-p.x)/d*kb,(e.y-p.y)/d*kb,K.r);
+  if(e.state==='idle')e.state='chase';
+  if(isSkill&&(G.orn==='破势'||skillId==='break')&&e.state==='windup'&&e.atk.inter){
+    e.state='stagger';e.opening=G.orn==='破势';e.t=G.orn==='破势'?-.8:0;G.stats.interrupts++;trackCombat('interrupts');
+    fxText(e.x,e.y-98,'打断！','#F08A6A');toast((G.orn==='破势'?'破势打断！接普攻可追击 +8：':'截流剑打断：')+K.name);
+    SFX.interrupt();
+  }else if(K.flinch&&e.state!=='windup'&&e.state!=='dash'){e.state='flinch';e.t=0;}
+  if(e.hp<=0)kill(e);
+  const current=G.enemies.find(x=>x.id===e.id);
+  impact(skillId==='qi'?'qi':big||isSkill?'heavy':'light',face,current?.hp<=0);
+}
+function countSkillHit(action){
+  if(!action.skill||action.counted||[...G.swings,...G.qi].some(s=>s.id===action.id&&s.counted))return;action.counted=true;trackCombat('hits',1,G,action.orn);
+  for(const s of [...G.swings,...G.qi])if(s.id===action.id)s.counted=true;
+}
+function settlePendingSkills(state){
+  const actions=[...state.swings,...state.qi],seen=new Set();
+  for(const action of actions){
+    if(!action.skill||seen.has(action.id))continue;seen.add(action.id);
+    if(!actions.some(s=>s.id===action.id&&s.counted))trackCombat('misses',1,state,action.orn);
   }
-  const dm = DUMMY_POS, dd = G.dummy;
-  if (Math.hypot(dm.x - p.x, dm.y - p.y) < 200 && inArc(dm.x, dm.y, 14, range, half)) {
-    n++; dd.hit = 0.15; burst(dm.x, dm.y - 30, 4, ['#FFFFFF', '#C8A86A'], 120, 40);
-    if (isSkill && (G.orn === '破势' || p.activeSkill==='break') && dd.state === 'windup') { dd.state = 'stagger'; dd.opening=G.orn==='破势';dd.t = G.orn==='破势'?-.8:0; G.stats.practice++;trackCombat('interrupts'); fxText(dm.x, dm.y - 90, '打断！', '#F08A6A'); SFX.interrupt(); toast('打断了木人桩（练习）'); }
-    else if(!isSkill&&G.orn==='破势'&&dd.state==='stagger'&&dd.opening){dd.opening=false;trackCombat('counters');fxText(dm.x,dm.y-90,'破势追击 +8（练习）','#F2D27A');}
-    else fxText(dm.x, dm.y - 70, isSkill ? '叮' : '咚', '#EFE6D2');
+}
+function cancelSwings(){
+  for(const s of G.swings)if(s.skill&&!s.counted&&!(s.skill==='qi'&&s.launched))trackCombat('misses',1,G,s.orn);
+  G.swings=[];G.p.swing=0;
+}
+function returnQi(attack) {
+  if(!attack.skill||attack.qiReturned||(attack.orn||G.orn)!=='回气'||[...G.swings,...G.qi].some(s=>s.id===attack.id&&s.qiReturned))return;
+  attack.qiReturned=true;
+  for(const current of [...G.swings,...G.qi])if(current.id===attack.id)current.qiReturned=true;
+  const gain=Math.min(P_.qiBack,G.p.maxMp-G.p.mp);G.p.mp+=gain;G.stats.qiBack+=Math.round(gain);trackCombat('qiReturned',gain,G,attack.orn);
+  if(gain>0)fxText(G.p.x,G.p.y-76,'回气 +'+Math.round(gain),'#7FD0BE');
+}
+function strikeEnemies(strike) {
+  const origin={x:strike.x,y:strike.y,face:strike.face+(strike.skill==='sweep'?skillHead(strike.age/strike.duration)*Math.PI*2-.7:0)};let n=0;
+  const hits=()=>G.swings.find(s=>s.id===strike.id)?.hitIDs||strike.hitIDs;
+  for(const old of G.enemies.slice()){
+    const e=G.enemies.find(x=>x.id===old.id);if(!activeFoe(e)||hits().includes(e.id))continue;
+    if(!inArc(e.x,e.y,KIND[e.kind].r,strike.range,strike.skill==='sweep'?.72:strike.half,origin))continue;
+    hits().push(e.id);n++;countSkillHit(strike);damageFoe(e,strike.damage,!!strike.skill,strike.combo===3,origin.face,strike.skill);
   }
-  if (n > 0) { G.hitstop = Math.max(G.hitstop, big ? 0.09 : isSkill ? 0.07 : 0.045); if (big) G.shake = Math.max(G.shake, 2); (big ? SFX.hitBig : SFX.hit)(); }
-  if (isSkill && n > 0 && G.orn === '回气') {
-    const pp = G.p, gain = Math.min(P_.qiBack, pp.maxMp - pp.mp);
-    pp.mp += gain; G.stats.qiBack += Math.round(gain);trackCombat('qiReturned',gain);
-    if (gain > 0) fxText(pp.x, pp.y - 76, '回气 +' + Math.round(gain), '#7FD0BE');
+  const dd=G.dummy,dm=DUMMY_POS;
+  if(!hits().includes('dummy')&&inArc(dm.x,dm.y,14,strike.range,strike.skill==='sweep'?.72:strike.half,origin)){
+    hits().push('dummy');n++;dd.hit=.15;
+    G.fx.push({type:'songfengSpark',x:dm.x,y:dm.y-15,face:strike.face,heavy:!!strike.skill||strike.combo===3,t:0,dur:.22});
+    if(strike.skill&&(G.orn==='破势'||strike.skill==='break')&&dd.state==='windup'){
+      dd.state='stagger';dd.opening=G.orn==='破势';dd.t=G.orn==='破势'?-.8:0;G.stats.practice++;trackCombat('interrupts');
+      fxText(dm.x,dm.y-90,'打断！','#F08A6A');SFX.interrupt();toast('打断了木人桩（练习）');
+    }else if(!strike.skill&&G.orn==='破势'&&dd.state==='stagger'&&dd.opening){dd.opening=false;trackCombat('counters');fxText(dm.x,dm.y-90,'破势追击 +8（练习）','#F2D27A');}
+    impact(strike.combo===3||strike.skill?'heavy':'light',strike.face);
   }
+  if(n>0){returnQi(strike);countSkillHit(strike);}
   return n;
 }
 function attack() {
-  const p = G.p; if (!canAct() || p.atkCd > 0 || p.dodge > 0) return;
-  p.combo = p.comboT > 0 ? (p.combo + 1) % 3 : 0;
-  const c = P_.combo[p.combo];
-  p.atkCd = c.big ? 0.45 : P_.atkCd; p.comboT = 0.65; aim(1.6);
-  p.swing = p.swingDur = c.big ? 0.2 : 0.15; p.swingKind = c.big ? 'atk3' : 'atk';
-  // 普攻原地出剑，不自动前冲；位移只来自摇杆、闪避和剑招突进（#4）。
-  (c.big ? SFX.swing3 : SFX.swing)();
-  strikeEnemies(c.range, c.half, c.dmg, false, c.big);
+  const p=G.p;if(!canAct()||p.atkCd>0||p.dodge>.06)return;
+  p.combo=p.comboT>0?(p.combo+1)%3:0;const c=P_.combo[p.combo];
+  p.atkCd=c.big?.39:P_.atkCd;p.comboT=.8;aim(Math.PI);
+  p.swing=p.swingDur=c.big?.35:.24;p.swingKind=c.big?'atk3':'atk';
+  G.combatSerial++;G.swings.push({id:uid(),x:p.x,y:p.y,face:p.face,combo:p.combo+1,age:0,life:p.swingDur,duration:p.swingDur,damage:c.dmg,range:c.range,half:c.half,hitIDs:[]});
+  startActionBattle(c.range);(c.big?SFX.swing3:SFX.swing)();
 }
 function skill(slot=0) {
-  const p=G.p,c=G.chapter, id=c.skills[slot], s=Chapter.SKILLS[id];
-  if(!canAct() || c.cooldowns[slot]>0 || p.dodge>0)return;
+  const p=G.p,c=G.chapter,id=c.skills[slot],s=Chapter.SKILLS[id];
+  if(!canAct()||c.cooldowns[slot]>0||p.dodge>.06)return;
   if(p.mp<s.cost){trackCombat('noMp');toast('内力不足，先用普攻周旋；战斗中自然回气较慢');return;}
-  startActionBattle(s.range+s.dash);trackCombat('casts');
-  p.mp-=s.cost;c.cooldowns[slot]=s.cd;p.skCd=s.cd;p.activeSkill=id;aim(id==='sweep'?Math.PI:1.7);
-  // 突进按小步检查碰撞，不能穿过石头和货车。
+  startActionBattle(s.range+s.dash);trackCombat('casts');p.mp-=s.cost;c.cooldowns[slot]=s.cd;p.skCd=s.cd;p.activeSkill=id;
+  aim(id==='sweep'?Math.PI:1.7);
   for(let n=0;n<Math.ceil(s.dash/8);n++)move(p,Math.cos(p.face)*Math.min(8,s.dash-n*8),Math.sin(p.face)*Math.min(8,s.dash-n*8),16);
-  p.swing=p.swingDur=.24;p.swingKind='sk';p.comboT=0;SFX.skill();
-  const hits=strikeEnemies(s.range,s.half,s.dmg,true);trackCombat(hits>0?'hits':'misses');
+  p.swing=p.swingDur=(id==='sweep'||id==='break')?.35:.24;p.swingKind='sk';p.comboT=0;G.combatSerial++;SFX.skill();
+  G.swings.push({id:uid(),x:p.x,y:p.y,face:p.face,combo:(id==='sweep'||id==='break')?3:id==='thrust'?1:2,visualCombo:(id==='sweep'||id==='break')?3:id==='thrust'?1:2,age:0,life:p.swingDur,duration:p.swingDur,
+    damage:s.dmg,range:s.range,half:s.half,skill:id,orn:G.orn||'基础剑',hitIDs:[],launched:false});
+}
+function updateStrikes(dt) {
+  for(const before of G.swings.slice()){
+    const swing=G.swings.find(s=>s.id===before.id);if(!swing)continue;
+    const previousAge=swing.age;swing.age+=dt;swing.life-=dt;
+    if(swing.skill==='qi'){
+      if(!swing.launched&&swing.age>=.055){swing.launched=true;G.qi.push({id:swing.id,x:swing.x+Math.cos(swing.face)*20,y:swing.y+Math.sin(swing.face)*20,
+        vx:Math.cos(swing.face)*590,vy:Math.sin(swing.face)*590,face:swing.face,life:.8,damage:swing.damage,skill:'qi',orn:swing.orn,hitIDs:[]});}
+    }else if(swing.skill==='sweep'){
+      const from=Math.max(previousAge,.055),to=Math.min(swing.age,swing.duration*.95);
+      if(from<=to){const steps=Math.max(1,Math.ceil((to-from)/.008));for(let i=0;i<=steps;i++)strikeEnemies({...swing,age:from+(to-from)*i/steps});}
+    }else if(swing.age>=(swing.skill==='break'?.095:.055)&&swing.age<=.19)strikeEnemies(swing);
+  }
+  G.swings=G.swings.filter(s=>{if(s.life>0)return true;if(s.skill&&s.skill!=='qi'&&!s.counted)trackCombat('misses',1,G,s.orn);return false;});
+  for(const old of G.qi.slice()){
+    let shot=G.qi.find(s=>s.id===old.id);if(!shot)continue;shot.life-=dt;
+    const x=shot.x,y=shot.y;shot.x+=shot.vx*dt;shot.y+=shot.vy*dt;
+    if(!clearShot(x,y,shot.x,shot.y)||covered(shot.x,shot.y)){shot.life=0;continue;}
+    for(const before of G.enemies.slice()){
+      const e=G.enemies.find(s=>s.id===before.id);shot=G.qi.find(s=>s.id===old.id)||shot;
+      if(!activeFoe(e)||shot.hitIDs.includes(e.id)||Math.hypot(e.x-shot.x,e.y-shot.y)>42)continue;
+      shot.hitIDs.push(e.id);countSkillHit(shot);damageFoe(e,shot.damage,true,true,shot.face,'qi');returnQi(G.qi.find(s=>s.id===old.id)||shot);
+    }
+    shot=G.qi.find(s=>s.id===old.id)||shot;
+    if(!shot.hitIDs.includes('dummy')&&Math.hypot(shot.x-DUMMY_POS.x,shot.y-DUMMY_POS.y)<42){
+      shot.hitIDs.push('dummy');countSkillHit(shot);G.dummy.hit=.15;G.fx.push({type:'songfengSpark',x:DUMMY_POS.x,y:DUMMY_POS.y-15,face:shot.face,heavy:true,t:0,dur:.22});impact('qi',shot.face);returnQi(shot);
+    }
+  }
+  G.qi=G.qi.filter(s=>{if(s.life>0&&s.x>0&&s.x<WORLD.w&&s.y>0&&s.y<WORLD.h)return true;if(!s.counted)trackCombat('misses',1,G,s.orn);return false;});
 }
 function dodge() {
-  const p = G.p; if (!canAct() || p.dgCd > 0 || p.dodge > 0) return;
+  const p = G.p; if (!canAct() || p.dgCd > 0 || p.dodge > 0 || p.sp < 30) return;
   let dx = p.ix || 0, dy = p.iy || 0; const l = Math.hypot(dx, dy);
   if (l < 0.2) { dx = Math.cos(p.face); dy = Math.sin(p.face); } else { dx /= l; dy /= l; }
-  p.dodge = 0.22; p.inv = 0.3; p.dgCd = P_.dgCd; p.dvx = dx * 650; p.dvy = dy * 650; p.trail = [];
+  cancelSwings();p.sp -= 30; p.dodge = 0.23; p.inv = 0.3; p.dgCd = P_.dgCd; p.dvx = dx * 650; p.dvy = dy * 650; p.trail = [];
   burst(p.x, p.y, 5, ['#9B8263', '#B3A58C'], 60, 10); SFX.dodge();
 }
 function useBandage() {
@@ -788,7 +772,7 @@ function hurtPlayer(dmg, fx, fy) {
   burst(p.x, p.y - 30, 6, ['#F08A6A', '#FFFFFF'], 120, 40);
   const d = Math.hypot(p.x - fx, p.y - fy) || 1;
   move(p, ((p.x - fx) / d) * 26, ((p.y - fy) / d) * 26, 16);
-  G.hitstop = Math.max(G.hitstop, 0.07); G.shake = Math.max(G.shake, dmg >= 20 ? 4 : 2); SFX.hurt();
+  impact('hurt',Math.atan2(p.y-fy,p.x-fx));
   if (p.hp <= 0) {
     const sp = G.enemies.find((e) => e.spar && e.hostile);
     if (sp) { p.hp = 1; endSpar(sp, false); return; }
@@ -797,8 +781,9 @@ function hurtPlayer(dmg, fx, fy) {
 }
 function die() { G.deadT = 1.6; G.respawned = false; G.f.defeats++; toast('你败退了……'); SFX.down(); }
 function respawn() {
+  settlePendingSkills(G);G.swings=[];G.qi=[];combatArt.reset();
   const p = G.p;
-  Object.assign(p, { x: RESPAWN.x, y: RESPAWN.y, hp: p.maxHp, mp: p.maxMp, dodge: 0, inv: 0, swing: 0, hurt: 0, trail: [], combo: 0, comboT: 0 });
+  Object.assign(p, { x: RESPAWN.x, y: RESPAWN.y, hp: p.maxHp, mp: p.maxMp, sp: 100, dodge: 0, inv: 0, swing: 0, hurt: 0, trail: [], combo: 0, comboT: 0 });
   for (const e of G.enemies) {
     if(e.kind!=='boss' && e.hp<=0){e.alive=false;continue;}
     if (!e.alive) continue;
@@ -808,7 +793,7 @@ function respawn() {
       if (e.hostile && !e.spar) { G.f.lostBoss = true; if (!G.mem.boss.k.includes('beat_player')) G.mem.boss.k.push('beat_player'); if (!G.log.includes('你在匪营败给了匪首，退回青石渡')) G.log.push('你在匪营败给了匪首，退回青石渡'); }
       e.hostile = false; e.spar = false;
     }
-    Object.assign(e, { x: e.hx, y: e.hy, hp: K.hp, state: 'idle', t: 0, atk: null, plan: null, flash: 0 });
+    Object.assign(e, { x: e.hx, y: e.hy, hp: K.hp, maxHp: K.hp, state: 'idle', t: 0, atk: null, plan: null, flash: 0 });
   }
   toast('你回到青石渡，伤已经养好；用掉的绷带回不来');
   saveNow(false);
@@ -826,7 +811,7 @@ function kill(e) {
     d.inv.med=true;d.f.branch='A';d.stats.branchAt=Math.round(G.time);know(d,'boss','route_A');d.mem.boss.att-=1;lg(d,'你击退匪首，夺回药包；他承认你剑快，却不再信任你');
   });
   if(!r.ok){e.hp=1;return;}
-  G.shake=4;G.hitstop=.18;toast('药包到手。匪首退开，指着旧账箱：有胆也看看那本账');SFX.down();
+  G.hitstop=Math.max(G.hitstop,.08);toast('药包到手。匪首退开，指着旧账箱：有胆也看看那本账');SFX.down();
 }
 function endSpar(e,win) {
   const n=G.f.sparWins+1;
@@ -1376,8 +1361,8 @@ function mapGoals() {
 }
 function paintMap(canvas,full) {
   const g=canvas.getContext('2d'),w=canvas.width,h=canvas.height,sx=w/WORLD.w,sy=h/WORLD.h;
-  g.imageSmoothingEnabled=false;g.fillStyle='#243d34';g.fillRect(0,0,w,h);g.drawImage(MAPBG[0],0,0,w,h);
-  const dot=(x,y,col,r=2)=>{g.fillStyle=col;g.fillRect(x*sx-r,y*sy-r,r*2,r*2);};
+  g.imageSmoothingEnabled=false;g.fillStyle='#476c50';g.fillRect(0,0,w,h);g.drawImage(MAPART,0,0,w,h);
+  const dot=(x,y,col,r=2)=>{g.fillStyle='#183d2c';g.beginPath();g.arc(x*sx,y*sy,r+1,0,Math.PI*2);g.fill();g.fillStyle=col;g.beginPath();g.arc(x*sx,y*sy,r,0,Math.PI*2);g.fill();};
   for(const n of NPCS)dot(n.x,n.y,'#E2BB69',full?4:2);
   for(const e of G.enemies)if(activeFoe(e))dot(e.x,e.y,'#DF755A',full?3:1);
   if(G.f.branch&&!G.chapter.clues.includes('ledger'))dot(LEDGER_POS.x,LEDGER_POS.y,'#8CD4BC',full?4:2);
@@ -1435,10 +1420,10 @@ function updateChapter(dt){
   }
 }
 function drawChapterWorld(g,items,t){
-  if(G.f.branch&&!G.chapter.clues.includes('ledger'))items.push({y:LEDGER_POS.y/U,d:()=>{g.drawImage(OBJ.wood,Math.round(LEDGER_POS.x/U)-(OBJ.wood.width>>1),Math.round(LEDGER_POS.y/U)-OBJ.wood.height+3);R(g,LEDGER_POS.x/U-4,LEDGER_POS.y/U-20,8,9,'#E4D5B0');line(g,LEDGER_POS.x/U-2,LEDGER_POS.y/U-17,LEDGER_POS.x/U+2,LEDGER_POS.y/U-17,'#5A4436');diamond(g,LEDGER_POS.x/U,LEDGER_POS.y/U-27,'#8CD4BC');}});
-  if(!G.chapter.cache)items.push({y:CACHE_POS.y/U,d:()=>{g.drawImage(OBJ.wood,Math.round(CACHE_POS.x/U)-(OBJ.wood.width>>1),Math.round(CACHE_POS.y/U)-OBJ.wood.height+3);P(g,CACHE_POS.x/U,CACHE_POS.y/U-18,'#C1D3AC');}});
+  if(G.f.branch&&!G.chapter.clues.includes('ledger'))items.push({y:LEDGER_POS.y/U,d:()=>{drawArt(g,OBJ.wood,Math.round(LEDGER_POS.x/U)-(spriteW(OBJ.wood)>>1),Math.round(LEDGER_POS.y/U)-spriteH(OBJ.wood)+3);R(g,LEDGER_POS.x/U-4,LEDGER_POS.y/U-20,8,9,'#E4D5B0');line(g,LEDGER_POS.x/U-2,LEDGER_POS.y/U-17,LEDGER_POS.x/U+2,LEDGER_POS.y/U-17,'#5A4436');diamond(g,LEDGER_POS.x/U,LEDGER_POS.y/U-27,'#8CD4BC');}});
+  if(!G.chapter.cache)items.push({y:CACHE_POS.y/U,d:()=>{drawArt(g,OBJ.wood,Math.round(CACHE_POS.x/U)-(spriteW(OBJ.wood)>>1),Math.round(CACHE_POS.y/U)-spriteH(OBJ.wood)+3);P(g,CACHE_POS.x/U,CACHE_POS.y/U-18,'#C1D3AC');}});
   if(G.f.delivered&&G.chapter.decision&&!G.chapter.finalStarted)items.push({y:FINAL_POS.y/U,d:()=>{drawChar(g,'lu','down','idle',FINAL_POS.x/U,FINAL_POS.y/U);diamond(g,FINAL_POS.x/U,FINAL_POS.y/U-31,'#E7D181');}});
-  if(G.ally&&!G.chapter.finalResolved)items.push({y:G.ally.y/U,d:()=>{if(G.ally.id==='boss'&&BOSS.idle)drawBoss(g,{state:'idle',face:G.ally.face||0,flash:0,t:0,an:0},G.ally.x/U,G.ally.y/U,t);else drawChar(g,G.ally.id,dirOf(G.ally.face),'idle',G.ally.x/U,G.ally.y/U);LABELS.push([G.ally.id==='xu'?'许舟 · 支援':'匪首 · 同行',G.ally.x/U,G.ally.y/U-(G.ally.id==='boss'&&BOSS.idle?46:22),'dim']);}});
+  if(G.ally&&!G.chapter.finalResolved)items.push({y:G.ally.y/U,d:()=>{drawChar(g,G.ally.id,dirOf(G.ally.face),'idle',G.ally.x/U,G.ally.y/U);LABELS.push([G.ally.id==='xu'?'许舟 · 支援':'匪首 · 同行',G.ally.x/U,G.ally.y/U-(G.ally.id==='boss'&&BOSS.idle?46:22),'dim']);}});
   for(const a of G.arrows)items.push({y:a.y/U,d:()=>{const len=Math.hypot(a.vx,a.vy);line(g,a.x/U,a.y/U-8,(a.x-a.vx/len*20)/U,(a.y-a.vy/len*20)/U-8,'#E4CF8E');}});
 }
 
@@ -1448,9 +1433,9 @@ function perfRec(ms){if(G.started)PERF.add(ms,frameMode());}
 function perfStats(mode){return PERF.stats(mode);}
 function frameMode(){if(!G.started)return 'startup';if(document.hidden)return 'background';if(G.dlg)return 'dialogue';if(G.logOpen||!$('atlas').hidden||G.done)return 'menu';if(inCombat())return 'combat';if(nearDummy())return 'practice';return G.p.moving?'move':'idle';}
 function nearDummy(){return Math.hypot(G.p.x-DUMMY_POS.x,G.p.y-DUMMY_POS.y)<190;}
-function trackCombat(key,n=1){
-  const r=Playtest.ensure(G);r.combat[key]=(r.combat[key]||0)+n;
-  if(!r.byOrn)r.byOrn={};const id=G.orn||'基础剑';if(!r.byOrn[id])r.byOrn[id]={casts:0,hits:0,misses:0,noMp:0,interrupts:0,counters:0,qiReturned:0};r.byOrn[id][key]+=n;
+function trackCombat(key,n=1,state=G,orn=state.orn||'基础剑'){
+  const r=Playtest.ensure(state);r.combat[key]=(r.combat[key]||0)+n;
+  if(!r.byOrn)r.byOrn={};const id=orn;if(!r.byOrn[id])r.byOrn[id]={casts:0,hits:0,misses:0,noMp:0,interrupts:0,counters:0,qiReturned:0};r.byOrn[id][key]+=n;
 }
 let battle=null;
 function finishBattle(reason='离开战斗范围'){
@@ -1471,7 +1456,7 @@ function syncBattle(){
 function perfText(){const s=perfStats(),combat=perfStats('combat');return s?'性能（本页前台）：'+s.frames+' 帧 / '+(s.durationMs/1000).toFixed(1)+' 秒 · p95≤'+s.p95+'ms（1ms分辨率）· 最大 '+s.max.toFixed(1)+'ms · >100ms '+s.over100+' / >200ms '+s.over200+'；战斗段 '+(combat?(combat.durationMs/1000).toFixed(1)+' 秒':'尚无样本')+(combat?.durationMs>=300000?'（样本累计≥5分钟，不代表连续实机达标）':'（不足5分钟，不能据此判定达标）'):'性能：本页尚无采样';}
 function recordPayload(){
   syncBattle();const r=Playtest.ensure(G,{debug:DEBUG});
-  return {build:'V0.4-20261023-na',session:PAGE_SESSION,exportedAt:new Date().toISOString(),evidence:r.debugUsed?'调试记录':r.profile.operator==='真人试玩'?'真人自报、正常输入记录':r.profile.operator==='自动化输入检查'?'自动化正常输入检查':'正常入口、操作者未声明',coverage:r.coverage,record:JSON.parse(JSON.stringify(r)),progress:{branch:G.f.branch,decision:G.chapter.decision,finished:G.chapter.finalResolved,inventory:{...G.inv},ornament:G.orn,skills:[...G.chapter.skills]},performance:{scope:'本页会话；p95向上取整至1ms，计入全部前台长帧；后台及恢复跨界帧排除',all:perfStats(),combat:perfStats('combat'),practice:perfStats('practice'),move:perfStats('move'),dialogue:perfStats('dialogue'),menu:perfStats('menu'),idle:perfStats('idle')},environment:{userAgent:navigator.userAgent,viewport:[innerWidth,innerHeight],pixelRatio:devicePixelRatio,standalone:matchMedia('(display-mode: standalone)').matches},limitations:['旧存档升级前的事件不补造','正常入口不证明操作者为真人','调试记录不能作为自然试玩样本','未进行五人真实实机验收']};
+  return {build:'V0.4-songfeng-clear1-20261023',session:PAGE_SESSION,exportedAt:new Date().toISOString(),evidence:r.debugUsed?'调试记录':r.profile.operator==='真人试玩'?'真人自报、正常输入记录':r.profile.operator==='自动化输入检查'?'自动化正常输入检查':'正常入口、操作者未声明',coverage:r.coverage,record:JSON.parse(JSON.stringify(r)),progress:{branch:G.f.branch,decision:G.chapter.decision,finished:G.chapter.finalResolved,inventory:{...G.inv},ornament:G.orn,skills:[...G.chapter.skills]},performance:{scope:'本页会话；p95向上取整至1ms，计入全部前台长帧；后台及恢复跨界帧排除',all:perfStats(),combat:perfStats('combat'),practice:perfStats('practice'),move:perfStats('move'),dialogue:perfStats('dialogue'),menu:perfStats('menu'),idle:perfStats('idle')},environment:{userAgent:navigator.userAgent,viewport:[innerWidth,innerHeight],pixelRatio:devicePixelRatio,standalone:matchMedia('(display-mode: standalone)').matches},limitations:['旧存档升级前的事件不补造','正常入口不证明操作者为真人','调试记录不能作为自然试玩样本','未进行五人真实实机验收']};
 }
 function fmtTime(s) { const m = Math.floor(s / 60), r = Math.floor(s % 60); return m + ' 分 ' + (r < 10 ? '0' : '') + r + ' 秒'; }
 function recordText() {
@@ -1479,7 +1464,7 @@ function recordText() {
   const pad = (n) => (n < 10 ? '0' : '') + n;
   const route = f.branch === 'A' ? 'A（武力夺回）' : f.branch === 'B' ? 'B（交涉交换）' + (f.bought ? '，买了匪首的料' : '，没买匪首的料') : '还没取回药包';
   return [
-    '青石渡风波 V0.4 试玩记录',
+    '青石渡风波 V0.4 松风版试玩记录',
     '会话：'+PAGE_SESSION,
     '来源：'+(r.debugUsed?'调试记录，不计自然试玩':'正常输入；操作者 '+r.profile.operator)+' · 覆盖：'+(r.coverage==='legacy'?'历史存档续玩，早期事件缺失':'新局起记录'),
     '招式：施放 '+r.combat.casts+' / 有效命中 '+r.combat.hits+' / 空挥 '+r.combat.misses+' / 内力不足 '+r.combat.noMp+'；破势追击 '+r.combat.counters+' 次，返内力 '+r.combat.qiReturned.toFixed(1),
@@ -1547,23 +1532,37 @@ addEventListener('keydown', (e) => {
     return;
   }
   if(!$('atlas').hidden){if(e.code==='Escape'||e.code==='KeyM')toggleAtlas(false);return;}
+  if(e.code==='Escape'&&G.started&&!G.dlg&&!G.logOpen&&$('atlas').hidden){pauseGame(!G.manualPaused);return;}
   if (G.logOpen && e.code === 'Escape') { toggleLog(false); return; }
   if (MOVE[e.code]) { keys.add(e.code); return; }
   if (e.repeat) return;
   if(e.code==='KeyM'){toggleAtlas();return;}
-  if (e.code === 'KeyJ') attack();
-  else if (e.code === 'KeyK') skill(0);
-  else if(e.code==='KeyI')skill(1);
-  else if (e.code === 'Space' || e.code === 'KeyL') dodge();
+  if (['KeyJ','KeyK','KeyI','Space','KeyL'].includes(e.code)){keys.add(e.code);pending[({KeyJ:'attack',KeyK:'skill',KeyI:'skill2',Space:'dodge',KeyL:'dodge'})[e.code]]=.14;startAudio();}
   else if (e.code === 'KeyE' || e.code === 'Enter') interact();
   else if (e.code === 'KeyH') useBandage();
 });
 addEventListener('keyup', (e) => keys.delete(e.code));
-function resetInput(){keys.clear();stick.id=null;stick.dx=stick.dy=0;stickHome();document.querySelectorAll('.press').forEach(e=>e.classList.remove('press'));}
+function resetInput(){keys.clear();heldActions.clear();for(const key of Object.keys(pending))pending[key]=0;combatEvents.length=0;combatAudio?.stop();stick.id=null;stick.dx=stick.dy=0;stickHome();document.querySelectorAll('.press').forEach(e=>e.classList.remove('press'));}
 addEventListener('blur',resetInput);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)finishBattle('切到后台');PERF.visibility(document.hidden);resetInput();if(G.started){Playtest.event(G,document.hidden?'background':'foreground');saveNow(false);}});
 addEventListener('pagehide',()=>{if(G.started){finishBattle('页面离开');saveNow(false);}});
 
+const heldActions=new Map(), pending={attack:0,skill:0,skill2:0,dodge:0};
+const actionCodes={attack:['KeyJ'],skill:['KeyK'],skill2:['KeyI'],dodge:['Space','KeyL']};
+const heldCombat=name=>[...heldActions.values()].includes(name)||actionCodes[name].some(code=>keys.has(code));
+function pauseGame(on=true){G.manualPaused=on;$('pauseMenu').hidden=!on;resetInput();}
+$('bPause').onclick=()=>pauseGame();$('bResume').onclick=()=>pauseGame(false);
+$('bPauseMap').onclick=()=>{if(inCombat()){let note=$('pauseMenu').querySelector('.battle-help');if(!note){note=document.createElement('p');note.className='battle-help';$('bPauseMap').after(note);}note.textContent='战斗中无法查看手记或换招，先脱身。';return;}pauseGame(false);toggleAtlas(true);};
+$('bPauseFull').onclick=()=>{
+  let note=$('pauseMenu').querySelector('.full-help');
+  if(!note){note=document.createElement('p');note.className='full-help';$('bPauseFull').after(note);}
+  note.textContent=standaloneMode()?'已在主屏幕模式中。':fullscreenRequest()?'已向浏览器请求全屏；若未进入，可继续横屏试玩。':'这个浏览器不提供网页全屏；iPhone 可分享→添加到主屏幕后横屏打开。';
+  if(!standaloneMode())$('bFull').click();
+};
+$('bSound').onclick=()=>{soundEnabled=!soundEnabled;$('bSound').innerHTML='音<span>'+(soundEnabled?'开':'关')+'</span>';$('bSound').setAttribute('aria-label',soundEnabled?'关闭声音':'开启声音');if(soundEnabled)startAudio();else{combatAudio?.stop();combatEvents.length=0;}};
+addEventListener('blur',()=>{if(G.started&&!paused())pauseGame();});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&G.started)pauseGame();});
+addEventListener('orientationchange',()=>{if(G.started&&innerHeight>innerWidth)pauseGame();});
 const stick = { id: null, ox: 0, oy: 0, dx: 0, dy: 0 };
 const zone = $('stickzone'), stickEl = $('stick'), knob = $('knob');
 function stickHome() {
@@ -1596,10 +1595,12 @@ function bindBtn(el, fn) {
   el.addEventListener('pointerup', up); el.addEventListener('pointerleave', up); el.addEventListener('pointercancel', up);
   el.addEventListener('click', (e) => { if (e.detail === 0) fn(); });
 }
-bindBtn($('bAtk'), attack);
-bindBtn($('bSk'),()=>skill(0));
-bindBtn($('bSk2'),()=>skill(1));
-bindBtn($('bDg'), dodge);
+for(const [id,action] of [['bAtk','attack'],['bSk','skill'],['bSk2','skill2'],['bDg','dodge']]){
+  const el=$(id);el.addEventListener('pointerdown',e=>{if(!canAct())return;e.preventDefault();e.stopPropagation();el.setPointerCapture(e.pointerId);heldActions.set(e.pointerId,action);pending[action]=.14;el.classList.add('press');startAudio();});
+  const release=e=>{heldActions.delete(e.pointerId);el.classList.remove('press');if(e.type==='pointercancel')pending[action]=0;};
+  for(const event of ['pointerup','pointercancel','lostpointercapture'])el.addEventListener(event,release);
+  el.addEventListener('click',e=>{if(e.detail===0)pending[action]=.14;});
+}
 bindBtn($('interact'), interact);
 bindBtn($('nearTalk'),interact);
 // iOS 的双击缩放不能只依赖 CSS；这些控件已经在 pointerdown 执行动作。
@@ -1616,8 +1617,9 @@ $('bCopy').addEventListener('click', () => {
   const fallback = () => { const ta = $('recTa'); ta.hidden = false; ta.value = text; ta.focus(); ta.select(); toast('复制不了，已经全选，手动复制即可'); };
   try { navigator.clipboard.writeText(text).then(() => toast('试玩记录已复制'), fallback); } catch (e) { fallback(); }
 });
-function startAudio() { try { AC = AC || new (window.AudioContext || window.webkitAudioContext)(); if (AC.state === 'suspended') AC.resume(); } catch (e) { AC = null; } }
+function startAudio() { if(!soundEnabled)return;try { AC ||= new (window.AudioContext||window.webkitAudioContext)();combatAudio ||= createCombatAudio(AC);AC.resume(); } catch { soundEnabled=false;toast('当前浏览器无法开启声音'); } }
 function begin() {
+  G.manualPaused=false;$('pauseMenu').hidden=true;resetInput();combatArt.reset();
   Playtest.ensure(G,{debug:DEBUG});Playtest.event(G,'session_start',{session:PAGE_SESSION});
   startAudio(); G.started = true; $('start').hidden = true;saveNow(false);
   if (!G.f.accepted) tip('move', '左半边按住拖动来走（键盘 WASD）。先去找渡口的沈青，她头顶有金色记号');
@@ -1660,6 +1662,13 @@ $('bAgain').addEventListener('click', () => { if(!clearSave())return; G = newGam
 // ---------------------------------------------------------------- 更新
 function update(dt) {
   G.time += dt;
+  if(heldCombat('attack')||pending.attack>0)attack();
+  for(const [name,slot] of [['skill',0],['skill2',1]])if((heldCombat(name)||pending[name]>0)&&G.chapter.cooldowns[slot]<=0){
+    if(G.p.mp>=Chapter.SKILLS[G.chapter.skills[slot]].cost){skill(slot);pending[name]=0;}
+    else if(pending[name]>0){skill(slot);pending[name]=0;}
+  }
+  if(heldCombat('dodge')||pending.dodge>0)dodge();
+  for(const key of Object.keys(pending))pending[key]=Math.max(0,pending[key]-dt);
   const p = G.p;
   for (const k of ['atkCd', 'skCd', 'dgCd', 'inv', 'swing', 'hurt', 'comboT']) p[k] = Math.max(0, p[k] - dt);
   G.shake = Math.max(0, G.shake - dt * 14);
@@ -1673,18 +1682,19 @@ function update(dt) {
   for (const k of keys) { const m = MOVE[k]; if (m) { ix += m[0]; iy += m[1]; } }
   const il = Math.hypot(ix, iy); if (il > 1) { ix /= il; iy /= il; }
   p.ix = ix; p.iy = iy; p.moving = false;
+  p.sp=Math.min(100,p.sp+21*dt);
   p.mp = Math.min(p.maxMp, p.mp + (inCombat()||nearDummy()?1.5:P_.mpRegen) * dt);
   G.chapter.cooldowns=G.chapter.cooldowns.map(n=>Math.max(0,n-dt));
   if (p.dodge > 0) {
     p.dodge -= dt; move(p, p.dvx * dt, p.dvy * dt, 16);
-    p.trail.push({ x: p.x, y: p.y, t: 0.25 });
   } else if (Math.hypot(ix, iy) > 0.08) {
     const slow = p.swing > 0 ? 0.35 : 1;
     move(p, ix * P_.speed * slow * dt, iy * P_.speed * slow * dt, 16);
     if (p.swing <= 0) p.face = Math.atan2(iy, ix);
     p.moving = true; p.an += dt * Math.min(1, Math.hypot(ix, iy) * 1.3);
   }
-  p.trail = p.trail.filter((t) => (t.t -= dt) > 0);
+  p.trail=[];
+  updateStrikes(dt);
   for (const e of G.enemies) updEnemy(e, dt);
   updateChapter(dt);
   updDummy(dt);
@@ -1701,13 +1711,13 @@ function updFx(dt) {
   });
 }
 
-// ---------------------------------------------------------------- 绘制：先画到低分辨率缓冲，再整数倍放大
+// ---------------------------------------------------------------- 绘制：场景缓冲与屏幕像素一致，逻辑地图尺寸不变
 let DPR = 1, VW = 0, VH = 0, Z = 3;
 const BUF = cnv(1, 1), bg = BUF.getContext('2d');
 const LBUF = cnv(1, 1), lgc = LBUF.getContext('2d');
 const AMB = [];
 // 光照：越往山里越暗（青石渡傍晚、山道薄暮、匪营入夜），灯笼、营火、铁匠铺和人物身边各有一圈暖光
-function ambientAt(px) { return px < 240 ? 0.1 : px < 300 ? 0.1 + ((px - 240) / 60) * 0.14 : px < 760 ? 0.24 : px < 840 ? 0.24 + ((px - 760) / 80) * 0.26 : 0.5; }
+function ambientAt(px) { return px < 240 ? .035 : px < 300 ? .035 + ((px - 240) / 60) * .025 : px < 760 ? .06 : px < 840 ? .06 + ((px - 760) / 80) * .06 : .12; }
 function lightPass(g, ox, oy, BW, BH, t) {
   const lights = [];
   for (const [k, x, y] of PROPS) if (k === 'lantern') lights.push({ x: x + (OBJ.lantern.width > 9 ? 11 : 7), y: y + (OBJ.lantern.width > 9 ? 14 : 18), r: 30, cut: 0.95, col: [255, 170, 90], a: 0.2 + 0.03 * Math.sin(t * 7 + x) });
@@ -1741,12 +1751,12 @@ function resize() {
   const viewport=window.visualViewport;
   app.style.setProperty('--app-width',Math.round(viewport?viewport.width:innerWidth)+'px');
   app.style.setProperty('--app-height',Math.round(viewport?viewport.height:innerHeight)+'px');
-  DPR = Math.min(2, window.devicePixelRatio || 1);
+  DPR = window.devicePixelRatio || 1;
   VW = app.clientWidth; VH = app.clientHeight;
   cv.width = Math.max(1, Math.round(VW * DPR)); cv.height = Math.max(1, Math.round(VH * DPR));
   Z = clamp(Math.round(VH / 170), 2, 5);
-  BUF.width = Math.ceil(VW / Z) + 1; BUF.height = Math.ceil(VH / Z) + 1;
-  LBUF.width = BUF.width; LBUF.height = BUF.height;
+  BUF.width=cv.width;BUF.height=cv.height;
+  LBUF.width=Math.ceil(VW/Z)+1;LBUF.height=Math.ceil(VH/Z)+1;
   if (stick.id === null) stickHome();
 }
 addEventListener('resize', resize);
@@ -1781,14 +1791,16 @@ function diamond(g, x, y, col) { R(g, x - 1, y - 3, 3, 1, col); R(g, x - 2, y - 
 const LABELS = [];
 let hudRects = [];
 function draw(realT) {
-  const p = G.p, g = bg, BW = BUF.width, BH = BUF.height, t = G.started ? G.time : realT;
-  let ox = Math.round(p.x / U) - Math.floor(BW / 2), oy = Math.round(p.y / U) - Math.floor(BH / 2);
+  const shake=combatArt.prepare(G,paused(),realT),p = G.p, g = bg, BW = VW/Z, BH = VH/Z, scale=Z*DPR, t = G.started ? G.time : realT;
+  let ox=p.x/U-BW/2,oy=p.y/U-BH/2;
   // 镜头不出地图：地图比画面宽（高）时夹在边内，比画面小就居中
   const MW = MAP_W * 16, MH = MAP_H * 16;
-  ox = BW < MW ? clamp(ox, 0, MW - BW) : Math.floor((MW - BW) / 2); oy = BH < MH ? clamp(oy, 0, MH - BH) : Math.floor((MH - BH) / 2);
-  if (G.shake > 0.3) { ox += Math.round((Math.random() - 0.5) * G.shake); oy += Math.round((Math.random() - 0.5) * G.shake); }
-  g.setTransform(1, 0, 0, 1, 0, 0); g.imageSmoothingEnabled = false;
-  g.fillStyle = '#0E0B09'; g.fillRect(0, 0, BW, BH);
+  ox = BW < MW ? clamp(ox, 0, MW - BW) : (MW-BW)/2; oy=BH<MH?clamp(oy,0,MH-BH):(MH-BH)/2;
+  const motionScale=matchMedia('(prefers-reduced-motion: reduce)').matches?.25:1;ox+=shake.x/U*motionScale;oy+=shake.y/U*motionScale;
+  ox=Math.round(ox*scale)/scale;oy=Math.round(oy*scale)/scale;
+  g.setTransform(1,0,0,1,0,0);g.globalAlpha=1;g.globalCompositeOperation='source-over';
+  g.fillStyle='#0E0B09';g.fillRect(0,0,BUF.width,BUF.height);
+  g.setTransform(scale,0,0,scale,0,0);g.imageSmoothingEnabled=false;
   const wf = Math.floor(t * 2) % 3, c0 = Math.floor(ox / 16), r0 = Math.floor(oy / 16);
   for (let r = r0; r <= r0 + Math.ceil(BH / 16) + 1; r++) for (let c = c0; c <= c0 + Math.ceil(BW / 16) + 1; c++) if (r < 0 || c < 0 || r >= MAP_H || c >= MAP_W) g.drawImage(tileAt(c, r, wf), c * 16 - ox, r * 16 - oy);
   g.drawImage(MAPBG[wf], -ox, -oy);
@@ -1802,11 +1814,11 @@ function draw(realT) {
   for (const fx of G.fx) if (fx.type === 'zone' && Math.floor(fx.t * 30) % 2 === 0) drawZonePx(g, Math.round(fx.x / U), Math.round(fx.y / U), fx, fx.face, 1, true);
   const items = [];
   drawChapterWorld(g, items, t);
-  for (const [k, x, y] of PROPS) { const im = OBJ[k], [dx, dy] = propXY(k, x, y); items.push({ y: SIZE[k] ? y + SIZE[k][1] : dy + im.height, d: () => g.drawImage(im, dx, dy) }); }
-  { const im = FIRE[Math.floor(t * 8) % 3]; items.push({ y: FIREPOS[1] + 22, d: () => { g.drawImage(OBJ.firepit, FIREPOS[0] - 8, FIREPOS[1] - 2); g.fillStyle = 'rgba(242,160,60,' + (0.13 + 0.05 * Math.sin(t * 9)) + ')'; for (let yy = -12; yy <= 12; yy++) for (let xx = -14; xx <= 14; xx++) if ((xx + yy) % 2 === 0 && xx * xx + yy * yy < 160) g.fillRect(FIREPOS[0] + 8 + xx, FIREPOS[1] + 12 + yy, 1, 1); g.drawImage(im, FIREPOS[0], FIREPOS[1]); } }); }
-  { const dd = G.dummy, dx = Math.round(DUMMY_POS.x / U), dy = Math.round(DUMMY_POS.y / U); items.push({ y: dy, d: () => { const wob = dd.state === 'stagger' ? Math.round(Math.sin(t * 30)) : dd.state === 'windup' ? -1 : 0; g.drawImage(dd.hit > 0 ? OBJ.dummyHit : OBJ.dummy, dx - 9 + wob, dy - 23); if (dd.state === 'windup') { drawBang(g, dx, dy - 31); if (G.orn === '破势') LABELS.push(['可打断', dx, dy - 40, 'red']); } LABELS.push(['木人桩', dx, dy - 27, 'dim']); } }); }
-  if (!f.matPicked) items.push({ y: CRATE.y / U + 2, d: () => { g.drawImage(OBJ.wood, Math.round(CRATE.x / U) - (OBJ.wood.width >> 1), Math.round(CRATE.y / U) - OBJ.wood.height + 2); diamond(g, Math.round(CRATE.x / U), Math.round(CRATE.y / U) - 20 - (Math.floor(t * 2) % 2), '#D8B66A'); } });
-  if (f.asked && !inv.med && f.branch === null) HERBS.forEach((h, i) => { if (!f.herbs[i]) items.push({ y: h.y / U, d: () => g.drawImage(OBJ.herb, Math.round(h.x / U) - (OBJ.herb.width >> 1), Math.round(h.y / U) - OBJ.herb.height + 1) }); });
+  for (const [k, x, y] of PROPS) { const im = k==='tree2'&&x%3===0?OBJ.bamboo:OBJ[k], [baseX,baseY] = propXY(k,x,y),dx=baseX+(spriteW(OBJ[k])-spriteW(im))/2,dy=baseY+spriteH(OBJ[k])-spriteH(im); items.push({ y: SIZE[k] ? y + SIZE[k][1] : dy + spriteH(im), d: () => drawArt(g,im,dx,dy) }); }
+  items.push({y:FIREPOS[1]+22,d:()=>{g.globalAlpha=.9+Math.sin(t*8)*.1;drawArt(g,OBJ.firepit,FIREPOS[0]-4,FIREPOS[1]-6);g.globalAlpha=1;}});
+  { const dd = G.dummy, dx = Math.round(DUMMY_POS.x / U), dy = Math.round(DUMMY_POS.y / U); items.push({ y: dy, d: () => { const wob = dd.state === 'stagger' ? Math.round(Math.sin(t * 30)) : dd.state === 'windup' ? -1 : 0; drawArt(g,dd.hit > 0 ? OBJ.dummyHit : OBJ.dummy, dx - 9 + wob, dy - 23); if (dd.state === 'windup') { drawBang(g, dx, dy - 31); if (G.orn === '破势') LABELS.push(['可打断', dx, dy - 40, 'red']); } LABELS.push(['木人桩', dx, dy - 27, 'dim']); } }); }
+  if (!f.matPicked) items.push({ y: CRATE.y / U + 2, d: () => { drawArt(g,OBJ.wood, Math.round(CRATE.x / U) - (spriteW(OBJ.wood) >> 1), Math.round(CRATE.y / U) - spriteH(OBJ.wood) + 2); diamond(g, Math.round(CRATE.x / U), Math.round(CRATE.y / U) - 20 - (Math.floor(t * 2) % 2), '#D8B66A'); } });
+  if (f.asked && !inv.med && f.branch === null) HERBS.forEach((h, i) => { if (!f.herbs[i]) items.push({ y: h.y / U, d: () => drawArt(g,OBJ.herb, Math.round(h.x / U) - (spriteW(OBJ.herb) >> 1), Math.round(h.y / U) - spriteH(OBJ.herb) + 1) }); });
   LABELS.length = 0;
   for (const it of INSPECT) if (!f.inspected[it.id] && it.id !== 'sign') items.push({ y: it.y / U + 1, d: () => { P(g, Math.round(it.x / U), Math.round(it.y / U) - 26 - (Math.floor(t * 2) % 2), '#F2D27A'); P(g, Math.round(it.x / U), Math.round(it.y / U) - 28 - (Math.floor(t * 2) % 2), '#F2D27A'); P(g, Math.round(it.x / U), Math.round(it.y / U) - 29 - (Math.floor(t * 2) % 2), '#F2D27A'); } });
   for (const n of NPCS.filter(n=>!(G.ally?.id===n.id&&!G.chapter.finalResolved))) items.push({ y: n.y / U, d: () => {
@@ -1820,30 +1832,12 @@ function draw(realT) {
     if (!e.alive || (e.kind==='boss'&&G.ally?.id==='boss'&&!G.chapter.finalResolved)) continue;
     items.push({ y: e.y / U, d: () => {
       const K = KIND[e.kind], ex = e.x / U, ey = e.y / U;
-      if (e.state === 'down' && BOSS.idle) { drawBoss(g, e, ex, ey, t); LABELS.push(['匪首', ex, ey - 44]); return; }
-      if (e.state === 'down') {
-        const s = SPR.boss.down.idle.n; g.fillStyle = 'rgba(0,0,0,0.34)'; g.fillRect(Math.round(ex) - 6, Math.round(ey) - 1, 12, 2);
-        g.drawImage(s, 0, 0, s.width, 15, Math.round(ex) - 9, Math.round(ey) - 15, s.width, 15);
-        LABELS.push(['匪首', ex, ey - 20]); return;
-      }
-      if (e.state === 'dying') {
-        const k = e.dieT / 0.6;
-        g.save(); g.globalAlpha = Math.max(0, k); g.translate(Math.round(ex), Math.round(ey) - 4); g.rotate(Math.PI / 2 * (1 - k));
-        if (SHEET.bandit) g.drawImage(SHEET.bandit.n, 48, 0, 16, 16, -8, -11, 16, 16); else g.drawImage(SPR.bandit.right.idle.n, -8, -15);
-        g.restore(); return;
-      }
-      const bossArt = e.kind === 'boss' && BOSS.idle;
-      const dir = dirOf(e.face), fr = e.state === 'recover' && e.t < 0.2 ? 'atk' : e.moving ? WALK[Math.floor(e.an * 8) % 4] : 'idle';
-      const lean = e.state === 'windup' ? -1 : e.state === 'recover' && e.t < 0.15 ? 1 : 0;
-      const ldx = Math.round(Math.cos(e.face) * lean), ldy = Math.round(Math.sin(e.face) * lean * 0.5);
-      const wang = e.state === 'windup' ? e.face + Math.PI * 0.8 * (e.atk && e.atk.shape === 'line' ? 0.2 : 1) : e.state === 'recover' && e.t < 0.2 ? e.face + 0.5 : e.state === 'dash' ? e.face : e.face + 1.1;
-      const behind = Math.sin(wang) < -0.2;
-      if (behind) drawWeapon(g, e.kind, ex + ldx, ey + ldy, wang, true);
-      if (bossArt) drawBoss(g, e, ex, ey, t); else drawChar(g, e.kind, dir, fr, ex, ey, { white: e.flash > 0, dx: ldx, dy: ldy });
-      if (e.kind === 'archer') { g.strokeStyle = '#D8B66A'; g.lineWidth = 1; g.beginPath(); g.arc(ex + Math.cos(e.face) * 5, ey - 7, 5, e.face - 1.2, e.face + 1.2); g.stroke(); }
-      if (!behind) drawWeapon(g, e.kind, ex + ldx, ey + ldy, wang);
-      const top = Math.round(ey) - (bossArt ? 44 : 21);
-      if (e.kind === 'boss' && !e.hostile) LABELS.push(['匪首', ex, ey - (bossArt ? 46 : 25)]);
+      combatArt.enemy(g,e,U);
+      if(e.state==='dying')return;
+      if(e.state==='down'){LABELS.push(['匪首',ex,ey-24]);return;}
+      const bossArt=e.kind==='boss';
+      const top = Math.round(ey) - (bossArt ? 32 : 19);
+      if (e.kind === 'boss' && !e.hostile) LABELS.push(['匪首', ex, ey - (bossArt ? 34 : 25)]);
       else if (e.hostile && e.kind !== 'boss' && e.hp < K.hp) {
         const w = 14, x0 = Math.round(ex - w / 2);
         R(g, x0 - 1, top - 1, w + 2, 4, INK); R(g, x0, top, w, 2, '#3B2F28'); R(g, x0, top, Math.max(0, Math.round(w * e.hp / K.hp)), 2, '#D9553A'); R(g, x0, top, Math.max(0, Math.round(w * e.hp / K.hp)), 1, '#F08A6A');
@@ -1852,40 +1846,14 @@ function draw(realT) {
       if(e.kind!=='boss')LABELS.push([K.name,ex,ey-28,e.kind==='archer'?'red':'dim']);
       if (e.state === 'windup') {
         drawBang(g, Math.round(ex), top - 8, e.atk.inter ? '#E0603F' : '#F2A03C');
-        if (e.atk.inter && G.orn === '破势') LABELS.push(['可打断', ex, ey - (bossArt ? 56 : 34), 'red']);
+        if (e.atk.inter && G.orn === '破势') LABELS.push(['可打断', ex, ey - (bossArt ? 44 : 30), 'red']);
       }
       if (e.state === 'stagger') for (let k = 0; k < 3; k++) { const a = t * 6 + k * 2.1; P(g, Math.round(ex + Math.cos(a) * 7), Math.round(top - 2 + Math.sin(a) * 2), '#F2D27A'); }
     } });
   }
-  items.push({ y: p.y / U, d: () => {
-    for (const tr of p.trail) drawChar(g, 'xia', dirOf(p.face), 'w1', tr.x / U, tr.y / U, { alpha: tr.t * 1.6, noShadow: true });
-    const fr = p.swing > 0 ? 'atk' : p.moving ? WALK[Math.floor(p.an * 8) % 4] : 'idle';
-    const blink = p.inv > 0 && Math.floor(t * 30) % 2 === 0;
-    const sw = p.swing > 0 ? 1 - p.swing / p.swingDur : -1;
-    const half = p.swingKind === 'sk' ? (Chapter.SKILLS[p.activeSkill]?.half||.95) : p.swingKind === 'atk3' ? 1.35 : 1.15;
-    const lean = sw >= 0 ? 1 : 0, ldx = Math.round(Math.cos(p.face) * lean), ldy = Math.round(Math.sin(p.face) * lean * 0.5);
-    const wang = sw >= 0 ? p.face - half + sw * half * 2 * (p.combo === 1 ? -1 : 1) + (p.combo === 1 ? half * 2 : 0) : p.face + 1.2;
-    const behind = Math.sin(wang) < -0.2;
-    if (behind) drawWeapon(g, 'xia', p.x / U + ldx, p.y / U + ldy, wang, true);
-    drawChar(g, 'xia', dirOf(p.face), fr, p.x / U, p.y / U, { alpha: blink ? 0.45 : 1, red: p.hurt > 0, dx: ldx, dy: ldy });
-    if (!behind) drawWeapon(g, 'xia', p.x / U + ldx, p.y / U + ldy, wang);
-    if (sw >= 0) {
-      // 月牙刀光：比人大一圈，中段最厚、两头收尖，挥完后整体淡出；剑招半径按所带招式的攻击距离
-      const sk = p.swingKind === 'sk', r = sk ? Math.round((Chapter.SKILLS[p.activeSkill]?.range || 108) / U) : p.swingKind === 'atk3' ? 28 : 24, maxT = sk ? 9 : p.swingKind === 'atk3' ? 8 : 6;
-      const edge = sk ? (G.orn === '破势' ? '#F08A6A' : '#7FD0BE') : '#BFD8F2';
-      const lo = -half, hi = -half + Math.min(1, sw * 1.4) * half * 2, fade = sw < 0.7 ? 1 : 1 - (sw - 0.7) / 0.3;
-      const rev = p.combo === 1 && !sk;
-      for (let a = lo; a <= hi; a += 0.025) {
-        const k = (a - lo) / Math.max(0.001, hi - lo), th = Math.max(1, Math.round(maxT * Math.sin(Math.PI * Math.min(1, k)) * fade));
-        const aa = rev ? p.face - a : p.face + a, cx = p.x / U, cy = p.y / U - 7;
-        for (let j = 0; j < th; j++) {
-          g.fillStyle = j === 0 ? edge : j < th - 1 ? 'rgba(255,255,255,' + (0.95 * fade).toFixed(2) + ')' : 'rgba(255,255,255,' + (0.4 * fade).toFixed(2) + ')';
-          const rr = r - j; g.fillRect(Math.round(cx + Math.cos(aa) * rr), Math.round(cy + Math.sin(aa) * rr * 0.8), 1, 1);
-        }
-      }
-    }
-  } });
+  items.push({y:p.y/U,d:()=>combatArt.hero(g,G,U)});
   items.sort((a, b) => a.y - b.y).forEach((it) => it.d());
+  combatArt.effects(g,G,U);
   for (const fx of G.fx) if (fx.type === 'pt') { g.globalAlpha = Math.max(0, 1 - fx.t / fx.dur); g.fillStyle = fx.col; g.fillRect(Math.round(fx.x / U), Math.round(fx.y / U), 1, 1); }
   g.globalAlpha = 1;
   // 命中闪光：两道交叉的黄白光条
@@ -1900,23 +1868,21 @@ function draw(realT) {
   ambT += 1 / 60;
   if (ambT > 0.4) { ambT = 0; AMB.push({ x: 164 + Math.random() * 2, y: 189, t: 0, dur: 2.2, vx: 2 + Math.random() * 3 }); }
   for (let i = AMB.length - 1; i >= 0; i--) { const a = AMB[i]; a.t += 1 / 60; if (a.t > a.dur) { AMB.splice(i, 1); continue; } const k = a.t / a.dur; g.fillStyle = 'rgba(190,184,172,' + (0.45 * (1 - k)) + ')'; const s = 1 + Math.floor(k * 3); g.fillRect(Math.round(a.x + a.vx * a.t * 3), Math.round(a.y - a.t * 9), s, s); }
-  g.setTransform(1, 0, 0, 1, 0, 0);
+  g.setTransform(scale,0,0,scale,0,0);
   lightPass(g, ox, oy, BW, BH, t);
 
-  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.imageSmoothingEnabled = false;
-  ctx.fillStyle = '#0E0B09'; ctx.fillRect(0, 0, cv.width, cv.height);
-  const zz = Z * DPR, offX = Math.round((VW * DPR - BW * zz) / 2), offY = Math.round((VH * DPR - BH * zz) / 2);
-  ctx.drawImage(BUF, 0, 0, BW, BH, offX, offY, BW * zz, BH * zz);
-  ctx.setTransform(DPR, 0, 0, DPR, offX / DPR, offY / DPR);
+  ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='copy';
+  ctx.drawImage(BUF,0,0);ctx.globalCompositeOperation='source-over';
+  ctx.setTransform(DPR,0,0,DPR,0,0);
   const sx = (x) => (x - ox) * Z, sy = (y) => (y - oy) * Z;
   ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
   const blocked = (X, Y, w, h) => hudRects.some((r) => X < r.right && X + w > r.left && Y < r.bottom && Y + h > r.top);
   for (const [text, x, y, kind] of LABELS) {
     ctx.font = '700 13px ' + SERIF; const w = Math.ceil(ctx.measureText(text).width) + 14, X = Math.round(sx(x) - w / 2), Y = Math.round(sy(y) - 22);
-    if (blocked(X + offX / DPR, Y + offY / DPR, w, 22)) continue;
-    ctx.fillStyle = '#0E0B09'; ctx.fillRect(X - 3, Y - 3, w + 6, 28);
-    ctx.fillStyle = kind === 'red' ? '#E0603F' : kind === 'dim' ? 'rgba(28,22,18,0.7)' : 'rgba(28,22,18,0.92)'; ctx.fillRect(X, Y, w, 22);
-    ctx.fillStyle = kind === 'red' ? '#14110E' : kind === 'dim' ? '#B9AD98' : '#EFE6D2'; ctx.fillText(text, X + w / 2, Y + 12);
+    if (blocked(X,Y,w,22)) continue;
+    ctx.fillStyle='rgba(16,42,34,.82)';ctx.fillRect(X-2,Y-1,w+4,24);ctx.fillStyle=kind==='red'?'#cf9870':'#b8b68b';ctx.fillRect(X,Y+22,w,1);
+    ctx.fillStyle = kind === 'red' ? '#E0603F' : kind === 'dim' ? 'rgba(34,67,49,.75)' : 'rgba(26,57,43,.9)'; ctx.fillRect(X, Y, w, 22);
+    ctx.fillStyle = kind === 'red' ? '#14110E' : kind === 'dim' ? '#c5cfb3' : '#f1e8ce'; ctx.fillText(text, X + w / 2, Y + 12);
   }
   for (const fx of G.fx) {
     if (fx.type !== 'text') continue;
@@ -1951,6 +1917,7 @@ function hud(dt) {
   const p = G.p, inv = G.inv;
   setStyle($('hpf'), 'width', (p.hp / p.maxHp * 100).toFixed(1) + '%');
   setStyle($('mpf'), 'width', (p.mp / p.maxMp * 100).toFixed(1) + '%');
+  setStyle($('spBar'),'width',p.sp+'%');setText('spVal',Math.floor(p.sp));
   setText('hpn', Math.ceil(p.hp)); setText('mpn', Math.floor(p.mp));
   setText('coin', inv.coin); setText('band', inv.bandage);
   const mats = [];
@@ -2023,7 +1990,7 @@ function drawCast(t) {
   castG.clearRect(0, 0, castC.width, castC.height);
   const fr = WALK[Math.floor(t * 6) % 4];
   ['xia', 'shen', 'xu', 'lu', 'zhou', 'bandit'].forEach((id, i) => drawChar(castG, id, 'down', i === 0 ? fr : 'idle', 12 + i * 22, 45));
-  if (BOSS.idle) castG.drawImage(BOSS.idle.n, (Math.floor(t * 8) % BOSS.idle.count) * 96, 0, 96, 48, 124, 1, 96, 48); else drawChar(castG, 'boss', 'down', 'idle', 166, 45);
+  drawChar(castG,'boss','down','idle',166,45);
 }
 
 // ---------------------------------------------------------------- 主循环
@@ -2033,9 +2000,11 @@ function frame(now) {
   syncBattle();
   const raw = now - last; last = now; perfRec(raw);
   const dt = Math.min(0.05, raw / 1000);
-  if (G.started && !paused()) { if (G.hitstop > 0) { G.hitstop -= dt; updFx(dt * 0.25); } else update(dt); }
+  if (G.started && !paused()) { if (G.hitstop > 0) G.hitstop=Math.max(0,G.hitstop-dt); else update(dt); }
   G.toasts = G.toasts.filter((t) => (t.t -= dt) > 0);
   rectT -= dt; if (rectT <= 0) { updHudRects(); rectT = 0.25; }
+  for(const event of combatEvents)combatArt.impact(event);
+  if(soundEnabled&&AC?.state==='running')combatAudio.play(combatEvents);combatEvents.length=0;
   draw(now / 1000); hud(dt); drawCast(now / 1000);
   requestAnimationFrame(frame);
 }
@@ -2045,12 +2014,14 @@ function sanitizeLoaded() {
     const K = KIND[e.kind];
     if (e.state === 'dying') { e.alive = false; continue; }
     if (e.kind === 'boss') { e.spar = false; e.hostile = false; }
-    Object.assign(e, { x: e.hx, y: e.hy, hp: K.hp, state: 'idle', t: 0, atk: null, plan: null });
+    Object.assign(e, { x: e.hx, y: e.hy, hp: K.hp, maxHp: K.hp, state: 'idle', t: 0, atk: null, plan: null });
     if (e.defeated && G.f.sparWins === 0) e.state = 'down';
   }
+  G.swings=[];G.qi=[];G.manualPaused=false;G.p.sp??=100;G.combatSerial??=0;combatArt.reset();
   G.dummy.state = 'idle'; G.dummy.t = 0; G.deadT = 0; G.p.hp = G.p.hp<=0?G.p.maxHp:G.p.hp;G.arrows=[];G.chapter.cooldowns=[0,0];G.p.dodge=G.p.inv=G.p.swing=0;
 }
 function boot(data) {
+  $('bStart').disabled=true;$('bNew').disabled=true;
   if (data && data.G && data.G.v === 4) G = data.G;
   else {
     const s = loadSave();
@@ -2064,10 +2035,10 @@ function boot(data) {
   Playtest.ensure(G,{debug:DEBUG});
   const cs = getComputedStyle(document.documentElement);
   SERIF = cs.getPropertyValue('--serif') || 'serif'; SANS = cs.getPropertyValue('--sans') || 'sans-serif'; PIX = cs.getPropertyValue('--pix') || 'monospace';
-  loadAssets().then(() => { buildMap(); portrait($('myFace'), 'xia'); resize(); renderAll(); last = performance.now(); requestAnimationFrame(frame); });
+  loadAssets().then(async () => { Object.assign(OBJ,await worldArt.props(new URL('./assets/songfeng/world-atlas.png',import.meta.url).href,SIZE));buildMap(); portrait($('myFace'), 'xia'); resize(); renderAll();$('bStart').disabled=false;$('bNew').disabled=false; last = performance.now(); requestAnimationFrame(frame); }).catch(error=>{showSaveError('场景载入失败，请刷新重试：'+error.message);$('bStart').disabled=true;});
 }
 try { window.claude?.hot?.snapshot?.(() => ({ G: JSON.parse(JSON.stringify(G)) })); } catch (e) { /* 没有热更新也能玩 */ }
-if (location.search.includes('debug')) window.__duko = { get G() { return G; }, get BUF() { return BUF; }, get LBUF() { return LBUF; }, draw, OBST, NPCS, INSPECT, CRATE, HERBS, DUMMY_POS, RESPAWN, WORLD, interact, doAct, attack, skill, dodge, useBandage, commit, loadSave, clearSave, recordText, recordPayload, perfRec, perfStats, newGame, get locations(){return {NPCS,CRATE,HERBS,LEDGER_POS,CACHE_POS,FINAL_POS};}, openDlg, toggleAtlas, kill, hurtPlayer, respawn, updArcher, updateChapter, get saveKey(){return SAVE_KEY;}, get target() { return curTarget; }, step(dt, n) { for (let i = 0; i < (n || 1); i++) { if (G.started && !paused()) { if (G.hitstop > 0) G.hitstop -= dt; else update(dt); } } hud(dt); } };
+if (location.search.includes('debug')) window.__duko = { get G() { return G; }, get BUF() { return BUF; }, get LBUF() { return LBUF; }, draw, OBST, NPCS, INSPECT, CRATE, HERBS, DUMMY_POS, RESPAWN, WORLD, interact, doAct, attack, skill, dodge, useBandage, commit, loadSave, clearSave, recordText, recordPayload, perfRec, perfStats, newGame, get locations(){return {NPCS,CRATE,HERBS,LEDGER_POS,CACHE_POS,FINAL_POS};}, openDlg, toggleAtlas, kill, hurtPlayer, respawn, updArcher, updateChapter, get worldStyle(){return WORLD_STYLE;},get saveKey(){return SAVE_KEY;}, get target() { return curTarget; }, step(dt, n) { for (let i = 0; i < (n || 1); i++) { if (G.started && !paused()) { if (G.hitstop > 0) G.hitstop=Math.max(0,G.hitstop-dt); else update(dt); } } hud(dt); } };
 installPlaytestForm();
 const hot = window.claude?.hot;
 if (hot?.ready) hot.ready(boot); else boot(hot?.data ?? {});

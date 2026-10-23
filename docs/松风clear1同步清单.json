@@ -1,0 +1,67 @@
+{
+  "sourceVersion": "V0.4-songfeng-clear1-20261023",
+  "baseCommit": "4f4f643ba1afbaac7553cb26008c6f71866110a2",
+  "scope": "批准版游戏源码和素材；不含运行状态、存档或部署",
+  "files": [
+    {
+      "path": "原型/V0.4/index.html",
+      "approvedSha256": "1cbf9bc87cbb64a854d105c577fbfcb31bdbab35f685c7ef966d9fd7c1ac11c3",
+      "repositorySha256": "1cbf9bc87cbb64a854d105c577fbfcb31bdbab35f685c7ef966d9fd7c1ac11c3",
+      "adaptation": null
+    },
+    {
+      "path": "原型/V0.4/game.js",
+      "approvedSha256": "31eeabb099a9a87761787a6e7a4ee81a6fec267aaf74fae3e3606082f3513451",
+      "repositorySha256": "eb7fa07012b35713cd390d561f7d53969a6ed2cdc0056a28fff645b95ce68484",
+      "adaptation": "保留仓库原V0.4存档键"
+    },
+    {
+      "path": "原型/V0.4/chapter.js",
+      "approvedSha256": "ffa0a324baf580b5df0aeb5a564a72707debb9a2548d3d0b95359505dc6a2399",
+      "repositorySha256": "ffa0a324baf580b5df0aeb5a564a72707debb9a2548d3d0b95359505dc6a2399",
+      "adaptation": null
+    },
+    {
+      "path": "原型/V0.4/playtest.js",
+      "approvedSha256": "18fc9595ea31d2e5dc057f243b77c68499a16eeeaad7d9af84239bb8df213d4a",
+      "repositorySha256": "18fc9595ea31d2e5dc057f243b77c68499a16eeeaad7d9af84239bb8df213d4a",
+      "adaptation": null
+    },
+    {
+      "path": "原型/V0.4/songfeng-ui.css",
+      "approvedSha256": "24f1e0dd95a49108c53a1ff31db7e27307b81b3ca83f35469d4095517f12def1",
+      "repositorySha256": "24f1e0dd95a49108c53a1ff31db7e27307b81b3ca83f35469d4095517f12def1",
+      "adaptation": null
+    },
+    {
+      "path": "原型/V0.4/combat-render.mjs",
+      "approvedSha256": "48578e5a8a01ec2b241f3bfcfe474c8829c57ddd7c79c3958e64489181a792e3",
+      "repositorySha256": "48578e5a8a01ec2b241f3bfcfe474c8829c57ddd7c79c3958e64489181a792e3",
+      "adaptation": null
+    },
+    {
+      "path": "原型/V0.4/songfeng-render.mjs",
+      "approvedSha256": "a7132f55ea8b474315ddec352953e51ea5c0b6be7e8a5022ebf7fe86aa4bad7e",
+      "repositorySha256": "a7132f55ea8b474315ddec352953e51ea5c0b6be7e8a5022ebf7fe86aa4bad7e",
+      "adaptation": null
+    },
+    {
+      "path": "原型/V0.4/songfeng-feedback.mjs",
+      "approvedSha256": "97231c59d32d0a9eaaa21071dfb2627781e40d6ce286abfe9755b88eb8bd4025",
+      "repositorySha256": "97231c59d32d0a9eaaa21071dfb2627781e40d6ce286abfe9755b88eb8bd4025",
+      "adaptation": null
+    },
+    {
+      "path": "原型/V0.4/world-art.mjs",
+      "approvedSha256": "d552b9c54917153475c34fd208e31e7de0e572d6ecdb7a52414dca7ef45db707",
+      "repositorySha256": "d552b9c54917153475c34fd208e31e7de0e572d6ecdb7a52414dca7ef45db707",
+      "adaptation": null
+    },
+    {
+      "path": "原型/V0.4/assets/songfeng/world-atlas.png",
+      "approvedSha256": "1fe628c1ea9bc0af05cf269606b7f8ec9873c44f83b3f9407edbe672003997bc",
+      "repositorySha256": "1fe628c1ea9bc0af05cf269606b7f8ec9873c44f83b3f9407edbe672003997bc",
+      "adaptation": null
+    }
+  ]
+}

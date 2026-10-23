@@ -2,10 +2,10 @@
 <html lang="zh-CN">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#151d21">
+<meta name="theme-color" content="#1b3228">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>青石渡风波 · V0.4</title>
+<title>青石渡风波 · V0.4 松风版</title>
 <style>
 /* 布局：像素画面铺满全屏（整数倍放大），HUD 叠在四角：左上状态与请求、右上资源、左下摇杆、右下三个战斗键；首领血条在底部正中；对话框是纸色木框，从底部升起 */
 :root {
@@ -262,6 +262,7 @@ kbd { font:inherit; color:var(--gold); }
 @media(max-height:500px){#combatHint{bottom:80px;font-size:10px;max-width:38%;border-width:7px;border-image-width:7px;}#nearTalk span{font-size:11px;padding:3px 5px;}#rec{max-height:140px;} .rb.sk .ic{width:23px;height:23px;} }
 
 </style>
+<link rel="stylesheet" href="songfeng-ui.css?v=20261023-clear1">
 
 <div id="app">
   <canvas id="cv" aria-label="游戏画面：青石渡、山道与匪营"></canvas>
@@ -270,9 +271,12 @@ kbd { font:inherit; color:var(--gold); }
 
   <div id="status" class="px-dark">
     <div class="portrait px-dark"><canvas id="myFace" width="16" height="12"></canvas></div>
+    <div class="songfeng-seal" aria-hidden="true">侠</div>
     <div class="bars">
+      <div class="songfeng-name">无名少侠 <small>青石渡行记</small></div>
       <div class="brow"><span>生命</span><div class="pbar" style="--c:#D9553A"><i id="hpf"></i><b id="hpn">100</b></div></div>
-      <div class="brow"><span>内力</span><div class="pbar mp" style="--c:#4A86C8"><i id="mpf"></i><b id="mpn">100</b></div></div>
+      <div class="brow"><span>内力</span><div class="pbar mp" style="--c:#579DA3"><i id="mpf"></i><b id="mpn">100</b></div></div>
+      <div class="brow stamina"><span>身法</span><div class="pbar" style="--c:#E4C579"><i id="spBar"></i><b id="spVal">100</b></div></div>
     </div>
   </div>
 
@@ -283,16 +287,24 @@ kbd { font:inherit; color:var(--gold); }
     <div id="qo"></div>
   </div>
 
-  <div id="res">
-    <div class="chip px-dark"><img class="ic" data-ic="coin" alt=""><b class="pnum" id="coin">30</b><small>铜钱</small></div>
-    <button class="chip px-dark" id="bBand" type="button" aria-label="用一条绷带包扎（H）"><img class="ic" data-ic="bandage" alt=""><b class="pnum" id="band">2</b><small>绷带</small></button>
-    <div class="chip px-dark" id="mats" hidden><img class="ic s" data-ic="pack" alt=""><span id="matsT"></span></div>
-    <button class="sq px-dark" id="bLog" type="button" aria-label="江湖日志与试玩记录"><img class="ic s" data-ic="book" alt=""></button>
+  <div class="songfeng-tools">
+    <button id="bMap" class="px-dark" aria-label="打开江湖图与武学（M）"><canvas id="minimap" width="140" height="50" aria-hidden="true"></canvas><span>江湖图 / 武学 <kbd>M</kbd></span></button>
+    <div class="songfeng-tool-stack">
+      <div class="songfeng-tool-row">
+        <button id="bSound" class="sq px-dark" type="button" aria-label="开启声音" title="声音">音<span>关</span></button>
+        <button class="sq px-dark" id="bLog" type="button" aria-label="江湖日志与试玩记录" title="江湖日志"><img class="ic s" data-ic="book" alt=""></button>
+        <button id="bPause" class="sq px-dark" type="button" aria-label="暂停游戏" title="暂停">Ⅱ</button>
+      </div>
+      <div id="res">
+        <div class="chip px-dark"><img class="ic" data-ic="coin" alt=""><b class="pnum" id="coin">30</b><small>铜钱</small></div>
+        <button class="chip px-dark" id="bBand" type="button" aria-label="用一条绷带包扎（H）"><img class="ic" data-ic="bandage" alt=""><b class="pnum" id="band">2</b><small>绷带</small></button>
+        <div class="chip px-dark" id="mats" hidden><img class="ic s" data-ic="pack" alt=""><span id="matsT"></span></div>
+      </div>
+    </div>
   </div>
   <div id="saved" class="px-dark" hidden><img class="ic s" data-ic="save" alt="" style="width:18px;height:18px">已存档</div>
   <div id="perf" hidden></div>
   <div id="region" class="px-dark"><span id="regionName">青石渡</span><small id="regionHint">山雨欲来</small></div>
-  <button id="bMap" class="px-dark" aria-label="打开江湖图与武学（M）"><canvas id="minimap" width="140" height="50" aria-hidden="true"></canvas><span>江湖图 / 武学 <kbd>M</kbd></span></button>
   <div id="saveError" role="alert" hidden></div>
 
   <div id="toasts" aria-live="polite"></div>
@@ -311,10 +323,10 @@ kbd { font:inherit; color:var(--gold); }
   <div id="pad">
     <span id="orn" class="tag none">无剑饰</span>
     <span class="combo" id="combo"></span>
-    <button class="rb sk" id="bSk" type="button" aria-label="追风刺（K）"><i class="cd"></i><img class="ic s" data-ic="skill" alt=""><span id="skName0">追风刺</span><small id="skCost0"></small></button>
+    <button class="rb sk" id="bSk" type="button" aria-label="松风剑气（K）"><i class="cd"></i><img class="ic s" data-ic="skill" alt=""><span id="skName0">松风剑气</span><small id="skCost0"></small></button>
     <button class="rb sk sk2" id="bSk2" type="button" aria-label="截流剑（I）"><i class="cd"></i><img class="ic s" data-ic="skill" alt=""><span id="skName1">截流剑</span><small id="skCost1"></small></button>
     <button class="rb dg" id="bDg" type="button" aria-label="闪避（空格）"><i class="cd"></i><img class="ic s" data-ic="dodge" alt=""><span>闪避</span></button>
-    <button class="rb atk" id="bAtk" type="button" aria-label="普攻（J）"><i class="cd"></i><img class="ic" data-ic="atk" alt=""><span>普攻</span></button>
+    <button class="rb atk" id="bAtk" type="button" aria-label="普攻（J）"><i class="cd"></i><img class="ic" data-ic="atk" alt=""><span>出剑</span></button>
   </div>
 
   <div id="dlg" class="px-paper" hidden>
@@ -367,24 +379,42 @@ kbd { font:inherit; color:var(--gold); }
     </div>
   </div>
   <div id="start" class="ov">
-    <div class="card px-dark">
-      <div class="sub">原创武侠 · 第一章 · V0.4</div>
-      <h1>青石渡风波</h1>
-      <canvas class="cast" id="cast" width="210" height="50" aria-label="少侠、沈青、许舟、陆平、周砚、匪徒、匪首的像素形象"></canvas>
-      <p>你不记得如何来到这个江湖。醒来时，青石渡正在等一船救命药。山上有人扣货，山下有人闭口不言。先救人，再决定要不要追问那本账。</p>
-      <dl class="keys">
-        <dt>手机</dt><dd>横屏。左半边按住拖动来走，右下角出招；走近人物会出现「交谈」。</dd>
-        <dt>键盘</dt><dd>WASD 或方向键走 · J 普攻（连按三段） · K / I 双剑招 · 空格 闪避 · E 交谈 · H 包扎 · M 地图与换招 · 对话里按数字键选</dd>
-      </dl>
-      <div class="row">
-        <button class="big px-gold" id="bStart" type="button">踏入青石渡</button>
-        <button class="ghost px-dark" id="bNew" type="button" hidden>重新开始</button>
-        <button class="ghost px-dark" id="bFull" type="button" aria-describedby="fullHint">全屏</button>
+    <div class="card px-dark songfeng-intro">
+      <div class="songfeng-intro-heading">
+        <div class="sub">V0.4 松风版</div>
+        <h1>青石渡<br>风波</h1>
+        <p class="songfeng-poem">一船药，几笔旧账。<br>剑在手，路由你选。</p>
+        <canvas class="cast" id="cast" width="210" height="50" aria-label="少侠、沈青、许舟、陆平、周砚、匪徒、匪首的像素形象"></canvas>
       </div>
-      <p class="hint" id="fullHint" role="status" hidden></p>
-      <div class="hint" id="saveHint"></div>
+      <div class="songfeng-intro-body">
+        <p class="songfeng-lead">风过青石渡，江湖等你落剑。</p>
+        <p>你不记得如何来到这个江湖。醒来时，青石渡正在等一船救命药。山上有人扣货，山下有人闭口不言。先救人，再决定要不要追问那本账。</p>
+        <dl class="keys">
+          <dt>手机</dt><dd>横屏。左手拖动行走，右手出剑；走近人物点击「交谈」。</dd>
+          <dt>键盘</dt><dd>WASD / 方向键走 · J 按住连招 · K / I 双剑招 · 空格闪避 · E 交谈 · H 包扎 · M 地图与换招 · 数字键选择对话</dd>
+        </dl>
+        <div class="row">
+          <button class="big px-gold" id="bStart" type="button">踏入青石渡</button>
+          <button class="ghost px-dark" id="bNew" type="button" hidden>重新开始</button>
+          <button class="ghost px-dark" id="bFull" type="button" aria-describedby="fullHint">全屏</button>
+        </div>
+        <p class="hint" id="fullHint" role="status" hidden></p>
+        <div class="hint" id="saveHint"></div>
+        <p class="songfeng-separate">原版剧情完整保留 · 探索、抉择与三个结局 · 本版使用独立试玩存档</p>
+      </div>
     </div>
   </div>
+
+  <section id="pauseMenu" class="ov" aria-label="暂停菜单" hidden>
+    <div class="card px-dark songfeng-pause">
+      <div class="sub">稍歇片刻</div>
+      <h2>剑归鞘</h2>
+      <p>青石渡的风波，等你继续。</p>
+      <button id="bResume" class="big px-gold" type="button">继续行走江湖</button>
+      <button id="bPauseMap" class="ghost px-dark" type="button">江湖图与武学</button>
+      <button id="bPauseFull" class="ghost px-dark" type="button">全屏说明</button>
+    </div>
+  </section>
 
   <div id="done" class="ov" hidden>
     <div class="card px-paper">
@@ -402,5 +432,5 @@ kbd { font:inherit; color:var(--gold); }
 
 <script src="chapter.js"></script>
 <script src="playtest.js"></script>
-<script src="game.js?v=20261023-na"></script>
+<script type="module" src="game.js?v=20261023-clear1"></script>
 </html>

@@ -60,13 +60,13 @@ test('两份书证公开也能争取船工支援，但不能伪造已经获得�
   assert.deepEqual(s.chapter.clues,['cart','ledger']);
   assert.equal(C.encounter(s).intro.includes('没有低下头'),false);
 });
-test('三招只能携带两招，战斗外更换不会重复或空槽', () => {
+test('四招只能携带两招，战斗外更换不会重复或空槽', () => {
   const s = state();
-  assert.deepEqual(s.chapter.skills, ['thrust', 'break']);
+  assert.deepEqual(s.chapter.skills, ['qi', 'break']);
   assert.equal(C.act(s, 'equip', { slot: 1, skill: 'sweep' }).ok, true);
   assert.equal(C.act(s, 'equip', { slot: 0, skill: 'sweep' }).ok, false);
   assert.equal(C.act(s, 'equip', { slot: 2, skill: 'break' }).ok, false);
-  assert.deepEqual(s.chapter.skills, ['thrust', 'sweep']);
+  assert.deepEqual(s.chapter.skills, ['qi', 'sweep']);
 });
 test('写入失败时物品、剧情与回执均保持原样，可以重试', () => {
   const s = state(); const before = JSON.stringify(s);
