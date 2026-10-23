@@ -200,3 +200,27 @@ test('double taps on HUD info under the minimap are blocked from zooming without
   assert.deepEqual(await page.evaluate(() => tapLog), ['dbl:true']);
   await page.locator('#bMap').tap(); assert.equal(await page.locator('#atlas').isVisible(), true);
 });
+
+test('quest panel opens briefly on start and on objective change, then collapses to one line; tapping reopens it (#13)', async t => {
+  const context = await browser.newContext({ viewport: { width: 844, height: 390 }, isMobile: true, hasTouch: true });
+  t.after(() => context.close()); const page = await context.newPage();
+  await page.clock.install();
+  await page.goto(base + '?debug'); await page.locator('#bStart').tap();
+  const state = () => page.evaluate(() => ({ collapsed: document.getElementById('quest').classList.contains('collapsed'), detail: getComputedStyle(document.getElementById('qs')).display !== 'none', h: Math.round(document.getElementById('quest').getBoundingClientRect().height) }));
+  await page.clock.runFor(1000);
+  const open = await state(); assert.equal(open.collapsed, false); assert.equal(open.detail, true);
+  await page.clock.runFor(6000);
+  const shut = await state(); assert.equal(shut.collapsed, true); assert.equal(shut.detail, false); assert.ok(shut.h < open.h, 'collapsed panel is shorter');
+  assert.match(await page.locator('#qt').innerText(), /\S/, 'current objective title stays visible');
+  const before = await page.evaluate(() => [__duko.G.p.x, __duko.G.p.y]);
+  await page.locator('#quest').tap(); await page.clock.runFor(200);
+  assert.equal((await state()).collapsed, false, 'tap reopens');
+  assert.deepEqual(await page.evaluate(() => [__duko.G.p.x, __duko.G.p.y]), before, 'tapping the panel does not move the player');
+  await page.clock.runFor(9000); assert.equal((await state()).collapsed, true);
+  await page.evaluate(() => { __duko.G.f.accepted = true; }); await page.clock.runFor(200);
+  assert.equal((await state()).collapsed, false, 'objective change reopens');
+  await page.clock.runFor(7000); assert.equal((await state()).collapsed, true);
+  await page.reload(); await page.locator('#bStart').tap(); await page.clock.runFor(1000);
+  assert.equal((await state()).collapsed, false, 'after reload it opens briefly again');
+  await page.clock.runFor(6500); assert.equal((await state()).collapsed, true, 'and does not stay open');
+});

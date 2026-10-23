@@ -1621,6 +1621,7 @@ app.addEventListener('touchend',e=>{
 },{passive:false});
 app.addEventListener('dblclick',e=>{if(e.cancelable)e.preventDefault();});
 $('bBand').addEventListener('click', useBandage);
+$('quest').addEventListener('click', () => { questOpenUntil = $('quest').classList.contains('collapsed') ? performance.now() + 8000 : 0; });
 function toggleLog(on) { G.logOpen = on === undefined ? !G.logOpen : on;resetInput();renderLog(); }
 $('bLog').addEventListener('click', () => { SFX.ui(); toggleLog(); });
 $('logx').addEventListener('click', () => toggleLog(false));
@@ -1657,7 +1658,7 @@ function renderSound() {
 function begin() {
   G.manualPaused=false;$('pauseMenu').hidden=true;resetInput();combatArt.reset();
   Playtest.ensure(G,{debug:DEBUG});Playtest.event(G,'session_start',{session:PAGE_SESSION});
-  startAudio(); G.started = true; $('start').hidden = true;saveNow(false);
+  startAudio(); G.started = true; $('start').hidden = true;saveNow(false);questOpenUntil=performance.now()+6000;
   if (!G.f.accepted) tip('move', '左半边按住拖动来走（键盘 WASD）。先去找渡口的沈青，她头顶有金色记号');
   else toast('继续上次的进度');
 }
@@ -1826,7 +1827,7 @@ function drawZonePx(g, ex, ey, a, face, prog, solid) {
 function drawBang(g, x, y, col) { fc(g, x, y, 4, col || '#E0603F'); R(g, x, y - 2, 1, 3, '#14110E'); P(g, x, y + 2, '#14110E'); pxCircle(g, x, y, 5, INK); }
 function diamond(g, x, y, col) { R(g, x - 1, y - 3, 3, 1, col); R(g, x - 2, y - 2, 5, 1, col); R(g, x - 3, y - 1, 7, 1, col); R(g, x - 2, y, 5, 1, col); R(g, x - 1, y + 1, 3, 1, col); P(g, x, y - 4, INK); P(g, x, y + 2, INK); P(g, x - 4, y - 1, INK); P(g, x + 4, y - 1, INK); }
 const LABELS = [];
-let hudRects = [];
+let hudRects = [], questShown = '', questOpenUntil = 0;
 function draw(realT) {
   const shake=combatArt.prepare(G,paused(),realT),p = G.p, g = bg, BW = VW/Z, BH = VH/Z, scale=Z*DPR, t = G.started ? G.time : realT;
   let ox=p.x/U-BW/2,oy=p.y/U-BH/2;
@@ -1964,6 +1965,10 @@ function hud(dt) {
   if (inv.med) mats.push('药包');
   $('mats').hidden = mats.length === 0; setText('matsT', mats.join(' · '));
   const q = questText(); setText('qt', q[0]); setText('qs', q[1]); $('qs').classList.toggle('echo', G.f.delivered);
+  // 任务面板不常驻（#13）：进入游戏或目标变化时完整展开几秒，之后收成一行标题；点标题可再展开。只是界面状态，不进存档
+  const questKey = [G.f.delivered, G.chapter.decision, G.chapter.finalResolved, ...q].join('|');
+  if (questKey !== questShown) { questShown = questKey; questOpenUntil = performance.now() + 6000; }
+  $('quest').classList.toggle('collapsed', G.started && performance.now() > questOpenUntil);
   setText('qo', G.f.delivered ? ('线索 '+G.chapter.clues.length+'/3 · M 查看江湖图与人物') : (G.orn ? '剑饰：' + G.orn : '可选：找周砚做一件剑饰'));
   const orn = $('orn'); setText('orn', G.orn || '无剑饰'); orn.classList.toggle('none', !G.orn);
   for(let i=0;i<2;i++){const sk=Chapter.SKILLS[G.chapter.skills[i]],button=$(i?'bSk2':'bSk');setStyle(button,'--p',(G.chapter.cooldowns[i]/sk.cd*100).toFixed(0)+'%');setText('skName'+i,sk.name);setText('skCost'+i,sk.cost+' 内力 '+(i?'I':'K'));button.setAttribute('aria-label',sk.name+(i?'（I）':'（K）'));button.classList.toggle('low',p.mp<sk.cost);}
