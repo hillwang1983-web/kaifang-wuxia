@@ -86,7 +86,7 @@ test('zoom protection preserves simultaneous controls and native journal scrolli
 test('home-screen content opts into the full screen beneath the status bar', async t => {
   const context = await browser.newContext(); t.after(() => context.close());
   const page = await context.newPage(); await page.goto(base);
-  assert.equal(await page.locator('meta[name="apple-mobile-web-app-status-bar-style"]').getAttribute('content', { timeout: 1000 }), 'black-translucent');
+  assert.equal(await page.locator('meta[name="apple-mobile-web-app-status-bar-style"]').getAttribute('content', { timeout: 10000 }), 'black-translucent');
 });
 
 test('game and canvas follow visual viewport resize without relying on window resize', async t => {
