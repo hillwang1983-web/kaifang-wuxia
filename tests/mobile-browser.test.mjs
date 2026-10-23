@@ -224,3 +224,37 @@ test('quest panel opens briefly on start and on objective change, then collapses
   assert.equal((await state()).collapsed, false, 'after reload it opens briefly again');
   await page.clock.runFor(6500); assert.equal((await state()).collapsed, true, 'and does not stay open');
 });
+
+test('start / continue card fits common landscape phones and scrolls with a fade on tiny ones (#18)', async t => {
+  const open = async (viewport, mobile = true) => {
+    const context = await browser.newContext({ viewport, isMobile: mobile, hasTouch: mobile });
+    t.after(() => context.close());
+    await context.addInitScript(() => { Object.defineProperty(navigator, 'standalone', { get: () => true }); });
+    const page = await context.newPage(); await page.goto(base);
+    await page.locator('#bStart').click(); await page.waitForTimeout(200); await page.reload(); await page.waitForTimeout(300);
+    assert.equal(await page.locator('#bStart').innerText(), '继续'); return page;
+  };
+  const measure = page => page.evaluate(() => {
+    const card = document.querySelector('#start .songfeng-intro'), c = card.getBoundingClientRect();
+    const buttons = [...card.querySelectorAll('.row button:not([hidden])')].map(b => b.getBoundingClientRect());
+    return { scroll: card.scrollHeight, client: card.clientHeight, more: card.classList.contains('more'), hScroll: document.documentElement.scrollWidth > innerWidth,
+      buttonsInside: buttons.every(r => r.left >= c.left - 1 && r.right <= c.right + 1), font: parseFloat(getComputedStyle(card.querySelector('.songfeng-intro-body p:nth-of-type(2)')).fontSize),
+      keyboardRow: getComputedStyle(card.querySelector('.keys dd.kb')).display };
+  });
+  for (const viewport of [{ width: 844, height: 390 }, { width: 852, height: 340 }, { width: 740, height: 360 }, { width: 667, height: 375 }]) {
+    const m = await measure(await open(viewport));
+    assert.ok(m.scroll <= m.client + 1, JSON.stringify({ viewport, m })); assert.equal(m.more, false);
+    assert.equal(m.hScroll, false); assert.ok(m.buttonsInside); assert.ok(m.font >= 12); assert.equal(m.keyboardRow, 'none', 'touch devices hide the keyboard row');
+  }
+  const tiny = await open({ width: 568, height: 320 }), before = await measure(tiny);
+  assert.ok(before.scroll > before.client && before.more, 'tiny screens scroll and show the fade: ' + JSON.stringify(before));
+  const after = await tiny.evaluate(async () => {
+    const card = document.querySelector('#start .songfeng-intro'); card.scrollTop = card.scrollHeight;
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+    const last = document.querySelector('.songfeng-separate').getBoundingClientRect(), c = card.getBoundingClientRect();
+    return { more: card.classList.contains('more'), lastVisible: last.bottom <= c.bottom + 1, startVisible: !document.getElementById('start').hidden };
+  });
+  assert.deepEqual(after, { more: false, lastVisible: true, startVisible: true }, 'scrolling reaches the end without starting the game');
+  const desktop = await measure(await open({ width: 1280, height: 720 }, false));
+  assert.notEqual(desktop.keyboardRow, 'none', 'desktop keeps the keyboard row'); assert.ok(desktop.scroll <= desktop.client + 1);
+});
