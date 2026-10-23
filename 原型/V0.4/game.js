@@ -1607,6 +1607,14 @@ bindBtn($('nearTalk'),interact);
 for(const type of ['touchstart','touchend','dblclick'])app.addEventListener(type,e=>{
   if(e.cancelable&&e.target.closest('#pad,#stickzone,#cv,#interact,#nearTalk'))e.preventDefault();
 },{passive:false});
+// 其余区域（小地图下的信息栏、HUD 空白间隙等）不拦单击和滚动，只拦快速的第二下，防双击缩放（#9）。
+// 按钮和输入框不拦，否则会吞掉它们的 click；按钮靠 CSS 的 touch-action 防缩放。
+let lastTapEnd=-1e9;
+app.addEventListener('touchend',e=>{
+  const quick=e.timeStamp-lastTapEnd<350;lastTapEnd=e.timeStamp;
+  if(quick&&e.cancelable&&!e.touches?.length&&!e.target.closest('button,a,input,select,textarea,[contenteditable]'))e.preventDefault();
+},{passive:false});
+app.addEventListener('dblclick',e=>{if(e.cancelable)e.preventDefault();});
 $('bBand').addEventListener('click', useBandage);
 function toggleLog(on) { G.logOpen = on === undefined ? !G.logOpen : on;resetInput();renderLog(); }
 $('bLog').addEventListener('click', () => { SFX.ui(); toggleLog(); });
