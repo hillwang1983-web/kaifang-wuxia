@@ -197,8 +197,68 @@ test('声音默认关闭，主动开启后产生声音，暂停与关闭清除�
   await page.keyboard.press('j');await page.waitForTimeout(300);assert.equal((await page.evaluate(()=>audioAudit)).started,muted.started);assert.deepEqual(errors,[]);
 });
 
+test('开始界面明示静音并可开启，偏好刷新后保留，按钮以实际出声状态为准（#7）', async t => {
+  const context=await browser.newContext({viewport:{width:844,height:390}});t.after(()=>context.close());
+  const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.goto(base);
+  assert.match(await page.locator('#bStartSound').innerText(),/声音：关/);assert.match(await page.locator('#soundHint').innerText(),/当前静音/);
+  await page.locator('#bStartSound').click();
+  assert.equal(await page.locator('#bStartSound').getAttribute('aria-pressed'),'true');
+  await page.locator('#bStart').click();
+  await page.waitForFunction(()=>document.getElementById('bSound').dataset.sound==='on');
+  await page.reload();
+  assert.equal(await page.locator('#bStartSound').innerText(),'声音：开');
+  await page.locator('#bStart').click();await page.waitForFunction(()=>document.getElementById('bSound').dataset.sound==='on');
+  // 切后台：音频挂起，按钮不再显示「开」；点「继续」后恢复
+  await page.evaluate(()=>{Object.defineProperty(document,'hidden',{configurable:true,get:()=>true});document.dispatchEvent(new Event('visibilitychange'));});
+  await page.waitForFunction(()=>document.getElementById('bSound').dataset.sound==='blocked');
+  assert.equal(await page.locator('#bSound span').innerText(),'停');
+  await page.evaluate(()=>{Object.defineProperty(document,'hidden',{configurable:true,get:()=>false});});
+  await page.locator('#bResume').click();await page.waitForFunction(()=>document.getElementById('bSound').dataset.sound==='on');
+  await page.locator('#bSound').click();
+  assert.equal(await page.locator('#bSound').getAttribute('data-sound'),'off');
+  assert.equal(await page.evaluate(()=>localStorage.getItem('qingshi-sound')),'off');assert.deepEqual(errors,[]);
+});
+
+test('浏览器不放行声音时不显示假成功（#7）', async t => {
+  const context=await browser.newContext({viewport:{width:844,height:390}});t.after(()=>context.close());
+  await context.addInitScript(()=>{
+    const Original=window.AudioContext;
+    window.AudioContext=class extends Original{constructor(...a){super(...a);super.suspend();}resume(){return Promise.reject(new Error('blocked'));}};
+  });
+  const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.goto(base);await page.locator('#bStartSound').click();await page.locator('#bStart').click();
+  await page.waitForFunction(()=>document.getElementById('bSound').dataset.sound==='blocked');
+  assert.equal(await page.locator('#bSound span').innerText(),'停');
+  assert.match(await page.locator('#bSound').getAttribute('aria-label'),/点此恢复/);assert.deepEqual(errors,[]);
+});
+
+test('背景音乐程序合成：开声音后自动播放，战斗切段，暂停与静音即停（#7）', async t => {
+  const context=await browser.newContext({viewport:{width:844,height:390}});t.after(()=>context.close());
+  await context.addInitScript(()=>{
+    window.audioAudit={started:0};const Original=window.AudioContext;
+    window.AudioContext=class extends Original{createOscillator(){const o=super.createOscillator(),start=o.start.bind(o);o.start=(...a)=>{audioAudit.started++;return start(...a);};return o;}};
+  });
+  const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.goto(base+'?debug');await page.locator('#bStart').click();await page.waitForTimeout(400);
+  assert.equal(await page.evaluate(()=>__duko.music),undefined,'静音时不创建音乐');
+  await page.locator('#bSound').click();
+  await page.waitForFunction(()=>__duko.music?.playing&&__duko.music.mode==='explore');
+  const before=await page.evaluate(()=>audioAudit.started);await page.waitForTimeout(1500);
+  assert.ok(await page.evaluate(()=>audioAudit.started)>before,'不操作也持续排出探索音符');
+  await page.evaluate(()=>{const G=__duko.G,e=G.enemies.find(x=>x.kind==='bandit'&&x.alive);e.hostile=true;e.state='chase';G.p.x=e.x-120;G.p.y=e.y;});
+  await page.waitForFunction(()=>__duko.music.mode==='combat');
+  await page.locator('#bPause').click();await page.waitForFunction(()=>!__duko.music.playing);
+  const paused=await page.evaluate(()=>audioAudit.started);await page.waitForTimeout(600);
+  assert.equal(await page.evaluate(()=>audioAudit.started),paused,'暂停后不再排音符');
+  await page.locator('#bResume').click();await page.waitForFunction(()=>__duko.music.playing);
+  await page.locator('#bSound').click();await page.waitForFunction(()=>!__duko.music.playing);
+  const muted=await page.evaluate(()=>audioAudit.started);await page.waitForTimeout(600);
+  assert.equal(await page.evaluate(()=>audioAudit.started),muted,'静音后不再排音符');assert.deepEqual(errors,[]);
+});
+
 test('发布白名单与HEAD生效，不提供测试、源服务与备份', async () => {
-  for(const route of ['game.js','combat-render.mjs','songfeng-render.mjs','songfeng-feedback.mjs','songfeng-ui.css']){
+  for(const route of ['game.js','combat-render.mjs','songfeng-render.mjs','songfeng-feedback.mjs','songfeng-music.mjs','songfeng-ui.css']){
     const response=await fetch(base+route);assert.equal(response.status,200);assert.equal(response.headers.get('cache-control'),'no-store');
     const head=await fetch(base+route,{method:'HEAD'});assert.equal(head.status,200);assert.equal(await head.text(),'');assert.equal(head.headers.get('content-length'),response.headers.get('content-length'));
   }

@@ -396,8 +396,10 @@ kbd { font:inherit; color:var(--gold); }
         <div class="row">
           <button class="big px-gold" id="bStart" type="button">踏入青石渡</button>
           <button class="ghost px-dark" id="bNew" type="button" hidden>重新开始</button>
+          <button class="ghost px-dark" id="bStartSound" type="button" aria-pressed="false" aria-describedby="soundHint">声音：关（点此开启）</button>
           <button class="ghost px-dark" id="bFull" type="button" aria-describedby="fullHint">全屏</button>
         </div>
+        <p class="hint" id="soundHint" role="status">当前静音。想听出剑、预警与命中音效，先点「声音」开启。</p>
         <p class="hint" id="fullHint" role="status" hidden></p>
         <div class="hint" id="saveHint"></div>
         <p class="songfeng-separate">原版剧情完整保留 · 探索、抉择与三个结局 · 本版使用独立试玩存档</p>

@@ -6,7 +6,7 @@ import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 
-const assets = ['index.html', 'chapter.js', 'playtest.js', 'game.js', 'songfeng-ui.css', 'combat-render.mjs', 'songfeng-render.mjs', 'songfeng-feedback.mjs', 'world-art.mjs'];
+const assets = ['index.html', 'chapter.js', 'playtest.js', 'game.js', 'songfeng-ui.css', 'combat-render.mjs', 'songfeng-render.mjs', 'songfeng-feedback.mjs', 'songfeng-music.mjs', 'world-art.mjs'];
 // 发布目录包含历史CC0素材与松风原创图集，保持旧版可回退。
 const artDirs = ['assets/na', 'assets/songfeng'];
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');

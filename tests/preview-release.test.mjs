@@ -80,7 +80,7 @@ test('发布目录带上素材，按发布结构启动的服务通过全部资�
   const art = Object.keys(files).filter(name => name.startsWith('public/assets/na/'));
   assert.ok(art.includes('public/assets/na/chars/player.png') && art.includes('public/assets/na/tiles/floor.png'), '清单缺少素材');
   assert.ok(existsSync(join(stage, 'public/assets/na/boss/idle.png')));
-  for(const name of ['songfeng-ui.css','combat-render.mjs','songfeng-render.mjs','songfeng-feedback.mjs','world-art.mjs','assets/songfeng/world-atlas.png'])assert.ok(files['public/'+name],name);
+  for(const name of ['songfeng-ui.css','combat-render.mjs','songfeng-render.mjs','songfeng-feedback.mjs','songfeng-music.mjs','world-art.mjs','assets/songfeng/world-atlas.png'])assert.ok(files['public/'+name],name);
   const { createQingshiServer } = await import(pathToFileURL(join(stage, 'lib/server.mjs')).href);
   const server = createQingshiServer(pathToFileURL(join(stage, 'public') + '/'), { commit: 'abc123' });
   server.listen(0, '127.0.0.1'); await once(server, 'listening');

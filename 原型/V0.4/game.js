@@ -1,5 +1,6 @@
 import { createChapterCombatRenderer, skillHead } from './combat-render.mjs';
 import { IMPACTS, createCombatAudio } from './songfeng-feedback.mjs';
+import { createMusic } from './songfeng-music.mjs';
 import { createWorldArt, WORLD_STYLE } from './world-art.mjs';
 (() => {
 'use strict';
@@ -350,7 +351,9 @@ document.querySelectorAll('img[data-ic]').forEach((im) => { im.src = ICON_URL[im
 portrait($('myFace'), 'xia');
 
 // ================================================================ 声音（开始后才能出声）
-let AC = null, combatAudio = null, soundEnabled = false;
+// 声音默认关闭；玩家主动开启后记住偏好。按钮显示以 AudioContext 实际是否在运行为准（#7）。
+const SOUND_KEY = 'qingshi-sound';
+let AC = null, combatAudio = null, music = null, soundEnabled = (() => { try { return localStorage.getItem(SOUND_KEY) === 'on'; } catch { return false; } })(), audioWarned = false;
 const combatArt = createChapterCombatRenderer(), combatEvents = [];
 const cue = name => combatEvents.push(name);
 const SFX = { swing:()=>cue('swing'), swing3:()=>cue('heavy'), skill:()=>cue('cast'),
@@ -1550,8 +1553,8 @@ addEventListener('pagehide',()=>{if(G.started){finishBattle('页面离开');save
 const heldActions=new Map(), pending={attack:0,skill:0,skill2:0,dodge:0};
 const actionCodes={attack:['KeyJ'],skill:['KeyK'],skill2:['KeyI'],dodge:['Space','KeyL']};
 const heldCombat=name=>[...heldActions.values()].includes(name)||actionCodes[name].some(code=>keys.has(code));
-function pauseGame(on=true){G.manualPaused=on;$('pauseMenu').hidden=!on;resetInput();}
-$('bPause').onclick=()=>pauseGame();$('bResume').onclick=()=>pauseGame(false);
+function pauseGame(on=true){G.manualPaused=on;if(on)music?.stop();$('pauseMenu').hidden=!on;resetInput();}
+$('bPause').onclick=()=>pauseGame();$('bResume').onclick=()=>{pauseGame(false);startAudio();};
 $('bPauseMap').onclick=()=>{if(inCombat()){let note=$('pauseMenu').querySelector('.battle-help');if(!note){note=document.createElement('p');note.className='battle-help';$('bPauseMap').after(note);}note.textContent='战斗中无法查看手记或换招，先脱身。';return;}pauseGame(false);toggleAtlas(true);};
 $('bPauseFull').onclick=()=>{
   let note=$('pauseMenu').querySelector('.full-help');
@@ -1559,9 +1562,10 @@ $('bPauseFull').onclick=()=>{
   note.textContent=standaloneMode()?'已在主屏幕模式中。':fullscreenRequest()?'已向浏览器请求全屏；若未进入，可继续横屏试玩。':'这个浏览器不提供网页全屏；iPhone 可分享→添加到主屏幕后横屏打开。';
   if(!standaloneMode())$('bFull').click();
 };
-$('bSound').onclick=()=>{soundEnabled=!soundEnabled;$('bSound').innerHTML='音<span>'+(soundEnabled?'开':'关')+'</span>';$('bSound').setAttribute('aria-label',soundEnabled?'关闭声音':'开启声音');if(soundEnabled)startAudio();else{combatAudio?.stop();combatEvents.length=0;}};
+$('bSound').onclick=()=>{if(soundEnabled&&AC&&AC.state!=='running')startAudio();else setSound(!soundEnabled);};
+$('bStartSound').onclick=()=>setSound(!soundEnabled);
 addEventListener('blur',()=>{if(G.started&&!paused())pauseGame();});
-document.addEventListener('visibilitychange',()=>{if(document.hidden&&G.started)pauseGame();});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)return;combatAudio?.stop();music?.stop();combatEvents.length=0;AC?.suspend().catch(()=>{});if(G.started)pauseGame();});
 addEventListener('orientationchange',()=>{if(G.started&&innerHeight>innerWidth)pauseGame();});
 const stick = { id: null, ox: 0, oy: 0, dx: 0, dy: 0 };
 const zone = $('stickzone'), stickEl = $('stick'), knob = $('knob');
@@ -1625,7 +1629,30 @@ $('bCopy').addEventListener('click', () => {
   const fallback = () => { const ta = $('recTa'); ta.hidden = false; ta.value = text; ta.focus(); ta.select(); toast('复制不了，已经全选，手动复制即可'); };
   try { navigator.clipboard.writeText(text).then(() => toast('试玩记录已复制'), fallback); } catch (e) { fallback(); }
 });
-function startAudio() { if(!soundEnabled)return;try { AC ||= new (window.AudioContext||window.webkitAudioContext)();combatAudio ||= createCombatAudio(AC);AC.resume(); } catch { soundEnabled=false;toast('当前浏览器无法开启声音'); } }
+function startAudio() {
+  if(!soundEnabled)return;
+  try {
+    if(!AC){AC=new (window.AudioContext||window.webkitAudioContext)();AC.onstatechange=renderSound;}
+    combatAudio ||= createCombatAudio(AC);music ||= createMusic(AC);
+    if(AC.state!=='running')AC.resume().then(renderSound,()=>{renderSound();if(!audioWarned){audioWarned=true;toast('浏览器没有放行声音，点右上角「音」再试');}});
+  } catch { soundEnabled=false;toast('当前浏览器无法开启声音'); }
+  renderSound();
+}
+function setSound(on) {
+  soundEnabled=on;try{localStorage.setItem(SOUND_KEY,on?'on':'off');}catch{}
+  if(on){audioWarned=false;startAudio();}else{combatAudio?.stop();music?.stop();combatEvents.length=0;}
+  renderSound();
+}
+// 想开但浏览器还没放行（挂起、切后台回来）时显示「停」，点一下恢复，不假装已经在响。
+function renderSound() {
+  const state=!soundEnabled?'off':AC&&AC.state!=='running'?'blocked':'on';
+  $('bSound').innerHTML='音<span>'+{off:'关',blocked:'停',on:'开'}[state]+'</span>';
+  $('bSound').dataset.sound=state;
+  $('bSound').setAttribute('aria-label',{off:'开启声音',blocked:'声音被浏览器暂停，点此恢复',on:'关闭声音'}[state]);
+  $('bStartSound').textContent=soundEnabled?'声音：开':'声音：关（点此开启）';
+  $('bStartSound').setAttribute('aria-pressed',String(soundEnabled));
+  $('soundHint').textContent=soundEnabled?'进入后播放出剑、预警与命中音效；右上角「音」可随时静音。':'当前静音。想听出剑、预警与命中音效，先点「声音」开启。';
+}
 function begin() {
   G.manualPaused=false;$('pauseMenu').hidden=true;resetInput();combatArt.reset();
   Playtest.ensure(G,{debug:DEBUG});Playtest.event(G,'session_start',{session:PAGE_SESSION});
@@ -1634,6 +1661,7 @@ function begin() {
   else toast('继续上次的进度');
 }
 $('bStart').addEventListener('click', begin);
+renderSound();
 let newArmed = false;
 $('bNew').addEventListener('click', () => {
   if (!newArmed) { newArmed = true; $('bNew').textContent = '确定清空进度？'; return; }
@@ -2012,6 +2040,9 @@ function frame(now) {
   G.toasts = G.toasts.filter((t) => (t.t -= dt) > 0);
   rectT -= dt; if (rectT <= 0) { updHudRects(); rectT = 0.25; }
   for(const event of combatEvents)combatArt.impact(event);
+  // 背景音乐：手动暂停、切后台、静音时停；战斗中切到战斗段；预警与命中时让路
+  music?.update(soundEnabled&&AC?.state==='running'&&G.started&&!G.manualPaused&&!document.hidden,inCombat()?'combat':'explore');
+  if(combatEvents.some(e=>e==='tele'||e?.name==='impact'))music?.duck();
   if(soundEnabled&&AC?.state==='running')combatAudio.play(combatEvents);combatEvents.length=0;
   draw(now / 1000); hud(dt); drawCast(now / 1000);
   requestAnimationFrame(frame);
@@ -2046,7 +2077,7 @@ function boot(data) {
   loadAssets().then(async () => { Object.assign(OBJ,await worldArt.props(new URL('./assets/songfeng/world-atlas.png',import.meta.url).href,SIZE));buildMap(); portrait($('myFace'), 'xia'); resize(); renderAll();$('bStart').disabled=false;$('bNew').disabled=false; last = performance.now(); requestAnimationFrame(frame); }).catch(error=>{showSaveError('场景载入失败，请刷新重试：'+error.message);$('bStart').disabled=true;});
 }
 try { window.claude?.hot?.snapshot?.(() => ({ G: JSON.parse(JSON.stringify(G)) })); } catch (e) { /* 没有热更新也能玩 */ }
-if (location.search.includes('debug')) window.__duko = { get G() { return G; }, get BUF() { return BUF; }, get LBUF() { return LBUF; }, draw, OBST, NPCS, INSPECT, CRATE, HERBS, DUMMY_POS, RESPAWN, WORLD, interact, doAct, attack, skill, dodge, useBandage, commit, loadSave, clearSave, recordText, recordPayload, perfRec, perfStats, newGame, get locations(){return {NPCS,CRATE,HERBS,LEDGER_POS,CACHE_POS,FINAL_POS};}, openDlg, toggleAtlas, kill, hurtPlayer, respawn, updArcher, updateChapter, get worldStyle(){return WORLD_STYLE;},get saveKey(){return SAVE_KEY;}, get target() { return curTarget; }, step(dt, n) { for (let i = 0; i < (n || 1); i++) { if (G.started && !paused()) { if (G.hitstop > 0) G.hitstop=Math.max(0,G.hitstop-dt); else update(dt); } } hud(dt); } };
+if (location.search.includes('debug')) window.__duko = { get G() { return G; }, get music() { return music?.state; }, get BUF() { return BUF; }, get LBUF() { return LBUF; }, draw, OBST, NPCS, INSPECT, CRATE, HERBS, DUMMY_POS, RESPAWN, WORLD, interact, doAct, attack, skill, dodge, useBandage, commit, loadSave, clearSave, recordText, recordPayload, perfRec, perfStats, newGame, get locations(){return {NPCS,CRATE,HERBS,LEDGER_POS,CACHE_POS,FINAL_POS};}, openDlg, toggleAtlas, kill, hurtPlayer, respawn, updArcher, updateChapter, get worldStyle(){return WORLD_STYLE;},get saveKey(){return SAVE_KEY;}, get target() { return curTarget; }, step(dt, n) { for (let i = 0; i < (n || 1); i++) { if (G.started && !paused()) { if (G.hitstop > 0) G.hitstop=Math.max(0,G.hitstop-dt); else update(dt); } } hud(dt); } };
 installPlaytestForm();
 const hot = window.claude?.hot;
 if (hot?.ready) hot.ready(boot); else boot(hot?.data ?? {});
