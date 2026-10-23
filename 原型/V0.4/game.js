@@ -359,7 +359,8 @@ const cue = name => combatEvents.push(name);
 const SFX = { swing:()=>cue('swing'), swing3:()=>cue('heavy'), skill:()=>cue('cast'),
   hit:()=>{}, hitBig:()=>{}, hurt:()=>{}, tele:()=>cue('tele'), teleS:()=>cue('tele'),
   interrupt:()=>cue('interrupt'), dodge:()=>cue('dodge'), evade:()=>cue('evade'),
-  heal:()=>cue('heal'), coin:()=>cue('coin'), ui:()=>cue('ui'), down:()=>cue('down') };
+  heal:()=>cue('heal'), coin:()=>cue('coin'), ui:()=>cue('ui'), down:()=>cue('down'),
+  pickup:()=>cue('pickup'), buy:()=>cue('buy'), craft:()=>cue('craft'), note:()=>cue('note'), done:()=>cue('done') };
 function impact(kind, face, killed=false) {
   const event={name:'impact',kind,face,killed};combatEvents.push(event);
   G.hitstop=Math.max(G.hitstop,IMPACTS[kind].stop+(killed ? .008 : 0));
@@ -824,7 +825,7 @@ function endSpar(e,win) {
     else d.p.hp=Math.max(1,d.p.hp);
   });
   if(!r.ok){e.hp=Math.max(1,e.hp);return;}
-  toast(win?(n<=2?'切磋赢了！匪首给了一份修械料':'切磋赢了！（之后没有物质奖励）'):'点到为止。匪首收了刀：「再来？」');if(win)SFX.coin();
+  toast(win?(n<=2?'切磋赢了！匪首给了一份修械料':'切磋赢了！（之后没有物质奖励）'):'点到为止。匪首收了刀：「再来？」');if(win)(n<=2?SFX.pickup:SFX.coin)();
 }
 
 // ---------------------------------------------------------------- 敌人
@@ -989,12 +990,12 @@ function interact() {
   if (t.kind === 'look') { openDlg('look:' + t.id); return; }
   if (t.kind === 'crate') {
     const r = commit('crate', '拾取木料堆', (d) => { if (d.f.matPicked) return { ok: false }; d.f.matPicked = true; d.inv.wood += 2; d.inv.iron += 1; lg(d, '在铁匠铺门口的木料堆拿到一份修械料（木料 2、废铁 1）'); });
-    if (r.ok && !r.dup) { toast('拿到木料 2、废铁 1。去找周砚做剑饰'); SFX.coin(); }
+    if (r.ok && !r.dup) { toast('拿到木料 2、废铁 1。去找周砚做剑饰'); SFX.pickup(); }
     return;
   }
   if (t.kind === 'herb') {
     const r = commit('herb' + t.i, '采止血草', (d) => { if (d.f.herbs[t.i] || d.inv.herb >= 2) return { ok: false }; d.f.herbs[t.i] = true; d.inv.herb++; });
-    if (r.ok && !r.dup) { toast('采到止血草（' + G.inv.herb + '/2）'); SFX.coin(); }
+    if (r.ok && !r.dup) { toast('采到止血草（' + G.inv.herb + '/2）'); SFX.pickup(); }
   }
 }
 
@@ -1115,7 +1116,7 @@ function craft(name, op) {
     lg(d, '请周砚做了剑饰「' + name + '」' + (old ? '（替换了「' + old + '」）' : ''));
     know(d, 'zhou', 'made_' + name);
   });
-  if (r.ok && !r.dup) { toast('周砚做好了「' + name + '」' + (old ? '，旧的「' + old + '」已毁' : '')); SFX.coin(); tip('dummy', '去铺子旁边的木人桩试试新剑饰'); }
+  if (r.ok && !r.dup) { toast('周砚做好了「' + name + '」' + (old ? '，旧的「' + old + '」已毁' : '')); SFX.craft(); tip('dummy', '去铺子旁边的木人桩试试新剑饰'); }
   setDlg(dialogFor('zhou'));
 }
 function doAct(key) {
@@ -1154,7 +1155,7 @@ function doAct(key) {
     case 'craft_hq': craft('回气', op); break;
     case 'buy_zhou': {
       const r = commit(op, '向周砚买料', (d) => { if (d.f.zhouBuys >= 2) return { ok: false, msg: '周砚的料卖完了' }; if (d.inv.coin < 10) return { ok: false, msg: '铜钱不够，一份料要 10' }; d.inv.coin -= 10; d.inv.wood += 2; d.inv.iron += 1; d.f.zhouBuys++; });
-      if (r.ok && !r.dup) { toast('向周砚买了一份料'); SFX.coin(); }
+      if (r.ok && !r.dup) { toast('向周砚买了一份料'); SFX.buy(); }
       setDlg(dialogFor('zhou')); break;
     }
     case 'ask': {
@@ -1173,13 +1174,13 @@ function doAct(key) {
         lg(d, lost ? '败过一阵后，仍用止血草 2 与匪首换回了药包' : '用止血草 2 与匪首换回了药包');
       });
       if(!r.ok)break;
-      if (!r.dup) { toast('药包到手。回青石渡交给沈青'); SFX.coin(); }
+      if (!r.dup) { toast('药包到手。回青石渡交给沈青'); SFX.pickup(); }
       setDlg({ who: '匪首', sub: '匪营', id: 'boss', text: (lost ? '打过一架还肯按约办事……行。' : '') + '你肯按约办事。我这有一份修械料，五文给你。', opts: [{ label: '买修械料（5 铜钱）', sub: '木料 2 + 废铁 1，限购一份；以后再来买也行', key: 'buy_boss', primary: true }, { label: '先不买', key: 'close' }] });
       break;
     }
     case 'buy_boss': {
       const r = commit('buy_boss', '向匪首买料', (d) => { if (d.f.branch !== 'B') return { ok: false }; if (d.f.bought) return { ok: false, msg: '这份料已经买过了' }; if (d.inv.coin < 5) return { ok: false, msg: '铜钱不够' }; d.inv.coin -= 5; d.inv.wood += 2; d.inv.iron += 1; d.f.bought = true; know(d, 'boss', 'bought'); lg(d, '向匪首买下一份修械料（5 铜钱）'); });
-      if (r.ok && !r.dup) { toast('买到修械料：木料 2、废铁 1'); SFX.coin(); }
+      if (r.ok && !r.dup) { toast('买到修械料：木料 2、废铁 1'); SFX.buy(); }
       setDlg(dialogFor('boss')); break;
     }
     case 'fight': {
@@ -1207,7 +1208,7 @@ function deliver(tell, op) {
   });
   if (r.dup) return;
   if (!r.ok) { closeDlg(); return; }
-  SFX.coin();
+  SFX.done();
   const text = tell ? (br === 'A' ? '你和匪首动了手？……人没事就好。这些你收着。' : '拿药草换回来的？他们倒还讲道理。这些你收着。') : '药收到了，多谢。这些你收着。';
   setDlg({ who: '沈青', sub: '青石渡药师', id: 'shen', text, note: '获得：铜钱 +20 · 绷带 +1' + (hadHerb ? '；顺手把采到的止血草也交给了她' : ''), opts: [{ label: '收下', key: 'finish', primary: true }] });
 }
@@ -1263,12 +1264,12 @@ function chapterAction(key,d0,op) {
   if(key==='choices'){setDlg(choiceDialog());return true;}
   if(key.startsWith('clue_')){
     const id=key.slice(5),r=commit('clue:'+id,'取得线索',d=>Chapter.act(d,'clue',id));
-    if(r.ok){toast('记下线索：'+Chapter.CLUES[id].name);closeDlg();}return true;
+    if(r.ok){toast('记下线索：'+Chapter.CLUES[id].name);SFX.note();closeDlg();}return true;
   }
   if(key==='ledger_hint'){setDlg({who:'匪首',id:'boss',text:'东边木桶旁的旧箱子。六个人，两个月，谁欠谁的，你自己看。',opts:[{label:'去翻阅账册',key:'close'}]});return true;}
   if(key==='cache'){
     const r=commit('cache','搜寻山中行囊',d=>{if(d.chapter.cache)return {ok:false};d.chapter.cache=true;d.inv.bandage++;d.inv.coin+=5;d.inv.wood+=2;lg(d,'在山中旧行囊找到绷带 1、铜钱 5 和木料 2');});
-    if(r.ok){toast('行囊里的补给已经收好');closeDlg();}return true;
+    if(r.ok){toast('行囊里的补给已经收好');SFX.pickup();closeDlg();}return true;
   }
   if(key.startsWith('decide_')){
     const id=key.slice(7),probe=JSON.parse(JSON.stringify(G)),r=Chapter.act(probe,'decide',id);
@@ -1277,11 +1278,11 @@ function chapterAction(key,d0,op) {
   }
   if(key==='confirm_decision'){
     const r=commit('decision','渡口抉择',d=>Chapter.act(d,'decide',d0.decision));
-    if(r.ok){closeDlg();toast('第三幕 · '+Chapter.DECISIONS[G.chapter.decision].name+'。前往渡口南面告示赴约');}return true;
+    if(r.ok){closeDlg();toast('第三幕 · '+Chapter.DECISIONS[G.chapter.decision].name+'。前往渡口南面告示赴约');SFX.done();}return true;
   }
   if(key==='supply'){
     const r=commit('chapter:supply','领取赴约补给',d=>Chapter.act(d,'supply'));
-    if(r.ok){toast('绷带已经放进行囊');closeDlg();}return true;
+    if(r.ok){toast('绷带已经放进行囊');SFX.pickup();closeDlg();}return true;
   }
   if(key==='final_start'||key==='final_peace'){startFinal(key==='final_peace');return true;}
   if(key==='ending'){closeDlg();G.done=true;renderDone();return true;}
@@ -1301,7 +1302,7 @@ function startFinal(peace) {
   });
   if(!r.ok)return;
   closeDlg();resetInput();
-  if(peace){G.done=true;renderDone();}
+  if(peace){G.done=true;SFX.done();renderDone();}
   else toast('对峙开始。先处理弓手，木桶和房屋可以挡箭');
 }
 function endingText() {
@@ -1419,7 +1420,7 @@ function updateChapter(dt){
   }
   if(G.chapter.finalStarted&&!G.chapter.finalResolved&&!G.enemies.some(e=>e.final&&activeFoe(e))){
     const r=commit('chapter:result','结算渡口风波',d=>Chapter.act(d,'resolve','victory'));
-    if(r.ok){G.arrows=[];G.done=true;renderDone();}
+    if(r.ok){G.arrows=[];G.done=true;SFX.done();renderDone();}
   }
 }
 function drawChapterWorld(g,items,t){
@@ -2040,9 +2041,9 @@ function frame(now) {
   G.toasts = G.toasts.filter((t) => (t.t -= dt) > 0);
   rectT -= dt; if (rectT <= 0) { updHudRects(); rectT = 0.25; }
   for(const event of combatEvents)combatArt.impact(event);
-  // 背景音乐：手动暂停、切后台、静音时停；战斗中切到战斗段；预警与命中时让路
+  // 背景音乐：手动暂停、切后台、静音时停；战斗中切到战斗段；预警、命中与交互提示音时让路
   music?.update(soundEnabled&&AC?.state==='running'&&G.started&&!G.manualPaused&&!document.hidden,inCombat()?'combat':'explore');
-  if(combatEvents.some(e=>e==='tele'||e?.name==='impact'))music?.duck();
+  if(combatEvents.some(e=>['tele','pickup','buy','craft','note','done'].includes(e)||e?.name==='impact'))music?.duck();
   if(soundEnabled&&AC?.state==='running')combatAudio.play(combatEvents);combatEvents.length=0;
   draw(now / 1000); hud(dt); drawCast(now / 1000);
   requestAnimationFrame(frame);

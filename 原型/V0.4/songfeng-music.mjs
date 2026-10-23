@@ -110,11 +110,11 @@ export function createMusic(audio) {
       }
       if (duckUntil && audio.currentTime >= duckUntil) { duckUntil = 0; fade(out.gain, LEVEL, audio.currentTime, .25); }
     },
-    // 预警、命中时压低音乐，0.4 秒后回升
+    // 预警、命中、交互提示音时压低约 14 dB，0.4 秒后回升
     duck() {
       if (!timer) return;
       const t = audio.currentTime;
-      if (!duckUntil) fade(out.gain, LEVEL * .35, t, .04);
+      if (!duckUntil) fade(out.gain, LEVEL * .2, t, .04);
       duckUntil = t + .4;
     },
     stop() { if (timer) stop(); },

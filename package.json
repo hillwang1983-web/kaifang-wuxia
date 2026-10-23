@@ -5,7 +5,7 @@
   "description": "开放武侠多端协作与青石渡风波验证入口",
   "scripts": {
     "serve": "node portal-integration/server.mjs",
-    "test": "node --test tests/chapter.test.cjs tests/playtest.test.cjs portal-integration/server.test.mjs tests/preview-release.test.mjs tests/songfeng-skill-motion.test.mjs",
+    "test": "node --test tests/chapter.test.cjs tests/playtest.test.cjs portal-integration/server.test.mjs tests/preview-release.test.mjs tests/songfeng-skill-motion.test.mjs tests/songfeng-audio.test.mjs",
     "test:browser": "node --test --test-concurrency=1 --test-timeout=60000 tests/browser.test.mjs tests/mobile-browser.test.mjs tests/songfeng-combat.test.mjs tests/songfeng-clarity.test.mjs",
     "test:all": "npm test && npm run test:browser",
     "test:server": "python3 -m unittest discover -s 服务端/tests -t 服务端",
