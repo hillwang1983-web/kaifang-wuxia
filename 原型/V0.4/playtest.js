@@ -23,7 +23,7 @@
     return {add,stats,visibility(value){if(hidden&&!value)skipResume=true;hidden=value;}};
   }
   function ensure(state,{debug=false,fresh=false,now=new Date().toISOString()}={}){
-    if(!state.playtest)state.playtest={schema:1,coverage:fresh?'fresh':'legacy',debugUsed:!!debug,startedAt:now,baseline:{activeSeconds:state.time||0,inventory:{...state.inv}},profile:{operator:'未声明',source:'未填写',experience:'未填写',device:'',power:'未记录',difficulty:'',observation:'',nextTry:''},prompts:[],events:[],combat:{casts:0,hits:0,misses:0,noMp:0,interrupts:0,counters:0,qiReturned:0},battles:[]};
+    if(!state.playtest)state.playtest={schema:1,coverage:fresh?'fresh':'legacy',debugUsed:!!debug,startedAt:now,baseline:{activeSeconds:state.time||0,inventory:{...state.inv}},profile:{operator:'未声明',source:'未填写',experience:'未填写',device:'',power:'未记录',difficulty:'',observation:'',nextTry:''},prompts:[],events:[],combat:{casts:0,hits:0,misses:0,noMp:0,interrupts:0,counters:0,qiReturned:0,windups:0,heavyWindups:0,dodges:0,evades:0},battles:[]};
     if(debug)state.playtest.debugUsed=true;
     return state.playtest;
   }
