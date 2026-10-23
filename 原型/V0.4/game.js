@@ -717,7 +717,7 @@ function skill(slot=0) {
   if(p.mp<s.cost){trackCombat('noMp');toast('内力不足，先用普攻周旋；战斗中自然回气较慢');return;}
   startActionBattle(s.range+s.dash);trackCombat('casts');p.mp-=s.cost;c.cooldowns[slot]=s.cd;p.skCd=s.cd;p.activeSkill=id;
   aim(id==='sweep'?Math.PI:1.7);
-  for(let n=0;n<Math.ceil(s.dash/8);n++)move(p,Math.cos(p.face)*Math.min(8,s.dash-n*8),Math.sin(p.face)*Math.min(8,s.dash-n*8),16);
+  for(let n=0;n<Math.ceil(s.dash/8);n++){move(p,Math.cos(p.face)*Math.min(8,s.dash-n*8),Math.sin(p.face)*Math.min(8,s.dash-n*8),16);addTrail(p);}
   p.swing=p.swingDur=(id==='sweep'||id==='break')?.35:.24;p.swingKind='sk';p.comboT=0;G.combatSerial++;SFX.skill();
   G.swings.push({id:uid(),x:p.x,y:p.y,face:p.face,combo:(id==='sweep'||id==='break')?3:id==='thrust'?1:2,visualCombo:(id==='sweep'||id==='break')?3:id==='thrust'?1:2,age:0,life:p.swingDur,duration:p.swingDur,
     damage:s.dmg,range:s.range,half:s.half,skill:id,orn:G.orn||'基础剑',hitIDs:[],launched:false});
@@ -750,6 +750,12 @@ function updateStrikes(dt) {
     }
   }
   G.qi=G.qi.filter(s=>{if(s.life>0&&s.x>0&&s.x<WORLD.w&&s.y>0&&s.y<WORLD.h)return true;if(!s.counted)trackCombat('misses',1,G,s.orn);return false;});
+}
+// 残影只记录闪避与剑招突进的实际位移；相邻两枚至少隔 18 个世界单位，最多 6 枚，0.22 秒淡出（#15）
+function addTrail(p) {
+  const last = p.trail[p.trail.length - 1];
+  if (last && Math.hypot(p.x - last.x, p.y - last.y) < 18) return;
+  p.trail.push({ x: p.x, y: p.y, t: 0.22 }); if (p.trail.length > 6) p.trail.shift();
 }
 function dodge() {
   const p = G.p; if (!canAct() || p.dgCd > 0 || p.dodge > 0 || p.sp < 30) return;
@@ -1554,7 +1560,7 @@ addEventListener('pagehide',()=>{if(G.started){finishBattle('页面离开');save
 const heldActions=new Map(), pending={attack:0,skill:0,skill2:0,dodge:0};
 const actionCodes={attack:['KeyJ'],skill:['KeyK'],skill2:['KeyI'],dodge:['Space','KeyL']};
 const heldCombat=name=>[...heldActions.values()].includes(name)||actionCodes[name].some(code=>keys.has(code));
-function pauseGame(on=true){G.manualPaused=on;if(on)music?.stop();$('pauseMenu').hidden=!on;resetInput();}
+function pauseGame(on=true){G.manualPaused=on;if(on)G.p.trail=[];if(on)music?.stop();$('pauseMenu').hidden=!on;resetInput();}
 $('bPause').onclick=()=>pauseGame();$('bResume').onclick=()=>{pauseGame(false);startAudio();};
 $('bPauseMap').onclick=()=>{if(inCombat()){let note=$('pauseMenu').querySelector('.battle-help');if(!note){note=document.createElement('p');note.className='battle-help';$('bPauseMap').after(note);}note.textContent='战斗中无法查看手记或换招，先脱身。';return;}pauseGame(false);toggleAtlas(true);};
 $('bPauseFull').onclick=()=>{
@@ -1731,7 +1737,8 @@ function update(dt) {
     if (p.swing <= 0) p.face = Math.atan2(iy, ix);
     p.moving = true; p.an += dt * Math.min(1, Math.hypot(ix, iy) * 1.3);
   }
-  p.trail=[];
+  if (p.dodge > 0) addTrail(p);
+  p.trail = p.trail.filter((t) => (t.t -= dt) > 0);
   updateStrikes(dt);
   for (const e of G.enemies) updEnemy(e, dt);
   updateChapter(dt);
@@ -1889,7 +1896,7 @@ function draw(realT) {
       if (e.state === 'stagger') for (let k = 0; k < 3; k++) { const a = t * 6 + k * 2.1; P(g, Math.round(ex + Math.cos(a) * 7), Math.round(top - 2 + Math.sin(a) * 2), '#F2D27A'); }
     } });
   }
-  items.push({y:p.y/U,d:()=>combatArt.hero(g,G,U)});
+  items.push({y:p.y/U,d:()=>{combatArt.ghosts(g,G,U);combatArt.hero(g,G,U);}});
   items.sort((a, b) => a.y - b.y).forEach((it) => it.d());
   combatArt.effects(g,G,U);
   for (const fx of G.fx) if (fx.type === 'pt') { g.globalAlpha = Math.max(0, 1 - fx.t / fx.dur); g.fillStyle = fx.col; g.fillRect(Math.round(fx.x / U), Math.round(fx.y / U), 1, 1); }
@@ -2062,7 +2069,7 @@ function sanitizeLoaded() {
     Object.assign(e, { x: e.hx, y: e.hy, hp: K.hp, maxHp: K.hp, state: 'idle', t: 0, atk: null, plan: null });
     if (e.defeated && G.f.sparWins === 0) e.state = 'down';
   }
-  G.swings=[];G.qi=[];G.manualPaused=false;G.p.sp??=100;G.combatSerial??=0;combatArt.reset();
+  G.swings=[];G.qi=[];G.p.trail=[];G.manualPaused=false;G.p.sp??=100;G.combatSerial??=0;combatArt.reset();
   G.dummy.state = 'idle'; G.dummy.t = 0; G.deadT = 0; G.p.hp = G.p.hp<=0?G.p.maxHp:G.p.hp;G.arrows=[];G.chapter.cooldowns=[0,0];G.p.dodge=G.p.inv=G.p.swing=0;
 }
 function boot(data) {

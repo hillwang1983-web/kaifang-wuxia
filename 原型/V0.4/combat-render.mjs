@@ -92,6 +92,16 @@ export function createChapterCombatRenderer() {
       }
       c.restore();
     },
+    // 闪避与剑招突进的残影（#15）：沿实际位移轨迹，淡、短、在本体下层，不和本体抢眼
+    ghosts(c, G, unit) {
+      const pose = heroMotion.pose;
+      for (const tr of G.p.trail || []) {
+        c.save(); c.translate(tr.x / unit, tr.y / unit); c.scale(1 / unit, 1 / unit);
+        c.globalAlpha = Math.min(.35, tr.t * 1.6);
+        paintHero(c, { ...heroState.p, x: 0, y: 0, flash: 0 }, pose);
+        c.restore();
+      }
+    },
     enemy(c, e, unit) {
       const motion = enemyMotion.get(e.id); if (!motion) return;
       const pose = e.state === 'down' ? { ...motion.pose, crouch: 8, lean: 0 } : motion.pose;
