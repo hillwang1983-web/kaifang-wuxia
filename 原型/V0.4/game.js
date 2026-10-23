@@ -1846,6 +1846,7 @@ function draw(realT) {
   // 镜头不出地图：地图比画面宽（高）时夹在边内，比画面小就居中
   const MW = MAP_W * 16, MH = MAP_H * 16;
   ox = BW < MW ? clamp(ox, 0, MW - BW) : (MW-BW)/2; oy=BH<MH?clamp(oy,0,MH-BH):(MH-BH)/2;
+  CAM.ox=ox;CAM.oy=oy; // 交谈提示等屏幕定位用夹边后的镜头（不含震屏），与场景同一套换算（#17）
   const motionScale=matchMedia('(prefers-reduced-motion: reduce)').matches?.25:1;ox+=shake.x/U*motionScale;oy+=shake.y/U*motionScale;
   ox=Math.round(ox*scale)/scale;oy=Math.round(oy*scale)/scale;
   g.setTransform(1,0,0,1,0,0);g.globalAlpha=1;g.globalCompositeOperation='source-over';
@@ -2024,10 +2025,11 @@ function updHudRects() {
 }
 function renderAll() { $('start').hidden = G.started; renderDlg(); renderDone(); renderLog(); toastKey = '#'; }
 
+const CAM={ox:0,oy:0};
 function updateTalkMarker(){
   const el=$('nearTalk'),t=curTarget;el.hidden=!t||!['npc','boss'].includes(t.kind)||!canAct();if(el.hidden)return;
   const name=t.label.replace('交谈 · ','');el.querySelector('span').textContent=name+' · 点击交谈';el.setAttribute('aria-label','点击与'+name+'交谈');
-  el.style.left=(VW/2+(t.x-G.p.x)/U*Z)+'px';el.style.top=(VH/2+(t.y-G.p.y)/U*Z+4)+'px';el.style.width=Math.max(92,24*Z)+'px';el.style.height=(23*Z+30)+'px';
+  el.style.left=((t.x/U-CAM.ox)*Z)+'px';el.style.top=((t.y/U-CAM.oy)*Z+4)+'px';el.style.width=Math.max(92,24*Z)+'px';el.style.height=(23*Z+30)+'px';
 }
 function installPlaytestForm(){
   for(const el of document.querySelectorAll('[data-profile]'))el.addEventListener('change',()=>{
@@ -2095,7 +2097,7 @@ function boot(data) {
   loadAssets().then(async () => { Object.assign(OBJ,await worldArt.props(new URL('./assets/songfeng/world-atlas.png',import.meta.url).href,SIZE));buildMap(); portrait($('myFace'), 'xia'); resize(); renderAll();$('bStart').disabled=false;$('bNew').disabled=false; last = performance.now(); requestAnimationFrame(frame); }).catch(error=>{showSaveError('场景载入失败，请刷新重试：'+error.message);$('bStart').disabled=true;});
 }
 try { window.claude?.hot?.snapshot?.(() => ({ G: JSON.parse(JSON.stringify(G)) })); } catch (e) { /* 没有热更新也能玩 */ }
-if (location.search.includes('debug')) window.__duko = { get G() { return G; }, get music() { return music?.state; }, get BUF() { return BUF; }, get LBUF() { return LBUF; }, draw, OBST, NPCS, INSPECT, CRATE, HERBS, DUMMY_POS, RESPAWN, WORLD, interact, doAct, attack, skill, dodge, useBandage, commit, loadSave, clearSave, recordText, recordPayload, perfRec, perfStats, newGame, get locations(){return {NPCS,CRATE,HERBS,LEDGER_POS,CACHE_POS,FINAL_POS};}, openDlg, toggleAtlas, kill, hurtPlayer, respawn, updArcher, updateChapter, get worldStyle(){return WORLD_STYLE;},get saveKey(){return SAVE_KEY;}, get target() { return curTarget; }, step(dt, n) { for (let i = 0; i < (n || 1); i++) { if (G.started && !paused()) { if (G.hitstop > 0) G.hitstop=Math.max(0,G.hitstop-dt); else update(dt); } } hud(dt); } };
+if (location.search.includes('debug')) window.__duko = { get G() { return G; }, get CAM() { return { ...CAM, Z, U }; }, get music() { return music?.state; }, get BUF() { return BUF; }, get LBUF() { return LBUF; }, draw, OBST, NPCS, INSPECT, CRATE, HERBS, DUMMY_POS, RESPAWN, WORLD, interact, doAct, attack, skill, dodge, useBandage, commit, loadSave, clearSave, recordText, recordPayload, perfRec, perfStats, newGame, get locations(){return {NPCS,CRATE,HERBS,LEDGER_POS,CACHE_POS,FINAL_POS};}, openDlg, toggleAtlas, kill, hurtPlayer, respawn, updArcher, updateChapter, get worldStyle(){return WORLD_STYLE;},get saveKey(){return SAVE_KEY;}, get target() { return curTarget; }, step(dt, n) { for (let i = 0; i < (n || 1); i++) { if (G.started && !paused()) { if (G.hitstop > 0) G.hitstop=Math.max(0,G.hitstop-dt); else update(dt); } } hud(dt); } };
 installPlaytestForm();
 const hot = window.claude?.hot;
 if (hot?.ready) hot.ready(boot); else boot(hot?.data ?? {});

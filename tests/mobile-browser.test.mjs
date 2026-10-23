@@ -225,6 +225,29 @@ test('quest panel opens briefly on start and on objective change, then collapses
   await page.clock.runFor(6500); assert.equal((await state()).collapsed, true, 'and does not stay open');
 });
 
+test('the small talk marker stays on its NPC when the camera is clamped at the map edge (#17)', async t => {
+  const context = await browser.newContext({ viewport: { width: 844, height: 390 }, isMobile: true, hasTouch: true });
+  t.after(() => context.close()); const page = await context.newPage(); const errors = []; page.on('pageerror', e => errors.push(e.message));
+  await page.goto(base + '?debug'); await page.locator('#bStart').tap();
+  const check = (placement) => page.evaluate(async (placement) => {
+    const d = __duko, G = d.G, npc = placement === 'edge' ? [...d.NPCS].sort((a, b) => a.x - b.x)[0] : d.NPCS.find(n => n.x > 900) || d.NPCS[1];
+    for (const e of G.enemies) e.alive = false;
+    G.p.x = npc.x + 40; G.p.y = npc.y;
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+    const el = document.getElementById('nearTalk'), app = document.getElementById('app').getBoundingClientRect();
+    const { ox, oy, Z, U } = d.CAM, vw = app.width;
+    return { name: npc.name, hidden: el.hidden, text: el.textContent, left: parseFloat(el.style.left), top: parseFloat(el.style.top),
+      expectX: (npc.x / U - ox) * Z, expectY: (npc.y / U - oy) * Z + 4, oldX: vw / 2 + (npc.x - G.p.x) / U * Z };
+  }, placement);
+  const edge = await check('edge');
+  assert.equal(edge.hidden, false, 'marker shows near ' + edge.name); assert.match(edge.text, new RegExp(edge.name));
+  assert.ok(Math.abs(edge.left - edge.expectX) < 2 && Math.abs(edge.top - edge.expectY) < 2, JSON.stringify(edge));
+  assert.ok(Math.abs(edge.oldX - edge.expectX) > 20, 'scenario really clamps the camera: ' + JSON.stringify(edge));
+  const mid = await check('middle');
+  assert.equal(mid.hidden, false); assert.ok(Math.abs(mid.left - mid.expectX) < 2 && Math.abs(mid.top - mid.expectY) < 2, JSON.stringify(mid));
+  assert.deepEqual(errors, []);
+});
+
 test('start / continue card fits common landscape phones and scrolls with a fade on tiny ones (#18)', async t => {
   const open = async (viewport, mobile = true) => {
     const context = await browser.newContext({ viewport, isMobile: mobile, hasTouch: mobile });
