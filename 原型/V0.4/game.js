@@ -1,5 +1,6 @@
 import { createChapterCombatRenderer, skillHead } from './combat-render.mjs';
 import { IMPACTS, createCombatAudio } from './songfeng-feedback.mjs';
+import { createMusic } from './songfeng-music.mjs';
 import { createWorldArt, WORLD_STYLE } from './world-art.mjs';
 (() => {
 'use strict';
@@ -352,7 +353,7 @@ portrait($('myFace'), 'xia');
 // ================================================================ 声音（开始后才能出声）
 // 声音默认关闭；玩家主动开启后记住偏好。按钮显示以 AudioContext 实际是否在运行为准（#7）。
 const SOUND_KEY = 'qingshi-sound';
-let AC = null, combatAudio = null, soundEnabled = (() => { try { return localStorage.getItem(SOUND_KEY) === 'on'; } catch { return false; } })(), audioWarned = false;
+let AC = null, combatAudio = null, music = null, soundEnabled = (() => { try { return localStorage.getItem(SOUND_KEY) === 'on'; } catch { return false; } })(), audioWarned = false;
 const combatArt = createChapterCombatRenderer(), combatEvents = [];
 const cue = name => combatEvents.push(name);
 const SFX = { swing:()=>cue('swing'), swing3:()=>cue('heavy'), skill:()=>cue('cast'),
@@ -1624,14 +1625,14 @@ function startAudio() {
   if(!soundEnabled)return;
   try {
     if(!AC){AC=new (window.AudioContext||window.webkitAudioContext)();AC.onstatechange=renderSound;}
-    combatAudio ||= createCombatAudio(AC);
+    combatAudio ||= createCombatAudio(AC);music ||= createMusic(AC);
     if(AC.state!=='running')AC.resume().then(renderSound,()=>{renderSound();if(!audioWarned){audioWarned=true;toast('浏览器没有放行声音，点右上角「音」再试');}});
   } catch { soundEnabled=false;toast('当前浏览器无法开启声音'); }
   renderSound();
 }
 function setSound(on) {
   soundEnabled=on;try{localStorage.setItem(SOUND_KEY,on?'on':'off');}catch{}
-  if(on){audioWarned=false;startAudio();}else{combatAudio?.stop();combatEvents.length=0;}
+  if(on){audioWarned=false;startAudio();}else{combatAudio?.stop();music?.stop();combatEvents.length=0;}
   renderSound();
 }
 // 想开但浏览器还没放行（挂起、切后台回来）时显示「停」，点一下恢复，不假装已经在响。
@@ -2031,6 +2032,9 @@ function frame(now) {
   G.toasts = G.toasts.filter((t) => (t.t -= dt) > 0);
   rectT -= dt; if (rectT <= 0) { updHudRects(); rectT = 0.25; }
   for(const event of combatEvents)combatArt.impact(event);
+  // 背景音乐：手动暂停、切后台、静音时停；战斗中切到战斗段；预警与命中时让路
+  music?.update(soundEnabled&&AC?.state==='running'&&G.started&&!G.manualPaused&&!document.hidden,inCombat()?'combat':'explore');
+  if(combatEvents.some(e=>e==='tele'||e?.name==='impact'))music?.duck();
   if(soundEnabled&&AC?.state==='running')combatAudio.play(combatEvents);combatEvents.length=0;
   draw(now / 1000); hud(dt); drawCast(now / 1000);
   requestAnimationFrame(frame);
@@ -2065,7 +2069,7 @@ function boot(data) {
   loadAssets().then(async () => { Object.assign(OBJ,await worldArt.props(new URL('./assets/songfeng/world-atlas.png',import.meta.url).href,SIZE));buildMap(); portrait($('myFace'), 'xia'); resize(); renderAll();$('bStart').disabled=false;$('bNew').disabled=false; last = performance.now(); requestAnimationFrame(frame); }).catch(error=>{showSaveError('场景载入失败，请刷新重试：'+error.message);$('bStart').disabled=true;});
 }
 try { window.claude?.hot?.snapshot?.(() => ({ G: JSON.parse(JSON.stringify(G)) })); } catch (e) { /* 没有热更新也能玩 */ }
-if (location.search.includes('debug')) window.__duko = { get G() { return G; }, get BUF() { return BUF; }, get LBUF() { return LBUF; }, draw, OBST, NPCS, INSPECT, CRATE, HERBS, DUMMY_POS, RESPAWN, WORLD, interact, doAct, attack, skill, dodge, useBandage, commit, loadSave, clearSave, recordText, recordPayload, perfRec, perfStats, newGame, get locations(){return {NPCS,CRATE,HERBS,LEDGER_POS,CACHE_POS,FINAL_POS};}, openDlg, toggleAtlas, kill, hurtPlayer, respawn, updArcher, updateChapter, get worldStyle(){return WORLD_STYLE;},get saveKey(){return SAVE_KEY;}, get target() { return curTarget; }, step(dt, n) { for (let i = 0; i < (n || 1); i++) { if (G.started && !paused()) { if (G.hitstop > 0) G.hitstop=Math.max(0,G.hitstop-dt); else update(dt); } } hud(dt); } };
+if (location.search.includes('debug')) window.__duko = { get G() { return G; }, get music() { return music?.state; }, get BUF() { return BUF; }, get LBUF() { return LBUF; }, draw, OBST, NPCS, INSPECT, CRATE, HERBS, DUMMY_POS, RESPAWN, WORLD, interact, doAct, attack, skill, dodge, useBandage, commit, loadSave, clearSave, recordText, recordPayload, perfRec, perfStats, newGame, get locations(){return {NPCS,CRATE,HERBS,LEDGER_POS,CACHE_POS,FINAL_POS};}, openDlg, toggleAtlas, kill, hurtPlayer, respawn, updArcher, updateChapter, get worldStyle(){return WORLD_STYLE;},get saveKey(){return SAVE_KEY;}, get target() { return curTarget; }, step(dt, n) { for (let i = 0; i < (n || 1); i++) { if (G.started && !paused()) { if (G.hitstop > 0) G.hitstop=Math.max(0,G.hitstop-dt); else update(dt); } } hud(dt); } };
 installPlaytestForm();
 const hot = window.claude?.hot;
 if (hot?.ready) hot.ready(boot); else boot(hot?.data ?? {});

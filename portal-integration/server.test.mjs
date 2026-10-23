@@ -9,7 +9,7 @@ test('Qingshi serves only release assets under its prefix, GET/HEAD and health',
   server.listen(0, '127.0.0.1'); await once(server, 'listening');
   t.after(() => new Promise(resolve => server.close(resolve)));
   const base = 'http://127.0.0.1:' + server.address().port;
-  for (const file of ['index.html', 'chapter.js', 'playtest.js', 'game.js', 'songfeng-ui.css', 'combat-render.mjs', 'songfeng-render.mjs', 'songfeng-feedback.mjs', 'world-art.mjs']) {
+  for (const file of ['index.html', 'chapter.js', 'playtest.js', 'game.js', 'songfeng-ui.css', 'combat-render.mjs', 'songfeng-render.mjs', 'songfeng-feedback.mjs', 'songfeng-music.mjs', 'world-art.mjs']) {
     const path = file === 'index.html' ? '' : file + '?v=release';
     const response = await fetch(base + '/qingshi-v04/' + path);
     assert.equal(response.status, 200);

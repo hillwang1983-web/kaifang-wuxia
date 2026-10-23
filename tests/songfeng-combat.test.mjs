@@ -233,8 +233,32 @@ test('浏览器不放行声音时不显示假成功（#7）', async t => {
   assert.match(await page.locator('#bSound').getAttribute('aria-label'),/点此恢复/);assert.deepEqual(errors,[]);
 });
 
+test('背景音乐程序合成：开声音后自动播放，战斗切段，暂停与静音即停（#7）', async t => {
+  const context=await browser.newContext({viewport:{width:844,height:390}});t.after(()=>context.close());
+  await context.addInitScript(()=>{
+    window.audioAudit={started:0};const Original=window.AudioContext;
+    window.AudioContext=class extends Original{createOscillator(){const o=super.createOscillator(),start=o.start.bind(o);o.start=(...a)=>{audioAudit.started++;return start(...a);};return o;}};
+  });
+  const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.goto(base+'?debug');await page.locator('#bStart').click();await page.waitForTimeout(400);
+  assert.equal(await page.evaluate(()=>__duko.music),undefined,'静音时不创建音乐');
+  await page.locator('#bSound').click();
+  await page.waitForFunction(()=>__duko.music?.playing&&__duko.music.mode==='explore');
+  const before=await page.evaluate(()=>audioAudit.started);await page.waitForTimeout(1500);
+  assert.ok(await page.evaluate(()=>audioAudit.started)>before,'不操作也持续排出探索音符');
+  await page.evaluate(()=>{const G=__duko.G,e=G.enemies.find(x=>x.kind==='bandit'&&x.alive);e.hostile=true;e.state='chase';G.p.x=e.x-120;G.p.y=e.y;});
+  await page.waitForFunction(()=>__duko.music.mode==='combat');
+  await page.locator('#bPause').click();await page.waitForFunction(()=>!__duko.music.playing);
+  const paused=await page.evaluate(()=>audioAudit.started);await page.waitForTimeout(600);
+  assert.equal(await page.evaluate(()=>audioAudit.started),paused,'暂停后不再排音符');
+  await page.locator('#bResume').click();await page.waitForFunction(()=>__duko.music.playing);
+  await page.locator('#bSound').click();await page.waitForFunction(()=>!__duko.music.playing);
+  const muted=await page.evaluate(()=>audioAudit.started);await page.waitForTimeout(600);
+  assert.equal(await page.evaluate(()=>audioAudit.started),muted,'静音后不再排音符');assert.deepEqual(errors,[]);
+});
+
 test('发布白名单与HEAD生效，不提供测试、源服务与备份', async () => {
-  for(const route of ['game.js','combat-render.mjs','songfeng-render.mjs','songfeng-feedback.mjs','songfeng-ui.css']){
+  for(const route of ['game.js','combat-render.mjs','songfeng-render.mjs','songfeng-feedback.mjs','songfeng-music.mjs','songfeng-ui.css']){
     const response=await fetch(base+route);assert.equal(response.status,200);assert.equal(response.headers.get('cache-control'),'no-store');
     const head=await fetch(base+route,{method:'HEAD'});assert.equal(head.status,200);assert.equal(await head.text(),'');assert.equal(head.headers.get('content-length'),response.headers.get('content-length'));
   }

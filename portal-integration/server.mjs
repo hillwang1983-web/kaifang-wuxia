@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 
 export function createQingshiServer(root, release = {}) {
   const routes = new Map();
-  for (const name of ['index.html', 'chapter.js', 'playtest.js', 'game.js', 'songfeng-ui.css', 'combat-render.mjs', 'songfeng-render.mjs', 'songfeng-feedback.mjs', 'world-art.mjs']) {
+  for (const name of ['index.html', 'chapter.js', 'playtest.js', 'game.js', 'songfeng-ui.css', 'combat-render.mjs', 'songfeng-render.mjs', 'songfeng-feedback.mjs', 'songfeng-music.mjs', 'world-art.mjs']) {
     const type=name.endsWith('.html')?'text/html; charset=utf-8':name.endsWith('.css')?'text/css; charset=utf-8':'text/javascript; charset=utf-8';
     const asset = { body: readFileSync(new URL(name, root)), type };
     routes.set('/qingshi-v04/' + name, asset);
