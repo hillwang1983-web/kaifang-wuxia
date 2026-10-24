@@ -16,6 +16,9 @@
 - **AI 净心**：和玩家一样只产出操作指令（「搭档接口」）。会跟随、普攻、看红区闪避；玩家发邀请时走进光圈；玄诚读条时自己发邀请等玩家响应，不替玩家包办打断。
 - **玄诚**：带架势（普攻只吃一半），预警末段闪过横扫或被打断会失衡 2 秒（吃满伤害）。半血进入阶段二，加入 2 秒读条的重击，不打断就全场重伤 350。血量归零坐地，不死。
 - **败退**：玩家倒下两秒后两人回山门口重来（打玄诚时他也回满血）；净心倒下八秒后自己爬起来。
+- **装备掉落与物品栏**（规格书第七节）：物品 = 底子 + 品质 + 词缀，数值全在 `data/items.json`（八种底子、普通 / 魔法 / 稀有 5:4:1、十二条词缀各三档、掉落表）。喽啰掉金钱和丹药，玄诚坐地后必掉一件武器底子，走过去自动拾取（或按交谈键）；掉落用单独一路随机数，同种子可复现。10×6 格子物品栏 + 兵器 / 防具 / 饰品两格装备栏，鼠标拖拽（右键快捷装备 / 服用）、手机拖拽或点选后按按钮、手柄 / 键盘光标都能操作；Tab / Start / 手机右上「囊」打开，打开时战斗暂停。装备后攻击、攻速、暴击、生命、内力、回复、移速、毒伤、护盾、合击伤害、默契获取都真正生效；丹药 H / 十字键下快捷服用（回 300，冷却 5 秒）。图标与面板是占位，美术已列在交换清单第 56–58 条。
+- **武功熟练度壳**（规格书第三节）：物品栏「武学」页选一门参悟，每 5 秒熟练度 +1，一次只参悟一门；只存储和显示，不影响战斗。
+- **存档**：物品栏、装备、金钱、熟练度存在 `user://shansi_save.json`（网页上是浏览器本地存储），刷新后还在，重开一局也带着；留了 `version` 与 `runs` 字段给以后多局。开始界面可「清空存档」（按两次确认）。
 - **操作**：键鼠、手柄、手机触屏（左摇杆 + 右侧按键群，拖动技能键瞄准，支持多点同时按；身边有火把或能说话的人时多出一个「交谈」键）。
 
 ## 打开与测试
@@ -34,7 +37,7 @@ winget install --id GodotEngine.GodotEngine --exact
 powershell -ExecutionPolicy Bypass -File 原型/山寺/tools/test.ps1
 ```
 
-开发开关：命令行 `Godot_v4.7.2-stable_win64_console.exe --path 原型/山寺 -- skip auto quit xiepai yungong`，网页地址加 `?skip&auto`。`skip` 直接进山门；`auto` 由 AI 代玩、自动翻对话，从茶棚一路打到山门结算（命令行四倍速）；`quit` 打完退出并打印结算；`xiepai`、`tiyunzong` / `yungong` / `jiemai` 指定门派和通用技。
+开发开关：命令行 `Godot_v4.7.2-stable_win64_console.exe --path 原型/山寺 -- skip auto quit xiepai yungong`，网页地址加 `?skip&auto`。`skip` 直接进山门；`auto` 由 AI 代玩、自动翻对话，从茶棚一路打到山门结算（命令行四倍速）；`quit` 打完退出并打印结算；`xiepai`、`tiyunzong` / `yungong` / `jiemai` 指定门派和通用技；`mobile` 电脑上强制手机界面；`items` 用单独的演示存档塞几件样品看物品栏；`torch` 山门出生在火把旁；`fresh` 先清空存档。代玩用单独的测试存档，不碰真存档。
 
 工程设置：内部分辨率 960×540、窗口 1920×1080、整数倍拉伸，贴图默认最近邻、2D 变换吸附整像素（像素风不糊）；渲染器用 Compatibility（网页导出走 WebGL2）。
 
@@ -71,7 +74,8 @@ powershell -ExecutionPolicy Bypass -File 原型/山寺/tools/export_web.ps1
 | 闪避 | 空格 | LB |
 | 取消蓄力 / 瞄准 / 光圈 | Esc / 鼠标右键 | LT |
 | 交谈 / 互动 | E | 十字键上 |
-| 物品栏 | Tab | Start |
+| 物品栏（打开时暂停） | Tab | Start |
+| 丹药 | H | 十字键下 |
 | 暂停 | P / Esc（没在蓄力瞄准时） | Back |
 
 和规格书第五节不同的三处：三主动从 Q W E 改为 U I O（W 与移动冲突）；手柄取消从 B 改为 LT（B 是主动三）；规格书没给交谈 / 互动和暂停键，暂定如上。鼠标左右键不进输入映射（网页上触屏会模拟鼠标），由 `scripts/game/player_input.gd` 在非触屏时单独读。手机：左半屏按下即摇杆，右侧按键群按效果图摆放，按住技能键拖动即瞄准方向 / 落点。
@@ -101,6 +105,7 @@ powershell -ExecutionPolicy Bypass -File 原型/山寺/tools/export_web.ps1
 │   │                sim_command 操作指令、sim_enemies 喽啰与玄诚、sim_combo 合击默契、sim_partner_ai AI 净心
 │   └── game/        main 流程与菜单、level_base 关卡共用（镜头、界面、暂停）、chapeng 茶棚、shanmen 山门、world_view 画面、hud 战斗界面与触屏、
 │                    player_input 键鼠手柄触屏合成指令、dialogue_box 对话框、story 台词、ui_kit / menu_button_ui 界面共用
+├── data/            items.json 装备与掉落数值表（导出时随包）
 ├── tests/           无界面测试：run_tests.gd 入口、test_case.gd 基类、test_*.gd 用例
 ├── tools/           setup_input.gd 生成键位、test.ps1 跑测试、export_web.ps1 导出网页版
 └── export_presets.cfg  网页导出预设

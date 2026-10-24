@@ -32,7 +32,8 @@ const ARENA_START := Vector2(960, 470)
 var boss: SimFighter
 var _down_t := -1.0
 var _partner_down_t := -1.0
-var _stats := {"start": 0.0, "combos": 0, "interrupts": 0, "evades": 0, "defeats": 0}
+var _stats := {"start": 0.0, "combos": 0, "interrupts": 0, "evades": 0, "defeats": 0, "loot": "—", "equipped": ""}
+var _loot_t := 0.0
 
 
 func _ready() -> void:
@@ -52,6 +53,12 @@ func _ready() -> void:
 		world.add_enemy("louluo", p)
 	boss = world.add_enemy("xuancheng", BOSS_WAIT, true)
 	build_scene("res://assets/env/env_shanmen_v01.png", "res://assets/env/env_shanmen_front_v01.png")
+	# 开发开关 torch：出生在第一处火把旁边（截图核对「交谈」键用）
+	if get_parent() and get_parent().get("dev") is Dictionary and get_parent().dev.has("torch"):
+		me.pos = TORCHES[0] + Vector2(28, 6)
+		jingxin.pos = me.pos + Vector2(-30, 10)
+		camera.position = me.pos
+		camera.reset_smoothing()
 	hud.boss = boss
 	_objectives()
 	say(Story.shanmen_intro(sect))
@@ -74,6 +81,11 @@ func auto_command() -> SimCommand:
 			return cmd
 	if stage == "to_arena":
 		walk_to(cmd, ARENA_START)
+	if stage == "loot":
+		for g in world.ground_items:
+			if g.coins == 0 and SimItems.is_equipment(g.item):  # 只去捡玄诚的兵器；前庭剩下的钱和药在锁住的门外
+				walk_to(cmd, g.pos)
+				break
 	return cmd
 
 
@@ -101,6 +113,12 @@ func level_events(events: Array) -> void:
 					tip("invite", "净心发来合击邀请：%s，或走进地上的金色光圈" % ("点「合击」" if hud.mobile else "按 F"), 4.0)
 			"interact":
 				hud.toast("火把熄了")
+			"loot":
+				if e.id == boss.id:
+					hud.toast("玄诚身边掉下一件兵器", 3.0)
+			"pickup":
+				if stage == "loot" and e.has("item") and SimItems.is_equipment(e.item):
+					_on_loot_picked(e.item)
 			"phase2":
 				say(Story.phase2())
 				stage = "phase2_talk"
@@ -159,11 +177,38 @@ func _on_dialogue_done() -> void:
 			if utility != "jiemai":
 				tip("no_jiemai", "你没带截脉：等净心发合击邀请，或自己按住 F 摆光圈", 5.0)
 		"down_talk":
-			stage = "end"
-			var stats := _stats.duplicate()
-			stats["secs"] = world.time - _stats.start
-			stats["moqi"] = world.combo.moqi
-			done.emit(stats)
+			stage = "loot"
+			hud.objectives = ["拾取玄诚掉落的兵器（走过去即可）"]
+
+
+## 拿到玄诚的兵器：代玩直接装上；真人提示开物品栏，关上物品栏（或等一会儿）后结算
+func _on_loot_picked(it: Dictionary) -> void:
+	_stats.loot = "%s（%s）" % [SimItems.display_name(it), SimItems.quality_name(it)]
+	if autoplay:
+		var before := me.stat("atk_flat")
+		if world.inv_equip(me, int(it.uid)):
+			_stats.equipped = "%s，攻击 %d → %d" % [_stats.loot, before, me.stat("atk_flat")]
+		_finish()
+		return
+	stage = "loot_done"
+	_loot_t = 20.0
+	hud.objectives = ["打开物品栏换上新兵器（%s）" % ("点右上「囊」" if hud.mobile else "Tab"), "关上物品栏即结算"]
+	tip("bag", "拾得玄诚的兵器：打开物品栏，拖到装备栏的「兵器」格就能换上", 5.0)
+
+
+func _on_inventory_closed() -> void:
+	super._on_inventory_closed()
+	if stage == "loot_done":
+		_finish()
+
+
+func _finish() -> void:
+	stage = "end"
+	save_profile()
+	var stats := _stats.duplicate()
+	stats["secs"] = world.time - _stats.start
+	stats["moqi"] = world.combo.moqi
+	done.emit(stats)
 
 
 func _objectives() -> void:
@@ -174,6 +219,11 @@ func _objectives() -> void:
 
 func after_step(dt: float) -> void:
 	_teach()
+	if stage == "loot_done":
+		_loot_t -= dt
+		if _loot_t <= 0.0:
+			_finish()
+			return
 	interact_hint(world.interactables.filter(func(it): return it.on).map(func(it): return [it.pos, "熄灭火把"]))
 	if _partner_down_t > 0.0:
 		_partner_down_t -= dt

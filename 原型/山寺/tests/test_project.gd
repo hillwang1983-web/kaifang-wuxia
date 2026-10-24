@@ -2,7 +2,7 @@
 extends "res://tests/test_case.gd"
 
 const ACTIONS := ["move_up", "move_down", "move_left", "move_right", "aim_up", "aim_down", "aim_left", "aim_right",
-	"attack", "skill_1", "skill_2", "skill_3", "utility", "combo", "dodge", "cancel", "interact", "inventory", "pause"]
+	"attack", "skill_1", "skill_2", "skill_3", "utility", "combo", "dodge", "cancel", "interact", "inventory", "pause", "potion"]
 
 
 func test_display() -> void:

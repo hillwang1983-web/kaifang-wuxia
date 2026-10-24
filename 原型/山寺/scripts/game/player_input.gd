@@ -3,7 +3,7 @@
 class_name PlayerInput
 extends RefCounted
 
-const ACTIONS := ["attack", "skill_1", "skill_2", "skill_3", "utility", "combo", "dodge", "cancel", "interact"]
+const ACTIONS := ["attack", "skill_1", "skill_2", "skill_3", "utility", "combo", "dodge", "cancel", "interact", "potion"]
 const MOUSE_IDLE := 2.0   # 鼠标多久不动就不再当瞄准
 
 var hud: Hud

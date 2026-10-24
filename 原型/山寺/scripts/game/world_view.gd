@@ -157,6 +157,8 @@ func _draw() -> void:
 	_draw_aim()
 	for it in world.interactables:
 		_torch(it)
+	for g in world.ground_items:
+		_ground_item(g)
 	for id in trails:
 		var f: SimFighter = world.fighter(id)
 		if f == null:
@@ -294,6 +296,25 @@ func _draw_aim() -> void:
 			draw_colored_polygon(pts, Color(UiKit.QI, 0.16))
 			pts.append(pts[0])
 			draw_polyline(pts, Color(UiKit.QI, 0.85), 1.0)
+
+
+## 地上的掉落：金钱是几枚铜钱，物品是按品质描边的小块，装备上方飘名字（图标美术到之前的占位）
+func _ground_item(g: Dictionary) -> void:
+	var p: Vector2 = g.pos
+	var bob := sin(world.time * 4.0 + p.x) * 1.5
+	if g.coins > 0:
+		for i in 3:
+			draw_circle(p + Vector2(-4 + i * 4, -4 - i * 2 + bob), 3.0, Color("#E5C15A"))
+		return
+	var it: Dictionary = g.item
+	var col := SimItems.quality_color(it)
+	_ellipse(p, 12, Color(col, 0.18 + 0.1 * sin(world.time * 5.0)), 0.5)
+	var r := Rect2(p + Vector2(-6, -18 + bob), Vector2(12, 16))
+	draw_rect(r, Color("#5A3F29") if SimItems.is_equipment(it) else Color("#E8E2D2"))
+	draw_rect(r.grow(-0.5), col, false, 1.0)
+	if SimItems.is_equipment(it):
+		var label := SimItems.display_name(it)
+		UiKit.text(self, p + Vector2(-UiKit.text_width(label) / 2.0, -38 + bob), label, 12, col)
 
 
 func _torch(it: Dictionary) -> void:

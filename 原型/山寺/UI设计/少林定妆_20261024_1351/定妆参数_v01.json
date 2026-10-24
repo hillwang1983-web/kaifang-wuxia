@@ -1,0 +1,44 @@
+{
+  "asset": "ref_chr_shaolin_down_v01.png",
+  "kind": "front_standing_reference_only",
+  "frame_size": [
+    48,
+    64
+  ],
+  "frames": 1,
+  "direction": "down",
+  "anchor": [
+    24,
+    60
+  ],
+  "foot_contact_points": [
+    [
+      17,
+      60
+    ],
+    [
+      31,
+      60
+    ]
+  ],
+  "visible_pixel_bbox": [
+    8,
+    20,
+    42,
+    61
+  ],
+  "body_height_pixels": 41,
+  "alpha": [
+    0,
+    255
+  ],
+  "palette_limit": 16,
+  "head_note": "通用青年束发布巾外观示意；第11条正式临时头叠层尚未交付",
+  "animation_status": "未制作，待开发回执确认定妆后开始",
+  "planned_animation_fps": 12,
+  "technical_processing": "源图只合回右脚修正块：取修正图(643,1178)的200×170，放回初稿(620,1160)；其余像素保留。透明度80%阈值、最近邻整理41像素可见高度、固定16色调色板映射，平移(8,20)至48×64。",
+  "native_source_size": [
+    1086,
+    1448
+  ]
+}

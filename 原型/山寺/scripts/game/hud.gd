@@ -3,6 +3,9 @@
 class_name Hud
 extends Control
 
+signal bag_pressed
+signal pause_pressed
+
 const ACTIONS := ["attack", "skill_1", "skill_2", "skill_3", "utility", "combo", "dodge"]
 const DESK_X := [326, 418, 510, 602, 694, 786, 878]
 const DESK_Y := 478
@@ -10,6 +13,8 @@ const DESK_Y := 478
 const MOBILE := [[824, 458, 80], [704, 354, 64], [784, 354, 64], [864, 354, 64], [744, 458, 64], [664, 458, 64], [904, 458, 64]]
 const TALK := [884, 262, 56]   # 手机上下文「交谈 / 互动」键：身边有火把、能说话的人时才出现
 const STICK_CENTER := Vector2(126, 400)
+const BAG_BTN := Rect2(856, 18, 36, 36)     # 手机右上：物品栏
+const PAUSE_BTN := Rect2(902, 18, 36, 36)   # 手机右上：暂停（效果图 04 手机版的 Ⅱ）
 const STICK_R := 64.0
 
 var world: SimWorld
@@ -18,6 +23,7 @@ var partner: SimFighter
 var boss: SimFighter
 var objectives: Array = []      # 当前目标，每行一条
 var mobile := false
+var force_mobile := false      # 开发开关 mobile：电脑上也显示手机界面
 var can_talk := false           # 关卡每帧设置：身边有可互动的东西
 var toasts: Array = []          # {text, t}
 
@@ -35,7 +41,7 @@ var _button_origin := {}        # action -> 按下位置
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
-	mobile = OS.has_feature("web_android") or OS.has_feature("web_ios") or OS.has_feature("mobile")
+	mobile = force_mobile or OS.has_feature("web_android") or OS.has_feature("web_ios") or OS.has_feature("mobile")
 
 
 func toast(s: String, secs := 3.0) -> void:
@@ -76,6 +82,14 @@ func _input(event: InputEvent) -> void:
 		return
 	if event is InputEventScreenTouch:
 		var pos: Vector2 = event.position
+		if event.pressed and mobile and BAG_BTN.has_point(pos):
+			bag_pressed.emit()
+			get_viewport().set_input_as_handled()
+			return
+		if event.pressed and mobile and PAUSE_BTN.has_point(pos):
+			pause_pressed.emit()
+			get_viewport().set_input_as_handled()
+			return
 		if event.pressed:
 			if pos.x < 480 and _stick_index < 0:
 				_stick_index = event.index
@@ -145,8 +159,12 @@ func _draw() -> void:
 	_draw_toasts()
 	if mobile:
 		_draw_mobile_controls()
+		for pair in [[BAG_BTN, "囊"], [PAUSE_BTN, "Ⅱ"]]:
+			UiKit.panel(self, pair[0])
+			UiKit.text(self, pair[0].position + Vector2(0, 6), pair[1], 24, UiKit.TEXT, HORIZONTAL_ALIGNMENT_CENTER, pair[0].size.x)
 	else:
 		_draw_skill_bar()
+		UiKit.text_r(self, Vector2(944, 386), "Tab 物品栏 · H 丹药", 12, UiKit.MUTED)
 
 
 func _draw_self(at: Vector2) -> void:
@@ -159,6 +177,9 @@ func _draw_self(at: Vector2) -> void:
 		var trough := Rect2(at + Vector2(56, y), Vector2(152, 11))
 		UiKit.fill(self, trough, rows[i][1] / rows[i][2], rows[i][3])
 		UiKit.text(self, trough.position + Vector2(0, -1), "%d / %d" % [rows[i][1], rows[i][2]], 12, UiKit.TEXT, HORIZONTAL_ALIGNMENT_CENTER, trough.size.x)
+	var inv: SimInventory = world.inventories.get(me.id)
+	if inv:
+		UiKit.text_r(self, at + Vector2(212, 92), "丹药 ×%d" % inv.count("pill"), 12, UiKit.MUTED)
 	if me.primed:
 		UiKit.text(self, at + Vector2(150, 10), "内力满", 12, UiKit.QI)
 	elif me.shield > 0.0:

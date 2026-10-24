@@ -23,6 +23,11 @@ var view: WorldView
 var camera: Camera2D
 var hud: Hud
 var dialogue: DialogueBox
+var inventory_ui: InventoryUi
+var profile: Profile          # 由 main 传入；没有就不存档（测试用）
+var _save_t := 0.0
+var _dirty := false
+var _swallow_t := 0.0     # 对话 / 物品栏刚关上：吞掉这一下按键，免得关对话的 E 顺手熄了火把
 var freeze_rect: TextureRect
 var pause_layer: Control
 var stage := "intro"
@@ -62,6 +67,9 @@ func build_scene(background: String, foreground := "") -> void:
 	add_child(layer)
 	hud = Hud.new()
 	hud.add_to_group("hud")
+	if get_parent() and get_parent().get("dev") is Dictionary and get_parent().dev.has("mobile"):
+		hud.mobile = true
+		hud.force_mobile = true
 	hud.world = world
 	hud.me = me
 	hud.partner = jingxin
@@ -80,6 +88,24 @@ func build_scene(background: String, foreground := "") -> void:
 	layer.add_child(dialogue)
 	dialogue.finished.connect(_on_dialogue_done)
 
+	if profile:
+		if not profile.inventory.is_empty():
+			world.inventories[me.id] = SimInventory.from_dict(profile.inventory)
+		world.refresh_stats(me)
+		me.hp = me.max_hp
+		me.qi = me.max_qi
+	else:
+		profile = Profile.new()
+	inventory_ui = InventoryUi.new()
+	inventory_ui.world = world
+	inventory_ui.me = me
+	inventory_ui.profile = profile
+	layer.add_child(inventory_ui)
+	inventory_ui.changed.connect(func(): _dirty = true)
+	inventory_ui.closed.connect(_on_inventory_closed)
+	hud.bag_pressed.connect(open_inventory)
+	hud.pause_pressed.connect(func(): _set_paused(true))
+
 	pause_layer = _make_pause()
 	layer.add_child(pause_layer)
 
@@ -91,6 +117,10 @@ func build_scene(background: String, foreground := "") -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	input.feed(event)
+	if event.is_action_pressed("inventory") and not dialogue.visible and not paused and stage != "end":
+		open_inventory()
+		get_viewport().set_input_as_handled()
+		return
 	if event.is_action_pressed("pause") or (event.is_action_pressed("cancel") and me.state != "charge" and me.state != "aim" and world.combo.preview.is_empty()):
 		if not dialogue.visible and stage != "end":
 			_set_paused(not paused)
@@ -99,17 +129,26 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _physics_process(dt: float) -> void:
 	freeze_rect.visible = world.freeze_t > 0.0
-	hud.visible = not dialogue.visible  # 对话时收起战斗界面（效果图 06）
+	hud.visible = not dialogue.visible and not inventory_ui.visible  # 对话、物品栏开着时收起战斗界面
 	_update_camera(dt)
-	if paused or dialogue.visible or stage == "end":
+	_autosave(dt)
+	if paused or dialogue.visible or inventory_ui.visible or stage == "end":
+		_swallow_t = 0.15
 		return
+	if profile.tick_study(dt):
+		_dirty = true
 	if view.hitstop > 0.0:
 		view.hitstop -= dt
 		return
-	var cmds := {me.id: player_command()}
+	var pc := player_command()
+	if _swallow_t > 0.0:
+		_swallow_t -= dt
+		pc.pressed.clear()
+	var cmds := {me.id: pc}
 	if partner_active:
 		cmds[jingxin.id] = ai.command(DT)
 	world.step(DT, cmds)
+	_item_events(world.events)
 	level_events(world.events)
 	view.consume_events()
 	after_step(dt)
@@ -117,6 +156,49 @@ func _physics_process(dt: float) -> void:
 
 func player_command() -> SimCommand:
 	return auto_command() if autoplay else input.build(me, DT)
+
+
+# ---------- 物品栏与存档 ----------
+
+func open_inventory() -> void:
+	if inventory_ui.visible or dialogue.visible or stage == "end":
+		return
+	inventory_ui.mobile = hud.mobile
+	inventory_ui.open()
+
+
+func _on_inventory_closed() -> void:
+	_dirty = true
+
+
+func _item_events(events: Array) -> void:
+	for e in events:
+		match e.type:
+			"pickup":
+				if e.has("coins"):
+					hud.toast("金钱 +%d" % e.coins, 1.5)
+				else:
+					hud.toast("拾得：%s（%s）" % [SimItems.display_name(e.item), SimItems.quality_name(e.item)], 2.5)
+				_dirty = true
+			"bag_full":
+				hud.toast("物品栏满了，先整理一下（Tab）", 2.5)
+			"pill", "equip":
+				_dirty = true
+
+
+## 物品、装备、熟练度有变化就存；最多每秒写一次
+func _autosave(dt: float) -> void:
+	_save_t -= dt
+	if _dirty and _save_t <= 0.0:
+		save_profile()
+
+
+func save_profile() -> void:
+	_dirty = false
+	_save_t = 1.0
+	if profile and world.inventories.has(me.id):
+		profile.inventory = world.inventories[me.id].to_dict()
+		profile.save()
 
 
 # ---------- 子类覆写 ----------

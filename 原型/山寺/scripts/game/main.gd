@@ -6,16 +6,29 @@ const BG := "res://assets/env/env_shanmen_placeholder_v01.png"
 
 var sect := "shaolin"
 var utility := "jiemai"
+var profile: Profile
 var _layer: CanvasLayer
 
 
 ## 开发用开关：命令行 `-- skip auto quit xiepai yungong`，网页 `?skip&auto`。
-## skip 直接进山门；auto 由 AI 代玩、自动翻对话，从茶棚走到山门结算（冒烟测试用）；quit 打完退出并打印结算。
+## skip 直接进山门；auto 由 AI 代玩、自动翻对话，从茶棚走到山门结算（冒烟测试用）；quit 打完退出并打印结算；
+## fresh 先清空存档；mobile 强制手机界面（在电脑上看触屏布局用）；items 塞样品物品到单独的演示存档；torch 山门出生在火把旁。
 var dev := {}
 
 
 func _ready() -> void:
 	dev = _dev_flags()
+	if dev.has("auto"):
+		Profile.path = "user://shansi_autotest.json"
+		Profile.wipe()
+	if dev.has("fresh"):
+		Profile.wipe()
+	if dev.has("items"):
+		Profile.path = "user://shansi_demo.json"
+		Profile.wipe()
+	profile = Profile.load_or_new()
+	if dev.has("items"):
+		_demo_items()
 	if dev.has("skip") or dev.has("auto"):
 		sect = "xiepai" if dev.has("xiepai") else "shaolin"
 		for u in SimData.UTILITIES:
@@ -28,6 +41,28 @@ func _ready() -> void:
 			_shanmen()
 		return
 	_title()
+
+
+## 开发开关 items：塞几件样品进单独的演示存档，用来看物品栏（不碰真存档）
+func _demo_items() -> void:
+	var r := RandomNumberGenerator.new()
+	r.seed = 2026
+	var inv := SimInventory.new()
+	inv.coins = 128
+	var n := 1
+	for pair in [["gun", "rare"], ["dao", "magic"], ["pijia", "rare"], ["sengpao", "normal"], ["yupei", "magic"], ["fozhu", "rare"], ["xiujian", "normal"]]:
+		var it := SimItems.roll_equipment(r, pair[0], pair[1])
+		it.uid = n
+		n += 1
+		inv.add(it)
+	var pill := SimItems.make_consumable("pill", 7)
+	pill.uid = n
+	inv.add(pill)
+	inv.equip(1, "weapon")
+	inv.equip(5, "acc1")
+	profile.inventory = inv.to_dict()
+	profile.proficiency = {"luohanquan": 12, "jinzhongzhao": 3}
+	profile.studying = "luohanquan"
 
 
 func _dev_flags() -> Dictionary:
@@ -103,13 +138,27 @@ func _title() -> void:
 	start.position = Vector2(58, 194)
 	start.pressed.connect(_sect_select)
 	p.add_child(start)
-	var cont := MenuButtonUi.make("继续游戏")
-	cont.position = Vector2(58, 254)
-	cont.disabled = true
-	p.add_child(cont)
+	var wipe := MenuButtonUi.make("清空存档")
+	wipe.position = Vector2(58, 254)
+	wipe.disabled = not profile.exists
+	wipe.pressed.connect(_confirm_wipe.bind(wipe))
+	p.add_child(wipe)
+	if profile.exists:
+		var inv := SimInventory.from_dict(profile.inventory)
+		_label(p, "存档：金钱 %d · 物品 %d 件 · 已装备 %d 件" % [inv.coins, inv.entries.size(), inv.equipped_items().size()], Vector2(0, 306), 12, UiKit.MUTED, 336)
 	_label(p, "第一里程碑试玩 · 角色与场景为占位图", Vector2(0, 336), 12, UiKit.MUTED, 336)
 	_label(p, "确认：Enter / A / 点按", Vector2(0, 400), 12, UiKit.MUTED, 336)
 	start.grab_focus()
+
+
+## 清空存档要按两次，免得手滑
+func _confirm_wipe(b: Button) -> void:
+	if b.text != "再按一次确认":
+		b.text = "再按一次确认"
+		return
+	Profile.wipe()
+	profile = Profile.load_or_new()
+	_title()
 
 
 # ---------- 选门派（02） ----------
@@ -166,6 +215,7 @@ func _chapeng() -> void:
 		c.queue_free()
 	var level := Chapeng.new()
 	level.setup(sect, utility)
+	level.profile = profile
 	level.autoplay = dev.has("auto")
 	level.done.connect(_after_chapeng)
 	level.quit_to_title.connect(_title)
@@ -214,6 +264,7 @@ func _shanmen() -> void:
 		c.queue_free()
 	var level := Shanmen.new()
 	level.setup(sect, utility)
+	level.profile = profile
 	level.autoplay = dev.has("auto")
 	level.done.connect(_end)
 	level.quit_to_title.connect(_title)
@@ -236,12 +287,13 @@ func _end(stats: Dictionary) -> void:
 		"用时：%d 分 %02d 秒" % [int(stats.secs) / 60, int(stats.secs) % 60],
 		"合击成立 %d 次　　最终默契 %d" % [stats.combos, stats.moqi],
 		"打断 %d 次　　闪过 %d 次　　败退 %d 次" % [stats.interrupts, stats.evades, stats.defeats],
+		"所获：%s" % stats.get("loot", "—"),
 		"阿萝在偏殿药房，毒姥看着。——待续",
 	]
 	for i in lines.size():
-		_label(p, lines[i], Vector2(0, 108 + i * 30), 12, UiKit.TEXT if i < 4 else UiKit.MUTED, 420)
+		_label(p, lines[i], Vector2(0, 100 + i * 28), 12, UiKit.TEXT if i < 5 else UiKit.MUTED, 420)
 	var again := MenuButtonUi.make("再来一次")
-	again.position = Vector2(100, 270)
+	again.position = Vector2(100, 280)
 	again.pressed.connect(_title)
 	p.add_child(again)
 	again.grab_focus()

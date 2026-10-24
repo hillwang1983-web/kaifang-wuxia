@@ -76,6 +76,11 @@ func _succeed(responder: SimFighter) -> void:
 	moqi += 1
 	if w.time - last_success < C.streak_gap:
 		moqi += 1
+	# 默契获取加成（装备词缀）：两人里取高的，按概率多加一点
+	var from := w.fighter(invite.from)
+	var gain := maxf(from.stat("moqi_gain") if from else 0.0, responder.stat("moqi_gain"))
+	if gain > 0.0 and w.rng.randf() < gain / 100.0:
+		moqi += 1
 	last_success = w.time
 	pending = {"from": invite.from, "with": responder.id, "point": invite.point, "level": lv}
 	invite = {}
@@ -94,7 +99,8 @@ func on_freeze_end() -> void:
 	w.emit("combo_burst", {"point": pending.point, "radius": r, "level": lv})
 	for e in w.foes():
 		if e.pos.distance_to(pending.point) <= r + e.radius:
-			w.damage(src, e, C.dmg * C.mult[lv], {"skill": true, "interrupt": true, "stagger": C.stagger,
+			var boost := 1.0 + (src.stat("combo_dmg") / 100.0 if src else 0.0)
+			w.damage(src, e, C.dmg * C.mult[lv] * boost, {"skill": true, "interrupt": true, "stagger": C.stagger,
 				"heavy": true, "knockback": 30.0, "dir": (e.pos - pending.point).normalized()})
 	pending = {}
 

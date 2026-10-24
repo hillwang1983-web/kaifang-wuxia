@@ -24,6 +24,10 @@ var sp := 0.0
 var alive := true
 var dmg_scale := 1.0
 var moving := false
+var stats := {}          # 装备带来的属性合计（SimItems.totals），由世界 refresh_stats 写入
+var base_hp := 0.0
+var base_qi := 0.0
+var base_speed := 0.0
 
 ## 状态机。英雄：idle attack dodge charge aim skill；敌人：idle chase windup dash recover cast stagger flinch sit
 var state := "idle"
@@ -81,6 +85,10 @@ func is_hero() -> bool:
 ## 能打、能被打：坐地（玄诚落败）和待命（剧情没放出来）都不算
 func active() -> bool:
 	return alive and state != "sit" and state != "wait"
+
+
+func stat(key: String) -> float:
+	return float(stats.get(key, 0.0))
 
 
 func cd_of(skill: String) -> float:

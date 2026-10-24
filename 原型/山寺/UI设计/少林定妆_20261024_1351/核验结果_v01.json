@@ -1,0 +1,52 @@
+{
+  "status": "PASS",
+  "checked_at_utc": "2026-10-24T06:16:03.725057+00:00",
+  "item": 9,
+  "stage": "front standing reference delivered; full animation pending developer approval",
+  "dimensions": [
+    48,
+    64
+  ],
+  "opaque_colors": 14,
+  "alpha": [
+    0,
+    255
+  ],
+  "pixel_bbox": [
+    8,
+    20,
+    42,
+    61
+  ],
+  "anchor": [
+    24,
+    60
+  ],
+  "foot_contact_points": [
+    [
+      17,
+      60
+    ],
+    [
+      31,
+      60
+    ]
+  ],
+  "sole_row": 60,
+  "sole_runs": [
+    [
+      16,
+      18
+    ],
+    [
+      29,
+      32
+    ]
+  ],
+  "foot_row_bounds_midpoint_x": 24,
+  "exact_nearest_neighbor_8x": "PASS",
+  "source_outside_foot_patch_identity": "PASS",
+  "source_originals_preserved": true,
+  "visual_check": "通用青年束发布巾、褐红短褂、土黄束带、布鞋、单根木棍、正面站立、像素边缘与场景比例",
+  "runtime_validation": "未做动画、Godot角色接入或实机验收"
+}
