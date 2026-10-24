@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[node name="Main" type="Node2D"]
+
+[node name="Placeholder" type="Label" parent="."]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 424.0
+offset_bottom = 64.0
+text = "山寺 · 开发中（等 UI 设计图）"
