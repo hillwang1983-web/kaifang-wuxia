@@ -251,6 +251,36 @@ func _update_camera(dt: float) -> void:
 
 # ---------- 共用小工具 ----------
 
+## 镜头跟着 focus（脚下）时，世界点 p 在 960×540 屏幕上的位置（镜头在地图边缘会被夹住）。
+## 用来检查手机上关键物、人物站位不落进触屏操作区（#28，Hud.MOBILE_ZONES）
+static func screen_pos(p: Vector2, focus: Vector2, map: Vector2) -> Vector2:
+	var half := Vector2(480, 270)
+	var cam := (focus + Vector2(0, -16)).clamp(half, map - half)
+	return p - cam + half
+
+
+static func in_mobile_zone(screen: Vector2) -> bool:
+	return Hud.MOBILE_ZONES.any(func(z: Rect2): return z.has_point(screen))
+
+
+## 单屏地图（镜头不动）在手机上的可走区 = 地面减去触屏操作区（#28），人和红区不会钻到按键 / 摇杆底下
+static func mobile_bounds(floor: Array) -> PackedVector2Array:
+	var poly := PackedVector2Array(floor)
+	for z: Rect2 in Hud.MOBILE_ZONES:
+		var rect := PackedVector2Array([z.position, Vector2(z.end.x, z.position.y), z.end, Vector2(z.position.x, z.end.y)])
+		var parts := Geometry2D.clip_polygons(poly, rect)
+		parts.sort_custom(func(a, b): return _area(a) > _area(b))
+		poly = parts[0]
+	return poly
+
+
+static func _area(p: PackedVector2Array) -> float:
+	var s := 0.0
+	for i in p.size():
+		s += p[i].cross(p[(i + 1) % p.size()])
+	return absf(s) * 0.5
+
+
 func say(lines: Array) -> void:
 	dialogue.open(lines)
 

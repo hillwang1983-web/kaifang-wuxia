@@ -32,3 +32,24 @@ func test_main_scene_loads() -> void:
 	check(path != "", "没有设置主场景")
 	if path != "":
 		check(load(path) is PackedScene, "主场景无法加载：" + path)
+
+
+## #28 套到可卷动的地图：站到每个关键物 / 出生点 / 敌人位置上时（镜头在地图边缘会被夹住），
+## 这个点在屏幕上都不落进手机触屏操作区；单屏的茶棚在手机上直接把操作区从可走区里挖掉
+func test_mobile_layout_keeps_targets_clear() -> void:
+	var levels := {
+		"山门": [Shanmen.TORCHES + Shanmen.LOULUO + [Shanmen.START, Shanmen.ARENA_START, Shanmen.BOSS_WAIT]],
+		"藏经阁": [Cangjingge.LOULUO + Cangjingge.PROPS.map(func(x): return x[1]) + [Cangjingge.START, Cangjingge.HALL_START, Cangjingge.DULAO_AT]],
+		"大雄宝殿": [Daxiongbaodian.PILES.map(func(x): return x[1]) + Daxiongbaodian.SPOTS + [Daxiongbaodian.START, Daxiongbaodian.HALL_START,
+			Daxiongbaodian.BALLISTA_AT, Daxiongbaodian.CHEST_AT, Daxiongbaodian.JINGANG_AT]],
+	}
+	for name in levels:
+		for p: Vector2 in levels[name][0]:
+			var s := LevelBase.screen_pos(p, p, Vector2(1920, 1080))
+			check(not LevelBase.in_mobile_zone(s), "%s：%s 站上去时在屏幕 %s，落进手机操作区" % [name, p, s])
+	var walk := LevelBase.mobile_bounds(Chapeng.FLOOR)
+	for p: Vector2 in [Chapeng.START, Chapeng.JINGXIN_AT, Chapeng.EXIT]:
+		check(not LevelBase.in_mobile_zone(p), "茶棚：%s 落在手机操作区" % p)
+	for z: Rect2 in Hud.MOBILE_ZONES:
+		check(not Geometry2D.is_point_in_polygon(z.get_center(), walk), "茶棚手机可走区挖掉了操作区 %s" % z)
+

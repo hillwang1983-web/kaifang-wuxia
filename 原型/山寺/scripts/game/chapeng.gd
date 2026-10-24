@@ -33,6 +33,8 @@ func _ready() -> void:
 	jingxin.facing = Vector2.DOWN
 	partner_active = false   # 说上话之前他一直蹲着
 	build_scene("res://assets/env/env_chapeng_v01.png", "res://assets/env/env_chapeng_front_v01.png")
+	if hud.mobile:
+		world.bounds = mobile_bounds(FLOOR)  # 单屏地图：手机上人不走到摇杆、按键底下（#28）
 	hud.objectives = ["走到棚外的少年僧身边", "和他说话"]
 	say(Story.chapeng_intro(sect))
 
