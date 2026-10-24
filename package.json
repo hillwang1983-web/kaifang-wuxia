@@ -10,7 +10,8 @@
     "test:all": "npm test && npm run test:browser",
     "test:server": "python3 -m unittest discover -s 服务端/tests -t 服务端",
     "update:preview": "node scripts/update-preview.mjs",
-    "build:shansi": "node scripts/build-shansi-preview.mjs"
+    "build:shansi": "node scripts/build-shansi-preview.mjs",
+    "test:shansi-web": "node scripts/check-shansi-web.mjs"
   },
   "engines": {
     "node": ">=22"
