@@ -16,8 +16,8 @@ var study_t := 0.0
 var runs: Array = []       # 预留：每局结算记录
 var origin := ""           # 出身（规格书第九节，开局四选一）；空 = 还没选过
 var player_name := ""      # 戏班小旦可改名（默认「玉儿」）
-## 设置：音乐 / 音效 / 界面音量（0–1）、屏幕震动开关
-var settings := {"music": 0.6, "sfx": 0.8, "ui": 0.8, "shake": true}
+## 设置：音乐 / 音效 / 界面音量（0–1）、屏幕震动开关、合击定格开关
+var settings := {"music": 0.6, "sfx": 0.8, "ui": 0.8, "shake": true, "freeze": true}
 var exists := false
 
 

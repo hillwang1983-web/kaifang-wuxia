@@ -29,6 +29,16 @@ func _init() -> void:
 	for r in rows:
 		md += "| %s | %s | %d%% | %s | %d | %.1f | %.1f | %.1f / %.1f |\n" % [r.boss, r.profile, roundi(r.rate * 100.0),
 			("%.0f 秒" % r.secs) if r.secs > 0.0 else "—", r.downs, r.combos, r.formations, r.breaks, r.deflects]
+	md += "
+## 铁甲金刚战：弩车与 AI 站位
+
+| 玩家水平 | 弩车被冲撞 | 被扔来的人砸中 | 非操弩 AI 离弩车平均 | 扎堆（90 像素内）时长 |
+|---|---|---|---|---|
+"
+	for r in rows:
+		if r.dist > 0.0:
+			md += "| %s | %.1f 次 | %.1f 次 | %.0f 像素 | %.1f 秒 |
+" % [r.profile, r.hit_charge, r.hit_throw, r.dist, r.crowd_t]
 	var f := FileAccess.open("res://试玩/平衡_代玩统计.md", FileAccess.WRITE)
 	if f:
 		f.store_string(md)
@@ -36,7 +46,10 @@ func _init() -> void:
 
 
 func _line(r: Dictionary) -> String:
-	return "%s · %s：首通 %d%%，成功平均 %.0f 秒，玩家倒下 %d 次，合击 %.1f，阵法 %.1f" % [r.boss, r.profile, roundi(r.rate * 100.0), r.secs, r.downs, r.combos, r.formations]
+	var s := "%s · %s：首通 %d%%，成功平均 %.0f 秒，玩家倒下 %d 次，合击 %.1f，阵法 %.1f" % [r.boss, r.profile, roundi(r.rate * 100.0), r.secs, r.downs, r.combos, r.formations]
+	if r.dist > 0.0:
+		s += "；弩车被冲撞 %.1f 次、被扔来的人砸 %.1f 次；AI 离弩车平均 %.0f 像素，扎堆（90 像素内）%.1f 秒" % [r.hit_charge, r.hit_throw, r.dist, r.crowd_t]
+	return s
 
 
 func _summary(boss: String, profile: String, runs: Array) -> Dictionary:
@@ -46,7 +59,9 @@ func _summary(boss: String, profile: String, runs: Array) -> Dictionary:
 	return {"boss": SimData.ENEMIES[boss].name, "profile": profile, "rate": float(ok.size()) / runs.size(),
 		"secs": ok.reduce(func(a, x): return a + x.secs, 0.0) / ok.size() if not ok.is_empty() else 0.0,
 		"downs": runs.filter(func(x): return x.player_down).size(), "combos": avg.call("combos"),
-		"formations": avg.call("formations"), "breaks": avg.call("breaks"), "deflects": avg.call("deflects")}
+		"formations": avg.call("formations"), "breaks": avg.call("breaks"), "deflects": avg.call("deflects"),
+		"hit_charge": avg.call("hit_charge"), "hit_throw": avg.call("hit_throw"), "crowd_t": avg.call("crowd_t"),
+		"dist": runs.reduce(func(a, x): return a + x.dist_sum, 0.0) / maxf(1.0, runs.reduce(func(a, x): return a + x.dist_n, 0))}
 
 
 func _run(boss_kind: String, profile: String, sect: String, util: String, seed_value: int) -> Dictionary:
@@ -89,7 +104,8 @@ func _run(boss_kind: String, profile: String, sect: String, util: String, seed_v
 		ais[0].hazard_react = 1.5
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_value
-	var out := {"win": false, "secs": 0.0, "player_down": false, "combos": 0, "formations": 0, "breaks": 0, "deflects": 0}
+	var out := {"win": false, "secs": 0.0, "player_down": false, "combos": 0, "formations": 0, "breaks": 0, "deflects": 0,
+		"hit_charge": 0, "hit_throw": 0, "dist_sum": 0.0, "dist_n": 0, "crowd_t": 0.0}
 	var revive := {}
 	var late_interrupt := false
 	var cast_seen := -1.0
@@ -114,12 +130,24 @@ func _run(boss_kind: String, profile: String, sect: String, util: String, seed_v
 					out.breaks += 1
 				"deflect":
 					out.deflects += 1
+				"ballista_hit":
+					out[("hit_charge" if e.cause == "charge" else "hit_throw")] += 1
 				"hero_down":
 					if e.id == p.id:
 						out.player_down = true
 					else:
 						revive[e.id] = 8.0
 		w.events.clear()
+		# 金刚战：不在车上、手上没事（不拼装、不背零件）的 AI 离弩车多远；离车 90 像素内算扎堆
+		if boss_kind == "jingang" and w.ballista.built:
+			for h in heroes:
+				if h.kind == "player" or not h.alive or h.state == "mounted" or h.state == "build" or not SimBallista.carried(w, h).is_empty():
+					continue
+				var d: float = h.pos.distance_to(w.ballista.center)
+				out.dist_sum += d
+				out.dist_n += 1
+				if d < 90.0:
+					out.crowd_t += DT
 		for id in revive.keys():
 			revive[id] -= DT
 			if revive[id] <= 0.0:

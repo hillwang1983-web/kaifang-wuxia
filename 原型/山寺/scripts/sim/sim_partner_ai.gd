@@ -318,28 +318,48 @@ func _armored_foe() -> SimFighter:
 	return null
 
 
-## 打铁甲：有裂口就绕到最大那道裂口的一侧再出手；没有裂口不硬砍——
-## 弩车拼好了就把金刚往远离弩车的方向引（小说：「你负责拦住它，我负责射」），否则在一旁游走等弩箭
+## 打铁甲（不在弩车上的 AI）：
+## - 金刚离弩车太近（< 200 像素）就先把它往远处引，引到 300 像素外再打——离得远，被抓起来扔也砸不到车（扔 220 像素）；
+## - 有裂口就绕到最大那道裂口的一侧出手，两个 AI 一左一右错开，不站成一堆；
+## - 抓人快到时离弩车太近的先退开，不站在会被扔上车的距离里；
+## - 没弩车、也没裂口时在一旁游走等弩箭，不硬砍铁甲。
+const LURE_START := 200.0
+const LURE_STOP := 300.0
+var _luring := false
+
+
 func _fight_armored(me: SimFighter, e: SimFighter, cmd: SimCommand, dt: float) -> void:
+	var b := w.ballista
+	var side := 0.45 if me_id % 2 == 0 else -0.45   # 一左一右错开
+	if not b.is_empty() and b.built:
+		var bd: float = e.pos.distance_to(b.center)
+		_luring = bd < (LURE_STOP if _luring else LURE_START)
+		if _luring:
+			var out: Vector2 = (e.pos - b.center).normalized() if bd > 1.0 else Vector2.UP
+			var lure := _walkable_toward(b.center, out.rotated(side * 0.5), 420.0)
+			if me.pos.distance_to(lure) > 16.0:
+				cmd.move = w.steer(me.pos, lure)
+			return
+	# 抓人快到了：离弩车 270 像素以内的先退到 290 外，免得被抓起来正好扔到车上（扔 220 像素，落点 40 像素内算砸中）
+	if not b.is_empty() and b.built and float(e.timers.get("grab", 99.0)) < 1.5 and me.pos.distance_to(b.center) < 270.0:
+		var back: Vector2 = (me.pos - b.center).normalized() if me.pos.distance_to(b.center) > 1.0 else Vector2.UP
+		cmd.move = w.steer(me.pos, _walkable_toward(b.center, back, 290.0))
+		return
 	var best := {}
 	for br in e.breaches:
 		if best.is_empty() or br.r > best.r:
 			best = br
 	var reach: float = SimData.ATTACKS[me.sect][0].range - 18.0
 	if best.is_empty():
-		var b := w.ballista
-		if not b.is_empty() and b.built:
-			var out: Vector2 = (e.pos - b.center).normalized() if e.pos.distance_to(b.center) > 1.0 else Vector2.UP
-			var lure: Vector2 = b.center + out * 340.0
-			if w.walkable(lure) and me.pos.distance_to(lure) > 20.0:
-				cmd.move = w.steer(me.pos, lure)
-				return
 		var away := me.pos - e.pos
 		if away.length() < 110.0:
-			cmd.move = w.steer(me.pos, e.pos + away.normalized() * 130.0)
+			cmd.move = w.steer(me.pos, e.pos + away.normalized().rotated(side) * 130.0)
 		return
-	var dir: Vector2 = best.off.normalized()
+	var dir: Vector2 = (best.off as Vector2).normalized().rotated(side * 0.6)
 	var spot: Vector2 = e.pos + dir * (e.radius + reach * 0.6)
+	if not SimBallista.in_breach(e, spot):
+		dir = (best.off as Vector2).normalized()
+		spot = e.pos + dir * (e.radius + reach * 0.6)
 	if me.pos.distance_to(spot) > 14.0 and (me.pos - e.pos).normalized().dot(dir) < 0.85:
 		cmd.move = w.steer(me.pos, spot)
 		return
@@ -351,4 +371,14 @@ func _fight_armored(me: SimFighter, e: SimFighter, cmd: SimCommand, dt: float) -
 	if _attack_hold <= 0.0 and me.atk_cd <= 0.0:
 		_attack_hold = 0.15
 		cmd.press("attack")
+
+
+## 从 from 沿 dir 走 dist 像素，落点走不到就左右逐步偏转、再缩短距离找能走的点
+func _walkable_toward(from: Vector2, dir: Vector2, dist: float) -> Vector2:
+	for d in [dist, dist * 0.75, dist * 0.5]:
+		for a in [0.0, 0.4, -0.4, 0.8, -0.8, 1.2, -1.2]:
+			var p: Vector2 = from + dir.rotated(a) * d
+			if w.walkable(p):
+				return p
+	return from + dir * dist * 0.3
 

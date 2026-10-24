@@ -107,9 +107,9 @@ const ENEMIES := {
 			# 冲撞：朝弩车（没拼好就朝最近的人）直线冲；预警 2.5 秒（留出摆合击 / 阵法撞偏的时间），冲 0.8 秒
 			"charge": {"shape": "line", "range": 520.0, "width": 30.0, "tele": 2.5, "dash_time": 0.8, "dmg": 120, "rec": 1.2, "reach": 9999.0},
 			# 踏地震：全场环形冲击波，0.8 秒红区，翻滚或梯云纵的无敌时间能躲
-			"quake": {"shape": "quake", "range": 9999.0, "tele": 0.8, "dmg": 180, "rec": 1.0, "reach": 9999.0},
+			"quake": {"shape": "quake", "range": 9999.0, "tele": 0.8, "dmg": 140, "rec": 1.0, "reach": 9999.0},
 			# 抓人：抓最近的非操弩者往弩车扔，落点离弩车近就砸中弩车
-			"grab": {"shape": "circle", "range": 70.0, "tele": 0.6, "dmg": 120, "rec": 0.8, "reach": 70.0, "throw": 220.0},
+			"grab": {"shape": "circle", "range": 70.0, "tele": 0.6, "dmg": 100, "rec": 0.8, "reach": 70.0, "throw": 220.0},
 		}},
 	# Boss 二（规格书第六节）。血量是草稿：三个满操作 AI 约四轮破罩打完（单测里打印），
 	# 真人输出低一些会多一两轮，对着规格书「三到四轮」偏长一点，待试玩标定。

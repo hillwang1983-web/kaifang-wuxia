@@ -29,6 +29,7 @@ var inventory_ui: InventoryUi
 var profile: Profile          # 由 main 传入；没有就不存档（测试用）
 var _save_t := 0.0
 var _dirty := false
+var _skip_freeze := false   # 合击定格时点了屏幕：跳过定格
 var _swallow_t := 0.0     # 对话 / 物品栏刚关上：吞掉这一下按键，免得关对话的 E 顺手熄了火把
 var freeze_rect: TextureRect
 var pause_layer: Control
@@ -132,9 +133,11 @@ func build_scene(background: Variant, foreground := "") -> void:
 ## 物品栏开关放在 _input（早于界面和 _unhandled_input），按下就处理，不和别的节点抢事件。
 ## 打不开时在控制台留一条原因，方便以后复现「第一次按 Tab 偶尔打不开」。
 func _input(event: InputEvent) -> void:
+	if world and world.freeze_t > 0.0 and ((event is InputEventMouseButton and event.pressed) or (event is InputEventScreenTouch and event.pressed)):
+		_skip_freeze = true
 	if not event.is_action_pressed("inventory", false, true) or inventory_ui == null or inventory_ui.visible:
 		return
-	var why := "对话中" if dialogue.visible else ("已暂停" if paused else ("已结算" if stage == "end" else ""))
+	var why := "对话中" if _blocking_dialogue() else ("已暂停" if paused else ("已结算" if stage == "end" else ""))
 	if why != "":
 		push_warning("物品栏没打开：%s" % why)
 		return
@@ -145,17 +148,22 @@ func _input(event: InputEvent) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	input.feed(event)
 	if event.is_action_pressed("pause") or (event.is_action_pressed("cancel") and me.state != "charge" and me.state != "aim" and world.combo.preview.is_empty()):
-		if not dialogue.visible and stage != "end":
+		if not _blocking_dialogue() and stage != "end":
 			_set_paused(not paused)
 			get_viewport().set_input_as_handled()
 
 
+## 对话开着并且要停住世界（开场演出这类阻塞对话）
+func _blocking_dialogue() -> bool:
+	return dialogue.visible and dialogue.blocking
+
+
 func _physics_process(dt: float) -> void:
-	freeze_rect.visible = world.freeze_t > 0.0
-	hud.visible = not dialogue.visible and not inventory_ui.visible  # 对话、物品栏开着时收起战斗界面
+	freeze_rect.visible = world.freeze_t > 0.0 and profile.settings.get("freeze", true)
+	hud.visible = not _blocking_dialogue() and not inventory_ui.visible  # 阻塞对话、物品栏开着时收起战斗界面
 	_update_camera(dt)
 	_autosave(dt)
-	if paused or dialogue.visible or inventory_ui.visible or stage == "end":
+	if paused or _blocking_dialogue() or inventory_ui.visible or stage == "end":
 		_swallow_t = 0.15
 		return
 	if profile.tick_study(dt):
@@ -165,12 +173,19 @@ func _physics_process(dt: float) -> void:
 		return
 	var pc := player_command()
 	if _swallow_t > 0.0:
+		# 阻塞的对话 / 物品栏 / 暂停刚关：只吞关掉它的确认键（交谈、普攻），闪避和技能照常
 		_swallow_t -= dt
-		pc.pressed.clear()
+		pc.pressed.erase("interact")
+		pc.pressed.erase("attack")
+	if dialogue.visible:
+		pc.pressed.erase("interact")  # 不阻塞的对话开着时，交谈键是翻页，不再拿去熄火把、捡东西
 	var cmds := {me.id: pc}
 	if partner_active and jingxin:
 		cmds[jingxin.id] = ai.command(DT)
 	cmds.merge(extra_commands())
+	if world.freeze_t > 0.0 and (_skip_freeze or freeze_skip_pressed() or not profile.settings.get("freeze", true)):
+		world.freeze_t = minf(world.freeze_t, 0.0001)  # 跳过定格：下一步就结算，判定和不跳完全一样
+	_skip_freeze = false
 	world.step(DT, cmds)
 	_item_events(world.events)
 	level_events(world.events)
@@ -187,7 +202,7 @@ func player_command() -> SimCommand:
 # ---------- 物品栏与存档 ----------
 
 func open_inventory() -> void:
-	if inventory_ui.visible or dialogue.visible or stage == "end":
+	if inventory_ui.visible or _blocking_dialogue() or stage == "end":
 		return
 	inventory_ui.mobile = hud.mobile
 	inventory_ui.open()
@@ -299,8 +314,13 @@ static func _area(p: PackedVector2Array) -> float:
 	return absf(s) * 0.5
 
 
+## 副本里的对话默认不阻塞（规格书第九节）；开场演出这类纯剧情段由关卡覆写 dialogue_blocks() 返回真
 func say(lines: Array) -> void:
-	dialogue.open(lines)
+	dialogue.open(lines, dialogue_blocks())
+
+
+func dialogue_blocks() -> bool:
+	return false
 
 
 func tip(id: String, s: String, secs := 3.5) -> void:
@@ -382,6 +402,13 @@ func _make_settings() -> Control:
 			Sfx.apply_volumes(profile.settings)
 			_dirty = true)
 		panel.add_child(s)
+	var freeze := CheckButton.new()
+	freeze.text = "合击定格"
+	freeze.button_pressed = profile.settings.get("freeze", true) if profile else true
+	freeze.toggled.connect(func(on: bool):
+		profile.settings["freeze"] = on
+		_dirty = true)
+	panel.add_child(freeze)
 	var shake := CheckButton.new()
 	shake.text = "屏幕震动"
 	shake.button_pressed = profile.settings.get("shake", true) if profile else true
@@ -415,6 +442,15 @@ func _resume() -> void:
 func _restart_section() -> void:
 	_set_paused(false)
 	retry()
+
+
+## 合击 / 阵法定格（不超过 0.5 秒）可跳过（规格书第四节）：普攻、合击、交谈、确认任一键刚按下，或点屏幕。
+## 只认「刚按下」：按住普攻自动连击的那种按下不算，免得一直按着普攻的人每次定格都被跳掉
+static func freeze_skip_pressed() -> bool:
+	for a in ["attack", "combo", "interact", "ui_accept"]:
+		if Input.is_action_just_pressed(a):
+			return true
+	return false
 
 
 ## 子类覆写：这一段从头来

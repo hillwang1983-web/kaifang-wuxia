@@ -275,8 +275,20 @@ func test_three_ai_vs_jingang() -> void:
 	var secs := 0.0
 	var stats := {"deflect": 0, "bolt_fire": 0, "ballista_built": 0, "ballista_break": 0, "hero_down": 0,
 		"charge": 0, "combo_invite": 0, "combo_freeze": 0, "combo_broken": 0, "combo_timeout": 0, "ballista_hit": 0}
+	var dist_sum := 0.0
+	var dist_n := 0
+	var crowd_t := 0.0
 	while secs < 400.0 and g.state != "sit":
 		w.step(DT, {p.id: ais[0].command(DT), j.id: ais[1].command(DT), a.id: ais[2].command(DT)})
+		# 不在车上、手上没事的队友 AI（净心、韩青）离弩车多远；90 像素内算扎堆
+		if w.ballista.built:
+			for h in [j, a]:
+				if h.alive and h.state != "mounted" and h.state != "build" and SimBallista.carried(w, h).is_empty():
+					var d: float = h.pos.distance_to(w.ballista.center)
+					dist_sum += d
+					dist_n += 1
+					if d < 90.0:
+						crowd_t += DT
 		for e in w.events:
 			if stats.has(e.type):
 				stats[e.type] += 1
@@ -289,6 +301,9 @@ func test_three_ai_vs_jingang() -> void:
 				f.hp = f.max_hp
 		w.events.clear()
 		secs += DT
-	print("      三个 AI 对铁甲金刚：%.0f 秒，结果 %s，%s，金刚血 %d" % [secs, g.state, stats, g.hp])
+	var avg_d := dist_sum / maxf(1.0, dist_n)
+	print("      三个 AI 对铁甲金刚：%.0f 秒，结果 %s，%s，金刚血 %d；队友离弩车平均 %.0f 像素，扎堆 %.1f 秒" % [secs, g.state, stats, g.hp, avg_d, crowd_t])
+	check(avg_d > 180.0, "不操弩的队友不围着弩车（平均 %.0f 像素，要 > 180）" % avg_d)
+	check(crowd_t < secs * 0.15, "队友在弩车 90 像素内的时间不到一成半（%.1f / %.0f 秒）" % [crowd_t, secs])
 	check(g.state == "sit", "四百秒内打完金刚")
 	check(stats.ballista_built >= 1 and stats.bolt_fire >= 3, "拼好弩车并发射")

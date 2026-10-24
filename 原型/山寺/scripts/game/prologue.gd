@@ -231,6 +231,11 @@ func auto_command() -> SimCommand:
 	return cmd
 
 
+## 开场演出是纯剧情段：对话停住世界（整段开场可以从暂停菜单跳过）
+func dialogue_blocks() -> bool:
+	return true
+
+
 ## 跳过开场（暂停菜单 / 开发开关 skipintro）：直接接山门前，锤子照给
 func skip_intro() -> void:
 	if stage == "end":
