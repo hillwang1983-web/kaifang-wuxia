@@ -62,6 +62,8 @@ winget install --id GodotEngine.GodotEngine --exact
 powershell -ExecutionPolicy Bypass -File 原型/山寺/tools/test.ps1
 ```
 
+CI：改动本目录的 PR 和推到 main 的提交会触发 `.github/workflows/shansi.yml`，在 Linux 上用 Godot 4.7.2 跑同样的导入、规则用例和 AI 冒烟（日志里出现 `SCRIPT ERROR` / `ERROR:` 也算失败）。全新检出没有字体缓存，首次导入会临时清空 `theme/custom`，导入后恢复，做法与 `scripts/build-shansi-preview.mjs` 相同。CI 不做网页导出，也不代替实体手机与手柄验收。
+
 开发开关：命令行 `Godot_v4.7.2-stable_win64_console.exe --path 原型/山寺 -- skip auto quit xiepai yungong`，网页地址加 `?skip&auto`。`skip` 直接进山门；`auto` 由 AI 代玩、自动翻对话，从出身开场一路打到大雄宝殿结算（命令行四倍速）；`quit` 打完退出并打印结算；`xiepai`、`tiyunzong` / `yungong` / `jiemai` 指定门派和通用技；`mobile` 电脑上强制手机界面；`items` 用单独的演示存档塞几件样品看物品栏；`torch` 山门出生在火把旁；`fresh` 先清空存档；`origin=shenjia|tiejiang|xiban|langzhong` 指定出身（代玩默认郎中）；`skipintro` 开场一开始就走「跳过开场」；`until=shanmen` 走到山门就打印代玩计时并退出；`fps` 每 5 秒打印平均 / 最低帧率；`pad=xbox|ps` 没插手柄也显示手柄按键提示；`boss2` 直接进藏经阁；`boss3` 直接进大雄宝殿；`shots=10,20` 按真实秒数存画面到 `user://shot_*.png`（要原生窗口运行，存完退出），也可以写事件名 `shots=aim,deflect`（大雄宝殿里有人满档蓄力瞄准、冲撞被撞偏时各拍一张）。代玩用单独的测试存档，不碰真存档。
 
 工程设置：内部分辨率 960×540、窗口 1920×1080、整数倍拉伸（手机上改为非整数等比缩放，见下文），贴图默认最近邻、2D 变换吸附整像素（像素风不糊）；渲染器用 Compatibility（网页导出走 WebGL2）。
