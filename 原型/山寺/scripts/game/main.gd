@@ -15,6 +15,9 @@ var dev := {}
 
 
 func _ready() -> void:
+	# 手机上整数倍放大常常只能退回 1 倍，画面缩在中央（#25）：改为非整数等比缩放铺满；电脑保持整数倍，像素不糊
+	if _is_phone():
+		get_window().content_scale_stretch = Window.CONTENT_SCALE_STRETCH_FRACTIONAL
 	dev = _dev_flags()
 	if dev.has("skip") or dev.has("auto"):
 		sect = "xiepai" if dev.has("xiepai") else "shaolin"
@@ -26,6 +29,10 @@ func _ready() -> void:
 		_shanmen()
 		return
 	_title()
+
+
+func _is_phone() -> bool:
+	return OS.has_feature("web_android") or OS.has_feature("web_ios") or OS.has_feature("mobile")
 
 
 func _dev_flags() -> Dictionary:
