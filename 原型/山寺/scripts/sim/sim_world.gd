@@ -250,14 +250,21 @@ func _try_dodge(f: SimFighter, cmd: SimCommand) -> void:
 			e.read = true
 
 
+## 站在 at 能够着的、还亮着的可交互物；没有返回空字典（吸收自 #27：世界与界面共用同一判定）
+func interactable_near(at: Vector2) -> Dictionary:
+	for it in interactables:
+		if it.on and it.pos.distance_to(at) < 44.0:
+			return it
+	return {}
+
+
 func _interact(f: SimFighter) -> void:
 	if inventories.has(f.id) and _pickup(f, 44.0):
 		return
-	for it in interactables:
-		if it.on and it.pos.distance_to(f.pos) < 44.0:
-			it.on = false
-			emit("interact", {"id": f.id, "kind": it.kind, "target": it.id, "pos": it.pos})
-			return
+	var it := interactable_near(f.pos)
+	if not it.is_empty():
+		it.on = false
+		emit("interact", {"id": f.id, "kind": it.kind, "target": it.id, "pos": it.pos})
 
 
 func _attack(f: SimFighter, cmd: SimCommand) -> void:

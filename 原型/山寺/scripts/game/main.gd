@@ -17,6 +17,9 @@ var dev := {}
 
 
 func _ready() -> void:
+	# 手机上整数倍放大常常只能退回 1 倍，画面缩在中央（#25）：改为非整数等比缩放铺满；电脑保持整数倍，像素不糊
+	if _is_phone():
+		get_window().content_scale_stretch = Window.CONTENT_SCALE_STRETCH_FRACTIONAL
 	dev = _dev_flags()
 	if dev.has("auto"):
 		Profile.path = "user://shansi_autotest.json"
@@ -86,11 +89,15 @@ func _process(dt: float) -> void:
 			get_tree().quit(0)
 
 
+func _is_phone() -> bool:
+	return OS.has_feature("web_android") or OS.has_feature("web_ios") or OS.has_feature("mobile")
+
+
 func _dev_flags() -> Dictionary:
 	var out := {}
 	var args := Array(OS.get_cmdline_user_args())
 	if OS.has_feature("web"):
-		var q = JavaScriptBridge.eval("location.search", true)
+		var q = JavaScriptBridge.get_interface("location").search
 		if q is String:
 			args += Array(q.trim_prefix("?").split("&"))
 	for a in args:
