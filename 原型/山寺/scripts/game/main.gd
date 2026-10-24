@@ -43,11 +43,18 @@ func _ready() -> void:
 		for u in SimData.UTILITIES:
 			if dev.has(u):
 				utility = u
+		if dev.get("pad", "") in ["xbox", "ps"]:
+			UiKit.device = dev.pad  # 开发开关 pad=xbox|ps：没插手柄也能看手柄按键提示（截图用）
 		if dev.get("origin", "") in Story.ORIGINS:
 			origin = dev.origin
 		Story.player_name = Story.origin(origin).get("default_name", "")
 		if dev.has("auto"):
-			Engine.time_scale = 4.0 if not OS.has_feature("web") else 1.0
+			# 加速：time_scale 只放大每个物理帧的 delta，不增加物理帧数；世界每帧固定走 1/60 秒，
+			# 所以物理帧率要一起乘上去（每帧 delta 仍是 1/60），整局才真的快。无界面（冒烟、发布构建）八倍，窗口四倍
+			var speed := 1.0 if OS.has_feature("web") else (8.0 if DisplayServer.get_name() == "headless" else 4.0)
+			Engine.time_scale = speed
+			Engine.physics_ticks_per_second = int(60 * speed)
+			Engine.max_physics_steps_per_frame = 16
 		if dev.has("boss3"):
 			_daxiong()
 		elif dev.has("boss2"):
@@ -103,7 +110,20 @@ func _save_shot(path: String) -> void:
 		get_tree().quit(0)
 
 
+## 开发开关 fps：每 5 秒（真实时间）打印一次平均帧率和最低帧率，记手机尺寸下的性能用
+var _fps_t := 0.0
+var _fps_min := 999.0
+
+
 func _process(dt: float) -> void:
+	if dev.has("fps"):
+		var real_dt := dt / maxf(Engine.time_scale, 0.001)
+		_fps_t += real_dt
+		_fps_min = minf(_fps_min, 1.0 / maxf(real_dt, 0.0001))
+		if _fps_t >= 5.0:
+			print("帧率：平均 %d，最低 %d，窗口 %s" % [Engine.get_frames_per_second(), int(_fps_min), get_window().size])
+			_fps_t = 0.0
+			_fps_min = 999.0
 	if _clock_on:
 		_run_clock += dt
 	var real := dt / maxf(Engine.time_scale, 0.001)

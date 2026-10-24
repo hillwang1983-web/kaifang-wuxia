@@ -204,6 +204,17 @@ static func _dulao(w: SimWorld, e: SimFighter, k: Dictionary, dt: float) -> void
 		var span: float = w.fog.r_max - w.fog.r_min
 		if e.ward_t <= 0.0:
 			w.fog.r = maxf(w.fog.r_min, w.fog.r - span / k.fog_shrink * dt)
+		# 收口：压到最小圈后一直没人破罩，最后一圈也吞掉；破一次罩就重新计时
+		if e.ward_t > 0.0:
+			e.timers["fog_min_t"] = 0.0
+		elif w.fog.r <= w.fog.r_min + 0.5 or w.fog.get("closing", false):
+			e.timers["fog_min_t"] = e.timers.get("fog_min_t", 0.0) + dt
+			if e.timers.fog_min_t >= k.fog_close_after:
+				if not w.fog.get("closing", false):
+					w.fog["closing"] = true
+					w.emit("fog_close", {"id": e.id})
+				w.fog.r = maxf(0.0, w.fog.r - k.fog_min / k.fog_close_time * dt)
+				w.fog.r_min = minf(w.fog.r_min, w.fog.r)
 	match e.state:
 		"flinch":
 			e.t += dt
@@ -264,6 +275,12 @@ static func _jingang(w: SimWorld, e: SimFighter, k: Dictionary, dt: float) -> vo
 	if e.state == "idle":
 		e.state = "chase"
 	e.in_combat = true
+	# 狂暴：开战太久还没打下来，踏地震变密、变重
+	e.timers["fight"] = e.timers.get("fight", 0.0) + dt
+	if e.timers.fight >= k.enrage_at and not e.timers.get("enraged", false):
+		e.timers["enraged"] = true
+		e.timers["quake"] = minf(e.timers.get("quake", 0.0), 1.0)
+		w.emit("enrage", {"id": e.id, "pos": e.pos})
 	# 计时不论在做什么都走（失衡、收招时也走），到点了等回到追击再出手：冲撞稳定每 25 秒一次
 	for key in ["charge", "quake", "grab"]:
 		e.timers[key] = float(e.timers.get(key, {"charge": k.first_charge, "quake": 6.0, "grab": 10.0}[key])) - dt
@@ -288,7 +305,7 @@ static func _jingang(w: SimWorld, e: SimFighter, k: Dictionary, dt: float) -> vo
 				_begin(w, e, "charge", k.attacks.charge, "windup")
 				return
 			if e.timers.quake <= 0.0:
-				e.timers["quake"] = k.quake_every
+				e.timers["quake"] = k.enrage_quake_every if e.timers.get("enraged", false) else k.quake_every
 				_begin(w, e, "quake", k.attacks.quake, "windup")
 				return
 			var victim := _grab_target(w, e)
@@ -318,8 +335,12 @@ static func _jingang(w: SimWorld, e: SimFighter, k: Dictionary, dt: float) -> vo
 					w.emit("strike", {"id": e.id, "atk": "charge", "pos": e.pos, "dir": e.facing})
 				"quake":
 					w.emit("quake", {"id": e.id, "pos": e.pos})
+					var mult: float = k.enrage_mult if e.timers.get("enraged", false) else 1.0
 					for h in w.heroes():
-						_hit_hero(w, e, h)
+						if h.inv_t > 0.0:
+							w.emit("evade", {"id": h.id, "pos": h.pos, "from": e.id})
+						else:
+							w.damage(e, h, e.atk.dmg * mult, {"heavy": true})
 					_recover(e)
 				"grab":
 					_grab(w, e)

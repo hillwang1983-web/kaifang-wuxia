@@ -1,0 +1,28 @@
+{
+ "说明": "角色帧动画登记表（程序按此读美术交的动作条，规则见交换清单「当前请求」的接入规格）。文件名 前缀_动作_方向_v版本.png，放在 dir 指定的 assets 子目录；方向 down / left / up，右侧由程序镜像 left；帧等宽横排，帧数 = 图宽 ÷ 帧宽。新动作只要放文件，新角色在 sets 里加一行。actions 写播放方式：loop 循环；不写为单次播完停在最后一帧，hold 指定停在哪一帧（从 0 起）。缺的动作按 fallback 依次找替代，都没有就退回代码画的占位人形。",
+ "fps": 12,
+ "sets": {
+  "chr_shaolin": {"dir": "chr", "frame": [48, 64], "anchor": [24, 60]},
+  "chr_xiepai": {"dir": "chr", "frame": [48, 64], "anchor": [24, 60]},
+  "npc_jingxin": {"dir": "npc", "frame": [48, 64], "anchor": [24, 60]},
+  "npc_hanqing": {"dir": "npc", "frame": [48, 64], "anchor": [24, 60]},
+  "npc_louluo": {"dir": "npc", "frame": [48, 64], "anchor": [24, 60]},
+  "boss_xuancheng": {"dir": "boss", "frame": [64, 80], "anchor": [32, 76]},
+  "boss_dulao": {"dir": "boss", "frame": [64, 80], "anchor": [32, 76]},
+  "boss_jingang": {"dir": "boss", "frame": [96, 112], "anchor": [48, 108]}
+ },
+ "actions": {
+  "idle": {"loop": true},
+  "walk": {"loop": true},
+  "down": {"hold": 3},
+  "sit": {"loop": true}
+ },
+ "fallback": {
+  "atk1": ["atk"], "atk2": ["atk1", "atk"], "atk3": ["atk2", "atk1", "atk"],
+  "luohanquan": ["atk3", "atk"], "jinzhongzhao": ["atk"], "dalijingangzhang": ["atk3", "atk"],
+  "dushazhang": ["atk"], "huagongsan": ["atk"], "shehunshu": ["atk"],
+  "tiyunzong": ["roll"], "yungong": ["idle"], "jiemai": ["atk"],
+  "sweep": ["atk"], "dash": ["walk"], "heavy": ["cast", "atk"], "slash": ["atk"],
+  "sit": ["down"], "charge": ["windup"]
+ }
+}

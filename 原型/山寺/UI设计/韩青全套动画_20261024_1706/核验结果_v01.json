@@ -1,0 +1,1089 @@
+{
+  "result": "PASS",
+  "strips": 24,
+  "frames": 87,
+  "opaque_colors": 16,
+  "alpha": [
+    0,
+    255
+  ],
+  "anchor": [
+    24,
+    60
+  ],
+  "checks": [
+    "dimensions/frame counts/order",
+    "same16color palette",
+    "binary alpha",
+    "fixed metadata root",
+    "distinct frames within each action",
+    "six distinct walking lowerbodies",
+    "selected source poses uncut",
+    "6x nearest pixel exact",
+    "GIF counts/timings",
+    "final2 knockdown frames horizontal"
+  ],
+  "limits": [
+    "metadata/registration anchor validation is not independent runtime motion/collision verification",
+    "review GIF repeats nonloop moves with600ms last frame; gameJSON12fps",
+    "no Godot/mobile runtime test"
+  ],
+  "files": [
+    {
+      "file": "assets/npc/npc_hanqing_idle_down_v01.png",
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 15,
+      "bboxes": [
+        [
+          15,
+          20,
+          34,
+          61
+        ],
+        [
+          14,
+          20,
+          33,
+          61
+        ],
+        [
+          14,
+          20,
+          33,
+          61
+        ],
+        [
+          14,
+          20,
+          33,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "a81d7e4ebba7f4d05131f24da57baf82601a1217dbfd9b521f6db351167ac4df",
+        "648f362d3cca8995b3fe54da017e753c671f91dda03349742a7a08288cc6b6f0",
+        "3059db7164f1099b4ea2770c2ee56fdaaa55930c5c8fe65822413292fb8cd7ce",
+        "0d9430cee40a6392c1ec2a71d4d86695932c7bb9c73c79b9f4bb0a0d1e6d3736"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        80
+      ]
+    },
+    {
+      "file": "assets/npc/npc_hanqing_walk_down_v01.png",
+      "dimensions": [
+        288,
+        64
+      ],
+      "frames": 6,
+      "colors": 14,
+      "bboxes": [
+        [
+          16,
+          21,
+          35,
+          61
+        ],
+        [
+          15,
+          21,
+          34,
+          61
+        ],
+        [
+          15,
+          21,
+          34,
+          61
+        ],
+        [
+          15,
+          21,
+          34,
+          61
+        ],
+        [
+          15,
+          21,
+          34,
+          61
+        ],
+        [
+          16,
+          21,
+          35,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "bafe84bc7567fff7409930ef51e06f5685ec14a89182a4b2ea1ad55204910442",
+        "8c2c63e3e055e6264344fc6ce6561d4a62e32e9bc421ebf05bb8bc3ed6d5273f",
+        "2f3c5b257ffb282a965e25ba05921f44f50f601bfa0425f3e3cbdcf04deb014e",
+        "92a5b92ea35fb93f06ba10985711f5f3266f0dd41871470d3c5f03adae4a7a51",
+        "d1ff0d4c099dd3ef735c01db967d5c89ec60ddc5cba81e0344c20915b7f00750",
+        "6f439c4dcd46ebfa1be05be0a9b04885d13a0047f618eb5430b737e94ed00063"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        80,
+        80,
+        90
+      ]
+    },
+    {
+      "file": "assets/npc/npc_hanqing_idle_left_v01.png",
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 16,
+      "bboxes": [
+        [
+          17,
+          20,
+          33,
+          61
+        ],
+        [
+          18,
+          20,
+          34,
+          61
+        ],
+        [
+          18,
+          20,
+          34,
+          61
+        ],
+        [
+          19,
+          20,
+          34,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "eb2534e5442959bbe963e2e7810d8bcf09272b37bf0b5a21eb384119c5e8d367",
+        "973c54620e3b3e7ff67d5392712fef03519277b0d56a30456dc00e4ad94a76ad",
+        "e348f639c95a052b1ed4413fbac295ede46f7920060d478aa9acc15df8dfabf6",
+        "5fb51e8bdf9574cab9a3f839e514be6635ad9efab39943e060b194d10d5f9846"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        80
+      ]
+    },
+    {
+      "file": "assets/npc/npc_hanqing_walk_left_v01.png",
+      "dimensions": [
+        288,
+        64
+      ],
+      "frames": 6,
+      "colors": 15,
+      "bboxes": [
+        [
+          17,
+          22,
+          35,
+          61
+        ],
+        [
+          18,
+          22,
+          34,
+          61
+        ],
+        [
+          18,
+          22,
+          36,
+          61
+        ],
+        [
+          18,
+          22,
+          35,
+          61
+        ],
+        [
+          18,
+          22,
+          35,
+          61
+        ],
+        [
+          17,
+          22,
+          35,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "a8be88add236cea48fad2ae84507f5ad8caf2ee489d76bd2dbb8f4007d41ba16",
+        "3f0bf194bd9ed5266fd7215283b80956c9c5fbe3fff462f575eef051080949ae",
+        "600dc4eb8c78fc6bc812c58f41b74091fc806d6d5fd3d069c228fffb3d8cdd6a",
+        "f412884c52e29a382a2b7b62304ccd1407d2678247db967ffccc5802e02b6118",
+        "3fb054435217839e686599efbdb3e2047f75b968b394fec911b7a03f755bfe7b",
+        "10f6ffdfe95751a140151fa3ca5c03fdf03ab499c84e5ddcb2bbe7408cd25214"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        80,
+        80,
+        90
+      ]
+    },
+    {
+      "file": "assets/npc/npc_hanqing_idle_up_v01.png",
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 14,
+      "bboxes": [
+        [
+          16,
+          20,
+          34,
+          61
+        ],
+        [
+          15,
+          20,
+          34,
+          61
+        ],
+        [
+          15,
+          20,
+          34,
+          61
+        ],
+        [
+          15,
+          20,
+          34,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "24c2f9d2762173974d7daa958c5766285756d2ba066aad3833d8ae4b6059be56",
+        "f5c3d59f7c1bc1c882d5b04c9c01f267eff9a8f838fc390329897df4b59c94dc",
+        "afda344f36247a54b0beba5d79900d9725eaf9aaf89914a70ad69e9fa8be1132",
+        "f1adbf7657e73a6e77907a15e12b2756d16e192cfd643478bbbe6001817053d2"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        80
+      ]
+    },
+    {
+      "file": "assets/npc/npc_hanqing_walk_up_v01.png",
+      "dimensions": [
+        288,
+        64
+      ],
+      "frames": 6,
+      "colors": 15,
+      "bboxes": [
+        [
+          15,
+          21,
+          34,
+          61
+        ],
+        [
+          15,
+          21,
+          34,
+          61
+        ],
+        [
+          15,
+          21,
+          34,
+          61
+        ],
+        [
+          15,
+          21,
+          34,
+          61
+        ],
+        [
+          14,
+          21,
+          33,
+          61
+        ],
+        [
+          15,
+          21,
+          34,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "790d88a584e39cfbcc9799c0e25f4c7a16bb251f1454af539b3dda42747306a0",
+        "033782197a39052f8a36e8192f80ad6be874fb69fdfa0ea08e9635fd097c1ab4",
+        "099d9fb50694199518842b5ccd2c0147e9d810055222d6fa2138c510b133b64a",
+        "7abf198171f640f559b8b65c405f3b0696223996e5bf3a9c09466d485082e65f",
+        "4697aa5dc11ccf5830925cc3972e5f7bf1bbec6e71741135fc41072c2a2c7ff6",
+        "cd2b4616028b76e2bfb900152d009dc637f2aea1f51df23463583fee4161c202"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        80,
+        80,
+        90
+      ]
+    },
+    {
+      "file": "assets/npc/npc_hanqing_atk1_down_v01.png",
+      "dimensions": [
+        144,
+        64
+      ],
+      "frames": 3,
+      "colors": 15,
+      "bboxes": [
+        [
+          6,
+          18,
+          35,
+          60
+        ],
+        [
+          12,
+          22,
+          35,
+          62
+        ],
+        [
+          10,
+          20,
+          43,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "93fb616ce8d7f3706c9352c18db53b8e1c8c77389a06f1b3829dd3ea583d1d0b",
+        "9976e2c052105e2d1624d3ca5e542ce38ec84167b48c8f044816ce22062a11f9",
+        "ed93121b64027364bb2450b9756461d62dcc69e43a9fd3d4abeae46a04af5c16"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/npc/npc_hanqing_atk2_down_v01.png",
+      "dimensions": [
+        144,
+        64
+      ],
+      "frames": 3,
+      "colors": 15,
+      "bboxes": [
+        [
+          11,
+          17,
+          37,
+          60
+        ],
+        [
+          7,
+          23,
+          46,
+          60
+        ],
+        [
+          13,
+          24,
+          34,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "5ea185c0ba7546fcbc33fd6011adbf8a1d89829d4ea86ace121235af76e21562",
+        "63a13139b5a9bc2ef98b1b5488c37e89c422f4a83638f4945a210a6d9e147f0c",
+        "360ee84b929aebecd242d72a9841b2051774c7854b347499eb85ff9087cbe13d"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/npc/npc_hanqing_atk3_down_v01.png",
+      "dimensions": [
+        144,
+        64
+      ],
+      "frames": 3,
+      "colors": 15,
+      "bboxes": [
+        [
+          11,
+          13,
+          35,
+          60
+        ],
+        [
+          11,
+          21,
+          36,
+          62
+        ],
+        [
+          12,
+          28,
+          36,
+          63
+        ]
+      ],
+      "frame_sha256": [
+        "cbfa634f519848d603272ed204a2fc15179b29890dc0242837742bf99aa8fd82",
+        "9ec219c67ca0cc67bef04ea8c7274f1115253061377a497f09a2816c3dfed1c7",
+        "742e7856976c056e1e91c57a7c3b103193cf4a1283d7ffe718c5af39f60544b8"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/npc/npc_hanqing_hit_down_v01.png",
+      "dimensions": [
+        96,
+        64
+      ],
+      "frames": 2,
+      "colors": 14,
+      "bboxes": [
+        [
+          14,
+          23,
+          40,
+          60
+        ],
+        [
+          10,
+          32,
+          40,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "f7a2c150967ef680bb0c569693c1cd1cc16d32950847b7adaaf77b73bebdf977",
+        "b15476d3595935812634f4fe3a933470c77d94b11b178f90615b88113180cd7a"
+      ],
+      "gif_durations_ms": [
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/npc/npc_hanqing_roll_down_v01.png",
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 15,
+      "bboxes": [
+        [
+          7,
+          31,
+          38,
+          60
+        ],
+        [
+          10,
+          19,
+          47,
+          57
+        ],
+        [
+          7,
+          30,
+          39,
+          60
+        ],
+        [
+          11,
+          20,
+          41,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "ce11d072ced385063a11c07ac2a32065abf9ffb01946049ef800c25adf4d0cc5",
+        "8e52a9d84e55a2e51caac5405555f562f38bf1da6881d902dbb6c9e3410e6669",
+        "c8b5688dc9c04b675781d9db10e8330de183eab80b1cc4c2bf63380f47b5c011",
+        "ab3e74c219c4f9a0702b63dbf06b97d322e381d1c919fa591904b76965ad52eb"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        600
+      ]
+    },
+    {
+      "file": "assets/npc/npc_hanqing_down_down_v01.png",
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 15,
+      "bboxes": [
+        [
+          10,
+          29,
+          38,
+          60
+        ],
+        [
+          9,
+          35,
+          36,
+          60
+        ],
+        [
+          4,
+          42,
+          42,
+          60
+        ],
+        [
+          1,
+          43,
+          46,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "1d7c5353ce607e58e30499ff36a6ab86d0dd03a178e0034cd35a9baee24d37ee",
+        "45f32abd56a08cbf52070776cc00d413b90d280e959479b59d05424e532a38e6",
+        "22be2524844558f0093a1c69983921376d23860cdba1d22f81a0a026a1f38404",
+        "1db329626b1ab3364da945550b2854bd48fe658efc6b727f2d4ce0108e6e91cc"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        600
+      ]
+    },
+    {
+      "file": "assets/npc/npc_hanqing_atk1_left_v01.png",
+      "dimensions": [
+        144,
+        64
+      ],
+      "frames": 3,
+      "colors": 16,
+      "bboxes": [
+        [
+          12,
+          19,
+          36,
+          60
+        ],
+        [
+          4,
+          25,
+          37,
+          61
+        ],
+        [
+          2,
+          25,
+          35,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "60f8b282dcb23579056e8cfefb3120e4e7fa0a66dfcac1c4dfaf8f97f52237fd",
+        "2ecb8bc2af687c6ce2f74bbdc24da2baaec448c2c050a34015102b0b4f4ec5dc",
+        "ef5c49017a7f9c2717789f0933f5164f67b47c9602479a9b25e00bcf90bc8b06"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/npc/npc_hanqing_atk2_left_v01.png",
+      "dimensions": [
+        144,
+        64
+      ],
+      "frames": 3,
+      "colors": 15,
+      "bboxes": [
+        [
+          11,
+          24,
+          41,
+          60
+        ],
+        [
+          8,
+          26,
+          40,
+          60
+        ],
+        [
+          6,
+          30,
+          36,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "5279cfe2e0582e8bb8184acfd8b1244ad60a3a09a1c0a207798f6449877dce34",
+        "f3601d0e4e976c586b40e5891e8615e571a6270136a2c7079bfcc0d08e68cec0",
+        "43e59605c55b673e125728e6220505754cfc792676395f31462072a5621eca82"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/npc/npc_hanqing_atk3_left_v01.png",
+      "dimensions": [
+        144,
+        64
+      ],
+      "frames": 3,
+      "colors": 14,
+      "bboxes": [
+        [
+          12,
+          11,
+          37,
+          60
+        ],
+        [
+          4,
+          21,
+          36,
+          60
+        ],
+        [
+          4,
+          34,
+          37,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "1d84e01ea97ff2ce5c5ed128c538aeb4fd5226e0f029582004eb219e344dff8d",
+        "711dfdf19ce8e8e35a67621bd4f59b7afc632a096fd5a8b50b3b1b235888366e",
+        "b0623b26b70bfb80d651dacaa86266c3ad0aa8a62494c067e2fc952426f4de50"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/npc/npc_hanqing_hit_left_v01.png",
+      "dimensions": [
+        96,
+        64
+      ],
+      "frames": 2,
+      "colors": 14,
+      "bboxes": [
+        [
+          10,
+          28,
+          34,
+          60
+        ],
+        [
+          12,
+          33,
+          35,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "5aca63e80e76b601ac87ed1484586c10cbd1b812183e06fa6c5029ab8285ccd9",
+        "47f51ba6abba810498d2a02a7fa60bff7e637a8cec8fab3baa24ab0c157abf0c"
+      ],
+      "gif_durations_ms": [
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/npc/npc_hanqing_roll_left_v01.png",
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 16,
+      "bboxes": [
+        [
+          6,
+          39,
+          37,
+          60
+        ],
+        [
+          11,
+          20,
+          39,
+          58
+        ],
+        [
+          6,
+          35,
+          39,
+          60
+        ],
+        [
+          4,
+          24,
+          36,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "1e950a79fbee671adb4297e2bf2138ac8d2cdd57d06a215738d82d213be3b5c7",
+        "436b39ccb50a9ea441c89f533e91001a0c2bec570c1f9ec841b2832e1be090d7",
+        "7063d6f44c92c23e0eb54daca55ba5d0c97a2fa5477bbaf2dd7a9bd1b398b42f",
+        "b6091406278975b957aa353fc79ae566d24c61758a000f2201540552cc9ff527"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        600
+      ]
+    },
+    {
+      "file": "assets/npc/npc_hanqing_down_left_v01.png",
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 14,
+      "bboxes": [
+        [
+          9,
+          32,
+          38,
+          60
+        ],
+        [
+          6,
+          38,
+          42,
+          60
+        ],
+        [
+          2,
+          45,
+          47,
+          60
+        ],
+        [
+          2,
+          48,
+          46,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "0d280b76d08e79b8bc7639ee842e6c115b32e2b64d0b8660535b0ef0efe1f5cb",
+        "e00275515436d9ac434bcdba73af7d07ab9d40369fd6144e4a1f9fd839196346",
+        "53aea486758d64d1e0817d4387b115ad10e8c4c1aad3cf4211e462b38816de59",
+        "1e1de40a4d0e6e75f49e875d1323b24bed4dfd2ce588cfaa505d606f4c5dbd69"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        600
+      ]
+    },
+    {
+      "file": "assets/npc/npc_hanqing_atk1_up_v01.png",
+      "dimensions": [
+        144,
+        64
+      ],
+      "frames": 3,
+      "colors": 15,
+      "bboxes": [
+        [
+          12,
+          17,
+          34,
+          60
+        ],
+        [
+          11,
+          19,
+          43,
+          60
+        ],
+        [
+          10,
+          21,
+          44,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "b8db6e2fc6c0c75a1efdeb2d5d528da3f9d221c85677de637cd2cb4c89d1d0bf",
+        "007ec794ab3518853240d7d3da7e54a36eb4263f62baf10e753b680254e2e2cb",
+        "f198099c2fe90ec1a00b5df4737a5b23e58b13f85e803838109141c3ef7d3df1"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/npc/npc_hanqing_atk2_up_v01.png",
+      "dimensions": [
+        144,
+        64
+      ],
+      "frames": 3,
+      "colors": 15,
+      "bboxes": [
+        [
+          12,
+          15,
+          42,
+          60
+        ],
+        [
+          11,
+          22,
+          44,
+          61
+        ],
+        [
+          13,
+          28,
+          38,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "915acbfd2a903028f2f08db95d23af1c4716c9f04c611805b4df4ebc9b9673f7",
+        "9a1702715fb0e9295a056179b1ac538106f1b7497f823597fa5039f883c34be5",
+        "daf80eeeafbc112bf9c74dbadb82ab53efba70a6ceb9645569cf03761e584fd1"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/npc/npc_hanqing_atk3_up_v01.png",
+      "dimensions": [
+        144,
+        64
+      ],
+      "frames": 3,
+      "colors": 15,
+      "bboxes": [
+        [
+          11,
+          13,
+          35,
+          60
+        ],
+        [
+          11,
+          17,
+          35,
+          60
+        ],
+        [
+          12,
+          32,
+          41,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "beb8915248ee68bd47d7415a28aa2940f730091296b04797efa30b1ae7eba5ad",
+        "6b2113ce208b5e4e641ff8d8285a4d25dc1dcc1b193b7ba62f2e2ac010c12a0b",
+        "ddd098fa0a3444782820d8e284e32aa435e4e9199c1263d04e3136b7f50b09a3"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/npc/npc_hanqing_hit_up_v01.png",
+      "dimensions": [
+        96,
+        64
+      ],
+      "frames": 2,
+      "colors": 13,
+      "bboxes": [
+        [
+          10,
+          25,
+          37,
+          60
+        ],
+        [
+          12,
+          31,
+          36,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "0f2df7ed805fa05971c86565103c273e40a9c9a92cb560bb3ad91ed6e4755c28",
+        "36940b7ffa9a0d2e94929e24f08c84ed2487eaf6bc560c15d0c9a91236507a93"
+      ],
+      "gif_durations_ms": [
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/npc/npc_hanqing_roll_up_v01.png",
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 14,
+      "bboxes": [
+        [
+          12,
+          36,
+          44,
+          60
+        ],
+        [
+          12,
+          24,
+          37,
+          58
+        ],
+        [
+          8,
+          33,
+          42,
+          60
+        ],
+        [
+          13,
+          21,
+          37,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "14033140f2695a21a8bdcb6737739f735988e99919a9b010b21ed49f78a84fd7",
+        "32d2631c40479d52d5031cd59be8b29f9cae6359cd1058558e1f17d2da158450",
+        "fb4b95b5639fb2b4a63fbf71fdd8ae549df1e1056c33bc211cfb639b573fbb42",
+        "75272fe510b62b24c4c60094867dc4caa478c491d4813e0ff06d9f681c042c7b"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        600
+      ]
+    },
+    {
+      "file": "assets/npc/npc_hanqing_down_up_v01.png",
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 15,
+      "bboxes": [
+        [
+          11,
+          31,
+          39,
+          60
+        ],
+        [
+          9,
+          37,
+          41,
+          60
+        ],
+        [
+          3,
+          43,
+          47,
+          60
+        ],
+        [
+          6,
+          43,
+          42,
+          62
+        ]
+      ],
+      "frame_sha256": [
+        "31b3281f18ee667682fca4db257e9a987e0708965a1a896d10c4b7b87e032570",
+        "df1969824232c49f469336e94105aadf50b2f7f14ca5bcabe8cbbe7e9262967a",
+        "af138dfec373b87b1fc5cba660d0d6fd332890c2cbe3982f6a4cd265049fc4fa",
+        "067c1cee10c4627ac91ace6e3d8e4f6eacb7fb250d87cb9b35807e40bfde0dac"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        600
+      ]
+    }
+  ]
+}

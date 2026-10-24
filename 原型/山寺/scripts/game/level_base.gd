@@ -20,6 +20,7 @@ var jingxin: SimFighter
 var ai: SimPartnerAI
 var auto_ai: SimPartnerAI
 var input: PlayerInput
+var sfx: Sfx
 var view: WorldView
 var camera: Camera2D
 var hud: Hud
@@ -56,6 +57,11 @@ func build_scene(background: Variant, foreground := "") -> void:
 	if foreground != "":
 		view.foreground = UiKit.tex(foreground)
 	add_child(view)
+
+	sfx = Sfx.new()
+	sfx.world = world
+	sfx.me_id = me.id
+	add_child(sfx)
 
 	camera = Camera2D.new()
 	camera.limit_left = 0
@@ -94,6 +100,7 @@ func build_scene(background: Variant, foreground := "") -> void:
 	dialogue.finished.connect(_on_dialogue_done)
 
 	if profile:
+		Sfx.apply_volumes(profile.settings)
 		if not profile.inventory.is_empty():
 			world.inventories[me.id] = SimInventory.from_dict(profile.inventory)
 		world.refresh_stats(me)
@@ -111,11 +118,13 @@ func build_scene(background: Variant, foreground := "") -> void:
 	hud.bag_pressed.connect(open_inventory)
 	hud.pause_pressed.connect(func(): _set_paused(true))
 
+	sfx.play_music()
 	pause_layer = _make_pause()
 	layer.add_child(pause_layer)
 
 	if autoplay:
 		auto_ai = SimPartnerAI.new(world, me.id, jingxin.id if jingxin else me.id)
+		auto_ai.use_skills = true
 		dialogue.auto = true
 	camera.reset_smoothing()
 
@@ -165,6 +174,8 @@ func _physics_process(dt: float) -> void:
 	world.step(DT, cmds)
 	_item_events(world.events)
 	level_events(world.events)
+	sfx.handle(world.events)
+	_shot_events(world.events)
 	view.consume_events()
 	after_step(dt)
 
@@ -247,6 +258,8 @@ func _update_camera(dt: float) -> void:
 	if me.state == "aim" or me.state == "charge":
 		lead = me.aim_dir
 	camera.position = me.pos + lead * CAMERA_LEAD + Vector2(0, -16)
+	if view.shake > 0.0 and not profile.settings.get("shake", true):
+		view.shake = 0.0  # 设置里关了屏幕震动
 	if view.shake > 0.0:
 		camera.offset = Vector2(randf_range(-1, 1), randf_range(-1, 1)).round() * view.shake
 		view.shake = maxf(0.0, view.shake - dt * 20.0)
@@ -333,7 +346,7 @@ func _make_pause() -> Control:
 	shade.set_anchors_preset(Control.PRESET_FULL_RECT)
 	root.add_child(shade)
 	var box := VBoxContainer.new()
-	box.position = Vector2(370, 170)
+	box.position = Vector2(250, 90)
 	box.size = Vector2(220, 200)
 	box.add_theme_constant_override("separation", 12)
 	root.add_child(box)
@@ -344,7 +357,55 @@ func _make_pause() -> Control:
 		var b := MenuButtonUi.make(pair[0])
 		b.pressed.connect(pair[1])
 		box.add_child(b)
+	root.add_child(_make_settings())
 	return root
+
+
+## 暂停菜单右半边：音量三条总线、屏幕震动、本局关闭合击提示（规格书第四节防骚扰预留）
+func _make_settings() -> Control:
+	var panel := VBoxContainer.new()
+	panel.position = Vector2(500, 90)
+	panel.size = Vector2(220, 300)
+	panel.add_theme_constant_override("separation", 8)
+	for pair in [["音乐", "music"], ["音效", "sfx"], ["界面", "ui"]]:
+		var l := Label.new()
+		l.text = pair[0]
+		panel.add_child(l)
+		var s := HSlider.new()
+		s.min_value = 0.0
+		s.max_value = 1.0
+		s.step = 0.05
+		s.custom_minimum_size = Vector2(200, 20)
+		s.value = float(profile.settings.get(pair[1], 0.8)) if profile else 0.8
+		s.value_changed.connect(func(v: float):
+			profile.settings[pair[1]] = v
+			Sfx.apply_volumes(profile.settings)
+			_dirty = true)
+		panel.add_child(s)
+	var shake := CheckButton.new()
+	shake.text = "屏幕震动"
+	shake.button_pressed = profile.settings.get("shake", true) if profile else true
+	shake.toggled.connect(func(on: bool):
+		profile.settings["shake"] = on
+		_dirty = true)
+	panel.add_child(shake)
+	var hints := CheckButton.new()
+	hints.text = "本局关闭合击提示"
+	hints.toggled.connect(set_combo_hints_muted)
+	panel.add_child(hints)
+	return panel
+
+
+## 本局关闭合击提示（接口在世界的 combo.muted，按英雄记；界面不再弹邀请框、不响提示音、不画引导）。
+## 只关提示，不关合击本身：光圈还在，按合击键照样能响应
+func set_combo_hints_muted(on: bool) -> void:
+	if on:
+		world.combo.muted[me.id] = true
+	else:
+		world.combo.muted.erase(me.id)
+	sfx.hints_muted = on
+	hud.hints_muted = on
+	view.hints_muted = on
 
 
 func _resume() -> void:
@@ -364,6 +425,18 @@ func retry() -> void:
 func _skip_from_menu() -> void:
 	_set_paused(false)
 	skip_intro()
+
+
+## 开发截图（main 的 shots=skill,combo）：本地玩家出招、合击 / 阵法成立时通知 main 拍一张
+func _shot_events(events: Array) -> void:
+	var main := get_parent()
+	if main == null or not main.has_method("snap"):
+		return
+	for e in events:
+		if e.type == "skill" and e.get("id", -1) == me.id:
+			main.snap("skill")
+		elif e.type == "combo_burst":
+			main.snap("combo")
 
 
 ## 子类覆写：跳过开场（只有出身开场用）

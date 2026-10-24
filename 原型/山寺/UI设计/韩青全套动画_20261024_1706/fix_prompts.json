@@ -1,0 +1,34 @@
+[
+  {
+    "key": "move_down_gaitfix",
+    "prompt": "Use case: precise-object-edit. Target supplied Hanqing DOWN movement atlas6columns2rows. Correct ONLY the LOWER ROW last3 walk sprites (columns4,5,6). Upper row4idle+2empty and lower first3 unchanged. Currently walk repeats the same leading leg. Make last3 frames the OPPOSITE LEG half-cycle: camera-RIGHT shoe visibly lower/forward and larger, camera-LEFT foot lifted/back with sole visible. Frame4 opposite contact extended stride; frame5 opposite passing; frame6 left/right convergence preparing return to frame1. Reverse knee/robe-split folds accordingly. Both legs and both shoes must remain clear; preserve correct human legs, no extra limbs. Keep head, torso, hair, sash, long robe, BACK-CARRIED short staff identity and pixel size exactly unchanged, same floorline/anchor and cell spacing. Do not mirror whole sprite, do not change staff/hair side. Clear alternating walking silhouette, not six variants of same contact. Genuine transparency, no captions/grid.",
+    "referenced_image_paths": [
+      "/Volumes/ML_models/游戏/开放武侠/output/art-hanqing-animation-20261024-1706/source/hanqing_move_down_generated.png"
+    ],
+    "transparent_background": true
+  },
+  {
+    "key": "move_up_gaitfix",
+    "prompt": "Use case: precise-object-edit. Target supplied Hanqing UP movement atlas6columns2rows. Correct ONLY the LOWER ROW last3 walk sprites (columns4,5,6). Upper row4idle+2empty and lower first3 unchanged. Currently walk repeats the same leading leg. Make last3 frames the OPPOSITE LEG half-cycle: camera-LEFT heel/sole visibly lower/back toward viewer, camera-RIGHT foot lifted/forward away. Frame4 opposite contact extended stride; frame5 opposite passing; frame6 left/right convergence preparing return to frame1. Reverse knee/robe-split folds accordingly. Both legs and both shoes must remain clear; preserve correct human legs, no extra limbs. Keep head, torso, hair, sash, long robe, BACK-CARRIED short staff identity and pixel size exactly unchanged, same floorline/anchor and cell spacing. Do not mirror whole sprite, do not change staff/hair side. Clear alternating walking silhouette, not six variants of same contact. Genuine transparency, no captions/grid.",
+    "referenced_image_paths": [
+      "/Volumes/ML_models/游戏/开放武侠/output/art-hanqing-animation-20261024-1706/source/hanqing_move_up_generated.png"
+    ],
+    "transparent_background": true
+  },
+  {
+    "key": "combat_down_stafffix",
+    "prompt": "Use case: precise-object-edit. Target supplied Hanqing DOWN combat atlas6columns4rows19poses. Correct ONLY FIRST ROW LAST (sixth) sprite, the atk2 lowguard recovery. Its staff currently extends/crops at RIGHT canvas edge. Draw its held SHORT staff angled inward/foreshortened and compact so entire sprite has24px transparent right margin and clear12px gap from previous sprite. Keep head/body size and hairstyle/longbluegrayrobe/yellowsash, same direction down, both hands/arm anatomy natural and weapon attached, no staff duplicated on back. Every other18 sprite unchanged. No resizing/cropping entire atlas or moving others. Real alpha, no labels.",
+    "referenced_image_paths": [
+      "/Volumes/ML_models/游戏/开放武侠/output/art-hanqing-animation-20261024-1706/source/hanqing_combat_down_generated.png"
+    ],
+    "transparent_background": true
+  },
+  {
+    "key": "combat_up_stafffix",
+    "prompt": "Use case: precise-object-edit. Target supplied Hanqing UP combat atlas6columns4rows19poses. Correct ONLY FIRST ROW LAST (sixth) sprite, the atk2 lowguard recovery. Its staff currently extends/crops at RIGHT canvas edge. Draw its held SHORT staff angled inward/foreshortened and compact so entire sprite has24px transparent right margin and clear12px gap from previous sprite. Keep head/body size and hairstyle/longbluegrayrobe/yellowsash, same direction up, both hands/arm anatomy natural and weapon attached, no staff duplicated on back. Every other18 sprite unchanged. No resizing/cropping entire atlas or moving others. Real alpha, no labels.",
+    "referenced_image_paths": [
+      "/Volumes/ML_models/游戏/开放武侠/output/art-hanqing-animation-20261024-1706/source/hanqing_combat_up_generated.png"
+    ],
+    "transparent_background": true
+  }
+]

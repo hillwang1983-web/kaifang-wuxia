@@ -27,6 +27,10 @@ var markers: Array = []        # 开场教学：地上发光的目标点 {pos}
 var flash := 0.0               # 附身醒来的白光，按秒淡出
 var trainer_look := Color("#6B5A48")  # 开场引导人（教闪避的在场 NPC）的衣色
 var hitstop := 0.0             # 由关卡读走：命中停顿
+var _anim := {}                # fighter id -> {action, t}：帧动画的当前动作与已播时长
+var hints_muted := false       # 本局关闭合击提示：不画引导光路
+var guide_invites := 2         # AI 发的前两次合击邀请加强引导（规格书第四节：新手五分钟内自发打出第一次合击）
+var _guided := {}              # 已经加强引导过的邀请编号
 var shake := 0.0
 
 
@@ -47,6 +51,13 @@ func _process(dt: float) -> void:
 			tr.t -= dt
 		trails[id] = list.filter(func(tr): return tr.t > 0.0)
 	if world:
+		for f in world.fighters:
+			var act := SpriteLib.action_for(f)
+			var a: Dictionary = _anim.get(f.id, {})
+			if a.get("action", "") != act:
+				_anim[f.id] = {"action": act, "t": 0.0}
+			else:
+				a.t += dt
 		for f in world.fighters:
 			if f.alive and (f.state == "dodge" or f.inv_t > 0.0 and f.is_hero()):
 				var list: Array = trails.get(f.id, [])
@@ -83,6 +94,12 @@ func _on_event(e: Dictionary) -> void:
 			hitstop = maxf(hitstop, 0.03)
 		"skill":
 			match e.skill:
+				"jiemai":
+					_fx("needle", f.pos, 0.25, {"dir": e.dir})
+				"dushazhang":
+					_fx("burst", f.pos + e.dir * 16.0 + Vector2(0, -16), 0.25, {"color": UiKit.PURPLE, "r": 12.0})
+				"huagongsan":
+					_fx("burst", f.pos + Vector2(0, -16), 0.3, {"color": UiKit.POISON, "r": 10.0})
 				"dalijingangzhang":
 					_fx("palm", f.pos, 0.35, {"dir": e.dir, "r": SimData.SKILLS.dalijingangzhang.range})
 					shake = maxf(shake, 2.0)
@@ -134,12 +151,23 @@ func _on_event(e: Dictionary) -> void:
 		"strike":
 			if e.atk != "slash":
 				shake = maxf(shake, 2.0)
+			match e.atk:
+				"sweep", "slash":
+					_fx("slash", e.pos, 0.2, {"dir": e.dir, "r": 70.0 if e.atk == "sweep" else 50.0})
+				"dash", "charge":
+					_fx("dust", e.pos, 0.6, {"dir": e.dir})
+				"gu":
+					_fx("burst", e.pos, 0.45, {"color": UiKit.POISON, "r": 30.0})
+		"cast_start":
+			if f and f.kind == "dulao":
+				_fx("ring", f.pos + Vector2(0, -24), 0.6, {"color": UiKit.PURPLE, "r": 40.0})
 		"heavy_release":
 			_fx("shock", e.pos, 0.6, {})
 			shake = maxf(shake, 4.0)
 			hitstop = maxf(hitstop, 0.15)
 		"combo_burst":
-			_fx("combo", e.point, 0.6, {"r": e.radius, "level": e.level})
+			_fx("formation" if e.get("kind", "") == "formation" else "combo", e.point, 0.8 if e.get("kind", "") == "formation" else 0.6,
+				{"r": e.radius, "level": e.level})
 			shake = maxf(shake, 3.0)
 		"interact":
 			_fx("burst", e.pos + Vector2(0, -26), 0.5, {"color": UiKit.MUTED, "r": 14.0})
@@ -326,6 +354,10 @@ func _draw_fog() -> void:
 		return
 	var c: Vector2 = world.fog.center
 	var r: float = world.fog.r
+	if r < 4.0:
+		# 收口吞没了整个大厅：整片雾（圈太小时画环形会退化成坏多边形）
+		draw_rect(Rect2(Vector2.ZERO, Vector2(1920, 1080)), Color(UiKit.POISON.lerp(UiKit.DARK_PURPLE, 0.55), 0.4))
+		return
 	var n := 48
 	var outer := 2400.0
 	var pulse := 0.05 * sin(world.time * 2.0)
@@ -354,6 +386,7 @@ func _ring_frame(sheet: String, frame: int, center: Vector2, r: float, alpha := 
 
 func _draw_combo() -> void:
 	var c := world.combo
+	_draw_guide()
 	for id in c.preview:
 		_ring_frame("loop", int(world.time * RING_FPS) % 4, c.preview[id], c.radius(), 0.55)
 	if not c.invite.is_empty():
@@ -364,6 +397,26 @@ func _draw_combo() -> void:
 		else:
 			_ring_frame("loop", int(world.time * RING_FPS) % 4, pt, c.radius())
 		_ring_frame("countdown", int(elapsed / SimData.COMBO.window * 36.0), pt, c.radius())
+
+
+## 加强引导：AI 发的前两次邀请，从玩家脚下到光圈画一道流动的金光，光圈外再套一圈呼吸光（不靠文字）
+func _draw_guide() -> void:
+	var inv := world.combo.invite
+	var me := world.fighter(me_id)
+	if hints_muted or inv.is_empty() or me == null or inv.from == me_id or me_id in inv.responders:
+		return
+	if not _guided.has(inv.n):
+		if _guided.size() >= guide_invites:
+			return
+		_guided[inv.n] = true
+	var to: Vector2 = inv.point
+	var from := me.pos
+	var n := int(from.distance_to(to) / 18.0)
+	for i in n:
+		var u := fmod(float(i) / maxf(1.0, n) + world.time * 0.8, 1.0)
+		draw_circle(from.lerp(to, u), 3.0, Color(UiKit.GOLD_WHITE, 0.4 + 0.5 * u))
+	var pulse := 0.5 + 0.5 * sin(world.time * 8.0)
+	_ellipse_line(to, world.combo.radius() + 10.0 + 8.0 * pulse, Color(UiKit.QI, 0.4 + 0.5 * pulse), 0.55, 3.0)
 
 
 ## 本地玩家的蓄力进度 / 瞄准指示器
@@ -477,11 +530,17 @@ func _body(f: SimFighter, at: Vector2, tint: Color) -> void:
 	if f.kind == "crate" or f.kind == "jar" or f.kind == "pile":
 		_prop(f, at, tint)
 		return
+	if f.state == "thrown":
+		at += Vector2(0, -24.0 * sin(PI * clampf(1.0 - f.dodge_t / 0.45, 0.0, 1.0)))
+	# 美术交了动作条的角色画帧动画（受击时提亮闪白）；没有图的动作 / 角色退回下面的代码占位
+	var lit := Color(2.2, 2.2, 2.2, tint.a) if f.flash_t > 0.0 else tint
+	if SpriteLib.draw(self, f, at, float(_anim.get(f.id, {}).get("t", 0.0)), lit):
+		if f.kind == "jingang":
+			_breaches(f, at)
+		return
 	if f.kind == "jingang":
 		_jingang(f, at, tint)
 		return
-	if f.state == "thrown":
-		at += Vector2(0, -24.0 * sin(PI * clampf(1.0 - f.dodge_t / 0.45, 0.0, 1.0)))
 	var scale := 1.3 if f.kind == "xuancheng" else (1.2 if f.kind == "dulao" else (0.95 if f.kind == "partner" else 1.0))
 	var flash := f.flash_t > 0.0
 	var robe := UiKit.MONK
@@ -628,6 +687,32 @@ func _effect(fx: Dictionary) -> void:
 			draw_line(fx.pos + Vector2(0, -14), fx.to + Vector2(0, -14), Color(UiKit.GOLD_WHITE, 0.5 * (1.0 - k)), 6.0)
 		"shock":
 			_ellipse_line(fx.pos, 40.0 + 600.0 * k, Color(UiKit.GOLD_WHITE, 1.0 - k), 0.55, 3.0)
+		"needle":
+			# 截脉：一道细亮的指劲往前刺，尽头一个小环
+			var tip: Vector2 = fx.pos + fx.dir * 170.0 * minf(1.0, k * 3.0) + Vector2(0, -16)
+			draw_line(fx.pos + Vector2(0, -16), tip, Color("#BFE8FF", 1.0 - k), 2.0)
+			draw_arc(tip, 6.0 + 10.0 * k, 0, TAU, 16, Color("#BFE8FF", 1.0 - k), 1.0)
+		"slash":
+			# 横扫 / 劈砍：一道白色弧光
+			var base: float = fx.dir.angle()
+			draw_arc(fx.pos + Vector2(0, -14), fx.r * (0.8 + 0.2 * k), base - 1.1 + 2.2 * k * 0.3, base + 1.1, 20, Color(UiKit.GOLD_WHITE, 1.0 - k), 3.0)
+		"dust":
+			for i in 6:
+				var back: Vector2 = -fx.dir * (8.0 + i * 10.0) + fx.dir.orthogonal() * (sin(i * 2.3) * 8.0)
+				draw_circle(fx.pos + back, 4.0 + 6.0 * k, Color(0.55, 0.5, 0.42, 0.5 * (1.0 - k)))
+		"formation":
+			# 金刚伏魔圈：金色三角阵 + 外圈莲纹，比双人合击更满
+			var rr: float = fx.r * (0.7 + 0.5 * k)
+			_ellipse(fx.pos, rr, Color(UiKit.GOLD_WHITE, 0.3 * (1.0 - k)))
+			var tri := PackedVector2Array()
+			for i in 4:
+				var a := -PI / 2.0 + TAU * i / 3.0 + k * 0.6
+				tri.append(fx.pos + Vector2(cos(a), sin(a) * 0.55) * rr)
+			draw_polyline(tri, Color(UiKit.QI, 1.0 - k), 3.0)
+			for i in 8:
+				var a := TAU * i / 8.0 - k * 0.4
+				draw_circle(fx.pos + Vector2(cos(a), sin(a) * 0.55) * rr * 1.1, 5.0 * (1.0 - k) + 2.0, Color(UiKit.GOLD_WHITE, 1.0 - k))
+			_ellipse_line(fx.pos, rr * 1.15, Color(UiKit.QI, 1.0 - k), 0.55, 3.0)
 		"combo":
 			var r: float = fx.r * (0.6 + 0.6 * k)
 			_ellipse(fx.pos, r, Color(UiKit.GOLD_WHITE, 0.35 * (1.0 - k)))
@@ -733,6 +818,11 @@ func _jingang(f: SimFighter, at: Vector2, tint: Color) -> void:
 		for i in 3:
 			var a := world.time * 6.0 + TAU * i / 3.0
 			draw_circle(at + Vector2(cos(a) * 18.0, -h - 26 + sin(a) * 5.0), 2.5, UiKit.QI)
+	_breaches(f, at)
+
+
+## 铁甲金刚身上的裂口：露出发光齿轮，快合上时渐暗（帧动画和占位形体都叠这一层）
+func _breaches(f: SimFighter, at: Vector2) -> void:
 	for br in f.breaches:
 		var fade: float = clampf(br.t / 3.0, 0.3, 1.0)
 		var bp: Vector2 = at + br.off * 1.6 + Vector2(0, -32)

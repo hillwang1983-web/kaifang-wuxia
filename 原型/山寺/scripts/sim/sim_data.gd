@@ -101,19 +101,23 @@ const ENEMIES := {
 	"jingang": {"name": "铁甲金刚", "hp": 10000, "radius": 26, "speed": 45.0, "aggro": 9999.0, "boss": true,
 		"flinch": false, "stance": false, "armor_cut": 0.99,
 		"charge_every": 25.0, "first_charge": 15.0, "quake_every": 9.0, "grab_every": 13.0, "deflect_stagger": 3.0,
+		# 狂暴：开战 240 秒还没打下来，踏地震改为每 3 秒一次、伤害 ×1.5（不用弩车必团灭）
+		"enrage_at": 240.0, "enrage_quake_every": 3.0, "enrage_mult": 1.5,
 		"attacks": {
 			# 冲撞：朝弩车（没拼好就朝最近的人）直线冲；预警 2.5 秒（留出摆合击 / 阵法撞偏的时间），冲 0.8 秒
 			"charge": {"shape": "line", "range": 520.0, "width": 30.0, "tele": 2.5, "dash_time": 0.8, "dmg": 120, "rec": 1.2, "reach": 9999.0},
 			# 踏地震：全场环形冲击波，0.8 秒红区，翻滚或梯云纵的无敌时间能躲
-			"quake": {"shape": "quake", "range": 9999.0, "tele": 0.8, "dmg": 140, "rec": 1.0, "reach": 9999.0},
+			"quake": {"shape": "quake", "range": 9999.0, "tele": 0.8, "dmg": 180, "rec": 1.0, "reach": 9999.0},
 			# 抓人：抓最近的非操弩者往弩车扔，落点离弩车近就砸中弩车
-			"grab": {"shape": "circle", "range": 70.0, "tele": 0.6, "dmg": 80, "rec": 0.8, "reach": 70.0, "throw": 220.0},
+			"grab": {"shape": "circle", "range": 70.0, "tele": 0.6, "dmg": 120, "rec": 0.8, "reach": 70.0, "throw": 220.0},
 		}},
 	# Boss 二（规格书第六节）。血量是草稿：三个满操作 AI 约四轮破罩打完（单测里打印），
 	# 真人输出低一些会多一两轮，对着规格书「三到四轮」偏长一点，待试玩标定。
 	"dulao": {"name": "毒姥 · 护法", "hp": 5500, "radius": 16, "speed": 30.0, "aggro": 9999.0, "boss": true,
 		"flinch": false, "stance": false, "ward_cut": 0.95,
 		"fog_delay": 10.0, "fog_max": 640.0, "fog_shrink": 24.0, "fog_min": 110.0, "fog_pct": 3.0,
+		# 收口：毒雾压到最小圈后，再有 30 秒没人破罩，就把最后这一圈也吞掉（不摆阵必团灭，规格书第六节验收）
+		"fog_close_after": 30.0, "fog_close_time": 12.0,
 		"gu_every": 5.0, "soul_every": 12.0,
 		"attacks": {
 			"gu": {"shape": "spot", "radius": 48.0, "tele": 0.8, "dmg": 0, "pool_dps": 40.0, "pool_time": 15.0, "rec": 0.6, "reach": 9999.0, "range": 360.0},

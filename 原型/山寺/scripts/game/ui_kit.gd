@@ -22,9 +22,42 @@ const DARK_PURPLE := Color("#4A2A6B")
 const GOLD_WHITE := Color("#FFF3C4")
 
 const KEY_HINTS := {"attack": "J", "skill_1": "U", "skill_2": "I", "skill_3": "O", "utility": "K",
-	"combo": "F", "dodge": "空格", "interact": "E", "cancel": "Esc"}
+	"combo": "F", "dodge": "空格", "interact": "E", "cancel": "Esc", "inventory": "Tab", "potion": "H"}
+
+## 手柄按键提示（规格书第五节：Xbox 与 PS 即插即用，图标按手柄类型切换）。绑定见 tools/setup_input.gd
+const PAD_XBOX := {"attack": "A", "skill_1": "X", "skill_2": "Y", "skill_3": "B", "utility": "RB",
+	"combo": "RT", "dodge": "LB", "interact": "十字↑", "cancel": "LT", "inventory": "Start", "potion": "十字↓"}
+const PAD_PS := {"attack": "×", "skill_1": "□", "skill_2": "△", "skill_3": "○", "utility": "R1",
+	"combo": "R2", "dodge": "L1", "interact": "十字↑", "cancel": "L2", "inventory": "OPTIONS", "potion": "十字↓"}
+static var device := "kb"   # 最近用的输入：kb 键鼠 / xbox / ps
 
 static var _tex := {}
+
+
+## 某个动作当前该显示的按键（跟着最近用的设备变）
+static func key(action: String) -> String:
+	match device:
+		"xbox":
+			return PAD_XBOX.get(action, KEY_HINTS.get(action, ""))
+		"ps":
+			return PAD_PS.get(action, KEY_HINTS.get(action, ""))
+	return KEY_HINTS.get(action, "")
+
+
+## 看一眼输入事件，记下最近用的设备；手柄名里带 PlayStation / DualSense / DualShock 就当 PS，其余当 Xbox
+static func detect(event: InputEvent) -> void:
+	if event is InputEventJoypadButton or (event is InputEventJoypadMotion and absf(event.axis_value) > 0.5):
+		device = pad_kind(Input.get_joy_name(event.device))
+	elif event is InputEventKey or event is InputEventMouseButton:
+		device = "kb"
+
+
+static func pad_kind(joy_name: String) -> String:
+	var n := joy_name.to_lower()
+	for w in ["playstation", "dualsense", "dualshock", "ps4", "ps5", "sony", "wireless controller"]:
+		if n.contains(w):
+			return "ps"
+	return "xbox"
 
 
 static func tex(path: String) -> Texture2D:

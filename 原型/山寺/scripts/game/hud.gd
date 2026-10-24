@@ -23,6 +23,7 @@ var world: SimWorld
 var me: SimFighter
 var partner: SimFighter
 var extra_partners: Array = []  # 第三人等更多队友，依次往下排
+var hints_muted := false        # 本局关闭合击提示：别人发的邀请不弹提示框
 var boss: SimFighter
 var barks: Array = []           # 不挡操作的字幕 {who, text, t}，一条一条播
 var objectives: Array = []      # 当前目标，每行一条
@@ -84,6 +85,7 @@ func _process(dt: float) -> void:
 # ---------- 触屏 ----------
 
 func _input(event: InputEvent) -> void:
+	UiKit.detect(event)
 	if event is InputEventScreenTouch or event is InputEventScreenDrag:
 		mobile = true
 	if not visible or me == null:
@@ -177,7 +179,7 @@ func _draw() -> void:
 			UiKit.text(self, pair[0].position + Vector2(0, 6), pair[1], 24, UiKit.TEXT, HORIZONTAL_ALIGNMENT_CENTER, pair[0].size.x)
 	else:
 		_draw_skill_bar()
-		UiKit.text_r(self, Vector2(944, 386), "Tab 物品栏 · H 丹药", 12, UiKit.MUTED)
+		UiKit.text_r(self, Vector2(944, 386), "%s 物品栏 · %s 丹药" % [UiKit.key("inventory"), UiKit.key("potion")], 12, UiKit.MUTED)
 
 
 func _draw_self(at: Vector2) -> void:
@@ -347,7 +349,7 @@ func _draw_invite() -> void:
 		UiKit.text(self, at + Vector2(56, 10), "摆放%s光圈" % ("阵法" if world.combo.formation_ready() else "合击"))
 		UiKit.text(self, at + Vector2(56, 28), "松开发出邀请 · %s 取消" % ("拖回" if mobile else "Esc"), 12, UiKit.MUTED)
 		return
-	if inv.is_empty():
+	if inv.is_empty() or (hints_muted and inv.from != me.id):
 		return
 	var mine: bool = inv.from == me.id
 	var blink := 0.75 + 0.25 * sin(world.time * 10.0)
@@ -362,7 +364,7 @@ func _draw_invite() -> void:
 		UiKit.text(self, at + Vector2(56, 26), "%s · %.1f 秒" % [wait, inv.t], 12, UiKit.MUTED)
 	else:
 		UiKit.text(self, at + Vector2(56, 8), ("阵法邀请！（%d / %d）" % [inv.responders.size(), inv.need]) if formation else "合击邀请！")
-		UiKit.text(self, at + Vector2(56, 26), "%s 响应或走进光圈 · %.1f 秒" % ["点合击" if mobile else UiKit.KEY_HINTS.combo, inv.t], 12, UiKit.CAST)
+		UiKit.text(self, at + Vector2(56, 26), "%s 响应或走进光圈 · %.1f 秒" % ["点合击" if mobile else UiKit.key("combo"), inv.t], 12, UiKit.CAST)
 
 
 func _arc(center: Vector2, r: float, ratio: float, color: Color) -> void:
@@ -441,7 +443,7 @@ func _draw_skill_bar() -> void:
 	for i in ACTIONS.size():
 		var c := Vector2(DESK_X[i], DESK_Y)
 		_draw_slot(ACTIONS[i], c, 64.0)
-		var key: String = UiKit.KEY_HINTS[ACTIONS[i]]
+		var key: String = UiKit.key(ACTIONS[i])
 		var kw := UiKit.text_width(key) + 10.0
 		UiKit.panel(self, Rect2(c + Vector2(-kw / 2.0, -50), Vector2(kw, 16)))
 		UiKit.text(self, c + Vector2(-kw / 2.0, -49), key, 12, UiKit.TEXT, HORIZONTAL_ALIGNMENT_CENTER, kw)

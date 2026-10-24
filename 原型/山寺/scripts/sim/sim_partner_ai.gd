@@ -21,6 +21,17 @@ var _attack_hold := 0.0
 var porter := false         # 弩车：负责捡零件、送零件
 var may_ride := false       # 弩车：没人坐时可以上车
 var _ride_shots := 0
+var dodge_chance: float = A.dodge_chance   # 看见红区后真去闪的概率（平衡测试的「新手」配置会调低）
+var react: float = A.react                 # 从看见到闪的反应时间
+var invite_react: Array = A.invite_react   # 看到合击邀请到动身的反应时间区间
+var hazard_react := 0.0      # 踩进毒池、被毒雾罩住后过多久才反应过来往外走（平衡测试的「新手」配置会调高）
+var _hazard_t := 0.0
+var use_skills := false      # 代玩玩家：贴身时用门派第一招（快速点按的那招），截图和冒烟能看到招式
+var can_dodge := true        # 平衡测试开关：关掉就不看红区闪避
+var can_combo := true        # 关掉就不发、不响应合击 / 阵法
+var use_ballista := true     # 关掉就不碰弩车（不捡零件、不拼、不上车）
+var demo_invites := 2       # 前两次自己发邀请后走进光圈站着，给玩家示范「走进光圈」（规格书第四节引导）
+var _demo := {}             # {n, point}
 var _ride_rest := 0.0
 
 
@@ -38,16 +49,27 @@ func command(dt: float) -> SimCommand:
 	if _release_combo:
 		_release_combo = false
 		cmd.released["combo"] = true
+		if demo_invites > 0 and me.kind != "player":
+			demo_invites -= 1
+			_demo = {"n": w.combo._serial + 1, "point": w.combo.preview.get(me_id, me.pos)}
 		return cmd
 	var leader := w.fighter(leader_id)
 	_invite_cool = maxf(0.0, _invite_cool - dt)
 
-	# 1. 响应玩家的合击邀请：反应一下，然后走进光圈
+	# 0.5 示范：自己发的邀请还开着，就站进光圈里等（威胁来了照样闪）
 	var inv := w.combo.invite
-	if not inv.is_empty() and inv.from != me_id:
+	if not _demo.is_empty():
+		if inv.is_empty() or inv.n != _demo.n:
+			_demo = {}
+		elif _threat(me) == null:
+			cmd.move = w.steer(me.pos, _demo.point) if me.pos.distance_to(_demo.point) > 8.0 else Vector2.ZERO
+			return cmd
+
+	# 1. 响应玩家的合击邀请：反应一下，然后走进光圈
+	if can_combo and not inv.is_empty() and inv.from != me_id:
 		if _invite_seen != inv.n:
 			_invite_seen = inv.n
-			_react = w.rng.randf_range(A.invite_react[0], A.invite_react[1])
+			_react = w.rng.randf_range(invite_react[0], invite_react[1])
 		_react -= dt
 		if _react <= 0.0 and not (me_id in inv.responders):
 			if me.state == "mounted" or me.state == "build":
@@ -64,20 +86,23 @@ func command(dt: float) -> SimCommand:
 				return cmd
 
 	# 1.6 弩车：车上瞄准蓄力、送零件、拼装、上车（踏地震 / 冲撞的闪避在后面的红区规则里）
-	if not w.ballista.is_empty() and _threat(me) == null and _ballista(me, cmd, dt):
+	if use_ballista and not w.ballista.is_empty() and _threat(me) == null and _ballista(me, cmd, dt):
 		return cmd
 
 	# 1.8 站在敌人的毒池里：走出去
 	var pool := _bad_pool(me)
-	if not pool.is_empty():
+	var fogged: bool = not w.fog.is_empty() and w.in_fog(me.pos)
+	_hazard_t = _hazard_t + dt if (not pool.is_empty() or fogged) else 0.0
+	var aware := _hazard_t >= hazard_react
+	if not pool.is_empty() and aware:
 		cmd.move = (me.pos - pool.pos).normalized()
 		return cmd
 
 	# 2. 看红区闪避
-	var threat := _threat(me)
+	var threat := _threat(me) if can_dodge else null
 	if threat:
 		if _dodge_wait < 0.0:
-			_dodge_wait = A.react if w.rng.randf() < A.dodge_chance else 99.0
+			_dodge_wait = react if w.rng.randf() < dodge_chance else 99.0
 		_dodge_wait -= dt
 		if _dodge_wait <= 0.0:
 			_dodge_wait = 99.0
@@ -88,7 +113,7 @@ func command(dt: float) -> SimCommand:
 		_dodge_wait = -1.0
 
 	# 2.5 毒雾：离安全圈边缘太近就往圈中心（或净化区）走
-	if not w.fog.is_empty() and (w.in_fog(me.pos) or me.pos.distance_to(w.fog.center) > w.fog.r - 28.0):
+	if not w.fog.is_empty() and ((fogged and aware) or (hazard_react <= 0.0 and me.pos.distance_to(w.fog.center) > w.fog.r - 28.0)):
 		var safe: Vector2 = w.fog.center
 		for z in w.safe_zones:
 			if z.pos.distance_to(me.pos) < safe.distance_to(me.pos):
@@ -98,7 +123,7 @@ func command(dt: float) -> SimCommand:
 
 	# 2.8 毒姥罩着毒罩：发阵法 / 合击邀请去破罩（光圈摆在大家中间、往雾心偏一点）
 	var warded := _warded_foe()
-	if warded and inv.is_empty() and w.combo.cd <= 0.0 and _invite_cool <= 0.0 and w.heroes().size() >= 2:
+	if can_combo and warded and inv.is_empty() and w.combo.cd <= 0.0 and _invite_cool <= 0.0 and w.heroes().size() >= 2:
 		_invite_cool = 7.0
 		var spot := _party_center()
 		if not w.fog.is_empty():
@@ -111,7 +136,7 @@ func command(dt: float) -> SimCommand:
 
 	# 3. 自己发合击邀请：玄诚读条重击时，或战斗中隔一阵子
 	var boss := _casting_boss()
-	if inv.is_empty() and w.combo.cd <= 0.0 and leader and leader.alive:
+	if can_combo and inv.is_empty() and w.combo.cd <= 0.0 and leader and leader.alive:
 		var want := boss != null and boss.t >= 0.3
 		var armored := _armored_foe()
 		if armored and armored.state == "windup" and armored.atk_id == "charge" and armored.t >= 0.15:
@@ -141,6 +166,10 @@ func command(dt: float) -> SimCommand:
 			cmd.move = w.steer(me.pos, target.pos)
 		else:
 			cmd.aim = to.normalized()
+			var first: String = me.skills[0] if not me.skills.is_empty() else ""
+			if use_skills and first != "" and me.cd_of(first) <= 0.0 and me.qi >= SimData.SKILLS[first].cost:
+				cmd.press("skill_1")
+				return cmd
 			_attack_hold -= dt
 			if _attack_hold <= 0.0 and me.atk_cd <= 0.0:
 				_attack_hold = 0.15

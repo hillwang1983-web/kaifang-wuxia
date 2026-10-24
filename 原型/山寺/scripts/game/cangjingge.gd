@@ -144,6 +144,8 @@ func level_events(events: Array) -> void:
 			"ward_break":
 				_stats.breaks += 1
 				hud.toast("毒罩碎了！%d 秒内全力输出" % int(e.secs), 2.5)
+			"fog_close":
+				hud.toast("毒雾在收口——再不摆阵破罩，最后这一圈也要没了！", 3.0)
 			"fog_start":
 				tip("fog", "毒雾从四边压进来：待在圈里，摆阵能净化脚下的雾", 4.0)
 			"rooted":

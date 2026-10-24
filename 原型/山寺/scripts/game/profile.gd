@@ -16,6 +16,8 @@ var study_t := 0.0
 var runs: Array = []       # 预留：每局结算记录
 var origin := ""           # 出身（规格书第九节，开局四选一）；空 = 还没选过
 var player_name := ""      # 戏班小旦可改名（默认「玉儿」）
+## 设置：音乐 / 音效 / 界面音量（0–1）、屏幕震动开关
+var settings := {"music": 0.6, "sfx": 0.8, "ui": 0.8, "shake": true}
 var exists := false
 
 
@@ -35,6 +37,7 @@ static func load_or_new() -> Profile:
 	p.runs = d.get("runs", [])
 	p.origin = str(d.get("origin", ""))
 	p.player_name = str(d.get("player_name", ""))
+	p.settings.merge(d.get("settings", {}), true)
 	return p
 
 
@@ -44,7 +47,7 @@ func save() -> void:
 		push_warning("存档写不进去：%s" % error_string(FileAccess.get_open_error()))
 		return
 	f.store_string(JSON.stringify({"version": VERSION, "inventory": inventory, "proficiency": proficiency,
-		"studying": studying, "study_t": study_t, "runs": runs, "origin": origin, "player_name": player_name}, "\t"))
+		"studying": studying, "study_t": study_t, "runs": runs, "origin": origin, "player_name": player_name, "settings": settings}, "\t"))
 	exists = true
 
 

@@ -184,6 +184,8 @@ func level_events(events: Array) -> void:
 				else:
 					_stats.combos += 1
 					hud.toast("合击成立！默契 %d" % world.combo.moqi)
+			"enrage":
+				hud.toast("铁甲金刚狂暴了：踏地震又密又重！", 3.0)
 			"deflect":
 				_stats.deflects += 1
 				_snap("deflect")
