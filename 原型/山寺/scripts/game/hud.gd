@@ -8,6 +8,7 @@ const DESK_X := [326, 418, 510, 602, 694, 786, 878]
 const DESK_Y := 478
 # 手机按钮：[中心 x, 中心 y, 直径]，顺序同 ACTIONS
 const MOBILE := [[824, 458, 80], [704, 354, 64], [784, 354, 64], [864, 354, 64], [744, 458, 64], [664, 458, 64], [904, 458, 64]]
+const MOBILE_INTERACT := [864, 270, 64]  # 交互键：只在够得着可交互物时出现
 const STICK_CENTER := Vector2(126, 400)
 const STICK_R := 64.0
 
@@ -106,6 +107,10 @@ func _input(event: InputEvent) -> void:
 			touch_aim = (off / 60.0).limit_length(1.0) if off.length() > 10.0 else Vector2.ZERO
 
 
+func _can_interact() -> bool:
+	return me.alive and not world.interactable_near(me.pos).is_empty()
+
+
 func _update_stick(pos: Vector2) -> void:
 	var off := pos - STICK_CENTER
 	touch_move = (off / STICK_R).limit_length(1.0)
@@ -114,6 +119,8 @@ func _update_stick(pos: Vector2) -> void:
 
 
 func _button_at(pos: Vector2) -> String:
+	if _can_interact() and pos.distance_to(Vector2(MOBILE_INTERACT[0], MOBILE_INTERACT[1])) <= MOBILE_INTERACT[2] * 0.5 + 6.0:
+		return "interact"
 	for i in ACTIONS.size():
 		var b: Array = MOBILE[i]
 		if pos.distance_to(Vector2(b[0], b[1])) <= b[2] * 0.5 + 6.0:
@@ -253,6 +260,8 @@ func _slot_icon(action: String) -> Texture2D:
 			return UiKit.icon("btn_dodge")
 		"combo":
 			return UiKit.icon("skill_heji")
+		"interact":
+			return UiKit.icon("btn_talk")
 		"utility":
 			return UiKit.icon("skill_" + me.utility)
 	return UiKit.icon("skill_" + me.skills[int(action.right(1)) - 1])
@@ -266,6 +275,8 @@ func _slot_name(action: String) -> String:
 			return "闪避"
 		"combo":
 			return "合击"
+		"interact":
+			return "熄灭"
 		"utility":
 			return SimData.SKILLS[me.utility].name
 	return SimData.SKILLS[me.skills[int(action.right(1)) - 1]].name
@@ -274,7 +285,7 @@ func _slot_name(action: String) -> String:
 ## 返回 [冷却比例, 是否可用]
 func _slot_state(action: String) -> Array:
 	match action:
-		"attack":
+		"attack", "interact":
 			return [0.0, true]
 		"dodge":
 			return [me.dodge_cd / SimData.PLAYER.dodge_cd if me.dodge_cd > 0 else 0.0, me.sp >= SimData.PLAYER.dodge_cost]
@@ -323,3 +334,7 @@ func _draw_mobile_controls() -> void:
 		var c := Vector2(b[0], b[1])
 		_draw_slot(ACTIONS[i], c, b[2])
 		UiKit.text(self, c + Vector2(-40, b[2] * 0.5 + 1), _slot_name(ACTIONS[i]), 12, UiKit.TEXT, HORIZONTAL_ALIGNMENT_CENTER, 80)
+	if _can_interact():
+		var c := Vector2(MOBILE_INTERACT[0], MOBILE_INTERACT[1])
+		_draw_slot("interact", c, MOBILE_INTERACT[2])
+		UiKit.text(self, c + Vector2(-40, MOBILE_INTERACT[2] * 0.5 + 1), _slot_name("interact"), 12, UiKit.TEXT, HORIZONTAL_ALIGNMENT_CENTER, 80)
