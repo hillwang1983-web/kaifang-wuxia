@@ -73,6 +73,8 @@ func _process(dt: float) -> void:
 func _fx(kind: String, pos: Vector2, dur: float, extra := {}) -> void:
 	var fx := {"kind": kind, "pos": pos, "t": 0.0, "dur": dur}
 	fx.merge(extra)
+	if VfxLib.has(fx.get("vfx", "")):
+		fx.dur = maxf(dur, VfxLib.length(fx.vfx))  # 美术特效至少放完一遍
 	effects.append(fx)
 
 
@@ -88,26 +90,26 @@ func _on_event(e: Dictionary) -> void:
 	var f: SimFighter = world.fighter(e.get("id", -1))
 	match e.type:
 		"swing":
-			_fx("swing", f.pos, 0.16, {"dir": f.facing, "r": SimData.ATTACKS[f.sect][e.combo - 1].range,
+			_fx("swing", f.pos, 0.16, {"vfx": "%s_atk%d" % [f.sect, e.combo], "dir": f.facing, "r": SimData.ATTACKS[f.sect][e.combo - 1].range,
 				"color": _sect_color(f), "heavy": e.combo == 3, "id": f.id})
 		"punch":
-			_fx("burst", f.pos + f.facing * 36.0, 0.18, {"color": UiKit.QI, "r": 10.0 + 4.0 * e.n})
+			_fx("burst", f.pos + f.facing * 36.0, 0.18, {"vfx": "luohanquan", "color": UiKit.QI, "r": 10.0 + 4.0 * e.n})
 			hitstop = maxf(hitstop, 0.03)
 		"skill":
 			match e.skill:
 				"jiemai":
-					_fx("needle", f.pos, 0.25, {"dir": e.dir})
+					_fx("needle", f.pos, 0.25, {"vfx": "jiemai_line", "dir": e.dir})
 				"dushazhang":
 					_fx("burst", f.pos + e.dir * 16.0 + Vector2(0, -16), 0.25, {"color": UiKit.PURPLE, "r": 12.0})
 				"huagongsan":
 					_fx("burst", f.pos + Vector2(0, -16), 0.3, {"color": UiKit.POISON, "r": 10.0})
 				"dalijingangzhang":
-					_fx("palm", f.pos, 0.35, {"dir": e.dir, "r": SimData.SKILLS.dalijingangzhang.range})
+					_fx("palm", f.pos, 0.35, {"vfx": "dalijingangzhang", "dir": e.dir, "r": SimData.SKILLS.dalijingangzhang.range})
 					shake = maxf(shake, 2.0)
 				"jinzhongzhao":
-					_fx("ring", f.pos + Vector2(0, -16), 0.4, {"color": UiKit.QI, "r": 30.0})
+					_fx("ring", f.pos + Vector2(0, -16), 0.4, {"vfx": "jinzhongzhao_open", "color": UiKit.QI, "r": 30.0})
 				"yungong":
-					_fx("rise", f.pos, 0.8, {"color": UiKit.GOLD_WHITE})
+					_fx("rise", f.pos, 0.8, {"vfx": "yungong", "color": UiKit.GOLD_WHITE})
 		"hit":
 			var hero: bool = f and f.is_hero()
 			var col := BLOOD_TEXT if hero else (UiKit.QI if e.heavy else UiKit.TEXT)
@@ -130,9 +132,12 @@ func _on_event(e: Dictionary) -> void:
 		"stagger":
 			_text(e.pos + Vector2(0, -16), "失衡！", UiKit.QI, true)
 		"kill":
-			_fx("burst", e.pos + Vector2(0, -12), 0.4, {"color": UiKit.MUTED, "r": 22.0})
+			var brk: String = {"crate": "crate_broken", "jar": "jar_broken", "pile": "pile_break"}.get(f.kind if f else "", "")
+			if f and f.has_meta("art"):
+				brk = String(f.get_meta("art")).trim_prefix("obj_") + "_broken"  # 开场教学道具（第 77 条）
+			_fx("burst", e.pos + Vector2(0, -12), 0.4, {"vfx": brk, "color": UiKit.MUTED, "r": 22.0})
 		"poison_burst":
-			_fx("burst", e.pos + Vector2(0, -12), 0.4, {"color": UiKit.POISON, "r": 20.0})
+			_fx("burst", e.pos + Vector2(0, -12), 0.4, {"vfx": "diedu_burst", "color": UiKit.POISON, "r": 20.0})
 			_text(e.pos, "毒发", UiKit.POISON)
 		"primed":
 			if f:
@@ -141,9 +146,9 @@ func _on_event(e: Dictionary) -> void:
 			if e.id == me_id:
 				_text(f.pos, "内力不足" if e.why == "qi" else "还在冷却", UiKit.MUTED)
 		"beam":
-			_fx("beam", e.from, 0.25, {"to": e.to})
+			_fx("beam", e.from, 0.25, {"vfx": "shehunshu_beam", "to": e.to})
 		"blink":
-			_fx("blink", e.from, 0.3, {"to": e.to})
+			_fx("blink", e.from, 0.3, {"vfx": "tiyunzong", "to": e.to})
 		"heal":
 			if e.amount > 0:
 				_text(e.pos, "+%d" % e.amount, UiKit.POISON)
@@ -154,51 +159,51 @@ func _on_event(e: Dictionary) -> void:
 				shake = maxf(shake, 2.0)
 			match e.atk:
 				"sweep", "slash":
-					_fx("slash", e.pos, 0.2, {"dir": e.dir, "r": 70.0 if e.atk == "sweep" else 50.0})
+					_fx("slash", e.pos, 0.2, {"vfx": "xc_sweep" if e.atk == "sweep" else "", "dir": e.dir, "r": 70.0 if e.atk == "sweep" else 50.0})
 				"dash", "charge":
-					_fx("dust", e.pos, 0.6, {"dir": e.dir})
+					_fx("dust", e.pos, 0.6, {"vfx": "charge" if e.atk == "charge" else "", "dir": e.dir})
 				"gu":
-					_fx("burst", e.pos, 0.45, {"color": UiKit.POISON, "r": 30.0})
+					_fx("burst", e.pos, 0.45, {"vfx": "duchi_land", "color": UiKit.POISON, "r": 30.0})
 		"cast_start":
 			if f and f.kind == "dulao":
 				_fx("ring", f.pos + Vector2(0, -24), 0.6, {"color": UiKit.PURPLE, "r": 40.0})
 		"heavy_release":
-			_fx("shock", e.pos, 0.6, {})
+			_fx("shock", e.pos, 0.6, {"vfx": "xc_heavy", "r": 300.0})
 			shake = maxf(shake, 4.0)
 			hitstop = maxf(hitstop, 0.15)
 		"combo_burst":
 			_fx("formation" if e.get("kind", "") == "formation" else "combo", e.point, 0.8 if e.get("kind", "") == "formation" else 0.6,
-				{"r": e.radius, "level": e.level})
+				{"vfx": "fumoquan_open" if e.get("kind", "") == "formation" else "moqi_lv%d" % (e.level + 1), "r": e.radius, "level": e.level})
 			shake = maxf(shake, 3.0)
 		"interact":
 			_fx("burst", e.pos + Vector2(0, -26), 0.5, {"color": UiKit.MUTED, "r": 14.0})
 		"shield_hit":
 			_fx("ring", e.pos + Vector2(0, -16), 0.2, {"color": UiKit.QI, "r": 24.0})
 		"quake":
-			_fx("shock", e.pos, 0.7, {})
+			_fx("shock", e.pos, 0.7, {"vfx": "quake", "r": 600.0})
 			shake = maxf(shake, 5.0)
 			hitstop = maxf(hitstop, 0.1)
 		"bolt_fire":
 			shake = maxf(shake, 1.0 + e.tier)
 		"breach":
-			_fx("burst", e.pos + Vector2(0, -30), 0.5, {"color": BREACH, "r": 18.0 + 8.0 * e.tier})
+			_fx("burst", e.pos + Vector2(0, -30), 0.5, {"vfx": "bolt_hit", "color": BREACH, "r": 18.0 + 8.0 * e.tier})
 			_text(e.pos + Vector2(0, -20), ["小裂口", "裂口", "大裂口"][e.tier], BREACH, e.tier == 2)
 			hitstop = maxf(hitstop, 0.08 + 0.04 * e.tier)
 		"deflect":
 			_text(e.pos + Vector2(0, -30), "撞偏！", UiKit.QI, true)
-			_fx("ring", e.pos + Vector2(0, -30), 0.5, {"color": UiKit.GOLD_WHITE, "r": 60.0})
+			_fx("ring", e.pos + Vector2(0, -30), 0.5, {"vfx": "deflect", "color": UiKit.GOLD_WHITE, "r": 60.0})
 			shake = maxf(shake, 4.0)
 		"ballista_hit":
 			_text(e.pos + Vector2(0, -20), "弩车 -1", BLOOD_TEXT, true)
 			shake = maxf(shake, 3.0)
 		"ballista_break":
-			_fx("burst", e.pos + Vector2(0, -16), 0.6, {"color": WOOD, "r": 50.0})
+			_fx("burst", e.pos + Vector2(0, -16), 0.6, {"vfx": "ballista_break", "color": WOOD, "r": 50.0})
 		"part_install", "ballista_built":
 			_fx("ring", world.ballista.center + Vector2(0, -10), 0.4, {"color": UiKit.QI, "r": 40.0})
 		"grab":
 			_text(e.pos, "被抓！", BLOOD_TEXT)
 		"chest":
-			_fx("burst", e.pos + Vector2(0, -20), 0.6, {"color": UiKit.QI, "r": 30.0})
+			_fx("burst", e.pos + Vector2(0, -20), 0.6, {"vfx": "chest_glow", "color": UiKit.QI, "r": 30.0})
 
 
 # ---------- 绘制 ----------
@@ -210,6 +215,8 @@ func _draw() -> void:
 		draw_texture(background, Vector2.ZERO)
 	for pool in world.pools:
 		var foe_pool: bool = pool.get("team", SimFighter.HEROES) == SimFighter.FOES
+		if VfxLib.draw(self, "duchi_pool" if foe_pool else "huagongsan_pool", pool.pos, world.time, 0.0, pool.radius):
+			continue
 		var bubble := 0.06 * sin(world.time * 6.0 + pool.pos.x)
 		_ellipse(pool.pos, pool.radius, Color(UiKit.POISON if foe_pool else UiKit.PURPLE, 0.30 + bubble))
 		_ellipse(pool.pos, pool.radius * 0.7, Color(UiKit.PURPLE if foe_pool else UiKit.POISON, 0.22))
@@ -261,10 +268,18 @@ func _draw() -> void:
 	_draw_fog()
 	for pr in world.projectiles:
 		if pr.has("bolt"):
+			var bolt_art := UiKit.art("obj", "obj_bolt")
+			if bolt_art:
+				draw_set_transform(pr.pos + Vector2(0, -16), pr.vel.angle(), Vector2.ONE)
+				draw_texture(bolt_art, -Vector2(bolt_art.get_width(), bolt_art.get_height()) / 2.0)
+				draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+				continue
 			var d: Vector2 = pr.vel.normalized()
 			var c: Vector2 = pr.pos + Vector2(0, -16)
 			draw_line(c - d * 26.0, c, Color("#3B2A20"), 3.0 + pr.bolt)
 			draw_line(c - d * 6.0, c + d * 4.0, STEEL, 3.0 + pr.bolt)
+			continue
+		if VfxLib.draw(self, "dushazhang_fly", pr.pos + Vector2(0, -16), world.time, pr.vel.angle()):
 			continue
 		draw_circle(pr.pos + Vector2(0, -16), 5.0, UiKit.PURPLE)
 		draw_circle(pr.pos + Vector2(0, -16) - pr.vel.normalized() * 6.0, 3.0, Color(UiKit.POISON, 0.7))
@@ -452,6 +467,18 @@ func _draw_aim() -> void:
 func _ground_item(g: Dictionary) -> void:
 	var p: Vector2 = g.pos
 	var bob := sin(world.time * 4.0 + p.x) * 1.5
+	var icon := UiKit.art("ico", "ico_item_coin" if g.coins > 0 else "ico_item_" + str(g.item.base))
+	if icon:
+		# 地上的拾取物：图标缩到 16 像素高放地上，装备在下面垫一圈品质色光
+		var s: float = 16.0 / icon.get_height()
+		var size := Vector2(icon.get_width(), icon.get_height()) * s
+		if g.coins == 0:
+			_ellipse(p, 12, Color(SimItems.quality_color(g.item), 0.18 + 0.1 * sin(world.time * 5.0)), 0.5)
+		draw_texture_rect(icon, Rect2(p + Vector2(-size.x / 2.0, -size.y - 2 + bob), size), false)
+		if g.coins == 0 and SimItems.is_equipment(g.item):
+			var label := SimItems.display_name(g.item)
+			UiKit.text(self, p + Vector2(-UiKit.text_width(label) / 2.0, -38 + bob), label, 12, SimItems.quality_color(g.item))
+		return
 	if g.coins > 0:
 		for i in 3:
 			draw_circle(p + Vector2(-4 + i * 4, -4 - i * 2 + bob), 3.0, Color("#E5C15A"))
@@ -467,8 +494,27 @@ func _ground_item(g: Dictionary) -> void:
 		UiKit.text(self, p + Vector2(-UiKit.text_width(label) / 2.0, -38 + bob), label, 12, col)
 
 
+## 物件图（交换清单第 5–7、67、70、77 条）：脚底对准画布底边正中；frames > 1 时按时间循环
+func _obj(name: String, at: Vector2, fw := 0.0, fps := 0.0, mirror := false, frame := -1) -> bool:
+	var t := UiKit.art("obj", name)
+	if t == null:
+		return false
+	var w: float = fw if fw > 0.0 else float(t.get_width())
+	var h := float(t.get_height())
+	var i := frame if frame >= 0 else int(world.time * fps)
+	if mirror:
+		draw_set_transform(at, 0.0, Vector2(-1, 1))
+		UiKit.draw_strip(self, t, w, i, Rect2(Vector2(-w / 2.0, -h), Vector2(w, h)))
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+	else:
+		UiKit.draw_strip(self, t, w, i, Rect2(at + Vector2(-w / 2.0, -h), Vector2(w, h)))
+	return true
+
+
 func _torch(it: Dictionary) -> void:
 	var p: Vector2 = it.pos
+	if _obj("obj_torch_lit" if it.on else "obj_torch_out", p, 32.0 if it.on else 0.0, 8.0):
+		return
 	draw_rect(Rect2(p + Vector2(-2, -34), Vector2(4, 34)), WOOD)
 	draw_rect(Rect2(p + Vector2(-4, -36), Vector2(8, 4)), Color("#3B2A20"))
 	if it.on:
@@ -482,15 +528,15 @@ func _torch(it: Dictionary) -> void:
 
 func _fighter(f: SimFighter) -> void:
 	_ellipse(f.pos, f.radius + 2, Color(0, 0, 0, 0.35), 0.45)
-	if f.primed:
+	if f.primed and not VfxLib.draw(self, "jineili", f.pos, world.time):
 		_ellipse_line(f.pos, f.radius + 6, Color(UiKit.QI, 0.5 + 0.4 * sin(world.time * 8.0)), 0.45, 1.0)
-	if f.root_t > 0.0:
+	if f.root_t > 0.0 and not VfxLib.draw(self, "shehunshu_root", f.pos + Vector2(0, -8), world.time):
 		_ellipse_line(f.pos, f.radius + 8, UiKit.PURPLE, 0.45, 2.0)
 	var tint := Color.WHITE
 	if not f.alive:
 		tint = Color(0.6, 0.6, 0.6, 0.6)
 	_body(f, f.pos, tint)
-	if f.shield > 0.0:
+	if f.shield > 0.0 and not VfxLib.draw(self, "jinzhongzhao_loop", f.pos + Vector2(0, -18), world.time):
 		var c := f.pos + Vector2(0, -18)
 		draw_circle(c, 22.0, Color(UiKit.QI, 0.12))
 		draw_arc(c, 22.0, 0, TAU, 32, Color(UiKit.QI, 0.7), 1.0)
@@ -499,13 +545,16 @@ func _fighter(f: SimFighter) -> void:
 		draw_arc(c, 30.0 + 4.0 * sin(world.time * 16.0), 0, TAU, 32, UiKit.CAST, 2.0)
 		UiKit.text(self, f.pos + Vector2(-6, -86), "!", 24, UiKit.CAST)
 		var victim := world.fighter(f.target_id) if f.kind == "dulao" else null
-		if victim:
+		var tether_from := f.pos + Vector2(0, -24)
+		if victim and not VfxLib.draw(self, "shehunzhi", tether_from, world.time, (victim.pos + Vector2(0, -20) - tether_from).angle(), tether_from.distance_to(victim.pos + Vector2(0, -20))):
 			# 摄魂指：一道紫光线连到被点名的人
 			draw_line(f.pos + Vector2(0, -24), victim.pos + Vector2(0, -20), Color(UiKit.PURPLE, 0.5 + 0.4 * sin(world.time * 14.0)), 2.0)
 	# 毒姥的毒罩：罩着时是半透明紫绿球，被震碎时闪金屑
 	if f.kind == "dulao" and f.active():
 		var c := f.pos + Vector2(0, -20)
-		if f.ward_t <= 0.0:
+		if f.ward_t <= 0.0 and VfxLib.draw(self, "duzhao_loop", c, world.time):
+			pass
+		elif f.ward_t <= 0.0:
 			draw_circle(c, 30.0, Color(UiKit.PURPLE, 0.16))
 			draw_arc(c, 30.0, 0, TAU, 40, Color(UiKit.POISON, 0.7), 2.0)
 		else:
@@ -518,7 +567,8 @@ func _fighter(f: SimFighter) -> void:
 			draw_circle(f.pos + Vector2(cos(a) * 12.0, -52 + sin(a) * 4.0), 2.0, UiKit.QI)
 	if f.poison_stacks > 0 or f.poison_t > 0.0:
 		for i in (3 if f.poison_t > 0 else f.poison_stacks):
-			draw_circle(f.pos + Vector2(-6 + i * 6, 4), 2.5, UiKit.POISON)
+			if not VfxLib.draw(self, "diedu_stack", f.pos + Vector2(-6 + i * 6, 4), world.time):
+				draw_circle(f.pos + Vector2(-6 + i * 6, 4), 2.5, UiKit.POISON)
 	if f.kind == "trainer" and f.alive:
 		var w := UiKit.text_width(f.name)
 		UiKit.text(self, f.pos + Vector2(-w / 2.0, -54), f.name, 12, UiKit.TEXT)
@@ -605,6 +655,11 @@ func _body(f: SimFighter, at: Vector2, tint: Color) -> void:
 
 ## 可破坏物：木箱、酒坛（美术说明第六节，图到之前的色块）
 func _prop(f: SimFighter, at: Vector2, tint: Color) -> void:
+	var art_name: String = f.get_meta("art", {"crate": "obj_crate", "jar": "obj_jar"}.get(f.kind, ""))
+	if f.kind == "pile":
+		art_name = "obj_pile_part" if world.pile_parts.has(f.id) else "obj_pile"
+	if art_name != "" and _obj(art_name, at):
+		return
 	var c := (Color("#7A5A3C") if f.kind == "crate" else Color("#4A3A30")) * tint
 	if f.flash_t > 0.0:
 		c = UiKit.GOLD_WHITE
@@ -656,7 +711,27 @@ func _weapon(f: SimFighter, hand: Vector2, scale: float, tint: Color) -> void:
 	draw_line(from, from + dir * length, (WOOD if staff else STEEL) * tint, 2.0 if staff else 2.0)
 
 
+## 地面上的特效（光圈、毒池、冲击环、尘土）贴地画；其余在人物胸口高度
+const GROUND_VFX := ["moqi_lv1", "moqi_lv2", "moqi_lv3", "fumoquan_open", "duchi_land", "quake", "xc_heavy", "charge"]
+
+
+## 美术交了这个特效就画图（中心对齐、按方向转、按半径缩放 / 按两点拉伸），返回真；没交返回假，照常画代码占位
+func _effect_art(fx: Dictionary) -> bool:
+	var vfx: String = fx.get("vfx", "")
+	if not VfxLib.has(vfx):
+		return false
+	var at: Vector2 = fx.pos if vfx in GROUND_VFX else fx.pos + Vector2(0, -16)
+	var dir: Vector2 = fx.get("dir", Vector2.RIGHT)
+	var size: float = fx.get("r", 0.0)
+	if fx.has("to"):
+		dir = (fx.to - fx.pos).normalized() if fx.to != fx.pos else Vector2.RIGHT
+		size = fx.pos.distance_to(fx.to)
+	return VfxLib.draw(self, vfx, at, fx.t, dir.angle(), size)
+
+
 func _effect(fx: Dictionary) -> void:
+	if _effect_art(fx):
+		return
 	var k: float = fx.t / fx.dur
 	match fx.kind:
 		"text":
@@ -730,6 +805,15 @@ func _effect(fx: Dictionary) -> void:
 
 ## 零件：底盘（木架）、弓臂（长弓）、绞盘（铁鼓）；ground 为真时在地上画光圈和名字
 func _part(part: String, at: Vector2, ground: bool) -> void:
+	if UiKit.art("obj", "obj_part_" + part):
+		var bob0 := sin(world.time * 4.0 + at.x) * 1.5 if ground else 0.0
+		if ground:
+			_ellipse(at, 16, Color(UiKit.QI, 0.18 + 0.1 * sin(world.time * 5.0)), 0.5)
+		_obj("obj_part_" + part, at + Vector2(0, bob0))
+		if ground:
+			var nm: String = SimData.BALLISTA.part_names[part]
+			UiKit.text(self, at + Vector2(-UiKit.text_width(nm) / 2.0, -42 + bob0), nm, 12, UiKit.QI)
+		return
 	var c: Color = PART_COLORS[part]
 	var bob: float = sin(world.time * 4.0 + at.x) * 1.5 if ground else 0.0
 	if ground:
@@ -756,14 +840,21 @@ func _draw_ballista() -> void:
 	var c: Vector2 = b.center
 	_ellipse_line(c, 48.0, Color(UiKit.QI, 0.25 + 0.15 * sin(world.time * 3.0)), 0.55, 1.0)
 	if not b.built:
-		for i in b.installed.size():
-			_part(b.installed[i], c + Vector2(-22 + 22 * i, 6), false)
+		var n_in: int = b.installed.size()
+		if n_in > 0 and n_in < 3 and _obj("obj_ballista_build%d" % n_in, c + Vector2(0, 16)):
+			pass  # 拼装过程图（装上一件、两件）
+		else:
+			for i in b.installed.size():
+				_part(b.installed[i], c + Vector2(-22 + 22 * i, 6), false)
 		if b.build_by != -1:
 			var ratio: float = b.build_t / SimData.BALLISTA.build_time
 			draw_arc(c + Vector2(0, -40), 16, 0, TAU, 24, Color(0, 0, 0, 0.5), 4.0)
 			draw_arc(c + Vector2(0, -40), 16, -PI / 2, -PI / 2 + TAU * ratio, 24, UiKit.QI, 4.0)
 		return
 	var d: Vector2 = b.aim
+	if _ballista_art(b, c):
+		_ballista_hp(b, c)
+		return
 	var side := d.orthogonal()
 	var body := PackedVector2Array([c + side * 14 - d * 18, c + side * 14 + d * 10, c - side * 14 + d * 10, c - side * 14 - d * 18])
 	draw_colored_polygon(body, PART_COLORS.chassis)
@@ -775,9 +866,38 @@ func _draw_ballista() -> void:
 	draw_line(c - side * 26 + d * 4, c - d * bend, Color("#E8E2D2"), 1.0)
 	draw_rect(Rect2(c - d * 16 - Vector2(6, 6), Vector2(12, 12)), PART_COLORS.winch)
 	draw_line(c - d * bend, c + d * 30, STEEL, 2.0)
+	_ballista_hp(b, c)
+
+
+func _ballista_hp(b: Dictionary, c: Vector2) -> void:
 	for i in SimData.BALLISTA.hp:
 		var pip := Rect2(c + Vector2(-17 + i * 12, -46), Vector2(10, 4))
 		draw_rect(pip, UiKit.QI if i < b.hp else Color(0, 0, 0, 0.5))
+
+
+## 弩车朝向折到左半边后分五档：down / downleft / left / upleft / up（朝右时由程序镜像）
+static func ballista_dir(aim: Vector2) -> String:
+	var deg := rad_to_deg(atan2(aim.y, absf(aim.x)))   # 以水平为 0，朝下为正
+	if deg > 67.5:
+		return "down"
+	if deg > 22.5:
+		return "downleft"
+	if deg >= -22.5:
+		return "left"
+	if deg >= -67.5:
+		return "upleft"
+	return "up"
+
+
+## 整车图（第 67 条）：obj_ballista_<方向> 五个方向（右侧镜像），弓臂单独一层 obj_ballista_arm_<方向>，三帧对应蓄力三档
+func _ballista_art(b: Dictionary, c: Vector2) -> bool:
+	var dir := ballista_dir(b.aim)
+	var mirror: bool = b.aim.x > 0.0
+	if not _obj("obj_ballista_" + dir, c + Vector2(0, 32), 0.0, 0.0, mirror):
+		return false
+	var tier := SimBallista.charge_tier(b.charge_t) if b.charging else 0
+	_obj("obj_ballista_arm_" + dir, c + Vector2(0, 32), 64.0, 0.0, mirror, tier)
+	return true
 
 
 ## 车上的人：画弩箭走向与蓄力档位（圈上三个刻度：一档、二档、满档）；队友在车上时画淡一些，看得出他瞄哪
@@ -829,6 +949,8 @@ func _breaches(f: SimFighter, at: Vector2) -> void:
 	for br in f.breaches:
 		var fade: float = clampf(br.t / 3.0, 0.3, 1.0)
 		var bp: Vector2 = at + br.off * 1.6 + Vector2(0, -32)
+		if VfxLib.draw(self, "breach_lv%d" % (int(br.get("tier", 0)) + 1), bp, world.time, 0.0, 0.0, fade):
+			continue
 		draw_circle(bp, br.r * 0.8, Color(BREACH, 0.75 * fade))
 		draw_circle(bp, br.r * 0.4, Color(UiKit.GOLD_WHITE, 0.8 * fade))
 		draw_arc(bp, br.r * 0.8 + 2.0, 0, TAU, 16, Color("#3B2A20"), 2.0)
@@ -836,6 +958,8 @@ func _breaches(f: SimFighter, at: Vector2) -> void:
 
 func _chest(it: Dictionary) -> void:
 	var p: Vector2 = it.pos
+	if _obj("obj_chest", p, 48.0, 0.0, false, 0 if it.on else 1):
+		return
 	if it.on:
 		_ellipse(p, 26, Color(UiKit.QI, 0.15 + 0.1 * sin(world.time * 4.0)), 0.5)
 	draw_rect(Rect2(p + Vector2(-16, -20), Vector2(32, 20)), Color("#5A3F29"))

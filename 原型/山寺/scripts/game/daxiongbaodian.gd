@@ -43,8 +43,8 @@ var _end_t := -1.0
 func _ready() -> void:
 	map_size = Vector2(1920, 1080)
 	world = SimWorld.new(Time.get_ticks_msec())
-	world.bounds = PackedVector2Array(FLOOR)
-	for b in BLOCKS:
+	world.bounds = PackedVector2Array(SceneLib.poly("daxiongbaodian", "floor", FLOOR))
+	for b in SceneLib.polys("daxiongbaodian", "blocks", BLOCKS):
 		world.blockers.append(PackedVector2Array(b))
 	world.waypoints.assign(GATE_PATH)
 	me = world.add_hero("player", sect, utility, START)
@@ -64,7 +64,7 @@ func _ready() -> void:
 		if pr[0] != "":
 			SimBallista.bind_pile(world, pile, pr[0])
 	boss = world.add_enemy("jingang", JINGANG_AT, true)
-	build_scene(PlaceholderArt.daxiongbaodian())
+	build_scene(SceneLib.background("daxiongbaodian"), SceneLib.foreground("daxiongbaodian"))
 	ai.may_ride = true  # 净心：玩家不坐时上车打几发，玩家走过来就让座
 	if auto_ai:
 		auto_ai.porter = true
@@ -166,7 +166,7 @@ func _objectives() -> void:
 func _enter_hall() -> void:
 	stage = "hall_talk"
 	hud.objectives = []
-	world.bounds = PackedVector2Array(HALL)
+	world.bounds = PackedVector2Array(SceneLib.poly("daxiongbaodian", "hall", HALL))
 	world.waypoints.clear()
 	for f in [me, jingxin, ally]:
 		if f and not world.walkable(f.pos):

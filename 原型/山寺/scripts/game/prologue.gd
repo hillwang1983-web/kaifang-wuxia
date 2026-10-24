@@ -54,8 +54,7 @@ func _ready() -> void:
 	world = SimWorld.new(Time.get_ticks_msec())
 	var langzhong := origin == "langzhong"
 	world.bounds = PackedVector2Array(floor_of(origin))
-	if langzhong:
-		for b in CHAPENG_BLOCKS:
+	for b in SceneLib.polys(scene_of(origin), "blocks", CHAPENG_BLOCKS if langzhong else []):
 			world.blockers.append(PackedVector2Array(b))
 	me = world.add_hero("player", sect, utility, layout.start)
 	me.facing = Vector2.UP
@@ -64,11 +63,13 @@ func _ready() -> void:
 		jingxin = world.add_hero("partner", "shaolin", "", JINGXIN_AT)
 		jingxin.facing = Vector2.DOWN
 	prop = world.add_enemy(layout.prop[0], layout.prop[1], true)
+	# 开场教学打碎的东西各有各的图（交换清单第 77 条）：沈家练功木桩、铁匠铺 / 茶馆道具箱、茶棚一捆柴
+	prop.set_meta("art", {"shenjia": "obj_muzhuang", "langzhong": "obj_chaihuo"}.get(origin, "obj_daojuxiang"))
 	trainer = world.add_enemy("trainer", layout.trainer, true)
 	trainer.name = Story.tutorial(origin, "dodge").who
 	trainer.facing = Vector2.LEFT
 	skippable = true
-	build_scene(PlaceholderArt.workshop())
+	build_scene(SceneLib.background("workshop"))
 	partner_active = false
 	if hud.mobile:
 		world.bounds = mobile_bounds(floor_of(origin))  # 单屏：人不走到摇杆、按键底下（#28）
@@ -83,9 +84,8 @@ func _ready() -> void:
 ## 现代十秒之后：白光一闪，换成出身的屋子，放上在场的人，开始醒来的对话
 func _wake() -> void:
 	stage = "wake"
-	view.background = _room_texture()
-	if origin == "langzhong":
-		view.foreground = UiKit.tex("res://assets/env/env_chapeng_front_v01.png")
+	view.background = SceneLib.background(scene_of(origin))
+	view.foreground = SceneLib.foreground(scene_of(origin))
 	view.flash = 0.6
 	view.npcs = layout.npcs.map(func(n): return {"name": n[0], "pos": n[1], "robe": n[2], "hair": Color("#2B2320")})
 	me.pos = layout.start
@@ -93,19 +93,13 @@ func _wake() -> void:
 	say(Story.wake(origin))
 
 
+## 出身开场用哪张场景（郎中线就是茶棚）
+static func scene_of(id: String) -> String:
+	return "chapeng" if id == "langzhong" else id
+
+
 static func floor_of(id: String) -> Array:
-	return CHAPENG_FLOOR if id == "langzhong" else ROOM_FLOOR
-
-
-func _room_texture() -> Texture2D:
-	match origin:
-		"shenjia":
-			return PlaceholderArt.shenjia_room()
-		"tiejiang":
-			return PlaceholderArt.forge()
-		"xiban":
-			return PlaceholderArt.backstage()
-	return UiKit.tex("res://assets/env/env_chapeng_v01.png")
+	return SceneLib.poly(scene_of(id), "floor", CHAPENG_FLOOR if id == "langzhong" else ROOM_FLOOR)
 
 
 func _on_dialogue_done() -> void:

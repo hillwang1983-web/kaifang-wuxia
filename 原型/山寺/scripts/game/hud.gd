@@ -443,10 +443,14 @@ func _draw_skill_bar() -> void:
 	for i in ACTIONS.size():
 		var c := Vector2(DESK_X[i], DESK_Y)
 		_draw_slot(ACTIONS[i], c, 64.0)
-		var key: String = UiKit.key(ACTIONS[i])
-		var kw := UiKit.text_width(key) + 10.0
-		UiKit.panel(self, Rect2(c + Vector2(-kw / 2.0, -50), Vector2(kw, 16)))
-		UiKit.text(self, c + Vector2(-kw / 2.0, -49), key, 12, UiKit.TEXT, HORIZONTAL_ALIGNMENT_CENTER, kw)
+		var pad := UiKit.pad_icon(ACTIONS[i])
+		if pad:
+			draw_texture_rect(pad, Rect2(c + Vector2(-12, -58), Vector2(24, 24)), false)  # 交了手柄图标就用图
+		else:
+			var key: String = UiKit.key(ACTIONS[i])
+			var kw := UiKit.text_width(key) + 10.0
+			UiKit.panel(self, Rect2(c + Vector2(-kw / 2.0, -50), Vector2(kw, 16)))
+			UiKit.text(self, c + Vector2(-kw / 2.0, -49), key, 12, UiKit.TEXT, HORIZONTAL_ALIGNMENT_CENTER, kw)
 		var nm := _slot_name(ACTIONS[i])
 		UiKit.panel(self, Rect2(c + Vector2(-42, 34), Vector2(84, 18)))
 		UiKit.text(self, c + Vector2(-42, 35), nm, 12, UiKit.TEXT, HORIZONTAL_ALIGNMENT_CENTER, 84)

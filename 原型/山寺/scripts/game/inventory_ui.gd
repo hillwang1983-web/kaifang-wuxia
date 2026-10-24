@@ -371,12 +371,16 @@ func _draw_items() -> void:
 		elif it == null:
 			UiKit.text(self, r.position + Vector2(0, r.size.y / 2.0 - 7), SLOT_NAMES[s], 12, Color(UiKit.MUTED, 0.6), HORIZONTAL_ALIGNMENT_CENTER, r.size.x)
 	UiKit.text(self, slot_rects.weapon.position + Vector2(0, -20), "装备", 12, UiKit.MUTED)
-	# 格子
+	# 格子：交了物品栏面板（第 58 条 ui_inventory）就把格子区画成面板图，没交画暗木底和青灰格线
 	var g := _grid_rect()
-	draw_rect(g, WOOD)
-	for x in SimInventory.W + 1:
+	var panel_art := UiKit.art("ui", "ui_inventory")
+	if panel_art:
+		draw_texture_rect(panel_art, g, false)
+	else:
+		draw_rect(g, WOOD)
+	for x in (SimInventory.W + 1 if panel_art == null else 0):
 		draw_line(g.position + Vector2(x * cell, 0), g.position + Vector2(x * cell, g.size.y), LINE, 1.0)
-	for y in SimInventory.H + 1:
+	for y in (SimInventory.H + 1 if panel_art == null else 0):
 		draw_line(g.position + Vector2(0, y * cell), g.position + Vector2(g.size.x, y * cell), LINE, 1.0)
 	for uid in inv().entries:
 		if not held.is_empty() and held.uid == uid:
@@ -430,12 +434,19 @@ func _draw_tip(uid: int) -> void:
 
 
 ## 占位图标：按类型配色的块 + 名字首字 + 品质色描边（美术说明第八节：描边颜色按品质换）
+## 物品图标（交换清单第 56、57 条 ico_item_<底子>）：交了图就画图（等比放进格子），品质描边始终由程序叠；没交画色块和首字
 func _draw_item(it: Dictionary, r: Rect2, alpha := 1.0) -> void:
-	var fill: Color = {"weapon": Color("#5A3F29"), "armor": Color("#8C3B2E"), "accessory": Color("#5E8F7A")}.get(SimItems.slot_type(it), Color("#E8E2D2"))
-	draw_rect(r, Color(fill, alpha))
+	var icon := UiKit.art("ico", "ico_item_" + str(it.base))
+	if icon:
+		var s: float = minf(r.size.x / icon.get_width(), r.size.y / icon.get_height())
+		var size := Vector2(icon.get_width(), icon.get_height()) * s
+		draw_texture_rect(icon, Rect2(r.position + (r.size - size) / 2.0, size), false, Color(1, 1, 1, alpha))
+	else:
+		var fill: Color = {"weapon": Color("#5A3F29"), "armor": Color("#8C3B2E"), "accessory": Color("#5E8F7A")}.get(SimItems.slot_type(it), Color("#E8E2D2"))
+		draw_rect(r, Color(fill, alpha))
+		var nm: String = SimItems.base(it.base).name
+		UiKit.text(self, r.position + Vector2(0, r.size.y / 2.0 - 13), nm.left(1), 24, Color(UiKit.TEXT, alpha), HORIZONTAL_ALIGNMENT_CENTER, r.size.x)
 	draw_rect(r.grow(-1), Color(SimItems.quality_color(it), alpha), false, 2.0)
-	var nm: String = SimItems.base(it.base).name
-	UiKit.text(self, r.position + Vector2(0, r.size.y / 2.0 - 13), nm.left(1), 24, Color(UiKit.TEXT, alpha), HORIZONTAL_ALIGNMENT_CENTER, r.size.x)
 	if it.get("count", 1) > 1:
 		UiKit.text_r(self, r.end - Vector2(3, 15), str(it.count), 12, Color(UiKit.TEXT, alpha))
 

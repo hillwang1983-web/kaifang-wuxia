@@ -46,7 +46,7 @@ func setup(sect_id: String, utility_id: String) -> void:
 
 
 ## 子类先建好 world / me / jingxin，再调这个把画面和界面挂上
-func build_scene(background: Variant, foreground := "") -> void:
+func build_scene(background: Variant, foreground: Variant = "") -> void:
 	if jingxin:
 		ai = SimPartnerAI.new(world, jingxin.id, me.id)
 	else:
@@ -55,7 +55,9 @@ func build_scene(background: Variant, foreground := "") -> void:
 	view.world = world
 	view.me_id = me.id
 	view.background = background if background is Texture2D else UiKit.tex(background)
-	if foreground != "":
+	if foreground is Texture2D:
+		view.foreground = foreground
+	elif foreground is String and foreground != "":
 		view.foreground = UiKit.tex(foreground)
 	add_child(view)
 

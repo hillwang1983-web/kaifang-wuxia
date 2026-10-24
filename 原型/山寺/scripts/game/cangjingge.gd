@@ -40,8 +40,8 @@ var _got_loot := false
 func _ready() -> void:
 	map_size = Vector2(1920, 1080)
 	world = SimWorld.new(Time.get_ticks_msec())
-	world.bounds = PackedVector2Array(FLOOR)
-	for b in BLOCKS:
+	world.bounds = PackedVector2Array(SceneLib.poly("cangjingge", "floor", FLOOR))
+	for b in SceneLib.polys("cangjingge", "blocks", BLOCKS):
 		world.blockers.append(PackedVector2Array(b))
 	world.waypoints.assign(DOOR_PATH)
 	me = world.add_hero("player", sect, utility, START)
@@ -54,7 +54,7 @@ func _ready() -> void:
 		world.add_enemy(pr[0], pr[1])
 	boss = world.add_enemy("dulao", DULAO_AT, true)
 	boss.home = ARENA_CENTER + Vector2(0, -100)
-	build_scene(PlaceholderArt.cangjingge())
+	build_scene(SceneLib.background("cangjingge"), SceneLib.foreground("cangjingge"))
 	hud.boss = boss
 	hud.objectives = ["穿过后院回廊", "击退守卫 0 / 3"]
 	say(Story.houdian_intro())
@@ -107,7 +107,7 @@ func extra_commands() -> Dictionary:
 func _enter_hall() -> void:
 	stage = "hall_talk"
 	hud.objectives = []
-	world.bounds = PackedVector2Array(HALL)
+	world.bounds = PackedVector2Array(SceneLib.poly("cangjingge", "hall", HALL))
 	world.waypoints.clear()
 	for f in [me, jingxin]:
 		if not world.walkable(f.pos):

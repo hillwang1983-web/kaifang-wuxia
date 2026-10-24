@@ -1,0 +1,544 @@
+{
+ "说明": "特效帧动画登记表：程序按 vfx_名称_v版本.png 在 assets/vfx/ 读横条（帧等大、无间距、12 fps、透明底），帧尺寸见 frame；特效中心是画布中心。rotate：朝右画、程序按方向旋转；scale：r 按特效半径缩放、len 按两点距离横向拉伸；loop：持续期间循环。没交图的特效继续用程序画的。规格见交换清单「当前请求」D 组。 带 file 的条目在别的文件夹（如 obj/obj_crate_broken），其余在 vfx/vfx_名称。",
+ "fps": 12,
+ "effects": {
+  "shaolin_atk1": {
+   "frame": [
+    96,
+    96
+   ],
+   "loop": false,
+   "rotate": true,
+   "scale": "",
+   "条": "第 20 条"
+  },
+  "shaolin_atk2": {
+   "frame": [
+    96,
+    96
+   ],
+   "loop": false,
+   "rotate": true,
+   "scale": "",
+   "条": "第 20 条"
+  },
+  "shaolin_atk3": {
+   "frame": [
+    96,
+    96
+   ],
+   "loop": false,
+   "rotate": true,
+   "scale": "",
+   "条": "第 20 条"
+  },
+  "xiepai_atk1": {
+   "frame": [
+    96,
+    96
+   ],
+   "loop": false,
+   "rotate": true,
+   "scale": "",
+   "条": "第 25 条"
+  },
+  "xiepai_atk2": {
+   "frame": [
+    96,
+    96
+   ],
+   "loop": false,
+   "rotate": true,
+   "scale": "",
+   "条": "第 25 条"
+  },
+  "xiepai_atk3": {
+   "frame": [
+    96,
+    96
+   ],
+   "loop": false,
+   "rotate": true,
+   "scale": "",
+   "条": "第 25 条"
+  },
+  "luohanquan": {
+   "frame": [
+    32,
+    32
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "",
+   "条": "第 22 条"
+  },
+  "jinzhongzhao_open": {
+   "frame": [
+    64,
+    64
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "",
+   "条": "第 23 条"
+  },
+  "jinzhongzhao_loop": {
+   "frame": [
+    64,
+    64
+   ],
+   "loop": true,
+   "rotate": false,
+   "scale": "",
+   "条": "第 23 条"
+  },
+  "jinzhongzhao_break": {
+   "frame": [
+    64,
+    64
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "",
+   "条": "第 23 条"
+  },
+  "dalijingangzhang": {
+   "frame": [
+    128,
+    96
+   ],
+   "loop": false,
+   "rotate": true,
+   "scale": "",
+   "条": "第 24 条"
+  },
+  "dushazhang_fly": {
+   "frame": [
+    16,
+    16
+   ],
+   "loop": true,
+   "rotate": true,
+   "scale": "",
+   "条": "第 27 条"
+  },
+  "dushazhang_hit": {
+   "frame": [
+    32,
+    32
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "",
+   "条": "第 27 条"
+  },
+  "huagongsan_land": {
+   "frame": [
+    96,
+    64
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "r",
+   "条": "第 28 条"
+  },
+  "huagongsan_pool": {
+   "frame": [
+    96,
+    64
+   ],
+   "loop": true,
+   "rotate": false,
+   "scale": "r",
+   "条": "第 28 条"
+  },
+  "shehunshu_beam": {
+   "frame": [
+    64,
+    12
+   ],
+   "loop": true,
+   "rotate": true,
+   "scale": "len",
+   "条": "第 29 条"
+  },
+  "shehunshu_root": {
+   "frame": [
+    32,
+    32
+   ],
+   "loop": true,
+   "rotate": false,
+   "scale": "",
+   "条": "第 29 条"
+  },
+  "jineili": {
+   "frame": [
+    48,
+    24
+   ],
+   "loop": true,
+   "rotate": false,
+   "scale": "",
+   "条": "第 21 条"
+  },
+  "diedu_stack": {
+   "frame": [
+    12,
+    12
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "",
+   "条": "第 26 条"
+  },
+  "diedu_burst": {
+   "frame": [
+    48,
+    48
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "",
+   "条": "第 26 条"
+  },
+  "tiyunzong": {
+   "frame": [
+    64,
+    32
+   ],
+   "loop": false,
+   "rotate": true,
+   "scale": "",
+   "条": "第 30 条"
+  },
+  "yungong": {
+   "frame": [
+    48,
+    64
+   ],
+   "loop": true,
+   "rotate": false,
+   "scale": "",
+   "条": "第 31 条"
+  },
+  "jiemai_line": {
+   "frame": [
+    96,
+    16
+   ],
+   "loop": false,
+   "rotate": true,
+   "scale": "",
+   "条": "第 32 条"
+  },
+  "jiemai_hit": {
+   "frame": [
+    32,
+    32
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "",
+   "条": "第 32 条"
+  },
+  "moqi_lv1": {
+   "frame": [
+    96,
+    96
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "r",
+   "条": "第 35 条"
+  },
+  "moqi_lv2": {
+   "frame": [
+    128,
+    128
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "r",
+   "条": "第 35 条"
+  },
+  "moqi_lv3": {
+   "frame": [
+    160,
+    160
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "r",
+   "条": "第 35 条"
+  },
+  "fumoquan_open": {
+   "frame": [
+    192,
+    192
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "r",
+   "条": "第 63 条"
+  },
+  "fumoquan_loop": {
+   "frame": [
+    192,
+    192
+   ],
+   "loop": true,
+   "rotate": false,
+   "scale": "r",
+   "条": "第 63 条"
+  },
+  "xc_sweep": {
+   "frame": [
+    96,
+    96
+   ],
+   "loop": false,
+   "rotate": true,
+   "scale": "",
+   "条": "第 36 条"
+  },
+  "xc_heavy": {
+   "frame": [
+    192,
+    96
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "r",
+   "条": "第 36 条"
+  },
+  "duzhao_loop": {
+   "frame": [
+    64,
+    64
+   ],
+   "loop": true,
+   "rotate": false,
+   "scale": "",
+   "条": "第 62 条"
+  },
+  "duzhao_break": {
+   "frame": [
+    64,
+    64
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "",
+   "条": "第 62 条"
+  },
+  "duchi_land": {
+   "frame": [
+    96,
+    64
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "r",
+   "条": "第 62 条"
+  },
+  "duchi_pool": {
+   "frame": [
+    96,
+    64
+   ],
+   "loop": true,
+   "rotate": false,
+   "scale": "r",
+   "条": "第 62 条"
+  },
+  "shehunzhi": {
+   "frame": [
+    64,
+    12
+   ],
+   "loop": true,
+   "rotate": true,
+   "scale": "len",
+   "条": "第 62 条"
+  },
+  "duwu_edge": {
+   "frame": [
+    64,
+    32
+   ],
+   "loop": true,
+   "rotate": false,
+   "scale": "",
+   "条": "第 62 条（毒雾边缘雾带，程序沿圈平铺）"
+  },
+  "breach_lv1": {
+   "frame": [
+    16,
+    16
+   ],
+   "loop": true,
+   "rotate": false,
+   "scale": "",
+   "条": "第 68 条"
+  },
+  "breach_lv2": {
+   "frame": [
+    24,
+    24
+   ],
+   "loop": true,
+   "rotate": false,
+   "scale": "",
+   "条": "第 68 条"
+  },
+  "breach_lv3": {
+   "frame": [
+    36,
+    36
+   ],
+   "loop": true,
+   "rotate": false,
+   "scale": "",
+   "条": "第 68 条"
+  },
+  "breach_close": {
+   "frame": [
+    36,
+    36
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "",
+   "条": "第 68 条"
+  },
+  "charge": {
+   "frame": [
+    96,
+    48
+   ],
+   "loop": false,
+   "rotate": true,
+   "scale": "",
+   "条": "第 69 条（冲撞尘土）"
+  },
+  "quake": {
+   "frame": [
+    192,
+    96
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "r",
+   "条": "第 69 条（踏地震冲击环）"
+  },
+  "deflect": {
+   "frame": [
+    96,
+    96
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "",
+   "条": "第 69 条（撞偏）"
+  },
+  "bolt_hit": {
+   "frame": [
+    32,
+    32
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "",
+   "条": "第 69 条（弩箭命中）"
+  },
+  "crate_broken": {
+   "frame": [
+    32,
+    32
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "",
+   "条": "第 6 条（木箱打碎）",
+   "file": "obj/obj_crate_broken"
+  },
+  "jar_broken": {
+   "frame": [
+    32,
+    32
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "",
+   "条": "第 7 条（酒坛打碎）",
+   "file": "obj/obj_jar_broken"
+  },
+  "pile_break": {
+   "frame": [
+    48,
+    40
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "",
+   "条": "第 67 条（零件堆打碎）",
+   "file": "obj/obj_pile_break"
+  },
+  "ballista_break": {
+   "frame": [
+    64,
+    64
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "",
+   "条": "第 67 条（弩车散架）",
+   "file": "obj/obj_ballista_break"
+  },
+  "chest_glow": {
+   "frame": [
+    48,
+    48
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "",
+   "条": "第 70 条（开箱金光）",
+   "file": "obj/obj_chest_glow"
+  },
+  "muzhuang_broken": {
+   "frame": [
+    32,
+    32
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "",
+   "条": "第 77 条（开场教学道具打碎）",
+   "file": "obj/obj_muzhuang_broken"
+  },
+  "daojuxiang_broken": {
+   "frame": [
+    32,
+    32
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "",
+   "条": "第 77 条（开场教学道具打碎）",
+   "file": "obj/obj_daojuxiang_broken"
+  },
+  "chaihuo_broken": {
+   "frame": [
+    32,
+    32
+   ],
+   "loop": false,
+   "rotate": false,
+   "scale": "",
+   "条": "第 77 条（开场教学道具打碎）",
+   "file": "obj/obj_chaihuo_broken"
+  }
+ }
+}

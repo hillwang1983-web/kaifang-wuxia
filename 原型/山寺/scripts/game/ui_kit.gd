@@ -66,6 +66,48 @@ static func tex(path: String) -> Texture2D:
 	return _tex[path]
 
 
+## 美术替换的通用取图：assets/<dir>/<name>_v0N.png 取最高版本，没交返回 null（调用方回落到代码画的占位）
+static var _art := {}
+
+
+static func art(dir: String, name: String) -> Texture2D:
+	var key := dir + "/" + name
+	if not _art.has(key):
+		var t: Texture2D = null
+		for v in range(5, 0, -1):
+			var path := "res://assets/%s/%s_v%02d.png" % [dir, name, v]
+			if ResourceLoader.exists(path):
+				t = load(path)
+				break
+		_art[key] = t
+	return _art[key]
+
+
+## 横条里的第 i 帧（帧宽 fw），画在 rect 里；没图返回假
+static func draw_strip(ci: CanvasItem, tex2: Texture2D, fw: float, i: int, rect: Rect2, modulate := Color.WHITE) -> bool:
+	if tex2 == null:
+		return false
+	var n := maxi(1, int(tex2.get_width() / fw))
+	ci.draw_texture_rect_region(tex2, rect, Rect2((i % n) * fw, 0, fw, tex2.get_height()), modulate)
+	return true
+
+
+## 手柄按键图标的文件名（交换清单第 78 条）：ui_pad_xbox_a、ui_pad_ps_cross……
+const PAD_ICON := {
+	"xbox": {"attack": "a", "skill_1": "x", "skill_2": "y", "skill_3": "b", "utility": "rb", "combo": "rt",
+		"dodge": "lb", "cancel": "lt", "inventory": "start", "interact": "dup", "potion": "ddown"},
+	"ps": {"attack": "cross", "skill_1": "square", "skill_2": "triangle", "skill_3": "circle", "utility": "r1", "combo": "r2",
+		"dodge": "l1", "cancel": "l2", "inventory": "options", "interact": "dup", "potion": "ddown"},
+}
+
+
+## 当前设备是手柄时这个动作的按键图标；键鼠或没交图返回 null
+static func pad_icon(action: String) -> Texture2D:
+	if not PAD_ICON.has(device) or not PAD_ICON[device].has(action):
+		return null
+	return art("ui", "ui_pad_%s_%s" % [device, PAD_ICON[device][action]])
+
+
 static func ui(name: String) -> Texture2D:
 	return tex("res://assets/ui/ui_%s_v01.png" % name)
 
