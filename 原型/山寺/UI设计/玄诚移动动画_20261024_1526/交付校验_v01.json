@@ -1,0 +1,171 @@
+{
+  "delivery": "20261024-1526",
+  "date_shanghai": "2026-10-24T15:49:16.184762+08:00",
+  "files": [
+    {
+      "path": "UI设计/玄诚移动动画_20261024_1526/down_逐帧总览_v01.png",
+      "bytes": 11113,
+      "sha256": "af06eeb7416bc82e9782147904cce221e12e08b53258ea2ca8d5265e3a7e220c"
+    },
+    {
+      "path": "UI设计/玄诚移动动画_20261024_1526/idle_down_4倍_v01.png",
+      "bytes": 4296,
+      "sha256": "42f2ab6aa8b63d3dbc8ebf72712efccff7322af9d9a3b56731088b228c47bd4d"
+    },
+    {
+      "path": "UI设计/玄诚移动动画_20261024_1526/idle_down_循环_v01.gif",
+      "bytes": 14409,
+      "sha256": "1bec5dda728544e76dd94b3a89d69f9bfd6110e0c3531e74d4b3a230c329e244"
+    },
+    {
+      "path": "UI设计/玄诚移动动画_20261024_1526/idle_left_4倍_v01.png",
+      "bytes": 4648,
+      "sha256": "6dfff3c088b7b948735c1e1a61efb713fc2bc95494c1a25da66b430878041f26"
+    },
+    {
+      "path": "UI设计/玄诚移动动画_20261024_1526/idle_left_循环_v01.gif",
+      "bytes": 13943,
+      "sha256": "2aaabc81e7ce077f3ebb35c9684f94d3db48b18f6e11829e242b87b6e055c3e4"
+    },
+    {
+      "path": "UI设计/玄诚移动动画_20261024_1526/idle_up_4倍_v01.png",
+      "bytes": 4171,
+      "sha256": "df7b1c1bb9c4c7cd9b52d054fb0409e363b94134172f0c814a4568ab13d36719"
+    },
+    {
+      "path": "UI设计/玄诚移动动画_20261024_1526/idle_up_循环_v01.gif",
+      "bytes": 11580,
+      "sha256": "0a7bbc81e3e850045c06abd4593a1e5340ebb8d1df6cb7f6c6ce443ba690869c"
+    },
+    {
+      "path": "UI设计/玄诚移动动画_20261024_1526/left_逐帧总览_v01.png",
+      "bytes": 11650,
+      "sha256": "acbe38efef584cc766920e0dd41786d8bb6f7403818c3db46053668cfcc07b13"
+    },
+    {
+      "path": "UI设计/玄诚移动动画_20261024_1526/up_逐帧总览_v01.png",
+      "bytes": 10443,
+      "sha256": "7e2ec554b6b43717e9f3ea0f381c41e4d04b4665759fb506f835c45977556c1b"
+    },
+    {
+      "path": "UI设计/玄诚移动动画_20261024_1526/walk_down_4倍_v01.png",
+      "bytes": 6779,
+      "sha256": "f06091351bb8e9225df3665256d005c3747b9e08cd9c6df113497494d473cf00"
+    },
+    {
+      "path": "UI设计/玄诚移动动画_20261024_1526/walk_down_循环_v01.gif",
+      "bytes": 21055,
+      "sha256": "3c8a6482e5a10e9749cbd026a8dd16dac72bf6511cff8bb542b019720c966658"
+    },
+    {
+      "path": "UI设计/玄诚移动动画_20261024_1526/walk_left_4倍_v01.png",
+      "bytes": 7035,
+      "sha256": "05ef6dc4770ffd7f710f3b5c5fbaae25dfcab13cc7e57d09a1c3f0aff1a4011c"
+    },
+    {
+      "path": "UI设计/玄诚移动动画_20261024_1526/walk_left_循环_v01.gif",
+      "bytes": 20928,
+      "sha256": "d820e974b9d1f49fa27cfbefb58ce22dd05fe4eee3bb0932760c65ded72e16c7"
+    },
+    {
+      "path": "UI设计/玄诚移动动画_20261024_1526/walk_up_4倍_v01.png",
+      "bytes": 6307,
+      "sha256": "1e3a522a7a3d2636eadea80ca618817e3586a23fe12c786ed2c3d2534b129183"
+    },
+    {
+      "path": "UI设计/玄诚移动动画_20261024_1526/walk_up_循环_v01.gif",
+      "bytes": 18347,
+      "sha256": "b20877b77b6f7a7460ae4d770373575551145c4d535e73ed6e04694daadcd27a"
+    },
+    {
+      "path": "UI设计/玄诚移动动画_20261024_1526/交付说明_v01.md",
+      "bytes": 3599,
+      "sha256": "d2c1e6d53478a3f94f292e367e8f531868e27c0d1b37f1e10a081582869f3501"
+    },
+    {
+      "path": "UI设计/玄诚移动动画_20261024_1526/动画参数_v01.json",
+      "bytes": 34611,
+      "sha256": "931634023049d3cf3c9b0dadea951ae3098c78279d1973d90ff4a49ffd82cbd3"
+    },
+    {
+      "path": "UI设计/玄诚移动动画_20261024_1526/场景预览参数_v01.json",
+      "bytes": 846,
+      "sha256": "d20a8010afa83381577c99b0fb2c51338801638d2c025e5943619c6dd276ba62"
+    },
+    {
+      "path": "UI设计/玄诚移动动画_20261024_1526/处理参数_v01.json",
+      "bytes": 740,
+      "sha256": "0ef05da3fb361fd81a72fb5eacd0ee2090b52b18ed7dc51cf59d129e02075f28"
+    },
+    {
+      "path": "UI设计/玄诚移动动画_20261024_1526/核验结果_v01.json",
+      "bytes": 11495,
+      "sha256": "06585307bc9745dc9fba5702bd4228a18d3656ee52817445cae33dc0ce874024"
+    },
+    {
+      "path": "UI设计/玄诚移动动画_20261024_1526/玄诚三方向_山门实际比例_v01.png",
+      "bytes": 188382,
+      "sha256": "a8f5bd4f3f20a1e032c667ed32cbc1c3f6fc22bfcf87f3f0e3d61518b791f2e2"
+    },
+    {
+      "path": "UI设计/玄诚移动动画_20261024_1526/生图提示词_v01.json",
+      "bytes": 17183,
+      "sha256": "feda3f6cf33bbc95e2d1521332724731d5a1591ddaf067add0cfd65b12582086"
+    },
+    {
+      "path": "UI设计/玄诚移动动画_20261024_1526/调色板_v01.json",
+      "bytes": 194,
+      "sha256": "c06a00d1a0e738ef09690a5fa20e103a7d225d3dd0da0842351f9d2c67dff1fd"
+    },
+    {
+      "path": "assets/boss/boss_xuancheng_idle_down_v01.png",
+      "bytes": 5224,
+      "sha256": "ad825cf1e5460e9b8f0dda471d1c3f7758774e84f52f7bac6147fd53ea1209fd"
+    },
+    {
+      "path": "assets/boss/boss_xuancheng_idle_left_v01.png",
+      "bytes": 5399,
+      "sha256": "caedb8180ac9268c25cbec404a067c312e201777b792f355a650272a35a640a2"
+    },
+    {
+      "path": "assets/boss/boss_xuancheng_idle_up_v01.png",
+      "bytes": 4240,
+      "sha256": "f587b0ac6bf41baf7d8a7e2cbaf13cace59c24091ad877dd7ae3871467a33f75"
+    },
+    {
+      "path": "assets/boss/boss_xuancheng_walk_down_v01.png",
+      "bytes": 8140,
+      "sha256": "222f1070be26995358a891dc226ff8bcca3f27e020e4142e16ba7d7afc3a14ac"
+    },
+    {
+      "path": "assets/boss/boss_xuancheng_walk_left_v01.png",
+      "bytes": 8005,
+      "sha256": "d280f66173877309128036149b865f87843b8d30bd189bb29e93cf5f93c5a84e"
+    },
+    {
+      "path": "assets/boss/boss_xuancheng_walk_up_v01.png",
+      "bytes": 6880,
+      "sha256": "04572a3ee7d86a2ecea70a9caa20ca6aa58d30afba0cf9ba1ee6e6095dddb5be"
+    },
+    {
+      "path": "assets/ref/ref_boss_xuancheng_move_down_generated_v01.png",
+      "bytes": 1144851,
+      "sha256": "6c21f339fd6599c85abf6a1b3c70b0f82d911398aa303c90164604aebc9f3d0e"
+    },
+    {
+      "path": "assets/ref/ref_boss_xuancheng_move_left_generated_v01.png",
+      "bytes": 994594,
+      "sha256": "bad8494f67f19fede42e262b0e238fb2279646f18ecabc51e5b11ab1c2a56e49"
+    },
+    {
+      "path": "assets/ref/ref_boss_xuancheng_move_up_generated_v01.png",
+      "bytes": 940936,
+      "sha256": "acb9fba53f7a9e4a842db1f7156391e1aa1b54015bbfeb8d860c0f4bc42d95e6"
+    },
+    {
+      "path": "assets/ref/ref_boss_xuancheng_move_up_ground_repair_v01.png",
+      "bytes": 954303,
+      "sha256": "5121a978e3098cfda9c55239ee578356923bcac30eadf0e52b86fe04dec476ba"
+    }
+  ]
+}

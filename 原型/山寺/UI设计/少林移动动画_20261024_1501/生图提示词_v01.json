@@ -1,0 +1,215 @@
+{
+  "tool": "built-in imagegen",
+  "generation": [
+    {
+      "direction": "down",
+      "reference": "/Volumes/ML_models/游戏/开放武侠/output/art-shaolin-ref-20261024-1351/delivery/UI设计/少林定妆_20261024_1351/少林正面定妆_8倍_v01.png",
+      "layout": [
+        6,
+        2
+      ],
+      "native_cell": [
+        48,
+        64
+      ],
+      "native_sheet": [
+        288,
+        128
+      ],
+      "idle_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "walk_cells": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          1
+        ]
+      ],
+      "prompt": "Use case: identity-preserve. Asset type: PRODUCTION PIXEL GAME ANIMATION SOURCE SHEET for the already APPROVED Shaolin player. The attached image is the exact accepted character, not a loose moodboard: preserve his plain tied dark hair and cloth band, anonymous young Chinese face, short brown-red jacket, ochre yellow waist sash, brown trousers, humble cloth shoes, and ONE plain eyebrow-length wooden staff. Keep the same serious small sprite proportions, small native pixel-cluster face, upper-left hard two-shade lighting, material-dark outline, and rustic palette. No bald head, scars, jewelry, fancy clothes, armor, shadow, added scenery or effects. Hard pixel clusters, no gradients, antialiasing, intermediate alpha, blur, texture noise, pure black or magenta. GENUINE TRANSPARENT PNG.\nLAYOUT CRITICAL: exact evenly spaced SIX COLUMNS by TWO ROWS grid on a transparent canvas, no visible grid or labels. Each logical cell is48x64, total native288x128, shown at a clean6x enlargement1728x768 if possible. Each cell has identical size and coordinate system, no gutters. Each figure fits completely within its own cell. Human height about40-41 NATIVE pixels, feet ground root at local(24,60), four pixels bottom margin, upper blank area about20 native pixels. Staff fully inside the cell, roughly40 native pixels, no longer than the character. Do not fill the cell with a giant figure. No contact shadows.\nFIRST ROW: columns1 through4 are FOUR genuinely distinct but subtle IDLE BREATHING frames, in order: neutral, gentle inhale torso1px lift, full inhale, gentle exhale returning toward neutral. Feet stay planted at the same ground root; hands and staff move only by0-1 native pixel. Row1 columns5 and6 MUST remain fully transparent/empty.\nSECOND ROW: all SIX columns are ONE complete WALK CYCLE, a clearly readable alternating natural gait in place, left-foot contact, left passing, right-foot contact, right passing, transition and return to cycle start. Make distinct moving legs, modest arm counter-swing while keeping a believable two-handed staff grip, subtle coat/sash follow-through. No sliding the entire character horizontally between cells, no teleporting or spinning. Root ground location identical in every frame. All frames exactly the same camera and facing. No duplicate static walk poses, no attack.\nCAMERA: top-down3/4 orthographic camera at about45 degrees, same tilt as reference, visible head top and shoulders, no eye-level portrait and no isometric perspective. All frames of this sheet face ONE direction only. FACING FOR ALL TEN DRAWN FRAMES: DOWN / toward the viewer, shoulders front facing as the approved reference. Keep the wooden staff diagonally across the torso, lower-left to upper-right, both hands gripping it, just like the reference. The walk progresses toward the viewer in place. Do not change costume or face."
+    },
+    {
+      "direction": "left",
+      "reference": "/Volumes/ML_models/游戏/开放武侠/output/art-shaolin-ref-20261024-1351/delivery/UI设计/少林定妆_20261024_1351/少林正面定妆_8倍_v01.png",
+      "layout": [
+        6,
+        2
+      ],
+      "native_cell": [
+        48,
+        64
+      ],
+      "native_sheet": [
+        288,
+        128
+      ],
+      "idle_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "walk_cells": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          1
+        ]
+      ],
+      "prompt": "Use case: identity-preserve. Asset type: PRODUCTION PIXEL GAME ANIMATION SOURCE SHEET for the already APPROVED Shaolin player. The attached image is the exact accepted character, not a loose moodboard: preserve his plain tied dark hair and cloth band, anonymous young Chinese face, short brown-red jacket, ochre yellow waist sash, brown trousers, humble cloth shoes, and ONE plain eyebrow-length wooden staff. Keep the same serious small sprite proportions, small native pixel-cluster face, upper-left hard two-shade lighting, material-dark outline, and rustic palette. No bald head, scars, jewelry, fancy clothes, armor, shadow, added scenery or effects. Hard pixel clusters, no gradients, antialiasing, intermediate alpha, blur, texture noise, pure black or magenta. GENUINE TRANSPARENT PNG.\nLAYOUT CRITICAL: exact evenly spaced SIX COLUMNS by TWO ROWS grid on a transparent canvas, no visible grid or labels. Each logical cell is48x64, total native288x128, shown at a clean6x enlargement1728x768 if possible. Each cell has identical size and coordinate system, no gutters. Each figure fits completely within its own cell. Human height about40-41 NATIVE pixels, feet ground root at local(24,60), four pixels bottom margin, upper blank area about20 native pixels. Staff fully inside the cell, roughly40 native pixels, no longer than the character. Do not fill the cell with a giant figure. No contact shadows.\nFIRST ROW: columns1 through4 are FOUR genuinely distinct but subtle IDLE BREATHING frames, in order: neutral, gentle inhale torso1px lift, full inhale, gentle exhale returning toward neutral. Feet stay planted at the same ground root; hands and staff move only by0-1 native pixel. Row1 columns5 and6 MUST remain fully transparent/empty.\nSECOND ROW: all SIX columns are ONE complete WALK CYCLE, a clearly readable alternating natural gait in place, left-foot contact, left passing, right-foot contact, right passing, transition and return to cycle start. Make distinct moving legs, modest arm counter-swing while keeping a believable two-handed staff grip, subtle coat/sash follow-through. No sliding the entire character horizontally between cells, no teleporting or spinning. Root ground location identical in every frame. All frames exactly the same camera and facing. No duplicate static walk poses, no attack.\nCAMERA: top-down3/4 orthographic camera at about45 degrees, same tilt as reference, visible head top and shoulders, no eye-level portrait and no isometric perspective. All frames of this sheet face ONE direction only. FACING FOR ALL TEN DRAWN FRAMES: LEFT / screen-left PROFILE: face and nose clearly point to screen-left, torso and feet side-on left, the back of the tied hair at screen-right. Preserve the same head and clothing in this left view. Hold the staff angled diagonally forward/up toward screen-left, both hands gripping one staff; keep the full staff and both shoes in the frame. Walking motion is leftward in place. No frame faces right, front or back."
+    },
+    {
+      "direction": "up",
+      "reference": "/Volumes/ML_models/游戏/开放武侠/output/art-shaolin-ref-20261024-1351/delivery/UI设计/少林定妆_20261024_1351/少林正面定妆_8倍_v01.png",
+      "layout": [
+        6,
+        2
+      ],
+      "native_cell": [
+        48,
+        64
+      ],
+      "native_sheet": [
+        288,
+        128
+      ],
+      "idle_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "walk_cells": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          1
+        ]
+      ],
+      "prompt": "Use case: identity-preserve. Asset type: PRODUCTION PIXEL GAME ANIMATION SOURCE SHEET for the already APPROVED Shaolin player. The attached image is the exact accepted character, not a loose moodboard: preserve his plain tied dark hair and cloth band, anonymous young Chinese face, short brown-red jacket, ochre yellow waist sash, brown trousers, humble cloth shoes, and ONE plain eyebrow-length wooden staff. Keep the same serious small sprite proportions, small native pixel-cluster face, upper-left hard two-shade lighting, material-dark outline, and rustic palette. No bald head, scars, jewelry, fancy clothes, armor, shadow, added scenery or effects. Hard pixel clusters, no gradients, antialiasing, intermediate alpha, blur, texture noise, pure black or magenta. GENUINE TRANSPARENT PNG.\nLAYOUT CRITICAL: exact evenly spaced SIX COLUMNS by TWO ROWS grid on a transparent canvas, no visible grid or labels. Each logical cell is48x64, total native288x128, shown at a clean6x enlargement1728x768 if possible. Each cell has identical size and coordinate system, no gutters. Each figure fits completely within its own cell. Human height about40-41 NATIVE pixels, feet ground root at local(24,60), four pixels bottom margin, upper blank area about20 native pixels. Staff fully inside the cell, roughly40 native pixels, no longer than the character. Do not fill the cell with a giant figure. No contact shadows.\nFIRST ROW: columns1 through4 are FOUR genuinely distinct but subtle IDLE BREATHING frames, in order: neutral, gentle inhale torso1px lift, full inhale, gentle exhale returning toward neutral. Feet stay planted at the same ground root; hands and staff move only by0-1 native pixel. Row1 columns5 and6 MUST remain fully transparent/empty.\nSECOND ROW: all SIX columns are ONE complete WALK CYCLE, a clearly readable alternating natural gait in place, left-foot contact, left passing, right-foot contact, right passing, transition and return to cycle start. Make distinct moving legs, modest arm counter-swing while keeping a believable two-handed staff grip, subtle coat/sash follow-through. No sliding the entire character horizontally between cells, no teleporting or spinning. Root ground location identical in every frame. All frames exactly the same camera and facing. No duplicate static walk poses, no attack.\nCAMERA: top-down3/4 orthographic camera at about45 degrees, same tilt as reference, visible head top and shoulders, no eye-level portrait and no isometric perspective. All frames of this sheet face ONE direction only. FACING FOR ALL TEN DRAWN FRAMES: UP / AWAY from the viewer: show the BACK of his tied-haired head, shoulders, red short jacket back and yellow waist sash knot. NO face or eyes visible, heels and back of cloth shoes read clearly. One wooden staff held diagonally at his side and visible past one shoulder and hand, complete inside each cell. Walk away from viewer in place; no frame turns toward the viewer."
+    }
+  ],
+  "gait_repair": [
+    {
+      "direction": "down",
+      "refs": [
+        "/Users/hill/.codex/generated_images/01a16bc4-aa14-7661-a2e6-9af5cabaee1e/exec-30f69876-860b-4024-b869-96caadb9e0d4.png",
+        "/Volumes/ML_models/游戏/开放武侠/output/art-shaolin-ref-20261024-1351/delivery/UI设计/少林定妆_20261024_1351/少林正面定妆_8倍_v01.png"
+      ],
+      "prompt": "Use case: precise-object-edit. Image1 is the animation sheet to FIX. Image2 is the approved character identity. Keep the exact SAME six-column by two-row transparent sheet layout, camera, clothing, hair, face, palette, staff, margins and character scale as Image1. Keep row1 four idle figures and its last2 empty cells unchanged. FIX ONLY THE SIX WALK FIGURES IN THE SECOND ROW, with the same approved character facing DOWN in ALL frames. The current second row alternates similar contact poses too quickly and has almost no narrow passing poses. It must become ONE smooth canonical SIX FRAME gait in this exact order, NOT six unrelated versions of a standing man:\nFRAME1: LEFT foot forward contact / right foot behind, broad stride.\nFRAME2: weight settles on LEFT support leg, left knee compresses slightly, rear RIGHT heel lifts, feet drawing closer.\nFRAME3: RIGHT leg passes forward UNDER the hips with knee bent, RIGHT foot raised; LEFT support foot planted. NARROW leg silhouette with one lifted foot, clearly different from frame1.\nFRAME4: RIGHT foot forward contact / LEFT foot behind, broad stride opposite frame1.\nFRAME5: weight settles on RIGHT support leg, right knee compresses slightly, rear LEFT heel lifts, feet drawing closer.\nFRAME6: LEFT leg passes forward UNDER the hips with knee bent, LEFT foot raised; RIGHT support foot planted. NARROW leg silhouette opposite frame3, then returns to frame1.\nThe gait progresses in place with fixed ground root and consistent head/torso positions, head body bob <=1native pixel. Preserve the same shoes and two legs; no extra foot, no floating, no running/lunge. Modest cloth sash follow-through and both hands holding one complete staff. For left view, the direction of travel is screen-left; clear forward/back alternation of the legs. For down/up, use foreshortening with the forward foot lower and rear foot higher in the image; passing poses overlap near center, and broad contact poses show the two separated shoes. The six resulting silhouettes must be visibly different and form left support -> right support -> left support, not L/R/L/R/L/R between every adjacent frame. Actual alpha transparency, no labels, shadows, gridlines, floor or new elements. Keep the rest of Image1 unchanged."
+    },
+    {
+      "direction": "left",
+      "refs": [
+        "/Users/hill/.codex/generated_images/01a16bc4-aa14-7661-a2e6-9af5cabaee1e/exec-c72703cb-7510-4c46-ba1a-7b1c4c0ff6a7.png",
+        "/Volumes/ML_models/游戏/开放武侠/output/art-shaolin-ref-20261024-1351/delivery/UI设计/少林定妆_20261024_1351/少林正面定妆_8倍_v01.png"
+      ],
+      "prompt": "Use case: precise-object-edit. Image1 is the animation sheet to FIX. Image2 is the approved character identity. Keep the exact SAME six-column by two-row transparent sheet layout, camera, clothing, hair, face, palette, staff, margins and character scale as Image1. Keep row1 four idle figures and its last2 empty cells unchanged. FIX ONLY THE SIX WALK FIGURES IN THE SECOND ROW, with the same approved character facing LEFT in ALL frames. The current second row alternates similar contact poses too quickly and has almost no narrow passing poses. It must become ONE smooth canonical SIX FRAME gait in this exact order, NOT six unrelated versions of a standing man:\nFRAME1: LEFT foot forward contact / right foot behind, broad stride.\nFRAME2: weight settles on LEFT support leg, left knee compresses slightly, rear RIGHT heel lifts, feet drawing closer.\nFRAME3: RIGHT leg passes forward UNDER the hips with knee bent, RIGHT foot raised; LEFT support foot planted. NARROW leg silhouette with one lifted foot, clearly different from frame1.\nFRAME4: RIGHT foot forward contact / LEFT foot behind, broad stride opposite frame1.\nFRAME5: weight settles on RIGHT support leg, right knee compresses slightly, rear LEFT heel lifts, feet drawing closer.\nFRAME6: LEFT leg passes forward UNDER the hips with knee bent, LEFT foot raised; RIGHT support foot planted. NARROW leg silhouette opposite frame3, then returns to frame1.\nThe gait progresses in place with fixed ground root and consistent head/torso positions, head body bob <=1native pixel. Preserve the same shoes and two legs; no extra foot, no floating, no running/lunge. Modest cloth sash follow-through and both hands holding one complete staff. For left view, the direction of travel is screen-left; clear forward/back alternation of the legs. For down/up, use foreshortening with the forward foot lower and rear foot higher in the image; passing poses overlap near center, and broad contact poses show the two separated shoes. The six resulting silhouettes must be visibly different and form left support -> right support -> left support, not L/R/L/R/L/R between every adjacent frame. Actual alpha transparency, no labels, shadows, gridlines, floor or new elements. Keep the rest of Image1 unchanged."
+    },
+    {
+      "direction": "up",
+      "refs": [
+        "/Users/hill/.codex/generated_images/01a16bc4-aa14-7661-a2e6-9af5cabaee1e/exec-8f744af3-dbc1-4b15-9325-1927b020ac53.png",
+        "/Volumes/ML_models/游戏/开放武侠/output/art-shaolin-ref-20261024-1351/delivery/UI设计/少林定妆_20261024_1351/少林正面定妆_8倍_v01.png"
+      ],
+      "prompt": "Use case: precise-object-edit. Image1 is the animation sheet to FIX. Image2 is the approved character identity. Keep the exact SAME six-column by two-row transparent sheet layout, camera, clothing, hair, face, palette, staff, margins and character scale as Image1. Keep row1 four idle figures and its last2 empty cells unchanged. FIX ONLY THE SIX WALK FIGURES IN THE SECOND ROW, with the same approved character facing UP in ALL frames. The current second row alternates similar contact poses too quickly and has almost no narrow passing poses. It must become ONE smooth canonical SIX FRAME gait in this exact order, NOT six unrelated versions of a standing man:\nFRAME1: LEFT foot forward contact / right foot behind, broad stride.\nFRAME2: weight settles on LEFT support leg, left knee compresses slightly, rear RIGHT heel lifts, feet drawing closer.\nFRAME3: RIGHT leg passes forward UNDER the hips with knee bent, RIGHT foot raised; LEFT support foot planted. NARROW leg silhouette with one lifted foot, clearly different from frame1.\nFRAME4: RIGHT foot forward contact / LEFT foot behind, broad stride opposite frame1.\nFRAME5: weight settles on RIGHT support leg, right knee compresses slightly, rear LEFT heel lifts, feet drawing closer.\nFRAME6: LEFT leg passes forward UNDER the hips with knee bent, LEFT foot raised; RIGHT support foot planted. NARROW leg silhouette opposite frame3, then returns to frame1.\nThe gait progresses in place with fixed ground root and consistent head/torso positions, head body bob <=1native pixel. Preserve the same shoes and two legs; no extra foot, no floating, no running/lunge. Modest cloth sash follow-through and both hands holding one complete staff. For left view, the direction of travel is screen-left; clear forward/back alternation of the legs. For down/up, use foreshortening with the forward foot lower and rear foot higher in the image; passing poses overlap near center, and broad contact poses show the two separated shoes. The six resulting silhouettes must be visibly different and form left support -> right support -> left support, not L/R/L/R/L/R between every adjacent frame. Actual alpha transparency, no labels, shadows, gridlines, floor or new elements. Keep the rest of Image1 unchanged."
+    }
+  ],
+  "selection": "待机取原图第一行前4格；行走取步态修正源图第二行6格，逐格最近邻整理"
+}

@@ -1,0 +1,13 @@
+{
+ "说明": "场景登记表：底图 bg 与前景遮挡层 front 是 assets/env/ 下的文件名前缀（程序取最高版本 _v0N.png），没交就用 placeholder 指的代码占位图。叠放顺序固定为 底图 → 角色 → 前景。size 是地图尺寸（镜头边界就是地图边）。可走区与碰撞默认用关卡代码里的多边形；data/walk/<场景>.json 存在时用它覆盖（tools/trace_walkable.py 从可走区遮罩生成）。",
+ "scenes": {
+  "chapeng": {"bg": "env_chapeng", "front": "env_chapeng_front", "size": [960, 540]},
+  "shanmen": {"bg": "env_shanmen", "front": "env_shanmen_front", "size": [1920, 1080]},
+  "cangjingge": {"bg": "env_cangjingge", "front": "env_cangjingge_front", "size": [1920, 1080], "placeholder": "cangjingge"},
+  "daxiongbaodian": {"bg": "env_daxiongbaodian", "front": "env_daxiongbaodian_front", "size": [1920, 1080], "placeholder": "daxiongbaodian"},
+  "workshop": {"bg": "env_modern_workshop", "front": "", "size": [960, 540], "placeholder": "workshop"},
+  "shenjia": {"bg": "env_origin_shenjia", "front": "env_origin_shenjia_front", "size": [960, 540], "placeholder": "shenjia_room"},
+  "tiejiang": {"bg": "env_origin_tiejiang", "front": "env_origin_tiejiang_front", "size": [960, 540], "placeholder": "forge"},
+  "xiban": {"bg": "env_origin_xiban", "front": "env_origin_xiban_front", "size": [960, 540], "placeholder": "backstage"}
+ }
+}

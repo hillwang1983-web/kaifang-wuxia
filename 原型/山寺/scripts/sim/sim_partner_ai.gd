@@ -1,6 +1,9 @@
-## AI 净心：和真人一样只产出 SimCommand（规格书第四节「搭档接口」的 AI 实现）。
-## 会跟随、普攻、看红区闪避；玩家发合击邀请时走进光圈响应；
-## 玄诚读条重击时自己发合击邀请，等玩家按合击键或走进光圈——打断要靠两人配合，不替玩家包办。
+## AI 队友（净心、第三人，以及开发用的代玩）：和真人一样只产出 SimCommand（规格书第四节「搭档接口」的 AI 实现）。
+## 会跟随、普攻、看红区闪避、走出毒池、待在毒雾安全圈里；有人被定身就用截脉解穴；
+## 玩家发合击 / 阵法邀请时走进光圈响应；玄诚读条重击时、毒姥罩着毒罩时自己发邀请，
+## 等玩家按合击键或走进光圈——打断和破罩要靠大家配合，不替玩家包办。
+## 大雄宝殿（弩车）：porter 去捡零件、送到中央，零件齐了就拼；may_ride 在没人坐时上车打几发再让出来
+## （真人走过来要坐会让座）；金刚预警冲撞时发合击邀请等大家来撞偏；没有裂口时不去硬砍铁甲，有裂口就绕到裂口那一侧打。
 class_name SimPartnerAI
 extends RefCounted
 
@@ -15,6 +18,21 @@ var _dodge_wait := -1.0
 var _release_combo := false
 var _invite_cool := 8.0
 var _attack_hold := 0.0
+var porter := false         # 弩车：负责捡零件、送零件
+var may_ride := false       # 弩车：没人坐时可以上车
+var _ride_shots := 0
+var dodge_chance: float = A.dodge_chance   # 看见红区后真去闪的概率（平衡测试的「新手」配置会调低）
+var react: float = A.react                 # 从看见到闪的反应时间
+var invite_react: Array = A.invite_react   # 看到合击邀请到动身的反应时间区间
+var hazard_react := 0.0      # 踩进毒池、被毒雾罩住后过多久才反应过来往外走（平衡测试的「新手」配置会调高）
+var _hazard_t := 0.0
+var use_skills := false      # 代玩玩家：贴身时用门派第一招（快速点按的那招），截图和冒烟能看到招式
+var can_dodge := true        # 平衡测试开关：关掉就不看红区闪避
+var can_combo := true        # 关掉就不发、不响应合击 / 阵法
+var use_ballista := true     # 关掉就不碰弩车（不捡零件、不拼、不上车）
+var demo_invites := 2       # 前两次自己发邀请后走进光圈站着，给玩家示范「走进光圈」（规格书第四节引导）
+var _demo := {}             # {n, point}
+var _ride_rest := 0.0
 
 
 func _init(world: SimWorld, me: int, leader: int) -> void:
@@ -31,26 +49,60 @@ func command(dt: float) -> SimCommand:
 	if _release_combo:
 		_release_combo = false
 		cmd.released["combo"] = true
+		if demo_invites > 0 and me.kind != "player":
+			demo_invites -= 1
+			_demo = {"n": w.combo._serial + 1, "point": w.combo.preview.get(me_id, me.pos)}
 		return cmd
 	var leader := w.fighter(leader_id)
 	_invite_cool = maxf(0.0, _invite_cool - dt)
 
-	# 1. 响应玩家的合击邀请：反应一下，然后走进光圈
+	# 0.5 示范：自己发的邀请还开着，就站进光圈里等（威胁来了照样闪）
 	var inv := w.combo.invite
-	if not inv.is_empty() and inv.from != me_id:
-		if _invite_seen != inv.n:
-			_invite_seen = inv.n
-			_react = w.rng.randf_range(A.invite_react[0], A.invite_react[1])
-		_react -= dt
-		if _react <= 0.0:
-			cmd.move = (inv.point - me.pos).limit_length(1.0)
+	if not _demo.is_empty():
+		if inv.is_empty() or inv.n != _demo.n:
+			_demo = {}
+		elif _threat(me) == null:
+			cmd.move = w.steer(me.pos, _demo.point) if me.pos.distance_to(_demo.point) > 8.0 else Vector2.ZERO
 			return cmd
 
+	# 1. 响应玩家的合击邀请：反应一下，然后走进光圈
+	if can_combo and not inv.is_empty() and inv.from != me_id:
+		if _invite_seen != inv.n:
+			_invite_seen = inv.n
+			_react = w.rng.randf_range(invite_react[0], invite_react[1])
+		_react -= dt
+		if _react <= 0.0 and not (me_id in inv.responders):
+			if me.state == "mounted" or me.state == "build":
+				cmd.press("combo")  # 走不开：在原地按合击键响应
+				return cmd
+			cmd.move = w.steer(me.pos, inv.point) if me.pos.distance_to(inv.point) > 4.0 else Vector2.ZERO
+			return cmd
+
+	# 1.5 有人被定身：用截脉解穴（自己被定身也解自己）
+	if me.utility == "jiemai" and me.cd_of("jiemai") <= 0.0:
+		for h in w.heroes():
+			if h.root_t > 0.4 and (h == me or h.pos.distance_to(me.pos) <= SimData.SKILLS.jiemai.range):
+				cmd.press("utility")
+				return cmd
+
+	# 1.6 弩车：车上瞄准蓄力、送零件、拼装、上车（踏地震 / 冲撞的闪避在后面的红区规则里）
+	if use_ballista and not w.ballista.is_empty() and _threat(me) == null and _ballista(me, cmd, dt):
+		return cmd
+
+	# 1.8 站在敌人的毒池里：走出去
+	var pool := _bad_pool(me)
+	var fogged: bool = not w.fog.is_empty() and w.in_fog(me.pos)
+	_hazard_t = _hazard_t + dt if (not pool.is_empty() or fogged) else 0.0
+	var aware := _hazard_t >= hazard_react
+	if not pool.is_empty() and aware:
+		cmd.move = (me.pos - pool.pos).normalized()
+		return cmd
+
 	# 2. 看红区闪避
-	var threat := _threat(me)
+	var threat := _threat(me) if can_dodge else null
 	if threat:
 		if _dodge_wait < 0.0:
-			_dodge_wait = A.react if w.rng.randf() < A.dodge_chance else 99.0
+			_dodge_wait = react if w.rng.randf() < dodge_chance else 99.0
 		_dodge_wait -= dt
 		if _dodge_wait <= 0.0:
 			_dodge_wait = 99.0
@@ -60,15 +112,43 @@ func command(dt: float) -> SimCommand:
 	else:
 		_dodge_wait = -1.0
 
+	# 2.5 毒雾：离安全圈边缘太近就往圈中心（或净化区）走
+	if not w.fog.is_empty() and ((fogged and aware) or (hazard_react <= 0.0 and me.pos.distance_to(w.fog.center) > w.fog.r - 28.0)):
+		var safe: Vector2 = w.fog.center
+		for z in w.safe_zones:
+			if z.pos.distance_to(me.pos) < safe.distance_to(me.pos):
+				safe = z.pos
+		cmd.move = w.steer(me.pos, safe)
+		return cmd
+
+	# 2.8 毒姥罩着毒罩：发阵法 / 合击邀请去破罩（光圈摆在大家中间、往雾心偏一点）
+	var warded := _warded_foe()
+	if can_combo and warded and inv.is_empty() and w.combo.cd <= 0.0 and _invite_cool <= 0.0 and w.heroes().size() >= 2:
+		_invite_cool = 7.0
+		var spot := _party_center()
+		if not w.fog.is_empty():
+			spot = spot.lerp(w.fog.center, 0.3)
+		cmd.press("combo")
+		cmd.point = spot
+		cmd.has_point = true
+		_release_combo = true
+		return cmd
+
 	# 3. 自己发合击邀请：玄诚读条重击时，或战斗中隔一阵子
 	var boss := _casting_boss()
-	if inv.is_empty() and w.combo.cd <= 0.0 and leader and leader.alive:
+	if can_combo and inv.is_empty() and w.combo.cd <= 0.0 and leader and leader.alive:
 		var want := boss != null and boss.t >= 0.3
-		if not want and _invite_cool <= 0.0 and w.in_combat():
+		var armored := _armored_foe()
+		if armored and armored.state == "windup" and armored.atk_id == "charge" and armored.t >= 0.15:
+			want = true  # 金刚预警冲撞：发邀请等大家来撞偏
+			boss = null
+		elif not want and _invite_cool <= 0.0 and w.in_combat() and armored == null:
 			want = true
 		if want:
 			_invite_cool = A.invite_every
 			var spot := (boss.pos if boss else _target_of(me).pos if _target_of(me) else me.pos)
+			if armored:
+				spot = _party_center()
 			cmd.press("combo")
 			cmd.point = spot
 			cmd.has_point = true
@@ -77,13 +157,19 @@ func command(dt: float) -> SimCommand:
 
 	# 4. 打：贴近目标普攻；没有目标就跟着玩家
 	var target := _target_of(me)
-	if target:
+	if target and SimData.ENEMIES[target.kind].has("armor_cut"):
+		_fight_armored(me, target, cmd, dt)
+	elif target:
 		var to := target.pos - me.pos
 		var reach: float = SimData.ATTACKS[me.sect][0].range - 14.0
 		if to.length() > reach:
-			cmd.move = to.normalized()
+			cmd.move = w.steer(me.pos, target.pos)
 		else:
 			cmd.aim = to.normalized()
+			var first: String = me.skills[0] if not me.skills.is_empty() else ""
+			if use_skills and first != "" and me.cd_of(first) <= 0.0 and me.qi >= SimData.SKILLS[first].cost:
+				cmd.press("skill_1")
+				return cmd
 			_attack_hold -= dt
 			if _attack_hold <= 0.0 and me.atk_cd <= 0.0:
 				_attack_hold = 0.15
@@ -91,17 +177,39 @@ func command(dt: float) -> SimCommand:
 	elif leader:
 		var to := leader.pos - me.pos
 		if to.length() > A.follow:
-			cmd.move = to.normalized() * clampf((to.length() - A.follow) / 40.0, 0.3, 1.0)
+			cmd.move = w.steer(me.pos, leader.pos) * clampf((to.length() - A.follow) / 40.0, 0.3, 1.0)
 	return cmd
 
 
 func _threat(me: SimFighter) -> SimFighter:
 	for e in w.foes():
 		if e.state == "windup" and e.atk.get("shape", "") != "field" \
-				and SimEnemies.in_zone(e.atk, e.pos, e.facing, me.pos, me.radius) \
+				and SimEnemies.in_zone(e.atk, e.pos, e.facing, me.pos, me.radius, e.aim_point) \
 				and e.atk.tele - e.t < 0.45:
 			return e
 	return null
+
+
+func _bad_pool(me: SimFighter) -> Dictionary:
+	for p in w.pools:
+		if p.get("team", SimFighter.HEROES) == SimFighter.FOES and p.pos.distance_to(me.pos) <= p.radius + me.radius + 4.0:
+			return p
+	return {}
+
+
+func _warded_foe() -> SimFighter:
+	for e in w.foes():
+		if SimData.ENEMIES[e.kind].has("ward_cut") and e.ward_t <= 0.0 and e.in_combat:
+			return e
+	return null
+
+
+func _party_center() -> Vector2:
+	var sum := Vector2.ZERO
+	var hs := w.heroes()
+	for h in hs:
+		sum += h.pos
+	return sum / maxf(1.0, hs.size())
 
 
 func _casting_boss() -> SimFighter:
@@ -121,3 +229,156 @@ func _target_of(me: SimFighter) -> SimFighter:
 			if best == null or e.pos.distance_to(anchor) < best.pos.distance_to(anchor):
 				best = e
 	return best
+
+
+# ---------- 大雄宝殿：弩车 ----------
+
+## 返回真表示这一帧在忙弩车的事
+func _ballista(me: SimFighter, cmd: SimCommand, dt: float) -> bool:
+	var b := w.ballista
+	_ride_rest = maxf(0.0, _ride_rest - dt)
+	if me.state == "build":
+		return true  # 站着别动，等读条
+	if me.state == "mounted":
+		var leader := w.fighter(leader_id)
+		var wants := leader != null and leader.alive and leader.kind == "player" and leader.pos.distance_to(b.center) < SimData.BALLISTA.reach + 20.0
+		if _ride_shots >= 4 or wants:
+			_ride_shots = 0
+			_ride_rest = 8.0
+			cmd.press("interact")
+			return true
+		var foe := _armored_foe()
+		if foe:
+			cmd.aim = (foe.pos - b.center).normalized()
+		# 蓄到第三档再松手（AI 只打满档，不抢真人的节奏）
+		if b.charging and b.charge_t >= SimData.BALLISTA.charge_steps[1] + 0.05:
+			_ride_shots += 1
+		else:
+			cmd.held["attack"] = true
+		return true
+	var mine := SimBallista.carried(w, me)
+	if not b.built and not mine.is_empty():
+		cmd.move = w.steer(me.pos, b.center)
+		return true
+	if not b.built and b.installed.size() == SimData.BALLISTA.parts.size() and b.build_by == -1:
+		if me.pos.distance_to(b.center) > SimData.BALLISTA.reach - 12.0:
+			cmd.move = w.steer(me.pos, b.center)
+		else:
+			cmd.press("interact")
+		return true
+	if porter and not b.built and mine.is_empty():
+		var part := _loose_part(me)
+		if not part.is_empty():
+			cmd.move = w.steer(me.pos, part.pos)
+			return true
+		var pile := _part_pile(me)
+		if pile:
+			var to := pile.pos - me.pos
+			if to.length() > SimData.ATTACKS[me.sect][0].range - 20.0:
+				cmd.move = w.steer(me.pos, pile.pos)
+			else:
+				cmd.aim = to.normalized()
+				if me.atk_cd <= 0.0:
+					cmd.press("attack")
+			return true
+	if may_ride and b.built and b.rider == -1 and _ride_rest <= 0.0:
+		if me.pos.distance_to(b.center) > SimData.BALLISTA.reach - 12.0:
+			cmd.move = w.steer(me.pos, b.center)
+		else:
+			cmd.press("interact")
+		return true
+	return false
+
+
+## 没人背的零件里离自己最近、且别的英雄没在去捡的
+func _loose_part(me: SimFighter) -> Dictionary:
+	var best := {}
+	for p in w.parts:
+		if p.carrier != -1:
+			continue
+		if best.is_empty() or p.pos.distance_to(me.pos) < best.pos.distance_to(me.pos):
+			best = p
+	return best
+
+
+## 还没打碎、带零件的零件堆
+func _part_pile(me: SimFighter) -> SimFighter:
+	var best: SimFighter = null
+	for id in w.pile_parts:
+		var f := w.fighter(id)
+		if f and f.alive and (best == null or f.pos.distance_to(me.pos) < best.pos.distance_to(me.pos)):
+			best = f
+	return best
+
+
+func _armored_foe() -> SimFighter:
+	for e in w.foes():
+		if SimData.ENEMIES[e.kind].has("armor_cut"):
+			return e
+	return null
+
+
+## 打铁甲（不在弩车上的 AI）：
+## - 金刚离弩车太近（< 200 像素）就先把它往远处引，引到 300 像素外再打——离得远，被抓起来扔也砸不到车（扔 220 像素）；
+## - 有裂口就绕到最大那道裂口的一侧出手，两个 AI 一左一右错开，不站成一堆；
+## - 抓人快到时离弩车太近的先退开，不站在会被扔上车的距离里；
+## - 没弩车、也没裂口时在一旁游走等弩箭，不硬砍铁甲。
+const LURE_START := 200.0
+const LURE_STOP := 300.0
+var _luring := false
+
+
+func _fight_armored(me: SimFighter, e: SimFighter, cmd: SimCommand, dt: float) -> void:
+	var b := w.ballista
+	var side := 0.45 if me_id % 2 == 0 else -0.45   # 一左一右错开
+	if not b.is_empty() and b.built:
+		var bd: float = e.pos.distance_to(b.center)
+		_luring = bd < (LURE_STOP if _luring else LURE_START)
+		if _luring:
+			var out: Vector2 = (e.pos - b.center).normalized() if bd > 1.0 else Vector2.UP
+			var lure := _walkable_toward(b.center, out.rotated(side * 0.5), 420.0)
+			if me.pos.distance_to(lure) > 16.0:
+				cmd.move = w.steer(me.pos, lure)
+			return
+	# 抓人快到了：离弩车 270 像素以内的先退到 290 外，免得被抓起来正好扔到车上（扔 220 像素，落点 40 像素内算砸中）
+	if not b.is_empty() and b.built and float(e.timers.get("grab", 99.0)) < 1.5 and me.pos.distance_to(b.center) < 270.0:
+		var back: Vector2 = (me.pos - b.center).normalized() if me.pos.distance_to(b.center) > 1.0 else Vector2.UP
+		cmd.move = w.steer(me.pos, _walkable_toward(b.center, back, 290.0))
+		return
+	var best := {}
+	for br in e.breaches:
+		if best.is_empty() or br.r > best.r:
+			best = br
+	var reach: float = SimData.ATTACKS[me.sect][0].range - 18.0
+	if best.is_empty():
+		var away := me.pos - e.pos
+		if away.length() < 110.0:
+			cmd.move = w.steer(me.pos, e.pos + away.normalized().rotated(side) * 130.0)
+		return
+	var dir: Vector2 = (best.off as Vector2).normalized().rotated(side * 0.6)
+	var spot: Vector2 = e.pos + dir * (e.radius + reach * 0.6)
+	if not SimBallista.in_breach(e, spot):
+		dir = (best.off as Vector2).normalized()
+		spot = e.pos + dir * (e.radius + reach * 0.6)
+	if me.pos.distance_to(spot) > 14.0 and (me.pos - e.pos).normalized().dot(dir) < 0.85:
+		cmd.move = w.steer(me.pos, spot)
+		return
+	if (me.pos - e.pos).length() > e.radius + reach:
+		cmd.move = w.steer(me.pos, spot)
+		return
+	cmd.aim = (e.pos - me.pos).normalized()
+	_attack_hold -= dt
+	if _attack_hold <= 0.0 and me.atk_cd <= 0.0:
+		_attack_hold = 0.15
+		cmd.press("attack")
+
+
+## 从 from 沿 dir 走 dist 像素，落点走不到就左右逐步偏转、再缩短距离找能走的点
+func _walkable_toward(from: Vector2, dir: Vector2, dist: float) -> Vector2:
+	for d in [dist, dist * 0.75, dist * 0.5]:
+		for a in [0.0, 0.4, -0.4, 0.8, -0.8, 1.2, -1.2]:
+			var p: Vector2 = from + dir.rotated(a) * d
+			if w.walkable(p):
+				return p
+	return from + dir * dist * 0.3
+

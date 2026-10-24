@@ -1,0 +1,29 @@
+[
+  {
+    "direction": "down",
+    "suffix": "sweepfix",
+    "prompt": "Use case: precise-object-edit. CHANGE ONLY ROW1 COLUMN5 of this6col4row transparentpixelatlas, the horizontal staff sweep. Preserve exact sameperson anatomy/head/body/palette/feetposition and ALL other18frames unchanged. Staff extends too farRIGHT. FORESHORTEN ONLY the staff's projected reach, bring RIGHTtip inward byabout70sourcepixels so it ends nearx1040onthis1330wideimage, immediatelybeyondactor's rightshoe. Leftfoot/rightfoot/stance stayintact, securetwohandgrip. Wholepose mustfititscell atsamestanding40nativepixeltallscale. No attackglow/streak/text/grid/shadow, actualtransparent. Same6col4rowlayout.",
+    "referenced_image_paths": [
+      "/Volumes/ML_models/游戏/开放武侠/output/art-shaolin-combat-20261024-1826/source/shaolin_combat_down_generated.png"
+    ],
+    "transparent_background": true
+  },
+  {
+    "direction": "left",
+    "suffix": "strikefix",
+    "prompt": "Use case: precise-object-edit. CHANGE ONLY ROW2 COLUMN2 (downward staffstrike pose) of this6col4row transparentpixelatlas. Staff currentlyextends too farLEFT, fromx213in1330wideimage. Foreshorten/angle thewoodenstaff tobring itsLEFTMOSTtip rightwards tox255orhigher, held securelybetweenhands, compactvertical-downwardprojectedstrike. Preserve body/head/feetstanceposition, clothes/palette/anatomicalscale. Fullposebody+staffmustfit48nativecell. All other18framesexactlyunchanged includingblankcells, no newobjects/effects/grid/text, actualtransparent.",
+    "referenced_image_paths": [
+      "/Volumes/ML_models/游戏/开放武侠/output/art-shaolin-combat-20261024-1826/source/shaolin_combat_left_generated.png"
+    ],
+    "transparent_background": true
+  },
+  {
+    "direction": "up",
+    "suffix": "sweepfix",
+    "prompt": "Use case: precise-object-edit. CHANGE ONLY ROW1 COLUMN5 (rear-facing horizontalstaffsweep) ofthis6col4rowtransparentpixelatlas. Staffextends too farRIGHT tox1166on1330wideimage. Strongforeshortening only theprojectedstaffreach: RIGHTtip shouldendnearx1080 immediatelybesideactor's rightfoot/arm; NOTa long horizontalpole. Same body/head/feetlocation, sameclothing/palette/anatomicalscale, securetwohandgrip. KeepBACKjacket/rearhair NOeyes/face. Wholeposefits48nativecell. Other18frames andblankcellsUNCHANGED, actualtransparent noeffects/text/grid.",
+    "referenced_image_paths": [
+      "/Volumes/ML_models/游戏/开放武侠/output/art-shaolin-combat-20261024-1826/source/shaolin_combat_up_generated.png"
+    ],
+    "transparent_background": true
+  }
+]

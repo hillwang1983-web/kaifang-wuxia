@@ -1,0 +1,60 @@
+{
+  "background": "assets/env/env_shanmen_v01.png",
+  "camera_crop": [
+    480,
+    0,
+    960,
+    540
+  ],
+  "placements": [
+    {
+      "role": "shaolin",
+      "native_scale": 1,
+      "ground": [
+        320,
+        350
+      ],
+      "offset": [
+        296,
+        290
+      ]
+    },
+    {
+      "role": "down",
+      "native_scale": 1,
+      "ground": [
+        420,
+        350
+      ],
+      "offset": [
+        388,
+        274
+      ]
+    },
+    {
+      "role": "left",
+      "native_scale": 1,
+      "ground": [
+        520,
+        350
+      ],
+      "offset": [
+        488,
+        274
+      ]
+    },
+    {
+      "role": "up",
+      "native_scale": 1,
+      "ground": [
+        620,
+        350
+      ],
+      "offset": [
+        588,
+        274
+      ]
+    }
+  ],
+  "purpose": "静态原生尺寸合成，非运行时截图"
+}

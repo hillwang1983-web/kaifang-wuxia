@@ -1,0 +1,4882 @@
+[
+  {
+    "file": "assets/boss/boss_xuancheng_sweep_down_v01.png",
+    "action": "sweep",
+    "direction": "down",
+    "frame_size": [
+      64,
+      80
+    ],
+    "frame_count": 8,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      32,
+      76
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "hold_frames": [
+      2
+    ],
+    "sole_line_y": 76,
+    "no_pixels_below_y": 76,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_boss_xuancheng_attack_down_compactfix_source_v01.png",
+        "source_component_id": 2,
+        "source_crop_xywh": [
+          39,
+          34,
+          179,
+          187
+        ],
+        "uniform_scale": 0.25980392156862747,
+        "scaled_size": [
+          47,
+          49
+        ],
+        "offset": [
+          9,
+          28
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            19,
+            76
+          ],
+          [
+            45,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              7,
+              42,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              31,
+              42,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1107
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_boss_xuancheng_attack_down_compactfix_source_v01.png",
+        "source_component_id": 3,
+        "source_crop_xywh": [
+          318,
+          37,
+          187,
+          184
+        ],
+        "uniform_scale": 0.25980392156862747,
+        "scaled_size": [
+          49,
+          48
+        ],
+        "offset": [
+          6,
+          29
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            14,
+            76
+          ],
+          [
+            50,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              5,
+              41,
+              9,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              35,
+              41,
+              14,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1191
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_boss_xuancheng_attack_down_compactfix_source_v01.png",
+        "source_component_id": 1,
+        "source_crop_xywh": [
+          598,
+          7,
+          178,
+          214
+        ],
+        "uniform_scale": 0.25980392156862747,
+        "scaled_size": [
+          46,
+          56
+        ],
+        "offset": [
+          10,
+          21
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            14,
+            76
+          ],
+          [
+            50,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              0,
+              49,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              32,
+              49,
+              12,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1337
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_boss_xuancheng_attack_down_compactfix_source_v01.png",
+        "source_component_id": 6,
+        "source_crop_xywh": [
+          77,
+          265,
+          180,
+          182
+        ],
+        "uniform_scale": 0.25980392156862747,
+        "scaled_size": [
+          47,
+          47
+        ],
+        "offset": [
+          9,
+          30
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            13,
+            76
+          ],
+          [
+            51,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              1,
+              40,
+              14,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              38,
+              40,
+              9,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1126
+      },
+      {
+        "index": 4,
+        "source": "assets/ref/ref_boss_xuancheng_attack_down_compactfix_source_v01.png",
+        "source_component_id": 5,
+        "source_crop_xywh": [
+          337,
+          257,
+          190,
+          189
+        ],
+        "uniform_scale": 0.25980392156862747,
+        "scaled_size": [
+          49,
+          49
+        ],
+        "offset": [
+          9,
+          28
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            13,
+            76
+          ],
+          [
+            51,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              0,
+              42,
+              12,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              33,
+              42,
+              13,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1168
+      },
+      {
+        "index": 5,
+        "source": "assets/ref/ref_boss_xuancheng_attack_down_compactfix_source_v01.png",
+        "source_component_id": 7,
+        "source_crop_xywh": [
+          598,
+          265,
+          215,
+          182
+        ],
+        "uniform_scale": 0.25980392156862747,
+        "scaled_size": [
+          56,
+          47
+        ],
+        "offset": [
+          8,
+          30
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            12,
+            76
+          ],
+          [
+            52,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              0,
+              40,
+              14,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              39,
+              40,
+              9,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1147
+      },
+      {
+        "index": 6,
+        "source": "assets/ref/ref_boss_xuancheng_attack_down_compactfix_source_v01.png",
+        "source_component_id": 9,
+        "source_crop_xywh": [
+          60,
+          507,
+          171,
+          162
+        ],
+        "uniform_scale": 0.25980392156862747,
+        "scaled_size": [
+          44,
+          42
+        ],
+        "offset": [
+          11,
+          35
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            14,
+            76
+          ],
+          [
+            50,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              0,
+              35,
+              29,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              31,
+              35,
+              13,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1019
+      },
+      {
+        "index": 7,
+        "source": "assets/ref/ref_boss_xuancheng_attack_down_compactfix_source_v01.png",
+        "source_component_id": 8,
+        "source_crop_xywh": [
+          341,
+          477,
+          147,
+          194
+        ],
+        "uniform_scale": 0.25980392156862747,
+        "scaled_size": [
+          38,
+          50
+        ],
+        "offset": [
+          13,
+          27
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            19,
+            76
+          ],
+          [
+            45,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              3,
+              43,
+              11,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              26,
+              43,
+              11,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1077
+      }
+    ],
+    "phases": {
+      "anticipation_frames": [
+        0,
+        1,
+        2
+      ],
+      "hold_frame": 2,
+      "hold_seconds": 0.8,
+      "strike_frames": [
+        3,
+        4,
+        5
+      ],
+      "recovery_frames": [
+        6,
+        7
+      ]
+    },
+    "end_behavior": "return_to_idle_by_controller"
+  },
+  {
+    "file": "assets/boss/boss_xuancheng_heavy_down_v01.png",
+    "action": "heavy",
+    "direction": "down",
+    "frame_size": [
+      64,
+      80
+    ],
+    "frame_count": 9,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      32,
+      76
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "hold_frames": [],
+    "sole_line_y": 76,
+    "no_pixels_below_y": 76,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_boss_xuancheng_attack_down_compactfix_source_v01.png",
+        "source_component_id": 13,
+        "source_crop_xywh": [
+          53,
+          696,
+          173,
+          200
+        ],
+        "uniform_scale": 0.25980392156862747,
+        "scaled_size": [
+          45,
+          52
+        ],
+        "offset": [
+          10,
+          25
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            14,
+            76
+          ],
+          [
+            50,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              0,
+              45,
+              11,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              33,
+              45,
+              12,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [
+          20
+        ],
+        "opaque_pixel_count": 1540
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_boss_xuancheng_attack_down_compactfix_source_v01.png",
+        "source_component_id": 12,
+        "source_crop_xywh": [
+          340,
+          695,
+          173,
+          201
+        ],
+        "uniform_scale": 0.25980392156862747,
+        "scaled_size": [
+          45,
+          52
+        ],
+        "offset": [
+          10,
+          25
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            14,
+            76
+          ],
+          [
+            50,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              0,
+              45,
+              12,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              32,
+              45,
+              13,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [
+          24,
+          21
+        ],
+        "opaque_pixel_count": 1600
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_boss_xuancheng_attack_down_compactfix_source_v01.png",
+        "source_component_id": 10,
+        "source_crop_xywh": [
+          619,
+          694,
+          180,
+          202
+        ],
+        "uniform_scale": 0.25980392156862747,
+        "scaled_size": [
+          47,
+          52
+        ],
+        "offset": [
+          9,
+          25
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            12,
+            76
+          ],
+          [
+            52,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              0,
+              45,
+              12,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              33,
+              45,
+              14,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [
+          25,
+          22
+        ],
+        "opaque_pixel_count": 1615
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_boss_xuancheng_attack_down_compactfix_source_v01.png",
+        "source_component_id": 11,
+        "source_crop_xywh": [
+          911,
+          694,
+          176,
+          202
+        ],
+        "uniform_scale": 0.25980392156862747,
+        "scaled_size": [
+          46,
+          52
+        ],
+        "offset": [
+          10,
+          25
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            13,
+            76
+          ],
+          [
+            51,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              0,
+              45,
+              11,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              32,
+              45,
+              14,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [
+          23,
+          19
+        ],
+        "opaque_pixel_count": 1602
+      },
+      {
+        "index": 4,
+        "source": "assets/ref/ref_boss_xuancheng_attack_down_compactfix_source_v01.png",
+        "source_component_id": 18,
+        "source_crop_xywh": [
+          60,
+          880,
+          180,
+          247
+        ],
+        "uniform_scale": 0.25980392156862747,
+        "scaled_size": [
+          47,
+          64
+        ],
+        "offset": [
+          9,
+          13
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            13,
+            76
+          ],
+          [
+            51,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              0,
+              57,
+              12,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              33,
+              57,
+              14,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1351
+      },
+      {
+        "index": 5,
+        "source": "assets/ref/ref_boss_xuancheng_attack_down_compactfix_source_v01.png",
+        "source_component_id": 29,
+        "source_crop_xywh": [
+          344,
+          957,
+          170,
+          168
+        ],
+        "uniform_scale": 0.25980392156862747,
+        "scaled_size": [
+          44,
+          44
+        ],
+        "offset": [
+          11,
+          33
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            14,
+            76
+          ],
+          [
+            50,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              0,
+              37,
+              9,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              35,
+              37,
+              9,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 940
+      },
+      {
+        "index": 6,
+        "source": "assets/ref/ref_boss_xuancheng_attack_down_compactfix_source_v01.png",
+        "source_component_id": 30,
+        "source_crop_xywh": [
+          606,
+          965,
+          184,
+          160
+        ],
+        "uniform_scale": 0.25980392156862747,
+        "scaled_size": [
+          48,
+          42
+        ],
+        "offset": [
+          10,
+          35
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            13,
+            76
+          ],
+          [
+            51,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              0,
+              35,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              36,
+              35,
+              12,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1085
+      },
+      {
+        "index": 7,
+        "source": "assets/ref/ref_boss_xuancheng_attack_down_compactfix_source_v01.png",
+        "source_component_id": 36,
+        "source_crop_xywh": [
+          59,
+          1164,
+          158,
+          193
+        ],
+        "uniform_scale": 0.25980392156862747,
+        "scaled_size": [
+          41,
+          50
+        ],
+        "offset": [
+          12,
+          27
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            16,
+            76
+          ],
+          [
+            48,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              0,
+              43,
+              11,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              31,
+              43,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1176
+      },
+      {
+        "index": 8,
+        "source": "assets/ref/ref_boss_xuancheng_attack_down_compactfix_source_v01.png",
+        "source_component_id": 35,
+        "source_crop_xywh": [
+          341,
+          1153,
+          158,
+          204
+        ],
+        "uniform_scale": 0.25980392156862747,
+        "scaled_size": [
+          41,
+          53
+        ],
+        "offset": [
+          12,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            19,
+            76
+          ],
+          [
+            45,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              3,
+              46,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              28,
+              46,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1156
+      }
+    ],
+    "phases": {
+      "charge_loop_frames": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "charge_seconds": 2.0,
+      "strike_frames": [
+        4,
+        5,
+        6
+      ],
+      "recovery_frames": [
+        7,
+        8
+      ]
+    },
+    "end_behavior": "return_to_idle_by_controller"
+  },
+  {
+    "file": "assets/boss/boss_xuancheng_hit_down_v01.png",
+    "action": "hit",
+    "direction": "down",
+    "frame_size": [
+      64,
+      80
+    ],
+    "frame_count": 2,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      32,
+      76
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0,
+      1
+    ],
+    "hold_frames": [],
+    "sole_line_y": 76,
+    "no_pixels_below_y": 76,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_boss_xuancheng_react_down_source_v01.png",
+        "source_component_id": 2,
+        "source_crop_xywh": [
+          76,
+          121,
+          360,
+          380
+        ],
+        "uniform_scale": 0.12268518518518519,
+        "scaled_size": [
+          44,
+          47
+        ],
+        "offset": [
+          10,
+          30
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            21,
+            76
+          ],
+          [
+            43,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              9,
+              40,
+              7,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              29,
+              40,
+              8,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1023
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_boss_xuancheng_react_down_source_v01.png",
+        "source_component_id": 1,
+        "source_crop_xywh": [
+          578,
+          69,
+          334,
+          432
+        ],
+        "uniform_scale": 0.12268518518518519,
+        "scaled_size": [
+          41,
+          53
+        ],
+        "offset": [
+          8,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            19,
+            76
+          ],
+          [
+            45,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              9,
+              46,
+              8,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              31,
+              46,
+              9,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1091
+      }
+    ],
+    "end_behavior": "return_to_idle_by_controller"
+  },
+  {
+    "file": "assets/boss/boss_xuancheng_stagger_down_v01.png",
+    "action": "stagger",
+    "direction": "down",
+    "frame_size": [
+      64,
+      80
+    ],
+    "frame_count": 3,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      32,
+      76
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0,
+      1,
+      2
+    ],
+    "hold_frames": [],
+    "sole_line_y": 76,
+    "no_pixels_below_y": 76,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_boss_xuancheng_react_down_source_v01.png",
+        "source_component_id": 4,
+        "source_crop_xywh": [
+          77,
+          559,
+          366,
+          408
+        ],
+        "uniform_scale": 0.12268518518518519,
+        "scaled_size": [
+          45,
+          50
+        ],
+        "offset": [
+          6,
+          27
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            17,
+            76
+          ],
+          [
+            47,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              8,
+              43,
+              12,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              33,
+              43,
+              12,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1129
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_boss_xuancheng_react_down_source_v01.png",
+        "source_component_id": 5,
+        "source_crop_xywh": [
+          612,
+          607,
+          380,
+          360
+        ],
+        "uniform_scale": 0.12268518518518519,
+        "scaled_size": [
+          47,
+          44
+        ],
+        "offset": [
+          13,
+          33
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            16,
+            76
+          ],
+          [
+            48,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              0,
+              37,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              25,
+              37,
+              13,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1047
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_boss_xuancheng_react_down_source_v01.png",
+        "source_component_id": 6,
+        "source_crop_xywh": [
+          1058,
+          607,
+          402,
+          360
+        ],
+        "uniform_scale": 0.12268518518518519,
+        "scaled_size": [
+          49,
+          44
+        ],
+        "offset": [
+          10,
+          33
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            16,
+            76
+          ],
+          [
+            48,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              4,
+              37,
+              12,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              32,
+              37,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1022
+      }
+    ],
+    "end_behavior": "return_to_idle_by_controller"
+  },
+  {
+    "file": "assets/boss/boss_xuancheng_sit_down_v01.png",
+    "action": "sit",
+    "direction": "down",
+    "frame_size": [
+      64,
+      80
+    ],
+    "frame_count": 1,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      32,
+      76
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0
+    ],
+    "hold_frames": [
+      0
+    ],
+    "sole_line_y": 76,
+    "no_pixels_below_y": 76,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_boss_xuancheng_react_down_source_v01.png",
+        "source_component_id": 3,
+        "source_crop_xywh": [
+          1041,
+          239,
+          435,
+          267
+        ],
+        "uniform_scale": 0.12268518518518519,
+        "scaled_size": [
+          53,
+          33
+        ],
+        "offset": [
+          6,
+          44
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            26,
+            76
+          ],
+          [
+            38,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              18,
+              28,
+              7,
+              4
+            ],
+            "translate": [
+              0,
+              1
+            ]
+          },
+          {
+            "window": [
+              29,
+              28,
+              7,
+              4
+            ],
+            "translate": [
+              0,
+              1
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 850
+      }
+    ],
+    "end_behavior": "hold_seated_until_state_change"
+  },
+  {
+    "file": "assets/boss/boss_xuancheng_sweep_left_v01.png",
+    "action": "sweep",
+    "direction": "left",
+    "frame_size": [
+      64,
+      80
+    ],
+    "frame_count": 8,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      32,
+      76
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "hold_frames": [
+      2
+    ],
+    "sole_line_y": 76,
+    "no_pixels_below_y": 76,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_boss_xuancheng_attack_left_compactfix_source_v01.png",
+        "source_component_id": 3,
+        "source_crop_xywh": [
+          32,
+          96,
+          189,
+          193
+        ],
+        "uniform_scale": 0.2760416666666667,
+        "scaled_size": [
+          52,
+          53
+        ],
+        "offset": [
+          3,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            13,
+            76
+          ],
+          [
+            51,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              6,
+              46,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              38,
+              46,
+              14,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1065
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_boss_xuancheng_attack_left_compactfix_source_v01.png",
+        "source_component_id": 1,
+        "source_crop_xywh": [
+          303,
+          62,
+          174,
+          227
+        ],
+        "uniform_scale": 0.2760416666666667,
+        "scaled_size": [
+          48,
+          63
+        ],
+        "offset": [
+          8,
+          14
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            12,
+            76
+          ],
+          [
+            52,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              0,
+              56,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              33,
+              56,
+              15,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1280
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_boss_xuancheng_attack_left_compactfix_source_v01.png",
+        "source_component_id": 2,
+        "source_crop_xywh": [
+          552,
+          74,
+          175,
+          215
+        ],
+        "uniform_scale": 0.2760416666666667,
+        "scaled_size": [
+          48,
+          59
+        ],
+        "offset": [
+          8,
+          18
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            13,
+            76
+          ],
+          [
+            51,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              0,
+              52,
+              11,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              33,
+              52,
+              15,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1269
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_boss_xuancheng_attack_left_compactfix_source_v01.png",
+        "source_component_id": 6,
+        "source_crop_xywh": [
+          52,
+          370,
+          201,
+          170
+        ],
+        "uniform_scale": 0.2760416666666667,
+        "scaled_size": [
+          55,
+          47
+        ],
+        "offset": [
+          0,
+          30
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            13,
+            76
+          ],
+          [
+            51,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              8,
+              40,
+              11,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              41,
+              40,
+              14,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1177
+      },
+      {
+        "index": 4,
+        "source": "assets/ref/ref_boss_xuancheng_attack_left_compactfix_source_v01.png",
+        "source_component_id": 5,
+        "source_crop_xywh": [
+          316,
+          366,
+          193,
+          174
+        ],
+        "uniform_scale": 0.2760416666666667,
+        "scaled_size": [
+          53,
+          48
+        ],
+        "offset": [
+          3,
+          29
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            12,
+            76
+          ],
+          [
+            52,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              5,
+              41,
+              11,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              38,
+              41,
+              15,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1217
+      },
+      {
+        "index": 5,
+        "source": "assets/ref/ref_boss_xuancheng_left_isolated_source_v01.png",
+        "source_component_id": 1,
+        "source_crop_xywh": [
+          139,
+          241,
+          530,
+          428
+        ],
+        "uniform_scale": 0.10981308411214953,
+        "scaled_size": [
+          58,
+          47
+        ],
+        "offset": [
+          0,
+          30
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            11,
+            76
+          ],
+          [
+            53,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              7,
+              40,
+              11,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              42,
+              40,
+              16,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1280
+      },
+      {
+        "index": 6,
+        "source": "assets/ref/ref_boss_xuancheng_attack_left_compactfix_source_v01.png",
+        "source_component_id": 9,
+        "source_crop_xywh": [
+          53,
+          634,
+          203,
+          149
+        ],
+        "uniform_scale": 0.2760416666666667,
+        "scaled_size": [
+          56,
+          41
+        ],
+        "offset": [
+          0,
+          36
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            13,
+            76
+          ],
+          [
+            51,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              9,
+              34,
+              15,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              25,
+              34,
+              31,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1109
+      },
+      {
+        "index": 7,
+        "source": "assets/ref/ref_boss_xuancheng_attack_left_compactfix_source_v01.png",
+        "source_component_id": 8,
+        "source_crop_xywh": [
+          318,
+          592,
+          140,
+          191
+        ],
+        "uniform_scale": 0.2760416666666667,
+        "scaled_size": [
+          39,
+          53
+        ],
+        "offset": [
+          11,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            18,
+            76
+          ],
+          [
+            46,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              3,
+              46,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              28,
+              46,
+              11,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1112
+      }
+    ],
+    "phases": {
+      "anticipation_frames": [
+        0,
+        1,
+        2
+      ],
+      "hold_frame": 2,
+      "hold_seconds": 0.8,
+      "strike_frames": [
+        3,
+        4,
+        5
+      ],
+      "recovery_frames": [
+        6,
+        7
+      ]
+    },
+    "end_behavior": "return_to_idle_by_controller"
+  },
+  {
+    "file": "assets/boss/boss_xuancheng_heavy_left_v01.png",
+    "action": "heavy",
+    "direction": "left",
+    "frame_size": [
+      64,
+      80
+    ],
+    "frame_count": 9,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      32,
+      76
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "hold_frames": [],
+    "sole_line_y": 76,
+    "no_pixels_below_y": 76,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_boss_xuancheng_attack_left_compactfix_source_v01.png",
+        "source_component_id": 13,
+        "source_crop_xywh": [
+          51,
+          821,
+          179,
+          205
+        ],
+        "uniform_scale": 0.2760416666666667,
+        "scaled_size": [
+          49,
+          57
+        ],
+        "offset": [
+          8,
+          20
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            12,
+            76
+          ],
+          [
+            52,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              0,
+              50,
+              11,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              35,
+              50,
+              14,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [
+          20,
+          19
+        ],
+        "opaque_pixel_count": 1669
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_boss_xuancheng_attack_left_compactfix_source_v01.png",
+        "source_component_id": 10,
+        "source_crop_xywh": [
+          301,
+          820,
+          179,
+          206
+        ],
+        "uniform_scale": 0.2760416666666667,
+        "scaled_size": [
+          49,
+          57
+        ],
+        "offset": [
+          8,
+          20
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            12,
+            76
+          ],
+          [
+            52,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              0,
+              50,
+              11,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              36,
+              50,
+              13,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [
+          21,
+          25
+        ],
+        "opaque_pixel_count": 1698
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_boss_xuancheng_attack_left_compactfix_source_v01.png",
+        "source_component_id": 11,
+        "source_crop_xywh": [
+          554,
+          820,
+          176,
+          206
+        ],
+        "uniform_scale": 0.2760416666666667,
+        "scaled_size": [
+          49,
+          57
+        ],
+        "offset": [
+          8,
+          20
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            12,
+            76
+          ],
+          [
+            52,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              0,
+              50,
+              11,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              36,
+              50,
+              13,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [
+          23,
+          22
+        ],
+        "opaque_pixel_count": 1684
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_boss_xuancheng_attack_left_compactfix_source_v01.png",
+        "source_component_id": 12,
+        "source_crop_xywh": [
+          806,
+          820,
+          179,
+          206
+        ],
+        "uniform_scale": 0.2760416666666667,
+        "scaled_size": [
+          49,
+          57
+        ],
+        "offset": [
+          8,
+          20
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            12,
+            76
+          ],
+          [
+            52,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              0,
+              50,
+              11,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              36,
+              50,
+              13,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [
+          24,
+          18
+        ],
+        "opaque_pixel_count": 1665
+      },
+      {
+        "index": 4,
+        "source": "assets/ref/ref_boss_xuancheng_attack_left_compactfix_source_v01.png",
+        "source_component_id": 29,
+        "source_crop_xywh": [
+          64,
+          1063,
+          198,
+          214
+        ],
+        "uniform_scale": 0.2760416666666667,
+        "scaled_size": [
+          55,
+          59
+        ],
+        "offset": [
+          1,
+          18
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            13,
+            76
+          ],
+          [
+            51,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              7,
+              52,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              41,
+              52,
+              14,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1438
+      },
+      {
+        "index": 5,
+        "source": "assets/ref/ref_boss_xuancheng_left_isolated_source_v01.png",
+        "source_component_id": 3,
+        "source_crop_xywh": [
+          903,
+          340,
+          484,
+          329
+        ],
+        "uniform_scale": 0.10981308411214953,
+        "scaled_size": [
+          53,
+          36
+        ],
+        "offset": [
+          5,
+          41
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            11,
+            76
+          ],
+          [
+            53,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              1,
+              29,
+              11,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              37,
+              29,
+              16,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1028
+      },
+      {
+        "index": 6,
+        "source": "assets/ref/ref_boss_xuancheng_left_isolated_source_v01.png",
+        "source_component_id": 2,
+        "source_crop_xywh": [
+          1629,
+          241,
+          494,
+          428
+        ],
+        "uniform_scale": 0.10981308411214953,
+        "scaled_size": [
+          54,
+          47
+        ],
+        "offset": [
+          4,
+          30
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            11,
+            76
+          ],
+          [
+            53,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              3,
+              40,
+              12,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              39,
+              40,
+              15,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1293
+      },
+      {
+        "index": 7,
+        "source": "assets/ref/ref_boss_xuancheng_attack_left_compactfix_source_v01.png",
+        "source_component_id": 44,
+        "source_crop_xywh": [
+          67,
+          1338,
+          206,
+          166
+        ],
+        "uniform_scale": 0.2760416666666667,
+        "scaled_size": [
+          57,
+          46
+        ],
+        "offset": [
+          1,
+          31
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            11,
+            76
+          ],
+          [
+            53,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              5,
+              39,
+              15,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              25,
+              39,
+              32,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1217
+      },
+      {
+        "index": 8,
+        "source": "assets/ref/ref_boss_xuancheng_attack_left_compactfix_source_v01.png",
+        "source_component_id": 43,
+        "source_crop_xywh": [
+          321,
+          1312,
+          139,
+          192
+        ],
+        "uniform_scale": 0.2760416666666667,
+        "scaled_size": [
+          38,
+          53
+        ],
+        "offset": [
+          12,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            19,
+            76
+          ],
+          [
+            45,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              3,
+              46,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              26,
+              46,
+              12,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1081
+      }
+    ],
+    "phases": {
+      "charge_loop_frames": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "charge_seconds": 2.0,
+      "strike_frames": [
+        4,
+        5,
+        6
+      ],
+      "recovery_frames": [
+        7,
+        8
+      ]
+    },
+    "end_behavior": "return_to_idle_by_controller"
+  },
+  {
+    "file": "assets/boss/boss_xuancheng_hit_left_v01.png",
+    "action": "hit",
+    "direction": "left",
+    "frame_size": [
+      64,
+      80
+    ],
+    "frame_count": 2,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      32,
+      76
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0,
+      1
+    ],
+    "hold_frames": [],
+    "sole_line_y": 76,
+    "no_pixels_below_y": 76,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_boss_xuancheng_react_left_source_v01.png",
+        "source_component_id": 2,
+        "source_crop_xywh": [
+          101,
+          112,
+          337,
+          363
+        ],
+        "uniform_scale": 0.14324324324324325,
+        "scaled_size": [
+          48,
+          52
+        ],
+        "offset": [
+          6,
+          25
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            18,
+            76
+          ],
+          [
+            46,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              7,
+              45,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              35,
+              45,
+              9,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1168
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_boss_xuancheng_react_left_source_v01.png",
+        "source_component_id": 1,
+        "source_crop_xywh": [
+          593,
+          105,
+          300,
+          370
+        ],
+        "uniform_scale": 0.14324324324324325,
+        "scaled_size": [
+          43,
+          53
+        ],
+        "offset": [
+          6,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            19,
+            76
+          ],
+          [
+            45,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              9,
+              46,
+              9,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              34,
+              46,
+              9,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1157
+      }
+    ],
+    "end_behavior": "return_to_idle_by_controller"
+  },
+  {
+    "file": "assets/boss/boss_xuancheng_stagger_left_v01.png",
+    "action": "stagger",
+    "direction": "left",
+    "frame_size": [
+      64,
+      80
+    ],
+    "frame_count": 3,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      32,
+      76
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0,
+      1,
+      2
+    ],
+    "hold_frames": [],
+    "sole_line_y": 76,
+    "no_pixels_below_y": 76,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_boss_xuancheng_react_left_source_v01.png",
+        "source_component_id": 4,
+        "source_crop_xywh": [
+          49,
+          569,
+          377,
+          385
+        ],
+        "uniform_scale": 0.14324324324324325,
+        "scaled_size": [
+          54,
+          55
+        ],
+        "offset": [
+          2,
+          22
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            15,
+            76
+          ],
+          [
+            49,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              10,
+              48,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              37,
+              48,
+              15,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1302
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_boss_xuancheng_react_left_source_v01.png",
+        "source_component_id": 6,
+        "source_crop_xywh": [
+          544,
+          605,
+          440,
+          349
+        ],
+        "uniform_scale": 0.14324324324324325,
+        "scaled_size": [
+          63,
+          50
+        ],
+        "offset": [
+          0,
+          27
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            16,
+            76
+          ],
+          [
+            48,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              12,
+              43,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              44,
+              43,
+              9,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1333
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_boss_xuancheng_react_left_source_v01.png",
+        "source_component_id": 5,
+        "source_crop_xywh": [
+          1088,
+          585,
+          384,
+          369
+        ],
+        "uniform_scale": 0.14324324324324325,
+        "scaled_size": [
+          55,
+          53
+        ],
+        "offset": [
+          2,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            15,
+            76
+          ],
+          [
+            49,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              8,
+              46,
+              11,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              42,
+              46,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1333
+      }
+    ],
+    "end_behavior": "return_to_idle_by_controller"
+  },
+  {
+    "file": "assets/boss/boss_xuancheng_sit_left_v01.png",
+    "action": "sit",
+    "direction": "left",
+    "frame_size": [
+      64,
+      80
+    ],
+    "frame_count": 1,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      32,
+      76
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0
+    ],
+    "hold_frames": [
+      0
+    ],
+    "sole_line_y": 76,
+    "no_pixels_below_y": 76,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_boss_xuancheng_react_left_source_v01.png",
+        "source_component_id": 3,
+        "source_crop_xywh": [
+          1120,
+          240,
+          341,
+          235
+        ],
+        "uniform_scale": 0.14324324324324325,
+        "scaled_size": [
+          49,
+          34
+        ],
+        "offset": [
+          12,
+          43
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            24,
+            76
+          ],
+          [
+            40,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              8,
+              30,
+              9,
+              4
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              24,
+              30,
+              9,
+              4
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 843
+      }
+    ],
+    "end_behavior": "hold_seated_until_state_change"
+  },
+  {
+    "file": "assets/boss/boss_xuancheng_sweep_up_v01.png",
+    "action": "sweep",
+    "direction": "up",
+    "frame_size": [
+      64,
+      80
+    ],
+    "frame_count": 8,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      32,
+      76
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "hold_frames": [
+      2
+    ],
+    "sole_line_y": 76,
+    "no_pixels_below_y": 76,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_boss_xuancheng_attack_up_compactfix_source_v01.png",
+        "source_component_id": 3,
+        "source_crop_xywh": [
+          53,
+          98,
+          189,
+          189
+        ],
+        "uniform_scale": 0.25118483412322273,
+        "scaled_size": [
+          47,
+          47
+        ],
+        "offset": [
+          11,
+          30
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            18,
+            76
+          ],
+          [
+            46,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              3,
+              40,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              29,
+              40,
+              11,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 973
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_boss_xuancheng_attack_up_compactfix_source_v01.png",
+        "source_component_id": 1,
+        "source_crop_xywh": [
+          290,
+          63,
+          165,
+          224
+        ],
+        "uniform_scale": 0.25118483412322273,
+        "scaled_size": [
+          41,
+          56
+        ],
+        "offset": [
+          15,
+          21
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            17,
+            76
+          ],
+          [
+            47,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              0,
+              49,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              27,
+              49,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1037
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_boss_xuancheng_attack_up_compactfix_source_v01.png",
+        "source_component_id": 2,
+        "source_crop_xywh": [
+          528,
+          73,
+          176,
+          214
+        ],
+        "uniform_scale": 0.25118483412322273,
+        "scaled_size": [
+          44,
+          54
+        ],
+        "offset": [
+          13,
+          23
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            17,
+            76
+          ],
+          [
+            47,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              0,
+              47,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              29,
+              47,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1107
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_boss_xuancheng_attack_up_compactfix_source_v01.png",
+        "source_component_id": 7,
+        "source_crop_xywh": [
+          50,
+          363,
+          191,
+          182
+        ],
+        "uniform_scale": 0.25118483412322273,
+        "scaled_size": [
+          48,
+          46
+        ],
+        "offset": [
+          6,
+          31
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            15,
+            76
+          ],
+          [
+            49,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              6,
+              39,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              37,
+              39,
+              11,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1045
+      },
+      {
+        "index": 4,
+        "source": "assets/ref/ref_boss_xuancheng_attack_up_compactfix_source_v01.png",
+        "source_component_id": 6,
+        "source_crop_xywh": [
+          294,
+          353,
+          190,
+          192
+        ],
+        "uniform_scale": 0.25118483412322273,
+        "scaled_size": [
+          48,
+          48
+        ],
+        "offset": [
+          7,
+          29
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            14,
+            76
+          ],
+          [
+            50,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              4,
+              41,
+              12,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              38,
+              41,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1067
+      },
+      {
+        "index": 5,
+        "source": "assets/ref/ref_boss_xuancheng_attack_up_compactfix_source_v01.png",
+        "source_component_id": 5,
+        "source_crop_xywh": [
+          532,
+          351,
+          204,
+          195
+        ],
+        "uniform_scale": 0.25118483412322273,
+        "scaled_size": [
+          51,
+          49
+        ],
+        "offset": [
+          4,
+          28
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            14,
+            76
+          ],
+          [
+            50,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              7,
+              42,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              41,
+              42,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1073
+      },
+      {
+        "index": 6,
+        "source": "assets/ref/ref_boss_xuancheng_attack_up_compactfix_source_v01.png",
+        "source_component_id": 9,
+        "source_crop_xywh": [
+          61,
+          646,
+          195,
+          160
+        ],
+        "uniform_scale": 0.25118483412322273,
+        "scaled_size": [
+          49,
+          40
+        ],
+        "offset": [
+          7,
+          37
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            13,
+            76
+          ],
+          [
+            51,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              3,
+              33,
+              17,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              21,
+              33,
+              28,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 943
+      },
+      {
+        "index": 7,
+        "source": "assets/ref/ref_boss_xuancheng_attack_up_compactfix_source_v01.png",
+        "source_component_id": 8,
+        "source_crop_xywh": [
+          310,
+          597,
+          172,
+          209
+        ],
+        "uniform_scale": 0.25118483412322273,
+        "scaled_size": [
+          43,
+          52
+        ],
+        "offset": [
+          13,
+          25
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            22,
+            76
+          ],
+          [
+            42,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              6,
+              45,
+              11,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              23,
+              45,
+              11,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1049
+      }
+    ],
+    "phases": {
+      "anticipation_frames": [
+        0,
+        1,
+        2
+      ],
+      "hold_frame": 2,
+      "hold_seconds": 0.8,
+      "strike_frames": [
+        3,
+        4,
+        5
+      ],
+      "recovery_frames": [
+        6,
+        7
+      ]
+    },
+    "end_behavior": "return_to_idle_by_controller"
+  },
+  {
+    "file": "assets/boss/boss_xuancheng_heavy_up_v01.png",
+    "action": "heavy",
+    "direction": "up",
+    "frame_size": [
+      64,
+      80
+    ],
+    "frame_count": 9,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      32,
+      76
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "hold_frames": [],
+    "sole_line_y": 76,
+    "no_pixels_below_y": 76,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_boss_xuancheng_attack_up_compactfix_source_v01.png",
+        "source_component_id": 10,
+        "source_crop_xywh": [
+          64,
+          842,
+          157,
+          226
+        ],
+        "uniform_scale": 0.25118483412322273,
+        "scaled_size": [
+          39,
+          57
+        ],
+        "offset": [
+          13,
+          20
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            19,
+            76
+          ],
+          [
+            45,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              2,
+              50,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              27,
+              50,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1335
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_boss_xuancheng_attack_up_compactfix_source_v01.png",
+        "source_component_id": 12,
+        "source_crop_xywh": [
+          306,
+          844,
+          154,
+          224
+        ],
+        "uniform_scale": 0.25118483412322273,
+        "scaled_size": [
+          39,
+          56
+        ],
+        "offset": [
+          13,
+          21
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            17,
+            76
+          ],
+          [
+            47,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              1,
+              49,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              29,
+              49,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1363
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_boss_xuancheng_attack_up_compactfix_source_v01.png",
+        "source_component_id": 11,
+        "source_crop_xywh": [
+          533,
+          843,
+          157,
+          225
+        ],
+        "uniform_scale": 0.25118483412322273,
+        "scaled_size": [
+          39,
+          57
+        ],
+        "offset": [
+          14,
+          20
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            17,
+            76
+          ],
+          [
+            47,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              0,
+              50,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              27,
+              50,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1380
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_boss_xuancheng_attack_up_compactfix_source_v01.png",
+        "source_component_id": 13,
+        "source_crop_xywh": [
+          766,
+          844,
+          152,
+          224
+        ],
+        "uniform_scale": 0.25118483412322273,
+        "scaled_size": [
+          38,
+          56
+        ],
+        "offset": [
+          14,
+          21
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            18,
+            76
+          ],
+          [
+            46,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              0,
+              49,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              26,
+              49,
+              11,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1369
+      },
+      {
+        "index": 4,
+        "source": "assets/ref/ref_boss_xuancheng_attack_up_compactfix_source_v01.png",
+        "source_component_id": 22,
+        "source_crop_xywh": [
+          63,
+          1099,
+          169,
+          249
+        ],
+        "uniform_scale": 0.25118483412322273,
+        "scaled_size": [
+          42,
+          63
+        ],
+        "offset": [
+          13,
+          14
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            17,
+            76
+          ],
+          [
+            47,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              0,
+              56,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              29,
+              56,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1143
+      },
+      {
+        "index": 5,
+        "source": "assets/ref/ref_boss_xuancheng_attack_up_compactfix_source_v01.png",
+        "source_component_id": 25,
+        "source_crop_xywh": [
+          301,
+          1197,
+          187,
+          151
+        ],
+        "uniform_scale": 0.25118483412322273,
+        "scaled_size": [
+          47,
+          38
+        ],
+        "offset": [
+          8,
+          39
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            14,
+            76
+          ],
+          [
+            50,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              2,
+              31,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              36,
+              31,
+              11,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 886
+      },
+      {
+        "index": 6,
+        "source": "assets/ref/ref_boss_xuancheng_attack_up_compactfix_source_v01.png",
+        "source_component_id": 23,
+        "source_crop_xywh": [
+          536,
+          1158,
+          196,
+          190
+        ],
+        "uniform_scale": 0.25118483412322273,
+        "scaled_size": [
+          49,
+          48
+        ],
+        "offset": [
+          5,
+          29
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            15,
+            76
+          ],
+          [
+            49,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              7,
+              41,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              38,
+              41,
+              11,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1031
+      },
+      {
+        "index": 7,
+        "source": "assets/ref/ref_boss_xuancheng_attack_up_compactfix_source_v01.png",
+        "source_component_id": 27,
+        "source_crop_xywh": [
+          59,
+          1417,
+          182,
+          179
+        ],
+        "uniform_scale": 0.25118483412322273,
+        "scaled_size": [
+          46,
+          45
+        ],
+        "offset": [
+          7,
+          32
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            16,
+            76
+          ],
+          [
+            48,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              5,
+              38,
+              11,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              34,
+              38,
+              12,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 982
+      },
+      {
+        "index": 8,
+        "source": "assets/ref/ref_boss_xuancheng_attack_up_compactfix_source_v01.png",
+        "source_component_id": 26,
+        "source_crop_xywh": [
+          308,
+          1385,
+          164,
+          211
+        ],
+        "uniform_scale": 0.25118483412322273,
+        "scaled_size": [
+          41,
+          53
+        ],
+        "offset": [
+          12,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            21,
+            76
+          ],
+          [
+            43,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              6,
+              46,
+              9,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              25,
+              46,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 1066
+      }
+    ],
+    "phases": {
+      "charge_loop_frames": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "charge_seconds": 2.0,
+      "strike_frames": [
+        4,
+        5,
+        6
+      ],
+      "recovery_frames": [
+        7,
+        8
+      ]
+    },
+    "end_behavior": "return_to_idle_by_controller"
+  },
+  {
+    "file": "assets/boss/boss_xuancheng_hit_up_v01.png",
+    "action": "hit",
+    "direction": "up",
+    "frame_size": [
+      64,
+      80
+    ],
+    "frame_count": 2,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      32,
+      76
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0,
+      1
+    ],
+    "hold_frames": [],
+    "sole_line_y": 76,
+    "no_pixels_below_y": 76,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_boss_xuancheng_react_up_source_v01.png",
+        "source_component_id": 1,
+        "source_crop_xywh": [
+          154,
+          130,
+          252,
+          381
+        ],
+        "uniform_scale": 0.13910761154855644,
+        "scaled_size": [
+          35,
+          53
+        ],
+        "offset": [
+          13,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            22,
+            76
+          ],
+          [
+            42,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              7,
+              46,
+              8,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              25,
+              46,
+              8,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 950
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_boss_xuancheng_react_up_source_v01.png",
+        "source_component_id": 2,
+        "source_crop_xywh": [
+          618,
+          157,
+          333,
+          354
+        ],
+        "uniform_scale": 0.13910761154855644,
+        "scaled_size": [
+          46,
+          49
+        ],
+        "offset": [
+          11,
+          28
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            23,
+            76
+          ],
+          [
+            41,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              9,
+              42,
+              7,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              24,
+              42,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 884
+      }
+    ],
+    "end_behavior": "return_to_idle_by_controller"
+  },
+  {
+    "file": "assets/boss/boss_xuancheng_stagger_up_v01.png",
+    "action": "stagger",
+    "direction": "up",
+    "frame_size": [
+      64,
+      80
+    ],
+    "frame_count": 3,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      32,
+      76
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0,
+      1,
+      2
+    ],
+    "hold_frames": [],
+    "sole_line_y": 76,
+    "no_pixels_below_y": 76,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_boss_xuancheng_react_up_source_v01.png",
+        "source_component_id": 4,
+        "source_crop_xywh": [
+          65,
+          616,
+          346,
+          344
+        ],
+        "uniform_scale": 0.13910761154855644,
+        "scaled_size": [
+          48,
+          48
+        ],
+        "offset": [
+          0,
+          29
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            21,
+            76
+          ],
+          [
+            43,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              18,
+              41,
+              8,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              39,
+              41,
+              9,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 910
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_boss_xuancheng_react_up_source_v01.png",
+        "source_component_id": 5,
+        "source_crop_xywh": [
+          547,
+          631,
+          332,
+          329
+        ],
+        "uniform_scale": 0.13910761154855644,
+        "scaled_size": [
+          46,
+          46
+        ],
+        "offset": [
+          1,
+          31
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            21,
+            76
+          ],
+          [
+            43,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              17,
+              39,
+              8,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              38,
+              39,
+              8,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 869
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_boss_xuancheng_react_up_source_v01.png",
+        "source_component_id": 6,
+        "source_crop_xywh": [
+          1130,
+          638,
+          334,
+          322
+        ],
+        "uniform_scale": 0.13910761154855644,
+        "scaled_size": [
+          46,
+          45
+        ],
+        "offset": [
+          18,
+          32
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            21,
+            76
+          ],
+          [
+            43,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              0,
+              38,
+              10,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              21,
+              38,
+              8,
+              7
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 868
+      }
+    ],
+    "end_behavior": "return_to_idle_by_controller"
+  },
+  {
+    "file": "assets/boss/boss_xuancheng_sit_up_v01.png",
+    "action": "sit",
+    "direction": "up",
+    "frame_size": [
+      64,
+      80
+    ],
+    "frame_count": 1,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      32,
+      76
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0
+    ],
+    "hold_frames": [
+      0
+    ],
+    "sole_line_y": 76,
+    "no_pixels_below_y": 76,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_boss_xuancheng_react_up_source_v01.png",
+        "source_component_id": 3,
+        "source_crop_xywh": [
+          1055,
+          298,
+          409,
+          217
+        ],
+        "uniform_scale": 0.13910761154855644,
+        "scaled_size": [
+          57,
+          30
+        ],
+        "offset": [
+          4,
+          47
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            24,
+            76
+          ],
+          [
+            40,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              16,
+              26,
+              10,
+              4
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              31,
+              26,
+              10,
+              4
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_crack_component_ids": [],
+        "opaque_pixel_count": 691
+      }
+    ],
+    "end_behavior": "hold_seated_until_state_change"
+  }
+]

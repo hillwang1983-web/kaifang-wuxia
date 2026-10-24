@@ -1,0 +1,444 @@
+{
+  "delivery": "20261024-1826",
+  "row": 9,
+  "scope": "partial_core_combat",
+  "new_strips": 18,
+  "new_frames": 57,
+  "combined_base_frames": 87,
+  "generated_sources": 10,
+  "derived_reference_crops": 1,
+  "files": [
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/combat_prompts.json",
+      "bytes": 10537,
+      "sha256": "97ea43f9dc5eddad93b0235c6cfb4c8ae4b89d9072b3a8bfc7106d9fe1818330"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/compact_fix_prompts.json",
+      "bytes": 3293,
+      "sha256": "06fa6d36e8d16f6f0bf57c026f298874a08a57ed2f3486f89a1aaf6980ef28a2"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/left_death_fix_prompt.txt",
+      "bytes": 1226,
+      "sha256": "7f0e2fd200b45a48bd5cb869b4047c0d35bdb98eb5bc25c7235bcff261b2b6d7"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/production_plan.md",
+      "bytes": 844,
+      "sha256": "db2bf6c3d09d132471b424529ce29c8e9657c2e82ef8d8b0d1c4bcd5e54d0c18"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_atk1_down_6倍_v01.png",
+      "bytes": 3190,
+      "sha256": "8e43c69d0e7e4d77cc5616e0199da31720512e4efd8cd88a4b2e2ea8d08219f0"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_atk1_down_播放预览_v01.gif",
+      "bytes": 11610,
+      "sha256": "9f754a244506595e1ad7a133e3b6517e1700fd39893f49776dbcb365915f583a"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_atk1_left_6倍_v01.png",
+      "bytes": 2945,
+      "sha256": "03bd09c43d94966366c18c56d20a4fc4e70fc35ae99adba183e1eccea611fbfc"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_atk1_left_播放预览_v01.gif",
+      "bytes": 11356,
+      "sha256": "1f6913424c5644b6b0cad5a461f5be38962e6ab33c0e8a66187b3df3e884b561"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_atk1_up_6倍_v01.png",
+      "bytes": 3085,
+      "sha256": "6f3eadb0cb296c486f9c3074b93f85abe81f7be945cda0592a08405bcae16b0c"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_atk1_up_播放预览_v01.gif",
+      "bytes": 10965,
+      "sha256": "94bcbed659392786bd8c1b022e81c9145bbd57c08bcf1b1831c94223fda30195"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_atk2_down_6倍_v01.png",
+      "bytes": 3021,
+      "sha256": "64977dd5b87356a7612e120856e64ec444d8ff14937c50279391dec516930bbf"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_atk2_down_播放预览_v01.gif",
+      "bytes": 11115,
+      "sha256": "2cf47eed734b216862a4c8ca1fcf192f423beade907f6c421d2e894f2b8688b9"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_atk2_left_6倍_v01.png",
+      "bytes": 4198,
+      "sha256": "90b4ffbd95f976527e776a550d9d536f0ff4dfc21f5e5f64a681a823ea477277"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_atk2_left_播放预览_v01.gif",
+      "bytes": 11688,
+      "sha256": "a88e4b596c3d1461c1ca1052a665e3d251a87af8fb048dcf6361d6049cef3dfe"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_atk2_up_6倍_v01.png",
+      "bytes": 2790,
+      "sha256": "2753e03b82b26526857a773bd096a7e6baf75227cbb888cd9c396223052fcf04"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_atk2_up_播放预览_v01.gif",
+      "bytes": 10181,
+      "sha256": "475f76c4145b28a943c9ecf939dd66e6dc043afa93e431a6d7e7a15826eebc28"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_atk3_down_6倍_v01.png",
+      "bytes": 3174,
+      "sha256": "eb508e4770ed0066b641a9ca0427668ea7b82dea6c24e48f598d410f20004725"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_atk3_down_播放预览_v01.gif",
+      "bytes": 11179,
+      "sha256": "590ecb0a20764fb04fa9b0efc53150011ac38c600866644c9f29f82a28c14a5e"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_atk3_left_6倍_v01.png",
+      "bytes": 3285,
+      "sha256": "10b023c72324fd999b6319dc784c5f027439eb33262a1fc41e6c0c1712c8c76c"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_atk3_left_播放预览_v01.gif",
+      "bytes": 12453,
+      "sha256": "f9072f7764ec69a2ffa931cb3dea82cb5e5d182ad6b7697a3fd47505bf9d7396"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_atk3_up_6倍_v01.png",
+      "bytes": 3042,
+      "sha256": "963dbbb9ceed9087b46cb9e844b357fb8d13e23c3f086f0f31661a6ae6d0c42f"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_atk3_up_播放预览_v01.gif",
+      "bytes": 11013,
+      "sha256": "7e110da9e20a0352536f70b7ca599dc61f194b3d37078b493e657112edd2efc5"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_down_down_6倍_v01.png",
+      "bytes": 3710,
+      "sha256": "1613790df7f636001f754a786a1d2b87611c44a2122c45475a7b7212c03c0649"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_down_down_播放预览_v01.gif",
+      "bytes": 12521,
+      "sha256": "39cf30b8afacfdffa9b80802af430739974b59b56ffc2a172cd01dc552c09979"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_down_left_6倍_v01.png",
+      "bytes": 2599,
+      "sha256": "fc59e7a628279f17dc1c40447b923be397a7690c9e7cc1f9ac73eee5cfc216ba"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_down_left_播放预览_v01.gif",
+      "bytes": 11382,
+      "sha256": "d77ed8c2403bfab6aba8b539302978f203073fbb744b1edbd98d662bce854a3e"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_down_up_6倍_v01.png",
+      "bytes": 2771,
+      "sha256": "a8cf47b8f43b0bf69f1d9fa2b6447f1a5ef40361811479f6e96a7dbabc8c630f"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_down_up_播放预览_v01.gif",
+      "bytes": 12196,
+      "sha256": "c46948cea8304074873281792275895f1c0fdd3c8525b01ac7de6088db032e3e"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_hit_down_6倍_v01.png",
+      "bytes": 1898,
+      "sha256": "9052ed3f451c926cd02c8704271a5639b7f901b40b5c35125ee92b757ab795cb"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_hit_down_播放预览_v01.gif",
+      "bytes": 7625,
+      "sha256": "9f5f4c7a16ea0374dc7bc6b148872afe82ff728275ffc7cb811d6d58f1c40ea0"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_hit_left_6倍_v01.png",
+      "bytes": 2799,
+      "sha256": "eb7e00643aaaffa448a5d326fc6dc337139ff544a79d47727effa64ffff0b3ae"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_hit_left_播放预览_v01.gif",
+      "bytes": 7796,
+      "sha256": "534e7875daa0366996df07d954d9392d6660d051cdc92547e03cb9524eeb21ed"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_hit_up_6倍_v01.png",
+      "bytes": 1940,
+      "sha256": "9dc654c9992989fb76f61bbfb9bd34d103b7a3cb41190eb84d569b3d6288383b"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_hit_up_播放预览_v01.gif",
+      "bytes": 7702,
+      "sha256": "8f5b6f730d5868219bca6d621e60788ec26a3d15d2ab3d55efbd55d4801f53e8"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_roll_down_6倍_v01.png",
+      "bytes": 4739,
+      "sha256": "34591868ed2dfa65bc3d2511311b698f74116e7096d6d8dd176e4fcf5918edb1"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_roll_down_播放预览_v01.gif",
+      "bytes": 13304,
+      "sha256": "b0c6e8cee857c01ed66411bc0fd79b252a4a9b4e9dffbdf7d14eec958b672778"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_roll_left_6倍_v01.png",
+      "bytes": 3696,
+      "sha256": "adefb8d20009823219aa4a7d4ba41d4530329219a114b5627cc3fea51dd3e43a"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_roll_left_播放预览_v01.gif",
+      "bytes": 14189,
+      "sha256": "2796557dff77ced162c53f47cd3d4b067646a11ee0fd778c4337b5e0ca3e66d7"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_roll_up_6倍_v01.png",
+      "bytes": 4666,
+      "sha256": "d383d8d5619c640643625dcba397422aea4e1055d8cc6f42f57ff91ad635873a"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/shaolin_roll_up_播放预览_v01.gif",
+      "bytes": 13541,
+      "sha256": "fea4b2592470ad003ccb347c6fe4a39eef1690000c8838569ec75ef6453687c7"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/staff_fix_prompts.json",
+      "bytes": 2552,
+      "sha256": "1c901586b0c0abc059aa797069491ab85377eb1b43f7234dd378778c3d3460e2"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/交付说明_v01.md",
+      "bytes": 4378,
+      "sha256": "a2fcbaedd348b34b980000cb32d8f9e9b32e6a777256e63fcc48ddf067a2744c"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/少林基础87帧索引_v01.json",
+      "bytes": 85299,
+      "sha256": "4feb390a88286fb215a178bce6e6ac2a9c8517ec5e6c843f85690b3692108ea8"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/少林战斗_down_逐帧总览_v01.png",
+      "bytes": 22819,
+      "sha256": "7fcc0db7072ff5a2501ff46ad91bc9af5dd6d75d6409980c37285690920ab510"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/少林战斗_left_逐帧总览_v01.png",
+      "bytes": 22800,
+      "sha256": "8012bc6c8d1441c9fc72ceffdb52470a5a8c250570d70e0d69970cf3cc81e04f"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/少林战斗_up_逐帧总览_v01.png",
+      "bytes": 22341,
+      "sha256": "c6aa328c1c40ae0253a5940c1d86c9d173586834307bdc519e20f20150483e04"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/山门1比1_少林基础战斗_v01.png",
+      "bytes": 190696,
+      "sha256": "49eb8de813a157c0e1c0c650687090a58bd7f331da2ac159776f76824f695644"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/战斗动画参数_v01.json",
+      "bytes": 58573,
+      "sha256": "97e7519c7b55162fb5d76f829adc98ff63d0c0b18da144bfc46735f488f2fad1"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/核验结果_v01.json",
+      "bytes": 21975,
+      "sha256": "d1c7abc0e5731ecc658a03cf3aa2c36ea694bf4dbb94786d4e1e57a9150a0502"
+    },
+    {
+      "path": "UI设计/少林战斗动画_20261024_1826/调色板_v01.json",
+      "bytes": 210,
+      "sha256": "2c29439423882e40dc5cef07757fb669e640aaa2de7db0883ba2f63d91ad5ce8"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_atk1_down_v01.png",
+      "bytes": 3558,
+      "sha256": "d9bae91afe524a66514bc4c20ec5dd48028b89dae4a9d176501bc4c2719c7a85"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_atk1_left_v01.png",
+      "bytes": 3338,
+      "sha256": "fee7c298945cdbb92d51c365bf6aa9b87f6d3541241df48e1f33e31f0331b2ee"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_atk1_up_v01.png",
+      "bytes": 3405,
+      "sha256": "443c14f74ca76e19bde86a58c0dd1667355e017d088074aa0281c50c668b6c46"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_atk2_down_v01.png",
+      "bytes": 3407,
+      "sha256": "65d685749d5da26982f99cff48e25a2ad8738fff0ca3bcf095ba05017168e722"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_atk2_left_v01.png",
+      "bytes": 3533,
+      "sha256": "dc04127157e342ac72c3f4ea492a296afadc03703f951ca95428a82d85bd86b3"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_atk2_up_v01.png",
+      "bytes": 3177,
+      "sha256": "c0aed55262b00ebb1eea5564c541cb9b2618900a6fc72e645f7d0403cbe8b77e"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_atk3_down_v01.png",
+      "bytes": 3529,
+      "sha256": "13e87770f956cba2f577f61f9daa89ba331f49a3fb4c5361b3581045804a814b"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_atk3_left_v01.png",
+      "bytes": 3879,
+      "sha256": "ee341e9f5d2b07eaa09fca250062e497bb02ea9a9a5fdf810952b956ee5cbe11"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_atk3_up_v01.png",
+      "bytes": 3354,
+      "sha256": "2e70a91c410b9905d8c10e7c2814bf39e84127e17250a77fd023b8e7d4a742e7"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_down_down_v01.png",
+      "bytes": 3632,
+      "sha256": "53ebd0aee22f23562a938899b89c4fe77211db0700ff16bfaf02f00788526ab0"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_down_left_v01.png",
+      "bytes": 2926,
+      "sha256": "e18ffe2ca31f2822397c7e5d9d68d011d47563728c2de71ca5ad54eb42765d75"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_down_up_v01.png",
+      "bytes": 3426,
+      "sha256": "7401c009fc51a4a1d1b3143b060cd012c27d77428fd0420e6a8ca5feeb2d6be1"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_hit_down_v01.png",
+      "bytes": 2533,
+      "sha256": "940b3e8d9a60dac9c12c48a066e50b3fde28834cc08ce3ce78b0d7ce927ee726"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_hit_left_v01.png",
+      "bytes": 2601,
+      "sha256": "e238652d00aa9d8a6a020cf503edb2f0de6cd3bdf7143a518797f85d82657186"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_hit_up_v01.png",
+      "bytes": 2527,
+      "sha256": "35c9e169aa7d13b454ec969336d7bdd2a8527caef2fa964ecae8c1f7ef3f8a5a"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_roll_down_v01.png",
+      "bytes": 3982,
+      "sha256": "ebe9042bbc6f163674b8501859a6dadc8097e25a203e9e714c714de5e3bbf814"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_roll_left_v01.png",
+      "bytes": 4192,
+      "sha256": "a39b74ffa2a6b0ea8b957a700e2f90ab156dc4d1f1722aaaa4197eaf71d76c0e"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_roll_up_v01.png",
+      "bytes": 3966,
+      "sha256": "42ef54dc2ace832c524810b4fef9bfe3f2a285efab7906500fcdda25fea3d2f3"
+    },
+    {
+      "path": "assets/ref/ref_chr_shaolin_combat_down_pronefix_source_v01.png",
+      "bytes": 835999,
+      "sha256": "69143576305fb48a79e320345413b273bae7afcf5481ec733039bd66a0f1ed38"
+    },
+    {
+      "path": "assets/ref/ref_chr_shaolin_combat_down_source_v01.png",
+      "bytes": 855336,
+      "sha256": "6d61312327083c92730f98c8293dd6159e692e5a4156b40e1e8717912a0c4a2e"
+    },
+    {
+      "path": "assets/ref/ref_chr_shaolin_combat_down_sweepfix_source_v01.png",
+      "bytes": 842568,
+      "sha256": "e782781397b594391ac62f6ba75f38441b189ba5b3b51ca7b2103200f3f08ddd"
+    },
+    {
+      "path": "assets/ref/ref_chr_shaolin_combat_left_compactfix_source_v01.png",
+      "bytes": 825743,
+      "sha256": "881d13e3ed7e6ec65581423b2b3810e0cc4650b6de56540d6cd8e6740468a6f5"
+    },
+    {
+      "path": "assets/ref/ref_chr_shaolin_combat_left_deathfix_source_v01.png",
+      "bytes": 417339,
+      "sha256": "9ceb9a979035a045fdbd389796d5229d848f7345f35a35316c12d5eda9c4ad90"
+    },
+    {
+      "path": "assets/ref/ref_chr_shaolin_combat_left_source_v01.png",
+      "bytes": 805370,
+      "sha256": "73c4ddb50232be1d89b57d2b214159908762adc087c2bc819c1dc08dd49dbcf0"
+    },
+    {
+      "path": "assets/ref/ref_chr_shaolin_combat_left_strikefix_source_v01.png",
+      "bytes": 827823,
+      "sha256": "b80555e884cd3b112353c82146f955d8f3bbb9117558e4371c6327558ee2dd95"
+    },
+    {
+      "path": "assets/ref/ref_chr_shaolin_combat_up_pronefix_source_v01.png",
+      "bytes": 844492,
+      "sha256": "621b68030c6c6a30c77eccf27dcf5adb10a2c84f6f84033d640bfade6ecbd5b7"
+    },
+    {
+      "path": "assets/ref/ref_chr_shaolin_combat_up_source_v01.png",
+      "bytes": 817079,
+      "sha256": "dd609f2628215b86605dbf9548623f210682681a41b7a790848652490a007138"
+    },
+    {
+      "path": "assets/ref/ref_chr_shaolin_combat_up_sweepfix_source_v01.png",
+      "bytes": 821972,
+      "sha256": "3e95457ae9ca5c1b6e0df4ef22f9e3821ff3561dbd7b29116be9ce29402cc591"
+    },
+    {
+      "path": "assets/ref/ref_chr_shaolin_left_knockdown_crop_v01.png",
+      "bytes": 145613,
+      "sha256": "a0c1b131d230fa2983b78b685e81069db3c67c79f652ba2ad3a6d71c7eb45bae"
+    }
+  ],
+  "existing_dependencies": [
+    {
+      "path": "assets/chr/chr_shaolin_idle_down_v01.png",
+      "bytes": 4358,
+      "sha256": "cc1a94ed72048531b5a0ee87e5354291d3c603cbc39b0e83d2f56346d7e50231"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_idle_left_v01.png",
+      "bytes": 4274,
+      "sha256": "a22bf03e452c1d511cee88cf657a7b91f866ddfc7acb5300d66e9b8378345820"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_idle_up_v01.png",
+      "bytes": 4039,
+      "sha256": "aaf611495cf065fded813f994af07e2b4355ab913da31c8b54acbe584e22846c"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_walk_down_v01.png",
+      "bytes": 5677,
+      "sha256": "c8ecfc1c7afd3ca08cbf30fc4f4a27d9c446bf76831dc7c9e532aa5216193afd"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_walk_left_v01.png",
+      "bytes": 5608,
+      "sha256": "d1bd42620d25594c1f58897ee7dcd8f2d732710ebb644c511f42c9839cb64c37"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_walk_up_v01.png",
+      "bytes": 5647,
+      "sha256": "cb5a85160beb8b47ec2f7ce881cb6b77f302b8f275a90458330f05ecb2d77668"
+    },
+    {
+      "path": "assets/ref/ref_chr_shaolin_down_v01.png",
+      "bytes": 1396,
+      "sha256": "11cdf6747553404c0b8d9a9b4cb2526ee12b1f801b77e398fa053cbbc05aa071"
+    }
+  ]
+}

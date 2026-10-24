@@ -1,0 +1,890 @@
+[
+  {
+    "file": "assets/chr/chr_shaolin_idle_down_v01.png",
+    "action": "idle",
+    "direction": "down",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 4,
+    "fps": 12,
+    "loop": true,
+    "anchor": [
+      24,
+      60
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "hold_frames": [],
+    "frames": [
+      {
+        "index": 0,
+        "source_cell": [
+          0,
+          0,
+          314,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_down_generated_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          9,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 1.25
+      },
+      {
+        "index": 1,
+        "source_cell": [
+          314,
+          0,
+          313,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_down_generated_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          8,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 1.25
+      },
+      {
+        "index": 2,
+        "source_cell": [
+          627,
+          0,
+          313,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_down_generated_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          6,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 1.25
+      },
+      {
+        "index": 3,
+        "source_cell": [
+          940,
+          0,
+          314,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_down_generated_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          7,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 1.25
+      }
+    ]
+  },
+  {
+    "file": "assets/chr/chr_shaolin_walk_down_v01.png",
+    "action": "walk",
+    "direction": "down",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 6,
+    "fps": 12,
+    "loop": true,
+    "anchor": [
+      24,
+      60
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "hold_frames": [],
+    "frames": [
+      {
+        "index": 0,
+        "source_cell": [
+          0,
+          418,
+          314,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_down_gait_repair_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          8,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 1.25
+      },
+      {
+        "index": 1,
+        "source_cell": [
+          314,
+          418,
+          313,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_down_gait_repair_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          8,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 1.25
+      },
+      {
+        "index": 2,
+        "source_cell": [
+          627,
+          418,
+          314,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_down_gait_repair_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          6,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 1.25
+      },
+      {
+        "index": 3,
+        "source_cell": [
+          941,
+          418,
+          314,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_down_gait_repair_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          8,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 1.25
+      },
+      {
+        "index": 4,
+        "source_cell": [
+          1255,
+          418,
+          313,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_down_gait_repair_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          9,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 1.25
+      },
+      {
+        "index": 5,
+        "source_cell": [
+          1568,
+          418,
+          314,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_down_gait_repair_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          9,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 1.25
+      }
+    ]
+  },
+  {
+    "file": "assets/chr/chr_shaolin_idle_left_v01.png",
+    "action": "idle",
+    "direction": "left",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 4,
+    "fps": 12,
+    "loop": true,
+    "anchor": [
+      24,
+      60
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "hold_frames": [],
+    "frames": [
+      {
+        "index": 0,
+        "source_cell": [
+          0,
+          0,
+          314,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_left_generated_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          6,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 0.75
+      },
+      {
+        "index": 1,
+        "source_cell": [
+          314,
+          0,
+          313,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_left_generated_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          6,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 0.75
+      },
+      {
+        "index": 2,
+        "source_cell": [
+          627,
+          0,
+          313,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_left_generated_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          6,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 0.75
+      },
+      {
+        "index": 3,
+        "source_cell": [
+          940,
+          0,
+          314,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_left_generated_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          6,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 0.75
+      }
+    ]
+  },
+  {
+    "file": "assets/chr/chr_shaolin_walk_left_v01.png",
+    "action": "walk",
+    "direction": "left",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 6,
+    "fps": 12,
+    "loop": true,
+    "anchor": [
+      24,
+      60
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "hold_frames": [],
+    "frames": [
+      {
+        "index": 0,
+        "source_cell": [
+          0,
+          418,
+          314,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_left_gait_repair_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          7,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 0.75
+      },
+      {
+        "index": 1,
+        "source_cell": [
+          314,
+          418,
+          313,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_left_gait_repair_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          6,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 0.75
+      },
+      {
+        "index": 2,
+        "source_cell": [
+          627,
+          418,
+          314,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_left_gait_repair_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          6,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 0.75
+      },
+      {
+        "index": 3,
+        "source_cell": [
+          941,
+          418,
+          314,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_left_gait_repair_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          6,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 0.75
+      },
+      {
+        "index": 4,
+        "source_cell": [
+          1255,
+          418,
+          313,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_left_gait_repair_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          7,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 0.75
+      },
+      {
+        "index": 5,
+        "source_cell": [
+          1568,
+          418,
+          314,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_left_gait_repair_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          7,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 0.75
+      }
+    ]
+  },
+  {
+    "file": "assets/chr/chr_shaolin_idle_up_v01.png",
+    "action": "idle",
+    "direction": "up",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 4,
+    "fps": 12,
+    "loop": true,
+    "anchor": [
+      24,
+      60
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "hold_frames": [],
+    "frames": [
+      {
+        "index": 0,
+        "source_cell": [
+          0,
+          0,
+          314,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_up_generated_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          8,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 0.0
+      },
+      {
+        "index": 1,
+        "source_cell": [
+          314,
+          0,
+          313,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_up_generated_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          8,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 0.0
+      },
+      {
+        "index": 2,
+        "source_cell": [
+          627,
+          0,
+          313,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_up_generated_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          8,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 0.0
+      },
+      {
+        "index": 3,
+        "source_cell": [
+          940,
+          0,
+          314,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_up_generated_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          8,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 0.0
+      }
+    ]
+  },
+  {
+    "file": "assets/chr/chr_shaolin_walk_up_v01.png",
+    "action": "walk",
+    "direction": "up",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 6,
+    "fps": 12,
+    "loop": true,
+    "anchor": [
+      24,
+      60
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "hold_frames": [],
+    "frames": [
+      {
+        "index": 0,
+        "source_cell": [
+          0,
+          418,
+          314,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_up_gait_repair_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          8,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 0.0
+      },
+      {
+        "index": 1,
+        "source_cell": [
+          314,
+          418,
+          313,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_up_gait_repair_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          8,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 0.0
+      },
+      {
+        "index": 2,
+        "source_cell": [
+          627,
+          418,
+          314,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_up_gait_repair_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          8,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 0.0
+      },
+      {
+        "index": 3,
+        "source_cell": [
+          941,
+          418,
+          314,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_up_gait_repair_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          8,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 0.0
+      },
+      {
+        "index": 4,
+        "source_cell": [
+          1255,
+          418,
+          313,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_up_gait_repair_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          8,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 0.0
+      },
+      {
+        "index": 5,
+        "source_cell": [
+          1568,
+          418,
+          314,
+          418
+        ],
+        "source": "assets/ref/ref_chr_shaolin_move_up_gait_repair_v01.png",
+        "normalized_content": [
+          34,
+          41
+        ],
+        "offset": [
+          8,
+          20
+        ],
+        "root_anchor": [
+          24,
+          60
+        ],
+        "registration": "idle首帧两鞋参考中线校准头部中心；同方向锁定此偏移，抬脚不按单脚重新居中",
+        "head_to_root_delta_x": 0.0
+      }
+    ]
+  }
+]

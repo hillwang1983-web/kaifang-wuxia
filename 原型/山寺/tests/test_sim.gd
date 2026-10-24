@@ -20,12 +20,13 @@ func _cmd() -> SimCommand:
 	return SimCommand.new()
 
 
+## 吸收自 #27 的用例：只熄够得着的火把
 func test_torch_interact() -> void:
 	var w := _world()
 	var p := w.add_hero("player", "shaolin", "jiemai", Vector2(100, 100))
 	var near := w.add_interactable("torch", Vector2(130, 100))
 	var far := w.add_interactable("torch", Vector2(300, 100))
-	check_eq(w.interactable_near(p.pos).id, near.id, "够得着近处火把（手机交互键据此出现）")
+	check_eq(w.interactable_near(p.pos).id, near.id, "够得着近处火把（手机交谈键据此出现）")
 	w.step(DT, {p.id: _cmd().press("interact")})
 	check(not near.on and far.on, "交互只熄灭够得着的那根")
 	check(w.interactable_near(p.pos).is_empty(), "熄灭后不再可交互")
@@ -260,3 +261,23 @@ func test_boss_sits_and_full_fight() -> void:
 	check(b.state == "sit" or not p.alive or not j.alive, "四百秒内分出结果")
 	if b.state == "sit":
 		check(not b.active(), "玄诚坐地后不再参战")
+
+
+func test_blockers_and_gate_steering() -> void:
+	# 上下两块地由一道墙隔开，中间留门洞；墙下有一块石狮
+	var w := _world()
+	w.bounds = PackedVector2Array([Vector2(0, 0), Vector2(400, 0), Vector2(400, 180), Vector2(220, 180), Vector2(220, 240),
+		Vector2(400, 240), Vector2(400, 400), Vector2(0, 400), Vector2(0, 240), Vector2(180, 240), Vector2(180, 180), Vector2(0, 180)])
+	w.blockers.append(PackedVector2Array([Vector2(60, 280), Vector2(120, 280), Vector2(120, 340), Vector2(60, 340)]))
+	w.waypoints.assign([Vector2(200, 260), Vector2(200, 160)])
+	check(not w.walkable(Vector2(90, 300)), "石狮占的地方不能走")
+	check(not w.clear_line(Vector2(60, 380), Vector2(60, 60)), "隔着墙看不见")
+	var p := w.add_hero("player", "shaolin", "jiemai", Vector2(60, 380))
+	var target := Vector2(60, 60)
+	for i in 600:
+		var c := _cmd()
+		c.move = w.steer(p.pos, target)
+		w.step(DT, {p.id: c})
+		if p.pos.distance_to(target) < 8.0:
+			break
+	check(p.pos.distance_to(target) < 8.0, "经门洞路点绕到墙那边（停在 %s）" % p.pos)

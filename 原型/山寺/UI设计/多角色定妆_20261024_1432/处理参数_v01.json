@@ -1,0 +1,16 @@
+{
+  "tool": "内置imagegen；ImageMagick作尺寸/透明/调色板/排版处理",
+  "alpha_threshold": "80%",
+  "trim": true,
+  "resize_filter": "point（最近邻）",
+  "palette_method": "固定16色调色板，关闭抖动，RGB重映射后恢复二值alpha",
+  "composition": "透明目标画布 + native_colored，compose Over，按定妆参数offset整像素平移",
+  "foot_contact_method": "JSON记录左右脚底的固定接触参考像素及其中点；玄诚一只鞋有1px外缘低于参考线，未以该外缘改变根锚点",
+  "source_paths": {
+    "xuancheng": "assets/ref/ref_xuancheng_source_v01.png",
+    "jingxin": "assets/ref/ref_jingxin_source_v01.png",
+    "louluo": "assets/ref/ref_louluo_source_v01.png",
+    "xiepai": "assets/ref/ref_xiepai_source_v01.png"
+  },
+  "preserved_originals": true
+}

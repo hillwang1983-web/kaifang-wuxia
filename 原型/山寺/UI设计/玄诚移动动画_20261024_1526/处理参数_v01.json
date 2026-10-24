@@ -1,0 +1,21 @@
+{
+  "alpha_threshold": "80%",
+  "source_grid": [
+    6,
+    2
+  ],
+  "native_frame": [
+    64,
+    80
+  ],
+  "content_size": [
+    39,
+    53
+  ],
+  "filter": "point（最近邻）",
+  "palette": "沿用玄诚固定16色，关闭抖动，RGB映射后恢复二值alpha",
+  "ground_registration": "下半两鞋片的像素只作整像素注册；left六个walk帧左鞋片下移1px，其余不移。保留上端踝部连接，不重画人物。",
+  "isolated_fragment_cleanup": "left idle第1号帧清1×2透明区域，left walk第1号帧清2×4区域；移除相邻格裁入的碎片，索引0起",
+  "foot_rule": "每帧两个实际不透明脚底接触像素y76，其中点正好(32,76)；77-79行全透明",
+  "sources_preserved": true
+}

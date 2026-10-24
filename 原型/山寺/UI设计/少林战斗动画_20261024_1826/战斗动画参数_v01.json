@@ -1,0 +1,2342 @@
+[
+  {
+    "file": "assets/chr/chr_shaolin_atk1_down_v01.png",
+    "action": "atk1",
+    "direction": "down",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 3,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "return_to_idle_by_controller",
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_chr_shaolin_combat_down_source_v01.png",
+        "source_component_id": 1,
+        "source_crop_xywh": [
+          18,
+          45,
+          192,
+          259
+        ],
+        "uniform_scale": 0.1872146118721461,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          36,
+          48
+        ],
+        "source_projected_ground_point": [
+          110,
+          300
+        ],
+        "offset": [
+          7,
+          13
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_chr_shaolin_combat_down_source_v01.png",
+        "source_component_id": 5,
+        "source_crop_xywh": [
+          263,
+          90,
+          127,
+          219
+        ],
+        "uniform_scale": 0.1872146118721461,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          24,
+          41
+        ],
+        "source_projected_ground_point": [
+          334,
+          305
+        ],
+        "offset": [
+          11,
+          20
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_chr_shaolin_combat_down_source_v01.png",
+        "source_component_id": 3,
+        "source_crop_xywh": [
+          459,
+          85,
+          179,
+          219
+        ],
+        "uniform_scale": 0.1872146118721461,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          34,
+          41
+        ],
+        "source_projected_ground_point": [
+          545,
+          301
+        ],
+        "offset": [
+          8,
+          20
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      }
+    ]
+  },
+  {
+    "file": "assets/chr/chr_shaolin_atk2_down_v01.png",
+    "action": "atk2",
+    "direction": "down",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 3,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "return_to_idle_by_controller",
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_chr_shaolin_combat_down_source_v01.png",
+        "source_component_id": 2,
+        "source_crop_xywh": [
+          672,
+          61,
+          159,
+          248
+        ],
+        "uniform_scale": 0.1872146118721461,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          30,
+          46
+        ],
+        "source_projected_ground_point": [
+          754,
+          302
+        ],
+        "offset": [
+          9,
+          15
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_chr_shaolin_combat_down_sweepfix_source_v01.png",
+        "source_component_id": 4,
+        "source_crop_xywh": [
+          880,
+          87,
+          175,
+          219
+        ],
+        "uniform_scale": 0.1872146118721461,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          33,
+          41
+        ],
+        "source_projected_ground_point": [
+          953,
+          299
+        ],
+        "offset": [
+          10,
+          20
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_chr_shaolin_combat_down_source_v01.png",
+        "source_component_id": 6,
+        "source_crop_xywh": [
+          1118,
+          111,
+          194,
+          198
+        ],
+        "uniform_scale": 0.1872146118721461,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          36,
+          37
+        ],
+        "source_projected_ground_point": [
+          1198,
+          306
+        ],
+        "offset": [
+          9,
+          24
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      }
+    ]
+  },
+  {
+    "file": "assets/chr/chr_shaolin_atk3_down_v01.png",
+    "action": "atk3",
+    "direction": "down",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 3,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "return_to_idle_by_controller",
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_chr_shaolin_combat_down_source_v01.png",
+        "source_component_id": 7,
+        "source_crop_xywh": [
+          41,
+          316,
+          151,
+          306
+        ],
+        "uniform_scale": 0.1872146118721461,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          28,
+          57
+        ],
+        "source_projected_ground_point": [
+          120,
+          620
+        ],
+        "offset": [
+          9,
+          3
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_chr_shaolin_combat_down_source_v01.png",
+        "source_component_id": 8,
+        "source_crop_xywh": [
+          262,
+          419,
+          127,
+          219
+        ],
+        "uniform_scale": 0.1872146118721461,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          24,
+          41
+        ],
+        "source_projected_ground_point": [
+          329,
+          631
+        ],
+        "offset": [
+          11,
+          20
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_chr_shaolin_combat_down_source_v01.png",
+        "source_component_id": 10,
+        "source_crop_xywh": [
+          469,
+          446,
+          191,
+          188
+        ],
+        "uniform_scale": 0.1872146118721461,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          36,
+          35
+        ],
+        "source_projected_ground_point": [
+          549,
+          628
+        ],
+        "offset": [
+          9,
+          26
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      }
+    ]
+  },
+  {
+    "file": "assets/chr/chr_shaolin_hit_down_v01.png",
+    "action": "hit",
+    "direction": "down",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 2,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "return_to_idle_by_controller",
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_chr_shaolin_combat_down_source_v01.png",
+        "source_component_id": 9,
+        "source_crop_xywh": [
+          694,
+          422,
+          153,
+          212
+        ],
+        "uniform_scale": 0.1872146118721461,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          29,
+          40
+        ],
+        "source_projected_ground_point": [
+          773,
+          626
+        ],
+        "offset": [
+          9,
+          22
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_chr_shaolin_combat_down_source_v01.png",
+        "source_component_id": 11,
+        "source_crop_xywh": [
+          900,
+          469,
+          182,
+          165
+        ],
+        "uniform_scale": 0.1872146118721461,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          34,
+          31
+        ],
+        "source_projected_ground_point": [
+          992,
+          630
+        ],
+        "offset": [
+          7,
+          30
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      }
+    ]
+  },
+  {
+    "file": "assets/chr/chr_shaolin_roll_down_v01.png",
+    "action": "roll",
+    "direction": "down",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 4,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "return_to_idle_by_controller",
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_chr_shaolin_combat_down_source_v01.png",
+        "source_component_id": 14,
+        "source_crop_xywh": [
+          41,
+          768,
+          173,
+          144
+        ],
+        "uniform_scale": 0.1872146118721461,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          32,
+          27
+        ],
+        "source_projected_ground_point": [
+          124,
+          906
+        ],
+        "offset": [
+          9,
+          34
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_chr_shaolin_combat_down_source_v01.png",
+        "source_component_id": 13,
+        "source_crop_xywh": [
+          262,
+          718,
+          165,
+          193
+        ],
+        "uniform_scale": 0.1872146118721461,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          31,
+          36
+        ],
+        "source_projected_ground_point": [
+          344,
+          898
+        ],
+        "offset": [
+          9,
+          26
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_chr_shaolin_combat_down_source_v01.png",
+        "source_component_id": 15,
+        "source_crop_xywh": [
+          449,
+          768,
+          187,
+          150
+        ],
+        "uniform_scale": 0.1872146118721461,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          35,
+          28
+        ],
+        "source_projected_ground_point": [
+          534,
+          911
+        ],
+        "offset": [
+          8,
+          33
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_chr_shaolin_combat_down_source_v01.png",
+        "source_component_id": 12,
+        "source_crop_xywh": [
+          693,
+          678,
+          182,
+          233
+        ],
+        "uniform_scale": 0.1872146118721461,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          34,
+          44
+        ],
+        "source_projected_ground_point": [
+          781,
+          908
+        ],
+        "offset": [
+          8,
+          17
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      }
+    ]
+  },
+  {
+    "file": "assets/chr/chr_shaolin_down_down_v01.png",
+    "action": "down",
+    "direction": "down",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 4,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [
+      3
+    ],
+    "end_behavior": "hold_last_until_state_change",
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_chr_shaolin_combat_down_source_v01.png",
+        "source_component_id": 16,
+        "source_crop_xywh": [
+          18,
+          982,
+          195,
+          145
+        ],
+        "uniform_scale": 0.1872146118721461,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          37,
+          27
+        ],
+        "source_projected_ground_point": [
+          126,
+          1118
+        ],
+        "offset": [
+          4,
+          35
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_chr_shaolin_combat_down_source_v01.png",
+        "source_component_id": 17,
+        "source_crop_xywh": [
+          246,
+          1004,
+          231,
+          105
+        ],
+        "uniform_scale": 0.1872146118721461,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          43,
+          20
+        ],
+        "source_projected_ground_point": [
+          348,
+          1106
+        ],
+        "offset": [
+          4,
+          41
+        ],
+        "integer_margin_registration": [
+          -1,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_chr_shaolin_combat_down_pronefix_source_v01.png",
+        "source_component_id": 19,
+        "source_crop_xywh": [
+          526,
+          1030,
+          216,
+          100
+        ],
+        "uniform_scale": 0.1872146118721461,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          40,
+          19
+        ],
+        "source_projected_ground_point": [
+          634,
+          1127
+        ],
+        "offset": [
+          4,
+          42
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_chr_shaolin_combat_down_pronefix_source_v01.png",
+        "source_component_id": 20,
+        "source_crop_xywh": [
+          809,
+          1041,
+          228,
+          94
+        ],
+        "uniform_scale": 0.1872146118721461,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          43,
+          18
+        ],
+        "source_projected_ground_point": [
+          924,
+          1132
+        ],
+        "offset": [
+          2,
+          43
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      }
+    ]
+  },
+  {
+    "file": "assets/chr/chr_shaolin_atk1_left_v01.png",
+    "action": "atk1",
+    "direction": "left",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 3,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "return_to_idle_by_controller",
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_chr_shaolin_combat_left_source_v01.png",
+        "source_component_id": 2,
+        "source_crop_xywh": [
+          29,
+          104,
+          160,
+          191
+        ],
+        "uniform_scale": 0.21465968586387435,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          34,
+          41
+        ],
+        "source_projected_ground_point": [
+          109,
+          293
+        ],
+        "offset": [
+          7,
+          19
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_chr_shaolin_combat_left_compactfix_source_v01.png",
+        "source_component_id": 6,
+        "source_crop_xywh": [
+          255,
+          119,
+          174,
+          180
+        ],
+        "uniform_scale": 0.21465968586387435,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          37,
+          39
+        ],
+        "source_projected_ground_point": [
+          355,
+          297
+        ],
+        "offset": [
+          3,
+          21
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_chr_shaolin_combat_left_compactfix_source_v01.png",
+        "source_component_id": 3,
+        "source_crop_xywh": [
+          475,
+          110,
+          166,
+          189
+        ],
+        "uniform_scale": 0.21465968586387435,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          36,
+          41
+        ],
+        "source_projected_ground_point": [
+          570,
+          296
+        ],
+        "offset": [
+          3,
+          20
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      }
+    ]
+  },
+  {
+    "file": "assets/chr/chr_shaolin_atk2_left_v01.png",
+    "action": "atk2",
+    "direction": "left",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 3,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "return_to_idle_by_controller",
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_chr_shaolin_combat_left_source_v01.png",
+        "source_component_id": 1,
+        "source_crop_xywh": [
+          704,
+          66,
+          154,
+          229
+        ],
+        "uniform_scale": 0.21465968586387435,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          33,
+          49
+        ],
+        "source_projected_ground_point": [
+          782,
+          293
+        ],
+        "offset": [
+          7,
+          11
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_chr_shaolin_combat_left_source_v01.png",
+        "source_component_id": 4,
+        "source_crop_xywh": [
+          901,
+          118,
+          186,
+          178
+        ],
+        "uniform_scale": 0.21465968586387435,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          40,
+          38
+        ],
+        "source_projected_ground_point": [
+          999,
+          294
+        ],
+        "offset": [
+          3,
+          22
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_chr_shaolin_combat_left_source_v01.png",
+        "source_component_id": 6,
+        "source_crop_xywh": [
+          1116,
+          120,
+          192,
+          176
+        ],
+        "uniform_scale": 0.21465968586387435,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          41,
+          38
+        ],
+        "source_projected_ground_point": [
+          1212,
+          294
+        ],
+        "offset": [
+          4,
+          22
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      }
+    ]
+  },
+  {
+    "file": "assets/chr/chr_shaolin_atk3_left_v01.png",
+    "action": "atk3",
+    "direction": "left",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 3,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "return_to_idle_by_controller",
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_chr_shaolin_combat_left_source_v01.png",
+        "source_component_id": 7,
+        "source_crop_xywh": [
+          55,
+          341,
+          133,
+          282
+        ],
+        "uniform_scale": 0.21465968586387435,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          29,
+          61
+        ],
+        "source_projected_ground_point": [
+          119,
+          620
+        ],
+        "offset": [
+          10,
+          1
+        ],
+        "integer_margin_registration": [
+          0,
+          1
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_chr_shaolin_combat_left_strikefix_source_v01.png",
+        "source_component_id": 8,
+        "source_crop_xywh": [
+          228,
+          429,
+          200,
+          195
+        ],
+        "uniform_scale": 0.21465968586387435,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          43,
+          42
+        ],
+        "source_projected_ground_point": [
+          345,
+          620
+        ],
+        "offset": [
+          1,
+          19
+        ],
+        "integer_margin_registration": [
+          2,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_chr_shaolin_combat_left_source_v01.png",
+        "source_component_id": 12,
+        "source_crop_xywh": [
+          448,
+          478,
+          202,
+          151
+        ],
+        "uniform_scale": 0.21465968586387435,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          43,
+          32
+        ],
+        "source_projected_ground_point": [
+          550,
+          626
+        ],
+        "offset": [
+          2,
+          29
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      }
+    ]
+  },
+  {
+    "file": "assets/chr/chr_shaolin_hit_left_v01.png",
+    "action": "hit",
+    "direction": "left",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 2,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "return_to_idle_by_controller",
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_chr_shaolin_combat_left_source_v01.png",
+        "source_component_id": 9,
+        "source_crop_xywh": [
+          705,
+          444,
+          177,
+          179
+        ],
+        "uniform_scale": 0.21465968586387435,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          38,
+          38
+        ],
+        "source_projected_ground_point": [
+          802,
+          621
+        ],
+        "offset": [
+          3,
+          22
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_chr_shaolin_combat_left_source_v01.png",
+        "source_component_id": 10,
+        "source_crop_xywh": [
+          937,
+          459,
+          186,
+          163
+        ],
+        "uniform_scale": 0.21465968586387435,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          40,
+          35
+        ],
+        "source_projected_ground_point": [
+          1036,
+          620
+        ],
+        "offset": [
+          3,
+          25
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      }
+    ]
+  },
+  {
+    "file": "assets/chr/chr_shaolin_roll_left_v01.png",
+    "action": "roll",
+    "direction": "left",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 4,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "return_to_idle_by_controller",
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_chr_shaolin_combat_left_source_v01.png",
+        "source_component_id": 15,
+        "source_crop_xywh": [
+          25,
+          770,
+          176,
+          132
+        ],
+        "uniform_scale": 0.21465968586387435,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          38,
+          28
+        ],
+        "source_projected_ground_point": [
+          114,
+          899
+        ],
+        "offset": [
+          5,
+          33
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_chr_shaolin_combat_left_source_v01.png",
+        "source_component_id": 14,
+        "source_crop_xywh": [
+          276,
+          740,
+          143,
+          162
+        ],
+        "uniform_scale": 0.21465968586387435,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          31,
+          35
+        ],
+        "source_projected_ground_point": [
+          350,
+          900
+        ],
+        "offset": [
+          8,
+          25
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_chr_shaolin_combat_left_compactfix_source_v01.png",
+        "source_component_id": 14,
+        "source_crop_xywh": [
+          492,
+          767,
+          177,
+          139
+        ],
+        "uniform_scale": 0.21465968586387435,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          38,
+          30
+        ],
+        "source_projected_ground_point": [
+          580,
+          903
+        ],
+        "offset": [
+          5,
+          31
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_chr_shaolin_combat_left_source_v01.png",
+        "source_component_id": 13,
+        "source_crop_xywh": [
+          720,
+          704,
+          187,
+          201
+        ],
+        "uniform_scale": 0.21465968586387435,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          40,
+          43
+        ],
+        "source_projected_ground_point": [
+          810,
+          902
+        ],
+        "offset": [
+          5,
+          18
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      }
+    ]
+  },
+  {
+    "file": "assets/chr/chr_shaolin_down_left_v01.png",
+    "action": "down",
+    "direction": "left",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 4,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [
+      3
+    ],
+    "end_behavior": "hold_last_until_state_change",
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_chr_shaolin_combat_left_deathfix_source_v01.png",
+        "source_component_id": 1,
+        "source_crop_xywh": [
+          53,
+          173,
+          363,
+          360
+        ],
+        "uniform_scale": 0.09722222222222222,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          35,
+          35
+        ],
+        "source_projected_ground_point": [
+          241.76000000000002,
+          532
+        ],
+        "offset": [
+          6,
+          25
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_chr_shaolin_combat_left_deathfix_source_v01.png",
+        "source_component_id": 2,
+        "source_crop_xywh": [
+          502,
+          276,
+          466,
+          257
+        ],
+        "uniform_scale": 0.09722222222222222,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          45,
+          25
+        ],
+        "source_projected_ground_point": [
+          744.32,
+          532
+        ],
+        "offset": [
+          1,
+          35
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_chr_shaolin_combat_left_deathfix_source_v01.png",
+        "source_component_id": 8,
+        "source_crop_xywh": [
+          1093,
+          377,
+          407,
+          156
+        ],
+        "uniform_scale": 0.09722222222222222,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          40,
+          15
+        ],
+        "source_projected_ground_point": [
+          1304.64,
+          532
+        ],
+        "offset": [
+          3,
+          45
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_chr_shaolin_combat_left_deathfix_source_v01.png",
+        "source_component_id": 9,
+        "source_crop_xywh": [
+          1658,
+          379,
+          443,
+          154
+        ],
+        "uniform_scale": 0.09722222222222222,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          43,
+          15
+        ],
+        "source_projected_ground_point": [
+          1888.3600000000001,
+          532
+        ],
+        "offset": [
+          2,
+          45
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      }
+    ]
+  },
+  {
+    "file": "assets/chr/chr_shaolin_atk1_up_v01.png",
+    "action": "atk1",
+    "direction": "up",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 3,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "return_to_idle_by_controller",
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_chr_shaolin_combat_up_source_v01.png",
+        "source_component_id": 2,
+        "source_crop_xywh": [
+          55,
+          63,
+          168,
+          238
+        ],
+        "uniform_scale": 0.19902912621359223,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          33,
+          47
+        ],
+        "source_projected_ground_point": [
+          139,
+          296
+        ],
+        "offset": [
+          8,
+          14
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_chr_shaolin_combat_up_source_v01.png",
+        "source_component_id": 1,
+        "source_crop_xywh": [
+          278,
+          60,
+          114,
+          239
+        ],
+        "uniform_scale": 0.19902912621359223,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          23,
+          48
+        ],
+        "source_projected_ground_point": [
+          334,
+          297
+        ],
+        "offset": [
+          13,
+          12
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_chr_shaolin_combat_up_source_v01.png",
+        "source_component_id": 4,
+        "source_crop_xywh": [
+          461,
+          99,
+          182,
+          206
+        ],
+        "uniform_scale": 0.19902912621359223,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          36,
+          41
+        ],
+        "source_projected_ground_point": [
+          543,
+          303
+        ],
+        "offset": [
+          8,
+          19
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      }
+    ]
+  },
+  {
+    "file": "assets/chr/chr_shaolin_atk2_up_v01.png",
+    "action": "atk2",
+    "direction": "up",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 3,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "return_to_idle_by_controller",
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_chr_shaolin_combat_up_source_v01.png",
+        "source_component_id": 3,
+        "source_crop_xywh": [
+          697,
+          90,
+          168,
+          215
+        ],
+        "uniform_scale": 0.19902912621359223,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          33,
+          43
+        ],
+        "source_projected_ground_point": [
+          776,
+          302
+        ],
+        "offset": [
+          8,
+          18
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_chr_shaolin_combat_up_sweepfix_source_v01.png",
+        "source_component_id": 4,
+        "source_crop_xywh": [
+          901,
+          97,
+          191,
+          207
+        ],
+        "uniform_scale": 0.19902912621359223,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          38,
+          41
+        ],
+        "source_projected_ground_point": [
+          989,
+          298
+        ],
+        "offset": [
+          6,
+          20
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_chr_shaolin_combat_up_source_v01.png",
+        "source_component_id": 7,
+        "source_crop_xywh": [
+          1130,
+          134,
+          191,
+          171
+        ],
+        "uniform_scale": 0.19902912621359223,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          38,
+          34
+        ],
+        "source_projected_ground_point": [
+          1219,
+          303
+        ],
+        "offset": [
+          6,
+          26
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      }
+    ]
+  },
+  {
+    "file": "assets/chr/chr_shaolin_atk3_up_v01.png",
+    "action": "atk3",
+    "direction": "up",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 3,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "return_to_idle_by_controller",
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_chr_shaolin_combat_up_source_v01.png",
+        "source_component_id": 8,
+        "source_crop_xywh": [
+          65,
+          311,
+          123,
+          312
+        ],
+        "uniform_scale": 0.19902912621359223,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          24,
+          62
+        ],
+        "source_projected_ground_point": [
+          127,
+          620
+        ],
+        "offset": [
+          12,
+          1
+        ],
+        "integer_margin_registration": [
+          0,
+          2
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_chr_shaolin_combat_up_source_v01.png",
+        "source_component_id": 9,
+        "source_crop_xywh": [
+          254,
+          369,
+          163,
+          257
+        ],
+        "uniform_scale": 0.19902912621359223,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          32,
+          51
+        ],
+        "source_projected_ground_point": [
+          336,
+          622
+        ],
+        "offset": [
+          8,
+          10
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_chr_shaolin_combat_up_source_v01.png",
+        "source_component_id": 13,
+        "source_crop_xywh": [
+          482,
+          477,
+          168,
+          146
+        ],
+        "uniform_scale": 0.19902912621359223,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          33,
+          29
+        ],
+        "source_projected_ground_point": [
+          564,
+          620
+        ],
+        "offset": [
+          8,
+          32
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      }
+    ]
+  },
+  {
+    "file": "assets/chr/chr_shaolin_hit_up_v01.png",
+    "action": "hit",
+    "direction": "up",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 2,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "return_to_idle_by_controller",
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_chr_shaolin_combat_up_source_v01.png",
+        "source_component_id": 11,
+        "source_crop_xywh": [
+          701,
+          461,
+          177,
+          162
+        ],
+        "uniform_scale": 0.19902912621359223,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          35,
+          32
+        ],
+        "source_projected_ground_point": [
+          789,
+          620
+        ],
+        "offset": [
+          7,
+          29
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_chr_shaolin_combat_up_source_v01.png",
+        "source_component_id": 10,
+        "source_crop_xywh": [
+          903,
+          412,
+          178,
+          214
+        ],
+        "uniform_scale": 0.19902912621359223,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          35,
+          43
+        ],
+        "source_projected_ground_point": [
+          1003,
+          623
+        ],
+        "offset": [
+          4,
+          18
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      }
+    ]
+  },
+  {
+    "file": "assets/chr/chr_shaolin_roll_up_v01.png",
+    "action": "roll",
+    "direction": "up",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 4,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "return_to_idle_by_controller",
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_chr_shaolin_combat_up_source_v01.png",
+        "source_component_id": 18,
+        "source_crop_xywh": [
+          63,
+          754,
+          158,
+          141
+        ],
+        "uniform_scale": 0.19902912621359223,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          31,
+          28
+        ],
+        "source_projected_ground_point": [
+          146,
+          892
+        ],
+        "offset": [
+          8,
+          33
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_chr_shaolin_combat_up_source_v01.png",
+        "source_component_id": 17,
+        "source_crop_xywh": [
+          277,
+          731,
+          133,
+          170
+        ],
+        "uniform_scale": 0.19902912621359223,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          26,
+          34
+        ],
+        "source_projected_ground_point": [
+          343,
+          899
+        ],
+        "offset": [
+          11,
+          26
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_chr_shaolin_combat_up_source_v01.png",
+        "source_component_id": 19,
+        "source_crop_xywh": [
+          457,
+          764,
+          180,
+          130
+        ],
+        "uniform_scale": 0.19902912621359223,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          36,
+          26
+        ],
+        "source_projected_ground_point": [
+          547,
+          891
+        ],
+        "offset": [
+          6,
+          35
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_chr_shaolin_combat_up_source_v01.png",
+        "source_component_id": 16,
+        "source_crop_xywh": [
+          697,
+          663,
+          181,
+          228
+        ],
+        "uniform_scale": 0.19902912621359223,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          36,
+          45
+        ],
+        "source_projected_ground_point": [
+          789,
+          888
+        ],
+        "offset": [
+          6,
+          16
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      }
+    ]
+  },
+  {
+    "file": "assets/chr/chr_shaolin_down_up_v01.png",
+    "action": "down",
+    "direction": "up",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 4,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [
+      3
+    ],
+    "end_behavior": "hold_last_until_state_change",
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_chr_shaolin_combat_up_source_v01.png",
+        "source_component_id": 20,
+        "source_crop_xywh": [
+          41,
+          976,
+          165,
+          162
+        ],
+        "uniform_scale": 0.19902912621359223,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          33,
+          32
+        ],
+        "source_projected_ground_point": [
+          129,
+          1135
+        ],
+        "offset": [
+          6,
+          29
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_chr_shaolin_combat_up_source_v01.png",
+        "source_component_id": 21,
+        "source_crop_xywh": [
+          248,
+          1015,
+          211,
+          120
+        ],
+        "uniform_scale": 0.19902912621359223,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          42,
+          24
+        ],
+        "source_projected_ground_point": [
+          357,
+          1132
+        ],
+        "offset": [
+          2,
+          37
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_chr_shaolin_combat_up_source_v01.png",
+        "source_component_id": 22,
+        "source_crop_xywh": [
+          492,
+          1047,
+          225,
+          88
+        ],
+        "uniform_scale": 0.19902912621359223,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          45,
+          18
+        ],
+        "source_projected_ground_point": [
+          604,
+          1132
+        ],
+        "offset": [
+          2,
+          43
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_chr_shaolin_combat_up_pronefix_source_v01.png",
+        "source_component_id": 23,
+        "source_crop_xywh": [
+          783,
+          1071,
+          209,
+          62
+        ],
+        "uniform_scale": 0.19902912621359223,
+        "scale_reference": "同方向原稿站姿身体41px；独立左向倒地条按同姿态首帧35px校准，整动作等比，不逐帧拉伸",
+        "scaled_size": [
+          42,
+          12
+        ],
+        "source_projected_ground_point": [
+          888,
+          1131
+        ],
+        "offset": [
+          3,
+          48
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿按地面中点、翻滚横卧按投影身体根注册，原点固定，位移交程序"
+      }
+    ]
+  }
+]

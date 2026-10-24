@@ -1,0 +1,34 @@
+{
+  "alpha_threshold": "80%",
+  "filter": "point最近邻",
+  "jingxin_content": [
+    33,
+    39
+  ],
+  "jingxin_frame": [
+    48,
+    64
+  ],
+  "jingxin_anchor": [
+    24,
+    60
+  ],
+  "jingxin_registration": "idle首帧两鞋地面中线校准头部；每方向锁定偏移，抬脚不改根锚点",
+  "hanqing_front_content_height": 41,
+  "hanqing_front_frame": [
+    48,
+    64
+  ],
+  "hanqing_anchor": [
+    24,
+    60
+  ],
+  "portrait_content_height": 92,
+  "portrait_frame": [
+    96,
+    96
+  ],
+  "portrait_alignment": "底边齐96、上方留4像素；两侧肩部自然裁切",
+  "palette": "两角色分别固定16色，关闭抖动；韩青定妆与头像共用同一16色",
+  "source_preservation": true
+}

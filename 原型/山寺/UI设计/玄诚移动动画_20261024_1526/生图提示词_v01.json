@@ -1,0 +1,203 @@
+{
+  "tool": "built-in imagegen",
+  "generation": [
+    {
+      "direction": "down",
+      "references": [
+        "/Volumes/ML_models/游戏/开放武侠/output/art-roles-ref-20261024-1432/delivery/UI设计/多角色定妆_20261024_1432/玄诚_8倍_v01.png",
+        "/Volumes/ML_models/游戏/开放武侠/output/ui-delivery-20261024/delivery/assets/por/por_xuancheng_cold_v01.png"
+      ],
+      "layout": [
+        6,
+        2
+      ],
+      "native_cell": [
+        64,
+        80
+      ],
+      "native_sheet": [
+        384,
+        160
+      ],
+      "idle_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "walk_cells": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          1
+        ]
+      ],
+      "prompt": "Use case: identity-preserve. Asset type: production PIXEL GAME ANIMATION SOURCE SHEET of the already approved BOSS XUANCHENG. Image1 is his approved full-body sprite; Image2 is his accepted portrait, for identity only. Preserve EXACTLY this same lean mature Chinese man, tired angular face, SHORT STUBBLY DARK HAIR (not bald and not a topknot), guarded weary expression, plain worn brown-red monk robe #8C3B2E with a BLACK SLEEVELESS OVERCOAT #15121A, restrained dark-purple trim #4A2A6B, brown trousers and simple cloth shoes. No fancy patterns, cape, jewelry, armor, demon features, glowing eyes or extra equipment. ONE long plain wooden STAFF held diagonally with BOTH HANDS, complete in every cell. Not two staffs, a spear, sword or walking stick planted into the ground. Staff length about53-56 native pixels. Human height about53 native pixels, exactly1.3x the small player reference scale, not a giant and not a tiny chibi. Same head/body ratio and plain costume silhouette as Image1.\nCAMERA: orthographic45degree top-down3/4, same tilt as the approved sprite, visible top of head and shoulders. Hard material-dark1native-pixel outline, left-upper light, hard two-shade flat pixel clusters, <=16 opaque colors. No smooth gradients, fabric noise, antialiasing, intermediate alpha, pure black or magenta. Genuine transparent background, no floor, shadows, UI, lettering, gridlines, labels or scenery.\nEXACT LAYOUT: six equally sized columns x two equally sized rows, native384x160, each cell64x80. Show at a clean5x enlargement1920x800 if possible. No gutters, no drawn dividers. Every complete figure and staff is contained within its own cell, no overlap across cells. Native head top aroundy24, character about53 pixels tall, local root feet midpoint(32,76), character centered at x32. Important developer requirement: in EVERY FRAME BOTH SHOE SOLES are on the SAME horizontal baseline native y76, with NO opaque pixels in native rows77,78,79. Two distinct shoes with at least1-2 native pixel transparent gap. The old reference has one tiny shoe pixel below the line: CORRECT that in the animation, do not copy it. Keep the ankle and sole geometry clean and simple. No foot lifting, toe pointing down, running, jumping or floating; this boss uses a slow heavy grounded sliding-step gait with both soles on one line. His body stays centered in place; movement through the level is programmed, not painted as translation between cells.\nROW1: four IDLE BREATHING frames in columns1,2,3,4; columns5 and6 entirely empty/transparent. Sequence neutral -> subtle inhale -> relaxed full inhale -> gentle exhale. Changes <=1native pixel in hands/shoulders, stable head size, shoes unmoving. Staff stays at rest and gripped with both hands.\nROW2: six WALK frames, one coherent grounded shuffle cycle, NOT six near-identical idle poses. BOTH shoes stay FLAT on native row76 throughout. Frame1: left foot slid forward, wide stride, left support. Frame2: weight moves over left leg, right foot slides in closer, knees bend. Frame3: narrow passing stance with right foot sliding past left, two shoes still separated and flat. Frame4: right foot slid forward, opposite wide stride, right support. Frame5: weight moves over right leg, left foot slides in, knees bend. Frame6: opposite narrow passing stance with left foot sliding past right, returns toward frame1. Clear wide/narrow/wide/narrow rhythm with robe hem and knees changing, but no hopping and no lifted soles; head bob <=1native pixel. Calm heavy instructor pace, no attack, lunge, magic or motion trails. Staff has slight counter-motion while both hands keep the same grip. All ten figures have the same face, hair, clothes, proportions, staff length and palette. ALL figures in this sheet face one direction only.  FACING FOR ALL TEN FRAMES: DOWN/front: face and shoulders toward viewer, weary eyes visible, black overcoat open over brown-red robe. Long staff diagonal from lower-left to upper-right across the torso, just like approved reference. Grounded feet line horizontal."
+    },
+    {
+      "direction": "left",
+      "references": [
+        "/Volumes/ML_models/游戏/开放武侠/output/art-roles-ref-20261024-1432/delivery/UI设计/多角色定妆_20261024_1432/玄诚_8倍_v01.png",
+        "/Volumes/ML_models/游戏/开放武侠/output/ui-delivery-20261024/delivery/assets/por/por_xuancheng_cold_v01.png"
+      ],
+      "layout": [
+        6,
+        2
+      ],
+      "native_cell": [
+        64,
+        80
+      ],
+      "native_sheet": [
+        384,
+        160
+      ],
+      "idle_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "walk_cells": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          1
+        ]
+      ],
+      "prompt": "Use case: identity-preserve. Asset type: production PIXEL GAME ANIMATION SOURCE SHEET of the already approved BOSS XUANCHENG. Image1 is his approved full-body sprite; Image2 is his accepted portrait, for identity only. Preserve EXACTLY this same lean mature Chinese man, tired angular face, SHORT STUBBLY DARK HAIR (not bald and not a topknot), guarded weary expression, plain worn brown-red monk robe #8C3B2E with a BLACK SLEEVELESS OVERCOAT #15121A, restrained dark-purple trim #4A2A6B, brown trousers and simple cloth shoes. No fancy patterns, cape, jewelry, armor, demon features, glowing eyes or extra equipment. ONE long plain wooden STAFF held diagonally with BOTH HANDS, complete in every cell. Not two staffs, a spear, sword or walking stick planted into the ground. Staff length about53-56 native pixels. Human height about53 native pixels, exactly1.3x the small player reference scale, not a giant and not a tiny chibi. Same head/body ratio and plain costume silhouette as Image1.\nCAMERA: orthographic45degree top-down3/4, same tilt as the approved sprite, visible top of head and shoulders. Hard material-dark1native-pixel outline, left-upper light, hard two-shade flat pixel clusters, <=16 opaque colors. No smooth gradients, fabric noise, antialiasing, intermediate alpha, pure black or magenta. Genuine transparent background, no floor, shadows, UI, lettering, gridlines, labels or scenery.\nEXACT LAYOUT: six equally sized columns x two equally sized rows, native384x160, each cell64x80. Show at a clean5x enlargement1920x800 if possible. No gutters, no drawn dividers. Every complete figure and staff is contained within its own cell, no overlap across cells. Native head top aroundy24, character about53 pixels tall, local root feet midpoint(32,76), character centered at x32. Important developer requirement: in EVERY FRAME BOTH SHOE SOLES are on the SAME horizontal baseline native y76, with NO opaque pixels in native rows77,78,79. Two distinct shoes with at least1-2 native pixel transparent gap. The old reference has one tiny shoe pixel below the line: CORRECT that in the animation, do not copy it. Keep the ankle and sole geometry clean and simple. No foot lifting, toe pointing down, running, jumping or floating; this boss uses a slow heavy grounded sliding-step gait with both soles on one line. His body stays centered in place; movement through the level is programmed, not painted as translation between cells.\nROW1: four IDLE BREATHING frames in columns1,2,3,4; columns5 and6 entirely empty/transparent. Sequence neutral -> subtle inhale -> relaxed full inhale -> gentle exhale. Changes <=1native pixel in hands/shoulders, stable head size, shoes unmoving. Staff stays at rest and gripped with both hands.\nROW2: six WALK frames, one coherent grounded shuffle cycle, NOT six near-identical idle poses. BOTH shoes stay FLAT on native row76 throughout. Frame1: left foot slid forward, wide stride, left support. Frame2: weight moves over left leg, right foot slides in closer, knees bend. Frame3: narrow passing stance with right foot sliding past left, two shoes still separated and flat. Frame4: right foot slid forward, opposite wide stride, right support. Frame5: weight moves over right leg, left foot slides in, knees bend. Frame6: opposite narrow passing stance with left foot sliding past right, returns toward frame1. Clear wide/narrow/wide/narrow rhythm with robe hem and knees changing, but no hopping and no lifted soles; head bob <=1native pixel. Calm heavy instructor pace, no attack, lunge, magic or motion trails. Staff has slight counter-motion while both hands keep the same grip. All ten figures have the same face, hair, clothes, proportions, staff length and palette. ALL figures in this sheet face one direction only.  FACING FOR ALL TEN FRAMES: LEFT: nose and face point screen-left, clear left-facing side view while maintaining45degree top-down tilt; show the side of short-stubbled head, not a face looking down/right. Grounded shuffle moves toward screen-left in place. Staff held diagonally in front and toward upper-left; both hands gripping. Robe and sleeveless black coat same as reference, no new hat."
+    },
+    {
+      "direction": "up",
+      "references": [
+        "/Volumes/ML_models/游戏/开放武侠/output/art-roles-ref-20261024-1432/delivery/UI设计/多角色定妆_20261024_1432/玄诚_8倍_v01.png",
+        "/Volumes/ML_models/游戏/开放武侠/output/ui-delivery-20261024/delivery/assets/por/por_xuancheng_cold_v01.png"
+      ],
+      "layout": [
+        6,
+        2
+      ],
+      "native_cell": [
+        64,
+        80
+      ],
+      "native_sheet": [
+        384,
+        160
+      ],
+      "idle_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "walk_cells": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          1
+        ]
+      ],
+      "prompt": "Use case: identity-preserve. Asset type: production PIXEL GAME ANIMATION SOURCE SHEET of the already approved BOSS XUANCHENG. Image1 is his approved full-body sprite; Image2 is his accepted portrait, for identity only. Preserve EXACTLY this same lean mature Chinese man, tired angular face, SHORT STUBBLY DARK HAIR (not bald and not a topknot), guarded weary expression, plain worn brown-red monk robe #8C3B2E with a BLACK SLEEVELESS OVERCOAT #15121A, restrained dark-purple trim #4A2A6B, brown trousers and simple cloth shoes. No fancy patterns, cape, jewelry, armor, demon features, glowing eyes or extra equipment. ONE long plain wooden STAFF held diagonally with BOTH HANDS, complete in every cell. Not two staffs, a spear, sword or walking stick planted into the ground. Staff length about53-56 native pixels. Human height about53 native pixels, exactly1.3x the small player reference scale, not a giant and not a tiny chibi. Same head/body ratio and plain costume silhouette as Image1.\nCAMERA: orthographic45degree top-down3/4, same tilt as the approved sprite, visible top of head and shoulders. Hard material-dark1native-pixel outline, left-upper light, hard two-shade flat pixel clusters, <=16 opaque colors. No smooth gradients, fabric noise, antialiasing, intermediate alpha, pure black or magenta. Genuine transparent background, no floor, shadows, UI, lettering, gridlines, labels or scenery.\nEXACT LAYOUT: six equally sized columns x two equally sized rows, native384x160, each cell64x80. Show at a clean5x enlargement1920x800 if possible. No gutters, no drawn dividers. Every complete figure and staff is contained within its own cell, no overlap across cells. Native head top aroundy24, character about53 pixels tall, local root feet midpoint(32,76), character centered at x32. Important developer requirement: in EVERY FRAME BOTH SHOE SOLES are on the SAME horizontal baseline native y76, with NO opaque pixels in native rows77,78,79. Two distinct shoes with at least1-2 native pixel transparent gap. The old reference has one tiny shoe pixel below the line: CORRECT that in the animation, do not copy it. Keep the ankle and sole geometry clean and simple. No foot lifting, toe pointing down, running, jumping or floating; this boss uses a slow heavy grounded sliding-step gait with both soles on one line. His body stays centered in place; movement through the level is programmed, not painted as translation between cells.\nROW1: four IDLE BREATHING frames in columns1,2,3,4; columns5 and6 entirely empty/transparent. Sequence neutral -> subtle inhale -> relaxed full inhale -> gentle exhale. Changes <=1native pixel in hands/shoulders, stable head size, shoes unmoving. Staff stays at rest and gripped with both hands.\nROW2: six WALK frames, one coherent grounded shuffle cycle, NOT six near-identical idle poses. BOTH shoes stay FLAT on native row76 throughout. Frame1: left foot slid forward, wide stride, left support. Frame2: weight moves over left leg, right foot slides in closer, knees bend. Frame3: narrow passing stance with right foot sliding past left, two shoes still separated and flat. Frame4: right foot slid forward, opposite wide stride, right support. Frame5: weight moves over right leg, left foot slides in, knees bend. Frame6: opposite narrow passing stance with left foot sliding past right, returns toward frame1. Clear wide/narrow/wide/narrow rhythm with robe hem and knees changing, but no hopping and no lifted soles; head bob <=1native pixel. Calm heavy instructor pace, no attack, lunge, magic or motion trails. Staff has slight counter-motion while both hands keep the same grip. All ten figures have the same face, hair, clothes, proportions, staff length and palette. ALL figures in this sheet face one direction only.  FACING FOR ALL TEN FRAMES: UP/back: show BACK of the short-stubbled head, shoulders and plain black sleeveless overcoat over brown-red robe. No face, nose or eyes visible. Grounded shuffle is away from viewer in place. Staff is visible diagonally beside shoulder and hands, one complete wood staff, not strapped on the back."
+    }
+  ],
+  "up_ground_repair": {
+    "direction": "up",
+    "reference": "/Users/hill/.codex/generated_images/01a16bc4-aa14-7661-a2e6-9af5cabaee1e/exec-72f17510-4166-44f6-90b8-432b120ae793.png",
+    "prompt": "Use case: precise-object-edit. Edit ONLY the high/rear SHOES AND SHORT ANKLE REGIONS in the SECOND ROW of the attached Xuancheng animation sheet. This is a technical ground-line correction requested by the game developer. Keep exact same1942x809 canvas and6columns x2rows layout, same man, coat, staff, hands, camera, colors, head size, and the entire FIRST ROW completely unchanged. In each of the SIX SECOND-ROW cells, one shoe currently floats20-35 source pixels above the other. Lower ONLY that higher shoe/short ankle until the bottom SOLES OF BOTH SHOES in that cell meet the SAME horizontal ground baseline, around global y783, and naturally extend the small ankle/lower shin by that distance. BOTH shoes should stay FLAT on that baseline in ALL six walk frames, slow grounded shuffle, no foot lift, no toe dipped below the ground. The lower shoe of each pair stays in its current x position and nearly the current y; align soles precisely. Keep feet separated, preserve their left/right x stride positions and knee bends, do not replace all frames with one standing pose. Ground location fixed per cell, no opaque pixels below the common shoe baseline. No floor, shadows, platform, markers, text, gridlines, extra parts or changes outside the small ankle/shoe correction. Preserve real alpha transparency and the exact same pixel-art rendering and body identity."
+  },
+  "selection": "down/left全部与up待机取原始源图；up行走取背面脚线修正源图第二行"
+}

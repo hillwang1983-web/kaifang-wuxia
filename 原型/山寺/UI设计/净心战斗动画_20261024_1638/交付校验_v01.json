@@ -1,0 +1,308 @@
+{
+  "new_frames": 39,
+  "complete_minimum_frames": 69,
+  "files": [
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/jingxin_atk_down_6倍_v01.png",
+      "bytes": 3795,
+      "sha256": "64b8b00a908fa673e4350d9956019134c01620885c8e2a497ef095e05d43fc78"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/jingxin_atk_down_播放预览_v01.gif",
+      "bytes": 9887,
+      "sha256": "54f66f679d200b877e891ef310116d8cc99cb70f088861fd589d7b288ff5f5c6"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/jingxin_atk_left_6倍_v01.png",
+      "bytes": 2638,
+      "sha256": "8ade52380eac139578c256935c147d3bba2ab0d91ebfd2f0e56c8e8201ebf6d6"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/jingxin_atk_left_播放预览_v01.gif",
+      "bytes": 8889,
+      "sha256": "d4378e558959c5f53a99f8c367d9d2356b322c140fc236c90e0e47c1dc59fd48"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/jingxin_atk_up_6倍_v01.png",
+      "bytes": 2896,
+      "sha256": "6646472f22bbaa62dd21df2ca300ce60474adadb43eba8f0ab2ba14f859869e2"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/jingxin_atk_up_播放预览_v01.gif",
+      "bytes": 9137,
+      "sha256": "eb62964b539c5cf041d33490eb17b212977125bdcee5a0b3162293091e356cce"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/jingxin_down_down_6倍_v01.png",
+      "bytes": 2645,
+      "sha256": "6ceab5b36bcfdec5ffdea220c65b57e1630bfce6375cbe4bc756c99f6b25695f"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/jingxin_down_down_播放预览_v01.gif",
+      "bytes": 11354,
+      "sha256": "1ba78b9a5fd034408b08c6f27895040fb11d2de33a5dd362e95c72a0d5c2094a"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/jingxin_down_left_6倍_v01.png",
+      "bytes": 2339,
+      "sha256": "bcc117b748ea57e7e2852235c6fcafc3dd7c74047fd70fdd7d50b372bd8fc99a"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/jingxin_down_left_播放预览_v01.gif",
+      "bytes": 9892,
+      "sha256": "22024b8ca3362a440a289e38fa2827d78fef5cee4206bc887c9e6df100465349"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/jingxin_down_up_6倍_v01.png",
+      "bytes": 3056,
+      "sha256": "493793c87b907845efda79c2a91b39a96104997713f70005a7bf47ac8bf90061"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/jingxin_down_up_播放预览_v01.gif",
+      "bytes": 12257,
+      "sha256": "3e8a775f4a015a339a67b4c80a95ffa1ee38e0b39a765c55994051a12650c62c"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/jingxin_hit_down_6倍_v01.png",
+      "bytes": 1872,
+      "sha256": "7ef9f36d374732d0baf84be00f3251fff7be1b78965485ede17b76499f341b6f"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/jingxin_hit_down_播放预览_v01.gif",
+      "bytes": 7108,
+      "sha256": "1a359281c678d90741db38cf9be1d912eb1d4720764ca22be53a89244e4b789d"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/jingxin_hit_left_6倍_v01.png",
+      "bytes": 1697,
+      "sha256": "8448b74ec1f6c4ec6ff7a5db3ac0dc50bff8eba9d5aac56f27a2cb14b32c0bfd"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/jingxin_hit_left_播放预览_v01.gif",
+      "bytes": 6133,
+      "sha256": "d2485fbb0d8140b3866fda9500da0f16d8c591c270f8711087e9529fa41d3565"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/jingxin_hit_up_6倍_v01.png",
+      "bytes": 1657,
+      "sha256": "4a7e31670ad72a7a99fa509fdc2120fd12af9a18bf82f691253fb77b59a779a9"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/jingxin_hit_up_播放预览_v01.gif",
+      "bytes": 6250,
+      "sha256": "e07f5af6ca9d136d718a88e1f2ca3ca0b847cb5bb0ce2d928846a319f79d7273"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/jingxin_roll_down_6倍_v01.png",
+      "bytes": 4419,
+      "sha256": "30a982307b465bb03fce4e041e4ec9720a2a41830cde0d9b4bb1aa2ea654ffc3"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/jingxin_roll_down_播放预览_v01.gif",
+      "bytes": 12659,
+      "sha256": "d943a6e19f204a5986ebbeb8f2c184a6b18802dab73e89be1fb5d026f1260436"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/jingxin_roll_left_6倍_v01.png",
+      "bytes": 3146,
+      "sha256": "075f8ff88fd7d55ac973090486aef68f502eb0a379057918cf2b75af010fa140"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/jingxin_roll_left_播放预览_v01.gif",
+      "bytes": 10709,
+      "sha256": "200b7822e07ad35c8cdf453a0edaa6a4a62fa6b42ef64ddaf9d80b5bbfbfc3df"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/jingxin_roll_up_6倍_v01.png",
+      "bytes": 3380,
+      "sha256": "4254728836fd53693824b42993d89c60f0a5de70164f807600a5dfce223557b3"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/jingxin_roll_up_播放预览_v01.gif",
+      "bytes": 11470,
+      "sha256": "cbacacde6434c6178412dac8753e8e5aea35cf933381c693693429849fb5530d"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/left_strike_fix_prompt.txt",
+      "bytes": 902,
+      "sha256": "8eb56e7ae6c91e93675b53da215b9189d8d2601b1be6c01e23f155fd81acc4d8"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/production_plan.md",
+      "bytes": 548,
+      "sha256": "8ae94e33c6eab6242d32ee94a23827700bf9680f6291b31d9e4b442cc10b79a3"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/prompts.json",
+      "bytes": 8874,
+      "sha256": "4c987dbc56640b370318aca512122ef263106080550f2a00e75c67492a5e825a"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/up_staff_fix_prompt.txt",
+      "bytes": 802,
+      "sha256": "4879aba44c42a6e92273a2c057a17e68399284cd89ec1eec76f9a2ab5832ef77"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/交付说明_v01.md",
+      "bytes": 3349,
+      "sha256": "5b89c82efe2ad8755310a7a26c08b138fdd5c0cb7f2667055eab639a9c58b161"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/净心全套动画索引_v01.json",
+      "bytes": 62196,
+      "sha256": "7bd63aceb2c557b74cdb89f5e456bd83241be9112d515d9b4846c6ad3e3570e1"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/净心战斗_down_逐帧总览_v01.png",
+      "bytes": 13699,
+      "sha256": "160a0c7786293235dc161c47f642e50d6a16648da01779671d1cef89b1152537"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/净心战斗_left_逐帧总览_v01.png",
+      "bytes": 9252,
+      "sha256": "8b12c2751fa37e17dc90b77e86c6d1b8508a5517da26839759c5689a589386a8"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/净心战斗_up_逐帧总览_v01.png",
+      "bytes": 10499,
+      "sha256": "e5ac520c88dba1f6d09dff0defbf95f41844a695eed4c107dabbe0001c9e276c"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/山门1比1_待机攻击翻滚倒地_v01.png",
+      "bytes": 189496,
+      "sha256": "4fef1b87751385e1bc996b4f807cd4c663c5c56ab4413c79d04e98b7a502fba4"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/战斗动画参数_v01.json",
+      "bytes": 36004,
+      "sha256": "a86b1c88e30f05e7600ca6f4ef3d569ba19aa1355c060fb82d4d8132ea720026"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/核验结果_v01.json",
+      "bytes": 14712,
+      "sha256": "4c5e03998d27d424611b190844fdd47da57631c47d58517eacb25aca22cf9739"
+    },
+    {
+      "path": "UI设计/净心战斗动画_20261024_1638/调色板_v01.json",
+      "bytes": 245,
+      "sha256": "95f8592849c6eda4a51770b068ebeb29c1963992cbe29e3f381b700f32b32450"
+    },
+    {
+      "path": "assets/npc/npc_jingxin_atk_down_v01.png",
+      "bytes": 3426,
+      "sha256": "b3363165cc348e12b53dc25fb29563baffd55b2ed647f37d1e0cb0e99739bbca"
+    },
+    {
+      "path": "assets/npc/npc_jingxin_atk_left_v01.png",
+      "bytes": 3033,
+      "sha256": "8151b4ee1be7220aa2c8fb02f754073700c537912075e5d4f1024ea56c927375"
+    },
+    {
+      "path": "assets/npc/npc_jingxin_atk_up_v01.png",
+      "bytes": 3050,
+      "sha256": "8bf227af2035c304be96241e0ebd8f2d8effa79654845e916bafb1bb57b65f47"
+    },
+    {
+      "path": "assets/npc/npc_jingxin_down_down_v01.png",
+      "bytes": 3477,
+      "sha256": "2e53bb3a89775acfeb0264813fb2bc76e86553afb5bdc8206f8ba6530cfb8a6c"
+    },
+    {
+      "path": "assets/npc/npc_jingxin_down_left_v01.png",
+      "bytes": 2999,
+      "sha256": "fc038cd7aa59fa1d3e4696c5f273e5fc39f9a94732e2d50ee28281e8773ce155"
+    },
+    {
+      "path": "assets/npc/npc_jingxin_down_up_v01.png",
+      "bytes": 3572,
+      "sha256": "c4170121a93c0a00a159d4c45dba8126d1e3a121793c6072119d5fb0b8a8af0d"
+    },
+    {
+      "path": "assets/npc/npc_jingxin_hit_down_v01.png",
+      "bytes": 2593,
+      "sha256": "e15610858a568c74a59ead4cfab2248cceb661bf44e6d783e1eae8c3daff6230"
+    },
+    {
+      "path": "assets/npc/npc_jingxin_hit_left_v01.png",
+      "bytes": 2295,
+      "sha256": "f0a8c780379cf099c77720d628b9427108d21877b2ead769370b60938b0c92be"
+    },
+    {
+      "path": "assets/npc/npc_jingxin_hit_up_v01.png",
+      "bytes": 2142,
+      "sha256": "b978c52ec42e98be6f1b068df12fb08eee27363cee072c192f67b2ca1ca15a88"
+    },
+    {
+      "path": "assets/npc/npc_jingxin_roll_down_v01.png",
+      "bytes": 4119,
+      "sha256": "9feba28b07d942553e7d69b468fcc2781f5c0131ea8e5e43dd7a0fe0692bcf71"
+    },
+    {
+      "path": "assets/npc/npc_jingxin_roll_left_v01.png",
+      "bytes": 3398,
+      "sha256": "890b9b1ee2cecc4ac84d9f56db37b7c858f4c05200b1670ad7911c9ea04d39fb"
+    },
+    {
+      "path": "assets/npc/npc_jingxin_roll_up_v01.png",
+      "bytes": 3549,
+      "sha256": "a4b9fe7fa359eb7c08abf04035eaea33d242725476402ccea5a577fa5ada11f6"
+    },
+    {
+      "path": "assets/ref/ref_npc_jingxin_down_combat_source_v01.png",
+      "bytes": 836499,
+      "sha256": "c204749fbb65bc2de9f5749f573b1a8bc1de38119409d1644cb3d0e92506a909"
+    },
+    {
+      "path": "assets/ref/ref_npc_jingxin_left_combat_source_v01.png",
+      "bytes": 732630,
+      "sha256": "54338c5236e80bbd66e2420a434b9d23091c0afd4d9ce8e276e187046ae6efd5"
+    },
+    {
+      "path": "assets/ref/ref_npc_jingxin_left_strikefix_combat_source_v01.png",
+      "bytes": 748802,
+      "sha256": "e74b44060121fd28a208727dadeef83421ebe7254d71069b220e792063586265"
+    },
+    {
+      "path": "assets/ref/ref_npc_jingxin_up_combat_source_v01.png",
+      "bytes": 711074,
+      "sha256": "f4b3e4f5969b0cba0b1289b74dc871ee23d1a972d8a338a8cc2879d23d15aa31"
+    },
+    {
+      "path": "assets/ref/ref_npc_jingxin_up_stafffix_combat_source_v01.png",
+      "bytes": 747299,
+      "sha256": "5a516b7932b66a37dc5f8d12305b77395a54a7e7cfca1d22158c4821ab276943"
+    }
+  ],
+  "existing_dependencies": [
+    {
+      "path": "assets/npc/npc_jingxin_idle_down_v01.png",
+      "bytes": 4488,
+      "sha256": "bbdc2e4e3fdbfd3810a5ef94894c1c49c97e5d7eb7dc83d20258350c3288e6b7"
+    },
+    {
+      "path": "assets/npc/npc_jingxin_idle_left_v01.png",
+      "bytes": 3798,
+      "sha256": "b1607e67ee06d0bacbade008aa77c72a44e94e637a3321a4d0e7812205f9113e"
+    },
+    {
+      "path": "assets/npc/npc_jingxin_idle_up_v01.png",
+      "bytes": 3529,
+      "sha256": "e8c08f70664e23b2f54d690de45decd7c55ff44c04206204a94735f196138522"
+    },
+    {
+      "path": "assets/npc/npc_jingxin_walk_down_v01.png",
+      "bytes": 5639,
+      "sha256": "582b791ce075e202e19a1120eeb1ab4277a40b2af896ee3758638b2e7a4b612e"
+    },
+    {
+      "path": "assets/npc/npc_jingxin_walk_left_v01.png",
+      "bytes": 5466,
+      "sha256": "a9187c5426f621c49debcbf3ec282623f3aabe0e4f4ce8f04eeec26a3c54182a"
+    },
+    {
+      "path": "assets/npc/npc_jingxin_walk_up_v01.png",
+      "bytes": 4899,
+      "sha256": "e2863cb4dc947934e7fb17920b2ec1a89509eb4a5f624bfde5435af120526f5f"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "key": "combat_left_compactfix",
+    "prompt": "Use case: precise-object-edit. Target supplied Hanqing LEFT combat atlas1330x1182 6columns4rows. Correct ONLY first row sprites in columns2,3 and5: these staff strikes extend too far LEFT of the monk's feet midpoint for a48native frame. Keep head/body/feet exact anatomical size and their positions; shorten/foreshorten just the visible wooden staff and bend attacking elbows so the LEFT stafftip stays within130 source pixels LEFT of that pose's feet midpoint. Approx tip positions: col2 no farther left thanx225 instead175; col3 no farther left thanx455 instead422; col5 no farther left thanx885 instead852. Staff still held in both hands, aimedLEFT with compact jab/sweep and clear action, not cut at image edge, no extra back staff. Every other16 pose unchanged. Real transparency, same bluegray longrobe/yellowbelt/hair/headband. No labels or background.",
+    "referenced_image_paths": [
+      "/Volumes/ML_models/游戏/开放武侠/output/art-hanqing-animation-20261024-1706/source/hanqing_combat_left_generated.png"
+    ],
+    "transparent_background": true
+  },
+  {
+    "key": "combat_up_pronefix",
+    "prompt": "Use case: precise-object-edit. Target supplied Hanqing UP/rear combat atlas1330x1182 6columns4rows. Correct ONLY row4 fourth sprite, final prone position at lower right of existing4 poses. Whole prone figure+held staff currently spans320source pixels, too wide for48native canvas at same body scale. Keep hair/head/body/feet scale and prone rear-view pose. Turn/bend the hand-held SHORT staff inward ALONG his body toward feet, rather than sticking to the right past head. Target total pose width at most265source pixels. Do not shrink anatomy or crop a stafftip. Keep complete sprite with transparent margins/gap to neighbor, fixed ground reference. All other18 sprite poses unchanged; real transparency; no labels.",
+    "referenced_image_paths": [
+      "/Volumes/ML_models/游戏/开放武侠/output/art-hanqing-animation-20261024-1706/source/hanqing_combat_up_generated.png"
+    ],
+    "transparent_background": true
+  }
+]

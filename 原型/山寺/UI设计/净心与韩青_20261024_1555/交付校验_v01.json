@@ -1,0 +1,226 @@
+{
+  "delivery": "20261024-1555",
+  "date_shanghai": "2026-10-24T16:31:01.771917+08:00",
+  "files": [
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/jingxin_idle_down_6倍_v01.png",
+      "bytes": 5133,
+      "sha256": "311ace98f77cd924f90ff2ac5def66c337914c828f1ed72a369275eb12163e78"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/jingxin_idle_down_循环_v01.gif",
+      "bytes": 14947,
+      "sha256": "162d22cce7872dbd734bf63a25caf063febab0aff489066aa20b6789100dcc1d"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/jingxin_idle_left_6倍_v01.png",
+      "bytes": 3603,
+      "sha256": "b80dd7ce4ba586377fccf15cc55d4d37b77f0a2e8779ead056bee42f1b9857f4"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/jingxin_idle_left_循环_v01.gif",
+      "bytes": 14302,
+      "sha256": "fea6aa3274f9f2d0deb7559d1f44bf087c331019cecba67dfde2b563f7674175"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/jingxin_idle_up_6倍_v01.png",
+      "bytes": 3420,
+      "sha256": "fa93ef534e63c545edc7470107af7d283927a8508d6ec60d53d68b5ad6941086"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/jingxin_idle_up_循环_v01.gif",
+      "bytes": 14176,
+      "sha256": "6038d4d7bb88afb7b56d362f34fbdd2df87cebe00d5c0e4f46186467b838ffa4"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/jingxin_walk_down_6倍_v01.png",
+      "bytes": 5180,
+      "sha256": "2cec043feeaca37239fc8cad1cbb8191acd49a4f6d2e0c31625dbfccade8e31f"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/jingxin_walk_down_循环_v01.gif",
+      "bytes": 21065,
+      "sha256": "020b719a75e4af77e5528ec7023e3a24af94921b95e476601dce88ae8830bc48"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/jingxin_walk_left_6倍_v01.png",
+      "bytes": 5197,
+      "sha256": "594c61b3c1fa393d60647a80a76df0fe8d6e3ed26d1a181a01a6eacab0f1d78f"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/jingxin_walk_left_循环_v01.gif",
+      "bytes": 21126,
+      "sha256": "3ed5643b94a1e82ba84c2dce025e8fece206dcb5a40acf2c75e0a1deaf75fb39"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/jingxin_walk_up_6倍_v01.png",
+      "bytes": 4920,
+      "sha256": "c088c126698d9a3b6238b68d2f94ebd6bc2e0d1517bed0cfadf192891dbdb621"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/jingxin_walk_up_循环_v01.gif",
+      "bytes": 19957,
+      "sha256": "c89b2c3960ab84f97f66357f9d711d8f8f439823af7e378669c8c58c68d1aac7"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/交付说明_v01.md",
+      "bytes": 4846,
+      "sha256": "734b7959c77eb60b1d1fa43c0390bee9d9d38ce3a9f26424acd67a125df17edf"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/净心_down_逐帧总览_v01.png",
+      "bytes": 9400,
+      "sha256": "3ec22456bbab6625b8c5df5032a9c586c486b1764de88540d66a60b7ca83690b"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/净心_left_逐帧总览_v01.png",
+      "bytes": 9244,
+      "sha256": "1be66a04ea53a2cf81a057a8ed61f787ba078029d10b719355665cca09e22e79"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/净心_up_逐帧总览_v01.png",
+      "bytes": 8785,
+      "sha256": "3a144785405ec48c467c4f7dc92b6599cc1022a0eee217e5db83f22021984018"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/净心动画参数_v01.json",
+      "bytes": 20642,
+      "sha256": "6415de65189f314e03115212ea336b8c0ea93dbbd374c8cdc0db701b15605caf"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/净心韩青_山门实际比例_v01.png",
+      "bytes": 188426,
+      "sha256": "7734fd054d702de2f13849077579614ac6cf195df4763eda8b3de09630b55e55"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/场景预览参数_v01.json",
+      "bytes": 846,
+      "sha256": "c89c3172d2393c709234fc26e2977538be2d91f009c1ac0ac5f5214cfdc9422a"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/处理参数_v01.json",
+      "bytes": 721,
+      "sha256": "21dca836efd90fca43204a9bf977a0fefd0b1826babcd2e6a590942c56c25a98"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/核验结果_v01.json",
+      "bytes": 9308,
+      "sha256": "dd507924c29b18cec17685e6a53843685c51b4b39f1eadac9cefd3ac5eeb46e2"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/生图提示词_v01.json",
+      "bytes": 23919,
+      "sha256": "61c712c87f5bd96bad6642c6b6b57e846238c6d164924a5e8b53403d00769ff2"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/调色板_v01.json",
+      "bytes": 488,
+      "sha256": "4575f41c956e436fb47916b2538ce06187d1cda9df13eedca62dc2cca99b35cc"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/韩青头像_4倍_v01.png",
+      "bytes": 3406,
+      "sha256": "40f517f8e39dfd3103ac65bb02dd3630738009a475ab25043f0fc07589efc575"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/韩青头像_灰底_v01.png",
+      "bytes": 3390,
+      "sha256": "cc0a089a00402ca821f5103839069484427e6bdb4fad8d5660e079da8500fb61"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/韩青定妆_8倍_v01.png",
+      "bytes": 1735,
+      "sha256": "f1f04eb68df7404c8d61096866e18003d000a59de947f8094a43103968fea7b7"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/韩青定妆_灰底_v01.png",
+      "bytes": 1719,
+      "sha256": "a6fb842ca0249d69f49576a16c90d0e6853cb9b2fdbfde5d8a0e1089d52226dd"
+    },
+    {
+      "path": "UI设计/净心与韩青_20261024_1555/韩青定妆参数_v01.json",
+      "bytes": 608,
+      "sha256": "07aecde1f7e23ac905715451fa594add4f35fc15d6ffbeb0104258d6e67db263"
+    },
+    {
+      "path": "assets/npc/npc_jingxin_idle_down_v01.png",
+      "bytes": 4488,
+      "sha256": "bbdc2e4e3fdbfd3810a5ef94894c1c49c97e5d7eb7dc83d20258350c3288e6b7"
+    },
+    {
+      "path": "assets/npc/npc_jingxin_idle_left_v01.png",
+      "bytes": 3798,
+      "sha256": "b1607e67ee06d0bacbade008aa77c72a44e94e637a3321a4d0e7812205f9113e"
+    },
+    {
+      "path": "assets/npc/npc_jingxin_idle_up_v01.png",
+      "bytes": 3529,
+      "sha256": "e8c08f70664e23b2f54d690de45decd7c55ff44c04206204a94735f196138522"
+    },
+    {
+      "path": "assets/npc/npc_jingxin_walk_down_v01.png",
+      "bytes": 5639,
+      "sha256": "582b791ce075e202e19a1120eeb1ab4277a40b2af896ee3758638b2e7a4b612e"
+    },
+    {
+      "path": "assets/npc/npc_jingxin_walk_left_v01.png",
+      "bytes": 5466,
+      "sha256": "a9187c5426f621c49debcbf3ec282623f3aabe0e4f4ce8f04eeec26a3c54182a"
+    },
+    {
+      "path": "assets/npc/npc_jingxin_walk_up_v01.png",
+      "bytes": 4899,
+      "sha256": "e2863cb4dc947934e7fb17920b2ec1a89509eb4a5f624bfde5435af120526f5f"
+    },
+    {
+      "path": "assets/por/por_hanqing_v01.png",
+      "bytes": 1968,
+      "sha256": "e64463650a21f4e24687b000b4a7d691817028520202d9bc3ee3a3f6ae072511"
+    },
+    {
+      "path": "assets/ref/ref_npc_hanqing_backstaff_source_v01.png",
+      "bytes": 336546,
+      "sha256": "8e351fb77326d851f0f61ed111ae5b44f421a17fdfcf346bcd73f845b58a2a23"
+    },
+    {
+      "path": "assets/ref/ref_npc_hanqing_down_v01.png",
+      "bytes": 1414,
+      "sha256": "9ce869ec8d707b5a191f0a1bedee95b5487c4e902c8c56d62ae9583a429ec858"
+    },
+    {
+      "path": "assets/ref/ref_npc_hanqing_front_source_v01.png",
+      "bytes": 350788,
+      "sha256": "7247a48f0f3ceafc047cd163206f8666f9aa90d72c8ad576d31f1d50ea0c21ce"
+    },
+    {
+      "path": "assets/ref/ref_npc_jingxin_move_down_gaitfix_source_v01.png",
+      "bytes": 962955,
+      "sha256": "4334efa7abf7316d231a93632b228abcc1c428a939ab0c5e415a57262b79d054"
+    },
+    {
+      "path": "assets/ref/ref_npc_jingxin_move_down_source_v01.png",
+      "bytes": 978262,
+      "sha256": "b07cbafda43d7b99a62db96eb3c636814874741e2fe25614ce4cf521e9890448"
+    },
+    {
+      "path": "assets/ref/ref_npc_jingxin_move_left_source_v01.png",
+      "bytes": 995272,
+      "sha256": "4fbd14231df93248c46b0ae5a1ee2fc81a66f2fa11f9ccb7982c4cc1eac782d5"
+    },
+    {
+      "path": "assets/ref/ref_npc_jingxin_move_up_gaitfix_source_v01.png",
+      "bytes": 850266,
+      "sha256": "569f2789b18aadb2ec05d1abfaeac4bf1786a2ff622e5671a5e170213f116c0b"
+    },
+    {
+      "path": "assets/ref/ref_npc_jingxin_move_up_source_v01.png",
+      "bytes": 868759,
+      "sha256": "d8d5b7ea431ab211937f4731955ea5e9f4df5b46432bebe1eb055cff7b3f4b83"
+    },
+    {
+      "path": "assets/ref/ref_por_hanqing_source_v01.png",
+      "bytes": 817196,
+      "sha256": "8c18b88f0e57be41f478c95147d7a0b41425ef171a32f16c477b8125fbcfdb7b"
+    }
+  ]
+}

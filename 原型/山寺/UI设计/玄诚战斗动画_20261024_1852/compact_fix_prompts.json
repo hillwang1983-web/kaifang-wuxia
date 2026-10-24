@@ -1,0 +1,26 @@
+[
+  {
+    "direction": "down",
+    "prompt": "Use case: precise-object-edit. Edit THIS exact Xuancheng17-sprite attack atlas, preserving same17poses/positions andsame4column6rowlayout withblankcells. SameCHARACTERANATOMYscale, hair/face/robe/vest/shoes unchanged. Changes only compactweaponprojection+tinychargefloorfissures: ROW2 ALL3 SWEEPstrikeframes, ROW5 cols2and3 impact/followthrough, ROW6 col1 recovery: longstaffcurrentlyspillsfaroutsidebody, so FORESHORTEN itsprojectedlength toonlybodywidth+smallmargin, about190–205sourcepixel totalposewidth onthisinput, tofit64nativecell atsame53nativebodyheight. Bring stafftipsinsidenearoutsideedgesofshoestance, bothhandsstillgraspstaff, don'tbendstafflikeacord. ROW4 ALL4 chargeframes: horizontalstaffoverhead shouldbeabout190–205sourcepixelwide, centeredoverbodynotwidelyoverhanging, preservebothhandsup/clearoverheadsilhouette. AddtwoTINYHARDPIXELdarkearthfissures betweentheshoes ONLYonthatsoleline, insidebodyfootprint, noshadow/groundrectangle, no glow. ALL ACTUALSHOESOLES remainlevel ineachframe, no footlift. ALLstaff/robe/fissurepixels remainABOVE ORONsamegroundline, neverbelowshoe soles, especiallyROW5col3 followthrough andROW3col1lowguard. Do NOT change otherframes,resizewholeperson,addnewcells/effects/labels/grid. ACTUALtransparent background, removeanysoftambientglowoutsidecharacters; usefullalphaonlyonhardpixels. Keeprearview ifinputrear, leftview ifinputleft, front iffront. Preserve EVERYfullposeuncutwithgaps.",
+    "referenced_image_paths": [
+      "/Volumes/ML_models/游戏/开放武侠/output/art-xuancheng-combat-20261024-1852/source/xuancheng_attack_down_generated.png"
+    ],
+    "transparent_background": true
+  },
+  {
+    "direction": "left",
+    "prompt": "Use case: precise-object-edit. Edit THIS exact Xuancheng17-sprite attack atlas, preserving same17poses/positions andsame4column6rowlayout withblankcells. SameCHARACTERANATOMYscale, hair/face/robe/vest/shoes unchanged. Changes only compactweaponprojection+tinychargefloorfissures: ROW2 ALL3 SWEEPstrikeframes, ROW5 cols2and3 impact/followthrough, ROW6 col1 recovery: longstaffcurrentlyspillsfaroutsidebody, so FORESHORTEN itsprojectedlength toonlybodywidth+smallmargin, about190–205sourcepixel totalposewidth onthisinput, tofit64nativecell atsame53nativebodyheight. Bring stafftipsinsidenearoutsideedgesofshoestance, bothhandsstillgraspstaff, don'tbendstafflikeacord. ROW4 ALL4 chargeframes: horizontalstaffoverhead shouldbeabout190–205sourcepixelwide, centeredoverbodynotwidelyoverhanging, preservebothhandsup/clearoverheadsilhouette. AddtwoTINYHARDPIXELdarkearthfissures betweentheshoes ONLYonthatsoleline, insidebodyfootprint, noshadow/groundrectangle, no glow. ALL ACTUALSHOESOLES remainlevel ineachframe, no footlift. ALLstaff/robe/fissurepixels remainABOVE ORONsamegroundline, neverbelowshoe soles, especiallyROW5col3 followthrough andROW3col1lowguard. Do NOT change otherframes,resizewholeperson,addnewcells/effects/labels/grid. ACTUALtransparent background, removeanysoftambientglowoutsidecharacters; usefullalphaonlyonhardpixels. Keeprearview ifinputrear, leftview ifinputleft, front iffront. Preserve EVERYfullposeuncutwithgaps.",
+    "referenced_image_paths": [
+      "/Volumes/ML_models/游戏/开放武侠/output/art-xuancheng-combat-20261024-1852/source/xuancheng_attack_left_generated.png"
+    ],
+    "transparent_background": true
+  },
+  {
+    "direction": "up",
+    "prompt": "Use case: precise-object-edit. Edit THIS exact Xuancheng17-sprite attack atlas, preserving same17poses/positions andsame4column6rowlayout withblankcells. SameCHARACTERANATOMYscale, hair/face/robe/vest/shoes unchanged. Changes only compactweaponprojection+tinychargefloorfissures: ROW2 ALL3 SWEEPstrikeframes, ROW5 cols2and3 impact/followthrough, ROW6 col1 recovery: longstaffcurrentlyspillsfaroutsidebody, so FORESHORTEN itsprojectedlength toonlybodywidth+smallmargin, about190–205sourcepixel totalposewidth onthisinput, tofit64nativecell atsame53nativebodyheight. Bring stafftipsinsidenearoutsideedgesofshoestance, bothhandsstillgraspstaff, don'tbendstafflikeacord. ROW4 ALL4 chargeframes: horizontalstaffoverhead shouldbeabout190–205sourcepixelwide, centeredoverbodynotwidelyoverhanging, preservebothhandsup/clearoverheadsilhouette. AddtwoTINYHARDPIXELdarkearthfissures betweentheshoes ONLYonthatsoleline, insidebodyfootprint, noshadow/groundrectangle, no glow. ALL ACTUALSHOESOLES remainlevel ineachframe, no footlift. ALLstaff/robe/fissurepixels remainABOVE ORONsamegroundline, neverbelowshoe soles, especiallyROW5col3 followthrough andROW3col1lowguard. Do NOT change otherframes,resizewholeperson,addnewcells/effects/labels/grid. ACTUALtransparent background, removeanysoftambientglowoutsidecharacters; usefullalphaonlyonhardpixels. Keeprearview ifinputrear, leftview ifinputleft, front iffront. Preserve EVERYfullposeuncutwithgaps.",
+    "referenced_image_paths": [
+      "/Volumes/ML_models/游戏/开放武侠/output/art-xuancheng-combat-20261024-1852/source/xuancheng_attack_up_generated.png"
+    ],
+    "transparent_background": true
+  }
+]

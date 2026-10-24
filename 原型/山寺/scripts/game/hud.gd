@@ -3,23 +3,33 @@
 class_name Hud
 extends Control
 
+signal bag_pressed
+signal pause_pressed
+
 const ACTIONS := ["attack", "skill_1", "skill_2", "skill_3", "utility", "combo", "dodge"]
 const DESK_X := [326, 418, 510, 602, 694, 786, 878]
 const DESK_Y := 478
 # 手机按钮：[中心 x, 中心 y, 直径]，顺序同 ACTIONS
 const MOBILE := [[824, 458, 80], [704, 354, 64], [784, 354, 64], [864, 354, 64], [744, 458, 64], [664, 458, 64], [904, 458, 64]]
-const MOBILE_INTERACT := [624, 354, 64]  # 交互键：只在够得着可交互物时出现，排在技能一左边
-## 手机触屏操作区（按人物脚下坐标）：右下按键群、左下摇杆。地图关键物、人物站位都要避开（#28）
+## 手机触屏操作区（按人物脚下的屏幕坐标）：右下按键群、左下摇杆。地图关键物、人物站位都要避开（#28）
 const MOBILE_ZONES := [Rect2(576, 300, 384, 240), Rect2(0, 320, 214, 220)]
+const TALK := [884, 262, 56]   # 手机上下文「交谈 / 互动」键：身边有火把、能说话的人时才出现
 const STICK_CENTER := Vector2(126, 400)
+const BAG_BTN := Rect2(856, 18, 36, 36)     # 手机右上：物品栏
+const PAUSE_BTN := Rect2(902, 18, 36, 36)   # 手机右上：暂停（效果图 04 手机版的 Ⅱ）
 const STICK_R := 64.0
 
 var world: SimWorld
 var me: SimFighter
 var partner: SimFighter
+var extra_partners: Array = []  # 第三人等更多队友，依次往下排
+var hints_muted := false        # 本局关闭合击提示：别人发的邀请不弹提示框
 var boss: SimFighter
+var barks: Array = []           # 不挡操作的字幕 {who, text, t}，一条一条播
 var objectives: Array = []      # 当前目标，每行一条
 var mobile := false
+var force_mobile := false      # 开发开关 mobile：电脑上也显示手机界面
+var can_talk := false           # 关卡每帧设置：身边有可互动的东西
 var toasts: Array = []          # {text, t}
 
 # 触屏状态，PlayerInput 读取
@@ -36,7 +46,7 @@ var _button_origin := {}        # action -> 按下位置
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
-	mobile = OS.has_feature("web_android") or OS.has_feature("web_ios") or OS.has_feature("mobile")
+	mobile = force_mobile or OS.has_feature("web_android") or OS.has_feature("web_ios") or OS.has_feature("mobile")
 
 
 func toast(s: String, secs := 3.0) -> void:
@@ -62,6 +72,10 @@ func take_released() -> Dictionary:
 
 
 func _process(dt: float) -> void:
+	if not barks.is_empty():
+		barks[0].t -= dt
+		if barks[0].t <= 0.0:
+			barks.pop_front()
 	for t in toasts:
 		t.t -= dt
 	toasts = toasts.filter(func(t): return t.t > 0.0)
@@ -71,12 +85,21 @@ func _process(dt: float) -> void:
 # ---------- 触屏 ----------
 
 func _input(event: InputEvent) -> void:
+	UiKit.detect(event)
 	if event is InputEventScreenTouch or event is InputEventScreenDrag:
 		mobile = true
 	if not visible or me == null:
 		return
 	if event is InputEventScreenTouch:
 		var pos: Vector2 = event.position
+		if event.pressed and mobile and BAG_BTN.has_point(pos):
+			bag_pressed.emit()
+			get_viewport().set_input_as_handled()
+			return
+		if event.pressed and mobile and PAUSE_BTN.has_point(pos):
+			pause_pressed.emit()
+			get_viewport().set_input_as_handled()
+			return
 		if event.pressed:
 			if pos.x < 480 and _stick_index < 0:
 				_stick_index = event.index
@@ -109,10 +132,6 @@ func _input(event: InputEvent) -> void:
 			touch_aim = (off / 60.0).limit_length(1.0) if off.length() > 10.0 else Vector2.ZERO
 
 
-func _can_interact() -> bool:
-	return me.alive and not world.interactable_near(me.pos).is_empty()
-
-
 func _update_stick(pos: Vector2) -> void:
 	var off := pos - STICK_CENTER
 	touch_move = (off / STICK_R).limit_length(1.0)
@@ -121,7 +140,7 @@ func _update_stick(pos: Vector2) -> void:
 
 
 func _button_at(pos: Vector2) -> String:
-	if _can_interact() and pos.distance_to(Vector2(MOBILE_INTERACT[0], MOBILE_INTERACT[1])) <= MOBILE_INTERACT[2] * 0.5 + 6.0:
+	if can_talk and pos.distance_to(Vector2(TALK[0], TALK[1])) <= TALK[2] * 0.5 + 6.0:
 		return "interact"
 	for i in ACTIONS.size():
 		var b: Array = MOBILE[i]
@@ -138,20 +157,29 @@ func _draw() -> void:
 	if mobile:
 		_draw_self(Vector2(16, 16))
 		if partner:
-			_draw_party(Vector2(16, 128))
+			_draw_party(Vector2(16, 128), partner)
+		for i in extra_partners.size():
+			_draw_party(Vector2(16, 224 + i * 96), extra_partners[i], false)
 	else:
 		_draw_self(Vector2(16, 416))
 		if partner:
-			_draw_party(Vector2(16, 16))
+			_draw_party(Vector2(16, 16), partner)
+		for i in extra_partners.size():
+			_draw_party(Vector2(16, 112 + i * 96), extra_partners[i], false)
 	if boss and boss.alive and boss.state != "wait":
 		_draw_boss(Vector2(256, 16))
 	_draw_objectives()
 	_draw_invite()
 	_draw_toasts()
+	_draw_barks()
 	if mobile:
 		_draw_mobile_controls()
+		for pair in [[BAG_BTN, "囊"], [PAUSE_BTN, "Ⅱ"]]:
+			UiKit.panel(self, pair[0])
+			UiKit.text(self, pair[0].position + Vector2(0, 6), pair[1], 24, UiKit.TEXT, HORIZONTAL_ALIGNMENT_CENTER, pair[0].size.x)
 	else:
 		_draw_skill_bar()
+		UiKit.text_r(self, Vector2(944, 386), "%s 物品栏 · %s 丹药" % [UiKit.key("inventory"), UiKit.key("potion")], 12, UiKit.MUTED)
 
 
 func _draw_self(at: Vector2) -> void:
@@ -164,18 +192,24 @@ func _draw_self(at: Vector2) -> void:
 		var trough := Rect2(at + Vector2(56, y), Vector2(152, 11))
 		UiKit.fill(self, trough, rows[i][1] / rows[i][2], rows[i][3])
 		UiKit.text(self, trough.position + Vector2(0, -1), "%d / %d" % [rows[i][1], rows[i][2]], 12, UiKit.TEXT, HORIZONTAL_ALIGNMENT_CENTER, trough.size.x)
+	var inv: SimInventory = world.inventories.get(me.id)
+	if inv:
+		UiKit.text_r(self, at + Vector2(212, 92), "丹药 ×%d" % inv.count("pill"), 12, UiKit.MUTED)
 	if me.primed:
 		UiKit.text(self, at + Vector2(150, 10), "内力满", 12, UiKit.QI)
 	elif me.shield > 0.0:
 		UiKit.text(self, at + Vector2(150, 10), "金钟罩 %d" % me.shield, 12, UiKit.QI)
 
 
-func _draw_party(at: Vector2) -> void:
+func _draw_party(at: Vector2, who: SimFighter, show_moqi := true) -> void:
 	draw_texture(UiKit.ui("partybar"), at)
-	UiKit.text(self, at + Vector2(12, 10), partner.name + ("（倒地）" if not partner.alive else ""))
-	UiKit.text_r(self, at + Vector2(184, 10), "%d / %d" % [partner.hp, partner.max_hp], 12, UiKit.MUTED)
-	UiKit.fill(self, Rect2(at + Vector2(12, 32), Vector2(172, 9)), partner.hp / partner.max_hp, UiKit.HEALTH)
-	UiKit.fill(self, Rect2(at + Vector2(12, 49), Vector2(172, 5)), partner.qi / partner.max_qi, UiKit.QI)
+	var state := "（倒地）" if not who.alive else ("（定身）" if who.root_t > 0.0 else "")
+	UiKit.text(self, at + Vector2(12, 10), who.name + state)
+	UiKit.text_r(self, at + Vector2(184, 10), "%d / %d" % [who.hp, who.max_hp], 12, UiKit.MUTED)
+	UiKit.fill(self, Rect2(at + Vector2(12, 32), Vector2(172, 9)), who.hp / who.max_hp, UiKit.HEALTH)
+	UiKit.fill(self, Rect2(at + Vector2(12, 49), Vector2(172, 5)), who.qi / who.max_qi, UiKit.QI)
+	if not show_moqi:
+		return
 	var lv := world.combo.level()
 	UiKit.text(self, at + Vector2(12, 62), "默契")
 	draw_texture(UiKit.ui("moqi_lv%d" % (lv + 1)), at + Vector2(48, 64))
@@ -190,6 +224,12 @@ func _draw_boss(at: Vector2) -> void:
 	var label := "架势"
 	var ratio := 0.0
 	var right := ""
+	if boss.kind == "dulao":
+		_boss_dulao_status(at)
+		return
+	if boss.kind == "jingang":
+		_boss_jingang_status(at)
+		return
 	if boss.state == "cast":
 		label = "重击蓄力 · 快打断！"
 		ratio = boss.t / boss.atk.cast
@@ -203,6 +243,92 @@ func _draw_boss(at: Vector2) -> void:
 	if right != "":
 		UiKit.text_r(self, at + Vector2(432, 50), right, 12, UiKit.CAST)
 	UiKit.fill(self, Rect2(at + Vector2(16, 67), Vector2(416, 6)), ratio, UiKit.CAST)
+
+
+## 毒姥：读条（摄魂指）优先；其次毒罩状态——罩着显示减伤，被震碎显示剩余秒数
+func _boss_dulao_status(at: Vector2) -> void:
+	var label := "毒罩 · 减伤 95%（摆阵或合击震碎）"
+	var color := UiKit.POISON
+	var ratio := 0.0
+	var right := ""
+	if boss.state == "cast":
+		var tgt := world.fighter(boss.target_id)
+		label = "摄魂指 · 点名%s" % (("「" + tgt.name + "」") if tgt else "")
+		color = UiKit.CAST
+		ratio = boss.t / boss.atk.cast
+		right = "%.1f / %.1f 秒" % [boss.t, boss.atk.cast]
+	elif boss.ward_t > 0.0:
+		label = "毒罩已破！趁现在输出"
+		color = UiKit.QI
+		ratio = boss.ward_t / SimData.COMBO.break_formation
+		right = "%.1f 秒" % boss.ward_t
+	elif boss.state == "sit":
+		label = "毒姥收手了"
+		color = UiKit.TEXT
+	UiKit.text(self, at + Vector2(16, 50), label, 12, color)
+	if right != "":
+		UiKit.text_r(self, at + Vector2(432, 50), right, 12, color)
+	UiKit.fill(self, Rect2(at + Vector2(16, 67), Vector2(416, 6)), ratio, color)
+
+
+## 铁甲金刚：出招预警优先（冲撞要摆阵撞偏、踏地震要翻滚）；其次裂口剩余时间；平时显示铁甲与下次冲撞
+func _boss_jingang_status(at: Vector2) -> void:
+	var k: Dictionary = SimData.ENEMIES.jingang
+	var label := "铁甲 · 非裂口伤害减免 99%（上弩车射出裂口）"
+	var color := UiKit.TEXT
+	var ratio := 0.0
+	var right := "冲撞 %d 秒后" % ceili(maxf(0.0, boss.timers.get("charge", k.first_charge)))
+	if boss.state == "windup" and boss.atk_id == "charge":
+		label = "冲撞预警 · 摆阵撞偏！"
+		color = UiKit.CAST
+		ratio = boss.t / boss.atk.tele
+		right = "%.1f / %.1f 秒" % [boss.t, boss.atk.tele]
+	elif boss.state == "windup" and boss.atk_id == "quake":
+		label = "踏地震 · 落地前翻滚"
+		color = UiKit.WARN
+		ratio = boss.t / boss.atk.tele
+		right = ""
+	elif boss.state == "stagger":
+		label = "被撞偏了，失衡"
+		color = UiKit.QI
+		ratio = boss.stagger_t / k.deflect_stagger
+		right = ""
+	elif not boss.breaches.is_empty():
+		var longest := 0.0
+		for br in boss.breaches:
+			longest = maxf(longest, br.t)
+		label = "裂口 %d 道 · 从裂口那一侧打" % boss.breaches.size()
+		color = UiKit.QI
+		ratio = longest / SimData.BALLISTA.breach_time
+		right = "%.0f 秒" % longest
+	elif boss.state == "sit":
+		label = "跪倒了"
+		right = ""
+	UiKit.text(self, at + Vector2(16, 50), label, 12, color)
+	if right != "":
+		UiKit.text_r(self, at + Vector2(432, 50), right, 12, color)
+	UiKit.fill(self, Rect2(at + Vector2(16, 67), Vector2(416, 6)), ratio, color)
+
+
+## 字幕：不暂停、不挡操作（规格书第九节 Boss 二后叙事）
+func bark(who: String, text: String, secs := 3.5) -> void:
+	barks.append({"who": who, "text": text, "t": secs})
+
+
+func barks_done() -> bool:
+	return barks.is_empty()
+
+
+func _draw_barks() -> void:
+	if barks.is_empty():
+		return
+	var b: Dictionary = barks[0]
+	var s: String = (b.who + "：" if b.who != "" else "") + b.text
+	var w := minf(UiKit.text_width(s) + 24.0, 620.0)
+	var y := 300.0 if mobile else 380.0
+	var r := Rect2(Vector2(480 - w / 2.0, y), Vector2(w, 26))
+	UiKit.panel(self, r)
+	UiKit.text(self, r.position + Vector2(12, 6), s, 12, UiKit.TEXT if b.who != "" else UiKit.MUTED)
 
 
 func _draw_objectives() -> void:
@@ -220,22 +346,25 @@ func _draw_invite() -> void:
 	var at := Vector2(356, 360)
 	if not world.combo.preview.is_empty() and world.combo.preview.has(me.id):
 		UiKit.panel(self, Rect2(at, Vector2(248, 52)))
-		UiKit.text(self, at + Vector2(56, 10), "摆放合击光圈")
+		UiKit.text(self, at + Vector2(56, 10), "摆放%s光圈" % ("阵法" if world.combo.formation_ready() else "合击"))
 		UiKit.text(self, at + Vector2(56, 28), "松开发出邀请 · %s 取消" % ("拖回" if mobile else "Esc"), 12, UiKit.MUTED)
 		return
-	if inv.is_empty():
+	if inv.is_empty() or (hints_muted and inv.from != me.id):
 		return
 	var mine: bool = inv.from == me.id
 	var blink := 0.75 + 0.25 * sin(world.time * 10.0)
 	draw_texture(UiKit.ui("heji_invite"), at, Color(1, 1, 1, blink if not mine else 1.0))
 	var ratio: float = inv.t / SimData.COMBO.window
 	_arc(at + Vector2(26, 26), 18.0, ratio, UiKit.CAST)
+	var formation: bool = inv.get("kind", "combo") == "formation"
+	var word := "阵法" if formation else "合击"
 	if mine:
-		UiKit.text(self, at + Vector2(56, 8), "合击邀请已发出")
-		UiKit.text(self, at + Vector2(56, 26), "等净心走进光圈 · %.1f 秒" % inv.t, 12, UiKit.MUTED)
+		UiKit.text(self, at + Vector2(56, 8), "%s邀请已发出" % word)
+		var wait := "还差 %d 人进圈" % (inv.need - inv.responders.size()) if formation else "等队友走进光圈"
+		UiKit.text(self, at + Vector2(56, 26), "%s · %.1f 秒" % [wait, inv.t], 12, UiKit.MUTED)
 	else:
-		UiKit.text(self, at + Vector2(56, 8), "合击邀请！")
-		UiKit.text(self, at + Vector2(56, 26), "%s 响应或走进光圈 · %.1f 秒" % ["点合击" if mobile else UiKit.KEY_HINTS.combo, inv.t], 12, UiKit.CAST)
+		UiKit.text(self, at + Vector2(56, 8), ("阵法邀请！（%d / %d）" % [inv.responders.size(), inv.need]) if formation else "合击邀请！")
+		UiKit.text(self, at + Vector2(56, 26), "%s 响应或走进光圈 · %.1f 秒" % ["点合击" if mobile else UiKit.key("combo"), inv.t], 12, UiKit.CAST)
 
 
 func _arc(center: Vector2, r: float, ratio: float, color: Color) -> void:
@@ -262,8 +391,6 @@ func _slot_icon(action: String) -> Texture2D:
 			return UiKit.icon("btn_dodge")
 		"combo":
 			return UiKit.icon("skill_heji")
-		"interact":
-			return UiKit.icon("btn_talk")
 		"utility":
 			return UiKit.icon("skill_" + me.utility)
 	return UiKit.icon("skill_" + me.skills[int(action.right(1)) - 1])
@@ -277,8 +404,6 @@ func _slot_name(action: String) -> String:
 			return "闪避"
 		"combo":
 			return "合击"
-		"interact":
-			return "熄灭"
 		"utility":
 			return SimData.SKILLS[me.utility].name
 	return SimData.SKILLS[me.skills[int(action.right(1)) - 1]].name
@@ -287,7 +412,7 @@ func _slot_name(action: String) -> String:
 ## 返回 [冷却比例, 是否可用]
 func _slot_state(action: String) -> Array:
 	match action:
-		"attack", "interact":
+		"attack":
 			return [0.0, true]
 		"dodge":
 			return [me.dodge_cd / SimData.PLAYER.dodge_cd if me.dodge_cd > 0 else 0.0, me.sp >= SimData.PLAYER.dodge_cost]
@@ -318,10 +443,14 @@ func _draw_skill_bar() -> void:
 	for i in ACTIONS.size():
 		var c := Vector2(DESK_X[i], DESK_Y)
 		_draw_slot(ACTIONS[i], c, 64.0)
-		var key: String = UiKit.KEY_HINTS[ACTIONS[i]]
-		var kw := UiKit.text_width(key) + 10.0
-		UiKit.panel(self, Rect2(c + Vector2(-kw / 2.0, -50), Vector2(kw, 16)))
-		UiKit.text(self, c + Vector2(-kw / 2.0, -49), key, 12, UiKit.TEXT, HORIZONTAL_ALIGNMENT_CENTER, kw)
+		var pad := UiKit.pad_icon(ACTIONS[i])
+		if pad:
+			draw_texture_rect(pad, Rect2(c + Vector2(-12, -58), Vector2(24, 24)), false)  # 交了手柄图标就用图
+		else:
+			var key: String = UiKit.key(ACTIONS[i])
+			var kw := UiKit.text_width(key) + 10.0
+			UiKit.panel(self, Rect2(c + Vector2(-kw / 2.0, -50), Vector2(kw, 16)))
+			UiKit.text(self, c + Vector2(-kw / 2.0, -49), key, 12, UiKit.TEXT, HORIZONTAL_ALIGNMENT_CENTER, kw)
 		var nm := _slot_name(ACTIONS[i])
 		UiKit.panel(self, Rect2(c + Vector2(-42, 34), Vector2(84, 18)))
 		UiKit.text(self, c + Vector2(-42, 35), nm, 12, UiKit.TEXT, HORIZONTAL_ALIGNMENT_CENTER, 84)
@@ -336,7 +465,9 @@ func _draw_mobile_controls() -> void:
 		var c := Vector2(b[0], b[1])
 		_draw_slot(ACTIONS[i], c, b[2])
 		UiKit.text(self, c + Vector2(-40, b[2] * 0.5 + 1), _slot_name(ACTIONS[i]), 12, UiKit.TEXT, HORIZONTAL_ALIGNMENT_CENTER, 80)
-	if _can_interact():
-		var c := Vector2(MOBILE_INTERACT[0], MOBILE_INTERACT[1])
-		_draw_slot("interact", c, MOBILE_INTERACT[2])
-		UiKit.text(self, c + Vector2(-40, MOBILE_INTERACT[2] * 0.5 + 1), _slot_name("interact"), 12, UiKit.TEXT, HORIZONTAL_ALIGNMENT_CENTER, 80)
+	if can_talk:
+		var c := Vector2(TALK[0], TALK[1])
+		var r := Rect2(c - Vector2(TALK[2], TALK[2]) / 2.0, Vector2(TALK[2], TALK[2]))
+		draw_texture_rect(UiKit.ui("btn_pressed" if touch_held.has("interact") else "btn_base"), r, false)
+		draw_texture_rect(UiKit.icon("btn_talk"), r, false)
+		UiKit.text(self, c + Vector2(-40, TALK[2] * 0.5 + 1), "交谈", 12, UiKit.TEXT, HORIZONTAL_ALIGNMENT_CENTER, 80)

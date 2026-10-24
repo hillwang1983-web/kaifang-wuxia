@@ -9,17 +9,29 @@ var fighters: Array[SimFighter] = []
 var projectiles: Array = []   # {owner, pos, vel, life, dmg, hit}
 var pools: Array = []         # {owner, pos, radius, t, dps, slow, tick}
 var interactables: Array = [] # {id, kind, pos, on}
+var fog := {}                 # 毒雾 {center, r, r_max, r_min}；空 = 没有
+var safe_zones: Array = []    # 净化区 {pos, radius, t}：阵法 / 合击破罩时圈内不受毒雾
+var formation_enabled := false  # 三人阵法（随 Boss 二启用）
 var events: Array = []        # 给画面 / 剧情的一次性事件，消费方读完自己清空
 var time := 0.0
 var freeze_t := 0.0           # 合击成立定格，期间世界不动
 var bounds := PackedVector2Array()  # 可走区域多边形；空 = 不限制
+var blockers: Array[PackedVector2Array] = []  # 可走区域里挖掉的障碍（石狮、桌凳、香炉……）
+var waypoints: Array[Vector2] = []  # 绕路用的路点（如山门门洞），AI 走不直时经由它们
 var rng := RandomNumberGenerator.new()
+var loot_rng := RandomNumberGenerator.new()  # 掉落单独一路随机数：同种子掉落可复现，不受战斗随机影响
+var inventories := {}         # 英雄 id -> SimInventory（只有玩家有）
+var ground_items: Array = []  # 地上的掉落 {uid, item, coins, pos}；金钱 item 为空、coins > 0
+var ballista := {}           # 弩车（大雄宝殿）；空 = 本关没有。只由 SimBallista 改
+var parts: Array = []        # 地上 / 背着的弩车零件 {id, part, pos, carrier}
+var pile_parts := {}         # 零件堆 id -> 打碎后掉的零件
 var combo: SimCombo
 var _next_id := 1
 
 
 func _init(seed_value := 1) -> void:
 	rng.seed = seed_value
+	loot_rng.seed = seed_value * 7919 + 17
 	combo = SimCombo.new(self)
 
 
@@ -33,16 +45,21 @@ func add_hero(kind: String, sect: String, utility: String, at: Vector2) -> SimFi
 	f.sect = sect
 	f.skills = SimData.SECTS[sect].skills.duplicate()
 	f.utility = utility
-	f.name = "净心" if kind == "partner" else "你"
+	f.name = "净心" if kind == "partner" else (SimData.PARTY.third.name if kind == "ally" else "你")
 	f.pos = at
 	f.radius = P.radius
 	f.speed = P.speed
-	f.max_hp = SimData.PARTNER.hp if kind == "partner" else P.hp
+	f.max_hp = SimData.PARTNER.hp if kind != "player" else P.hp
 	f.hp = f.max_hp
 	f.max_qi = P.qi
 	f.qi = f.max_qi
 	f.sp = P.sp
-	f.dmg_scale = SimData.PARTNER.dmg_scale if kind == "partner" else 1.0
+	f.dmg_scale = SimData.PARTNER.dmg_scale if kind != "player" else 1.0
+	f.base_hp = f.max_hp
+	f.base_qi = f.max_qi
+	f.base_speed = f.speed
+	if kind == "player":
+		inventories[f.id] = SimInventory.new()
 	fighters.append(f)
 	return f
 
@@ -122,6 +139,7 @@ func step(dt: float, commands: Dictionary) -> void:
 	for f in fighters:
 		_tick(f, dt)
 	_apply_pools(dt)
+	_apply_fog(dt)
 	for f in fighters:
 		if f.is_hero() and f.alive:
 			var cmd: SimCommand = commands.get(f.id, SimCommand.new())
@@ -129,6 +147,8 @@ func step(dt: float, commands: Dictionary) -> void:
 	for f in fighters:
 		if not f.is_hero():
 			SimEnemies.step(self, f, dt)
+	if not ballista.is_empty():
+		SimBallista.step(self, dt)
 	_step_projectiles(dt)
 	combo.step(dt, commands)
 	_separate()
@@ -144,6 +164,7 @@ func _tick(f: SimFighter, dt: float) -> void:
 	f.stagger_t = maxf(0.0, f.stagger_t - dt)
 	f.hurt_t = maxf(0.0, f.hurt_t - dt)
 	f.flash_t = maxf(0.0, f.flash_t - dt)
+	f.ward_t = maxf(0.0, f.ward_t - dt)
 	f.swing_t = maxf(0.0, f.swing_t - dt)
 	f.slow = 0.0
 	if f.combo_t > 0.0:
@@ -159,16 +180,29 @@ func _tick(f: SimFighter, dt: float) -> void:
 		f.poison_t = maxf(0.0, f.poison_t - dt)
 		# 每 0.5 秒结一次毒伤，免得事件刷屏
 		if floori(before / 0.5) != floori(f.poison_t / 0.5):
-			damage(fighter(f.poison_owner), f, SimData.PASSIVE.poison_dps * 0.5, {"dot": true})
+			var owner := fighter(f.poison_owner)
+			var boost := 1.0 + (owner.stat("poison") / 100.0 if owner else 0.0)
+			damage(owner, f, SimData.PASSIVE.poison_dps * 0.5 * boost, {"dot": true})
 	if f.is_hero() and f.alive:
 		f.sp = minf(P.sp, f.sp + P.sp_regen * dt)
 		var regen: float = P.qi_regen_combat if in_combat() else P.qi_regen_idle
-		f.qi = minf(f.max_qi, f.qi + regen * dt)
+		f.qi = minf(f.max_qi, f.qi + (regen + f.stat("qi_regen")) * dt)
+		if f.stat("hp_regen") > 0.0 and f.active():
+			f.hp = minf(f.max_hp, f.hp + f.stat("hp_regen") * dt)
 
 
 # ---------- 英雄 ----------
 
 func _hero_step(f: SimFighter, cmd: SimCommand, dt: float) -> void:
+	if not ballista.is_empty() and SimBallista.hero_step(self, f, cmd, dt):
+		return
+	if f.state == "thrown":
+		_move(f, f.dodge_dir * float(f.timers.get("throw_v", 0.0)) * dt)
+		f.dodge_t -= dt
+		if f.dodge_t <= 0.0:
+			f.state = "idle"
+			SimBallista.on_land(self, f)
+		return
 	if cmd.is_pressed("cancel") and (f.state == "charge" or f.state == "aim"):
 		f.state = "idle"
 		f.active_skill = ""
@@ -177,6 +211,10 @@ func _hero_step(f: SimFighter, cmd: SimCommand, dt: float) -> void:
 		_try_dodge(f, cmd)
 	if cmd.is_pressed("interact"):
 		_interact(f)
+	if cmd.is_pressed("potion"):
+		use_pill(f)
+	if inventories.has(f.id):
+		_pickup(f, 22.0)
 	match f.state:
 		"dodge":
 			_move(f, f.dodge_dir * P.dodge_speed * dt)
@@ -205,7 +243,7 @@ func _hero_step(f: SimFighter, cmd: SimCommand, dt: float) -> void:
 
 
 func _try_dodge(f: SimFighter, cmd: SimCommand) -> void:
-	if f.dodge_cd > 0.0 or f.sp < P.dodge_cost or f.state == "dodge" or f.root_t > 0.0:
+	if f.dodge_cd > 0.0 or f.sp < P.dodge_cost or f.state == "dodge" or f.state == "thrown" or f.root_t > 0.0:
 		return
 	if f.state == "charge" or f.state == "aim" or f.state == "skill":
 		f.active_skill = ""
@@ -226,7 +264,7 @@ func _try_dodge(f: SimFighter, cmd: SimCommand) -> void:
 			e.read = true
 
 
-## 站在 at 能够着的、还亮着的可交互物；没有返回空字典
+## 站在 at 能够着的、还亮着的可交互物；没有返回空字典（吸收自 #27：世界与界面共用同一判定）
 func interactable_near(at: Vector2) -> Dictionary:
 	for it in interactables:
 		if it.on and it.pos.distance_to(at) < 44.0:
@@ -235,16 +273,35 @@ func interactable_near(at: Vector2) -> Dictionary:
 
 
 func _interact(f: SimFighter) -> void:
+	if inventories.has(f.id) and _pickup(f, 44.0):
+		return
 	var it := interactable_near(f.pos)
-	if not it.is_empty():
-		it.on = false
-		emit("interact", {"id": f.id, "kind": it.kind, "target": it.id, "pos": it.pos})
+	if it.is_empty():
+		return
+	if it.kind == "chest":
+		_open_chest(f, it)
+		return
+	it.on = false
+	emit("interact", {"id": f.id, "kind": it.kind, "target": it.id, "pos": it.pos})
+
+
+## 通关箱（规格书第七节）：每个有物品栏的英雄开一次，各得一件；人人开过才熄
+func _open_chest(f: SimFighter, it: Dictionary) -> void:
+	if not inventories.has(f.id) or f.id in it.get("opened", []):
+		return
+	var opened: Array = it.get("opened", [])
+	opened.append(f.id)
+	it["opened"] = opened
+	var item := stamp(SimItems.roll_chest(loot_rng))
+	ground_items.append({"uid": _take_id(), "item": item, "coins": 0, "pos": it.pos + Vector2(0, 22)})
+	it.on = inventories.keys().any(func(id): return not (id in opened))
+	emit("chest", {"id": f.id, "pos": it.pos, "item": item})
 
 
 func _attack(f: SimFighter, cmd: SimCommand) -> void:
 	f.combo_idx = (f.combo_idx + 1) % 3 if f.combo_t > 0.0 else 0
 	var a: Dictionary = SimData.ATTACKS[f.sect][f.combo_idx]
-	f.atk_cd = a.cd
+	f.atk_cd = a.cd / (1.0 + f.stat("atk_speed") / 100.0)
 	f.combo_t = P.combo_window
 	f.state = "attack"
 	f.swing_t = 0.24 if f.combo_idx < 2 else 0.35
@@ -254,7 +311,7 @@ func _attack(f: SimFighter, cmd: SimCommand) -> void:
 	for e in foes():
 		if _in_cone(f.pos, f.facing, e.pos, e.radius, a.range, a.half):
 			n += 1
-			damage(f, e, a.dmg, {"heavy": f.combo_idx == 2, "dir": f.facing})
+			damage(f, e, a.dmg + f.stat("atk_flat"), {"heavy": f.combo_idx == 2, "dir": f.facing})
 	if n > 0:
 		f.qi = minf(f.max_qi, f.qi + P.qi_on_hit)
 	emit("swing", {"id": f.id, "combo": f.combo_idx + 1, "hits": n})
@@ -342,7 +399,7 @@ func _cast(f: SimFighter, skill: String, charge: float, free := false) -> void:
 			f.set_meta("skill_opts", opts)
 			_move(f, f.facing * s.lunge)
 		"jinzhongzhao":
-			f.shield = lerpf(s.shield_min, s.shield_max, charge)
+			f.shield = lerpf(s.shield_min, s.shield_max, charge) * (1.0 + f.stat("shield") / 100.0)
 			f.shield_t = s.shield_time
 		"dalijingangzhang":
 			f.facing = f.aim_dir
@@ -357,7 +414,7 @@ func _cast(f: SimFighter, skill: String, charge: float, free := false) -> void:
 				"life": s.range / s.speed, "dmg": s.dmg, "hit": [], "skill": skill, "opts": opts})
 		"huagongsan":
 			pools.append({"owner": f.id, "pos": f.aim_point, "radius": s.radius, "t": s.time,
-				"dps": s.dps, "slow": s.slow, "tick": 0.0, "skill": skill})
+				"dps": s.dps * (1.0 + f.stat("poison") / 100.0), "slow": s.slow, "tick": 0.0, "skill": skill})
 		"shehunshu":
 			f.facing = f.aim_dir
 			var target := _first_in_line(f.pos, f.aim_dir, s.range, s.width)
@@ -382,6 +439,10 @@ func _cast(f: SimFighter, skill: String, charge: float, free := false) -> void:
 					h.qi = minf(h.max_qi, h.qi + s.share_qi)
 					emit("share", {"from": f.id, "to": h.id})
 		"jiemai":
+			var freed := _jiemai_cleanse(f, s.range)
+			if freed:
+				emit("cleanse", {"id": freed.id, "by": f.id, "pos": freed.pos})
+				return
 			var target := _jiemai_target(f, s.range)
 			if target:
 				f.facing = (target.pos - f.pos).normalized()
@@ -428,10 +489,28 @@ func damage(src: SimFighter, target: SimFighter, amount: float, opts := {}) -> f
 		emit("evade", {"id": target.id, "pos": target.pos})
 		return 0.0
 	var amt := amount * (src.dmg_scale if src else 1.0)
+	var crit := false
+	if src and src.is_hero() and not opts.get("dot", false):
+		amt *= 1.0 + src.stat("atk") / 100.0
+		if src.stat("crit") > 0.0 and rng.randf() < src.stat("crit") / 100.0:
+			amt *= 1.5
+			crit = true
 	var k: Dictionary = SimData.ENEMIES.get(target.kind, {})
 	var guarded: bool = k.get("stance", false) and target.state != "stagger" and not opts.get("skill", false) and not opts.get("dot", false)
 	if guarded:
 		amt *= k.stance_cut
+	var warded: bool = k.has("ward_cut") and target.ward_t <= 0.0 and target.active()
+	if warded:
+		amt *= 1.0 - float(k.ward_cut)
+	# 铁甲金刚：弩箭留下裂口；其余伤害看命中点是否落在裂口上，不在就减免 99%
+	var armored := false
+	if k.has("armor_cut"):
+		var from: Vector2 = opts.get("from", src.pos if src else target.pos)
+		if opts.has("bolt"):
+			SimBallista.add_breach(self, target, from, int(opts.bolt))
+		elif not SimBallista.in_breach(target, from):
+			amt *= 1.0 - float(k.armor_cut)
+			armored = true
 	if target.shield > 0.0:
 		var absorbed := minf(target.shield, amt)
 		target.shield -= absorbed
@@ -441,8 +520,8 @@ func damage(src: SimFighter, target: SimFighter, amount: float, opts := {}) -> f
 	target.hp -= amt
 	target.flash_t = 0.12
 	emit("hit", {"id": target.id, "src": src.id if src else -1, "pos": target.pos, "amount": roundi(amt),
-		"heavy": opts.get("heavy", false) or opts.get("skill", false), "guarded": guarded,
-		"dot": opts.get("dot", false), "dir": opts.get("dir", Vector2.ZERO)})
+		"heavy": opts.get("heavy", false) or opts.get("skill", false), "guarded": guarded, "warded": warded,
+		"dot": opts.get("dot", false), "dir": opts.get("dir", Vector2.ZERO), "crit": crit, "armored": armored})
 	if target.is_hero():
 		_hero_hurt(target, amt, src)
 	else:
@@ -456,11 +535,13 @@ func damage(src: SimFighter, target: SimFighter, amount: float, opts := {}) -> f
 
 func _hero_hurt(f: SimFighter, amt: float, src: SimFighter) -> void:
 	f.hurt_t = 0.25
+	if f.state == "build":
+		SimBallista.cancel_build(self, f, "hit")
 	if f.state == "charge":  # 金钟罩、摄魂术蓄力会被打断
 		f.state = "idle"
 		f.active_skill = ""
 		emit("charge_broken", {"id": f.id})
-	if src and amt > 0.0:
+	if src and amt > 0.0 and f.state != "mounted":
 		_move(f, (f.pos - src.pos).normalized() * P.hurt_knockback)
 	if f.sect == "shaolin" and not f.primed:
 		f.passive_fill += amt
@@ -472,6 +553,8 @@ func _hero_hurt(f: SimFighter, amt: float, src: SimFighter) -> void:
 
 func _foe_hurt(src: SimFighter, e: SimFighter, opts: Dictionary) -> void:
 	var k: Dictionary = SimData.ENEMIES[e.kind]
+	if k.get("prop", false):
+		return
 	e.in_combat = true
 	if e.state == "idle":
 		e.state = "chase"
@@ -482,6 +565,8 @@ func _foe_hurt(src: SimFighter, e: SimFighter, opts: Dictionary) -> void:
 			e.poison_t = SimData.PASSIVE.poison_time
 			e.poison_owner = src.id
 			emit("poison_burst", {"id": e.id, "pos": e.pos})
+	if k.has("armor_cut"):
+		return  # 铁甲金刚不吃打断、硬直、定身：只有合击 / 阵法能撞偏它的冲撞
 	if opts.get("root", 0.0) > 0.0:
 		e.root_t = maxf(e.root_t, opts.root)
 		emit("rooted", {"id": e.id, "pos": e.pos})
@@ -489,7 +574,7 @@ func _foe_hurt(src: SimFighter, e: SimFighter, opts: Dictionary) -> void:
 	# 喽啰的出刀预兆，任何招式都能打断；玄诚只认截脉与合击
 	if not k.stance and opts.get("skill", false) and e.state == "windup":
 		interrupting = true
-	if interrupting and (e.state == "windup" or e.state == "cast"):
+	if interrupting and (e.state == "windup" or e.state == "cast") and not e.atk.get("no_interrupt", false):
 		interrupt(e, src)
 	elif opts.get("stagger", 0.0) > 0.0:
 		stagger(e, opts.stagger)
@@ -522,11 +607,22 @@ func stagger(e: SimFighter, secs: float) -> void:
 
 func _down(f: SimFighter) -> void:
 	f.hp = 0.0
-	if f.kind == "xuancheng":
+	if not f.is_hero():
+		_drop_loot(f)
+	if SimData.ENEMIES.get(f.kind, {}).get("boss", false):
 		f.state = "sit"
 		f.atk = {}
-		emit("boss_sit", {"id": f.id, "pos": f.pos})
+		if f.kind == "dulao":
+			fog = {}
+			safe_zones.clear()
+		f.breaches.clear()
+		emit("boss_sit", {"id": f.id, "kind": f.kind, "pos": f.pos})
 	else:
+		if f.is_hero() and not ballista.is_empty():
+			if f.state == "mounted":
+				SimBallista.dismount(self, f)
+			elif f.state == "build":
+				SimBallista.cancel_build(self, f, "down")
 		f.alive = false
 		f.state = "dead"
 		emit("hero_down" if f.is_hero() else "kill", {"id": f.id, "pos": f.pos})
@@ -558,12 +654,72 @@ func _apply_pools(dt: float) -> void:
 		var ticking: bool = pool.tick >= 0.5
 		if ticking:
 			pool.tick -= 0.5
-		for e in foes():
+		var victims: Array[SimFighter] = heroes() if pool.get("team", SimFighter.HEROES) == SimFighter.FOES else foes()
+		for e in victims:
 			if e.pos.distance_to(pool.pos) <= pool.radius + e.radius:
 				e.slow = maxf(e.slow, pool.slow)
 				if ticking:
 					damage(fighter(pool.owner), e, pool.dps * 0.5, {"dot": true})
 	pools = pools.filter(func(p): return p.t > 0.0)
+
+
+## 毒雾：圈外每 0.5 秒掉一次最大生命的百分比；净化区里不掉
+func _apply_fog(dt: float) -> void:
+	for z in safe_zones:
+		z.t -= dt
+	safe_zones = safe_zones.filter(func(z): return z.t > 0.0)
+	if fog.is_empty():
+		return
+	fog.tick = fog.get("tick", 0.0) + dt
+	if fog.tick < 0.5:
+		return
+	fog.tick -= 0.5
+	for h in heroes():
+		if in_fog(h.pos):
+			damage(null, h, h.max_hp * fog.pct / 100.0 * 0.5, {"dot": true, "fog": true})
+
+
+func in_fog(p: Vector2) -> bool:
+	if fog.is_empty() or p.distance_to(fog.center) <= fog.r:
+		return false
+	for z in safe_zones:
+		if p.distance_to(z.pos) <= z.radius:
+			return false
+	return true
+
+
+## 合击 / 阵法成立：震碎附近带毒罩敌人的罩子，并在光圈处留一块净化区
+func break_wards(point: Vector2, radius: float, secs: float) -> void:
+	var hit := false
+	for e in foes():
+		var k: Dictionary = SimData.ENEMIES[e.kind]
+		if k.has("ward_cut") and e.pos.distance_to(point) <= SimData.COMBO.break_reach:
+			e.ward_t = maxf(e.ward_t, secs)
+			hit = true
+			emit("ward_break", {"id": e.id, "pos": e.pos, "secs": secs})
+	if hit or not fog.is_empty():
+		safe_zones.append({"pos": point, "radius": radius, "t": secs})
+
+
+## 合击 / 阵法成立：正在预警冲撞的铁甲金刚被撞偏（冲撞作废、失衡）
+func deflect_charges(point: Vector2) -> void:
+	for e in foes():
+		if e.atk_id == "charge" and e.state == "windup" and SimData.ENEMIES[e.kind].has("charge_every") \
+				and e.pos.distance_to(point) <= SimData.COMBO.break_reach:
+			emit("deflect", {"id": e.id, "pos": e.pos})
+			stagger(e, SimData.ENEMIES[e.kind].deflect_stagger)
+
+
+## 截脉解穴：自己被定身先解自己，否则解射程内被定身的队友
+func _jiemai_cleanse(f: SimFighter, reach: float) -> SimFighter:
+	if f.root_t > 0.0:
+		f.root_t = 0.0
+		return f
+	for h in heroes():
+		if h != f and h.root_t > 0.0 and h.pos.distance_to(f.pos) <= reach:
+			h.root_t = 0.0
+			return h
+	return null
 
 
 # ---------- 几何与移动 ----------
@@ -581,11 +737,56 @@ func _move(f: SimFighter, delta: Vector2) -> void:
 
 
 func _inside(p: Vector2) -> bool:
-	return bounds.is_empty() or Geometry2D.is_point_in_polygon(p, bounds)
+	if not bounds.is_empty() and not Geometry2D.is_point_in_polygon(p, bounds):
+		return false
+	for b in blockers:
+		if Geometry2D.is_point_in_polygon(p, b):
+			return false
+	return true
+
+
+func walkable(p: Vector2) -> bool:
+	return _inside(p)
+
+
+## 两点之间能不能直着走过去（每 6 像素抽样一次）
+func clear_line(a: Vector2, b: Vector2) -> bool:
+	var n := ceili(a.distance_to(b) / 6.0)
+	for i in range(1, n + 1):
+		if not _inside(a.lerp(b, float(i) / n)):
+			return false
+	return true
+
+
+## 寻路：能直走就直走；否则挑一个看得见、总路程最短的路点先过去（够用就好，地图只有一两个门洞）
+func steer(from: Vector2, to: Vector2) -> Vector2:
+	if from.distance_to(to) < 1.0:
+		return Vector2.ZERO
+	if waypoints.is_empty() or clear_line(from, to):
+		return _avoid(from, (to - from).normalized())
+	var best := to
+	var best_cost := INF
+	for w in waypoints:
+		if from.distance_to(w) < 10.0 or not clear_line(from, w):
+			continue
+		var cost := from.distance_to(w) + w.distance_to(to) + (0.0 if clear_line(w, to) else 400.0)
+		if cost < best_cost:
+			best = w
+			best_cost = cost
+	return _avoid(from, (best - from).normalized())
+
+
+## 正前方 12 像素走不了（贴着石狮、桌角），就左右逐步偏转找能走的方向
+func _avoid(from: Vector2, dir: Vector2) -> Vector2:
+	for a in [0.0, 0.5, -0.5, 1.0, -1.0, 1.5, -1.5]:
+		var d := dir.rotated(a)
+		if _inside(from + d * 12.0):
+			return d
+	return dir
 
 
 func _separate() -> void:
-	var live := fighters.filter(func(f): return f.alive and f.state != "dodge")
+	var live := fighters.filter(func(f): return f.alive and f.state != "dodge" and f.state != "mounted" and f.state != "thrown")
 	for i in live.size():
 		for j in range(i + 1, live.size()):
 			var a: SimFighter = live[i]
@@ -644,3 +845,118 @@ func _jiemai_target(f: SimFighter, reach: float) -> SimFighter:
 			best = e
 			best_score = score
 	return best
+
+
+# ---------- 物品：掉落、拾取、丹药、装备生效 ----------
+
+func player_inventory() -> SimInventory:
+	for f in fighters:
+		if inventories.has(f.id):
+			return inventories[f.id]
+	return null
+
+
+## 给物品分配本局唯一的 uid（存档读回来的物品沿用旧 uid，新物品往后排）
+func stamp(item: Dictionary) -> Dictionary:
+	var inv := player_inventory()
+	if inv:
+		_next_id = maxi(_next_id, inv.max_uid() + 1)
+	if int(item.get("uid", 0)) == 0:
+		item.uid = _take_id()
+	return item
+
+
+func _drop_loot(e: SimFighter) -> void:
+	var d := SimItems.roll_drops(loot_rng, e.kind)
+	SimBallista.on_destroyed(self, e, d.parts)
+	var n := 0
+	if d.coins > 0:
+		ground_items.append({"uid": _take_id(), "item": {}, "coins": d.coins, "pos": _drop_spot(e.pos, n)})
+		n += 1
+	for it in d.items:
+		ground_items.append({"uid": _take_id(), "item": stamp(it), "coins": 0, "pos": _drop_spot(e.pos, n)})
+		n += 1
+	emit("loot", {"id": e.id, "pos": e.pos, "coins": d.coins, "items": d.items.map(func(i): return i.base)})
+
+
+func _drop_spot(at: Vector2, n: int) -> Vector2:
+	var p := at + Vector2(20, 0).rotated(n * 2.1) if n > 0 else at
+	return p if _inside(p) else at
+
+
+## 拾取身边的掉落；背包满了装备留在地上。返回这次有没有捡到东西
+func _pickup(f: SimFighter, reach: float) -> bool:
+	var inv: SimInventory = inventories[f.id]
+	var got := false
+	for g in ground_items.duplicate():
+		if g.pos.distance_to(f.pos) > reach:
+			continue
+		if g.coins > 0:
+			inv.coins += g.coins
+			emit("pickup", {"id": f.id, "pos": g.pos, "coins": g.coins})
+		elif inv.add(g.item):
+			emit("pickup", {"id": f.id, "pos": g.pos, "item": g.item})
+		else:
+			if not g.get("full_warned", false):
+				g.full_warned = true
+				emit("bag_full", {"id": f.id, "pos": g.pos})
+			continue
+		ground_items.erase(g)
+		got = true
+	return got
+
+
+func use_pill(f: SimFighter) -> bool:
+	var inv: SimInventory = inventories.get(f.id)
+	var pill := SimItems.base("pill")
+	if inv == null or f.cd_of("pill") > 0.0 or f.hp >= f.max_hp:
+		return false
+	if not inv.consume("pill"):
+		emit("deny", {"id": f.id, "skill": "pill", "why": "none"})
+		return false
+	f.cooldowns["pill"] = pill.cd
+	heal(f, pill.heal)
+	emit("pill", {"id": f.id})
+	return true
+
+
+## 装备变化后重算属性：生命 / 内力上限按加成增减（当前值同步增减），移速按百分比
+func refresh_stats(f: SimFighter) -> void:
+	var inv: SimInventory = inventories.get(f.id)
+	f.stats = SimItems.totals(inv.equipped_items()) if inv else {}
+	var new_hp := f.base_hp + f.stat("max_hp")
+	f.hp = clampf(f.hp + (new_hp - f.max_hp), 1.0 if f.alive else 0.0, new_hp)
+	f.max_hp = new_hp
+	var new_qi := f.base_qi + f.stat("max_qi")
+	f.qi = clampf(f.qi + (new_qi - f.max_qi), 0.0, new_qi)
+	f.max_qi = new_qi
+	f.speed = f.base_speed * (1.0 + f.stat("move_speed") / 100.0)
+
+
+## 物品栏操作统一走这里（以后联机时变成发给服务端的指令）
+func inv_equip(f: SimFighter, uid: int, slot := "") -> bool:
+	var inv: SimInventory = inventories.get(f.id)
+	if inv == null:
+		return false
+	var it := inv.item(uid)
+	if it.is_empty():
+		return false
+	var ok := inv.equip(uid, slot if slot != "" else inv.slot_for(it))
+	if ok:
+		refresh_stats(f)
+		emit("equip", {"id": f.id, "uid": uid})
+	return ok
+
+
+func inv_unequip(f: SimFighter, slot: String, pos := Vector2i(-1, -1)) -> bool:
+	var inv: SimInventory = inventories.get(f.id)
+	var ok := inv != null and inv.unequip(slot, pos)
+	if ok:
+		refresh_stats(f)
+		emit("equip", {"id": f.id})
+	return ok
+
+
+func inv_move(f: SimFighter, uid: int, pos: Vector2i) -> bool:
+	var inv: SimInventory = inventories.get(f.id)
+	return inv != null and inv.move(uid, pos)

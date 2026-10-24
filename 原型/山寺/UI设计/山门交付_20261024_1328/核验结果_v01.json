@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "checked_at_utc": "2026-10-24T05:44:20.353657+00:00",
+  "rows": [
+    2,
+    3
+  ],
+  "dimensions": [
+    1920,
+    1080
+  ],
+  "screens": [
+    2,
+    2
+  ],
+  "base_colors": 48,
+  "foreground_colors": 47,
+  "base_alpha": [
+    255
+  ],
+  "foreground_alpha": [
+    0,
+    255
+  ],
+  "foreground_pixel_match": "PASS",
+  "foreground_overlay_base_identity": "PASS",
+  "occluded_test_sprite_pixels": 173,
+  "camera_previews": [
+    960,
+    540
+  ],
+  "exact_nearest_neighbor_2x": "PASS",
+  "source_originals_preserved": true,
+  "visual_check": "上下连续布局、开放门洞与石阶、无字匾、石狮及右侧碎块、倒地香炉、松树、空旷操练场、40像素角色比例和门檐透明边缘",
+  "runtime_validation": "未执行Godot导入、碰撞导航或实机验收；前景分离中央门楼，外围边界通行路线由开发确定"
+}

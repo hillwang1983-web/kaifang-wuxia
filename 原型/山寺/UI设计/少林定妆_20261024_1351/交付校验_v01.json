@@ -1,0 +1,67 @@
+{
+  "delivery_id": "20261024-1351",
+  "item": 9,
+  "stage": "front_reference",
+  "files": [
+    {
+      "path": "UI设计/少林定妆_20261024_1351/交付说明_v01.md",
+      "bytes": 2882,
+      "sha256": "decb53e1175ffa68341146138ced69d095786008690f16e9fbc02c81537ca91b"
+    },
+    {
+      "path": "UI设计/少林定妆_20261024_1351/定妆参数_v01.json",
+      "bytes": 950,
+      "sha256": "6e0a97bb662865602d4b3c8e1373ab6615ab01824238cf3a630d109b16af3b7b"
+    },
+    {
+      "path": "UI设计/少林定妆_20261024_1351/少林定妆_山门实际比例_v01.png",
+      "bytes": 184518,
+      "sha256": "1d20b64ee93de3b954cbce946cc093242de04490ff0ccd5b14214ca0ffe7afb9"
+    },
+    {
+      "path": "UI设计/少林定妆_20261024_1351/少林定妆_锚点示意_v01.png",
+      "bytes": 2191,
+      "sha256": "0bb181456819f70c093d9d2bab33259c4142eb861141fb9162903627b5e718f8"
+    },
+    {
+      "path": "UI设计/少林定妆_20261024_1351/少林正面定妆_8倍_v01.png",
+      "bytes": 1351,
+      "sha256": "2aefcab5fdcca2dcb71b97b31f2f6f86904af03573201f243bfbf1bfdaeb902e"
+    },
+    {
+      "path": "UI设计/少林定妆_20261024_1351/少林正面定妆_灰底预览_v01.png",
+      "bytes": 1335,
+      "sha256": "835ccb9db61bd3651a0f43d12e186c855cb27600830439dca6059845c568fbf2"
+    },
+    {
+      "path": "UI设计/少林定妆_20261024_1351/核验结果_v01.json",
+      "bytes": 944,
+      "sha256": "74951b4a1e1ac24b3334e8c02fb5052b1c22d0852418b1b78f9378b8c21e3471"
+    },
+    {
+      "path": "UI设计/少林定妆_20261024_1351/生图提示词_v01.json",
+      "bytes": 4250,
+      "sha256": "8aac67bd693b4daf79247b27df7e2a9604a22c82494437a2744c10c1e4aa44f7"
+    },
+    {
+      "path": "UI设计/少林定妆_20261024_1351/调色板_v01.json",
+      "bytes": 211,
+      "sha256": "e764053c8be44ad2ba9d8a93b28fb73dc54c703940c0343cb1ecb0c30065838e"
+    },
+    {
+      "path": "assets/ref/ref_chr_shaolin_down_v01.png",
+      "bytes": 1396,
+      "sha256": "11cdf6747553404c0b8d9a9b4cb2526ee12b1f801b77e398fa053cbbc05aa071"
+    },
+    {
+      "path": "assets/ref/ref_chr_shaolin_foot_source_v01.png",
+      "bytes": 436081,
+      "sha256": "3d6ee6e19afea1e33ed4f4208ba315740a1fb106add60432dd36c0b0d6d941b6"
+    },
+    {
+      "path": "assets/ref/ref_chr_shaolin_source_v01.png",
+      "bytes": 433824,
+      "sha256": "763135ac21dc5ece0b056a118715e29461ef02f60d8d3157e36697a85a7b8286"
+    }
+  ]
+}

@@ -1,0 +1,358 @@
+{
+  "status": "PASS",
+  "checked_at_utc": "2026-10-24T07:18:07.961192+00:00",
+  "batch_scope": "第9条基础移动，6条30帧；并非完整战斗动画",
+  "combined_opaque_colors": 15,
+  "assets": [
+    {
+      "file": "assets/chr/chr_shaolin_idle_down_v01.png",
+      "frames": 4,
+      "dimensions": [
+        192,
+        64
+      ],
+      "colors": 15,
+      "alpha": [
+        0,
+        255
+      ],
+      "root_anchor": [
+        24,
+        60
+      ],
+      "ground_bottom_pixel_y": 60,
+      "frame_bboxes": [
+        [
+          9,
+          20,
+          43,
+          61
+        ],
+        [
+          8,
+          20,
+          42,
+          61
+        ],
+        [
+          9,
+          20,
+          40,
+          61
+        ],
+        [
+          11,
+          20,
+          41,
+          61
+        ]
+      ],
+      "unique_rgba_frames": 4,
+      "unique_lower_body_alpha": 4,
+      "exact_horizontal_frame_order": true,
+      "exact_nearest_6x": true,
+      "gif_frames": 4,
+      "gif_duration_ms": 330,
+      "sha256": "cc1a94ed72048531b5a0ee87e5354291d3c603cbc39b0e83d2f56346d7e50231"
+    },
+    {
+      "file": "assets/chr/chr_shaolin_walk_down_v01.png",
+      "frames": 6,
+      "dimensions": [
+        288,
+        64
+      ],
+      "colors": 14,
+      "alpha": [
+        0,
+        255
+      ],
+      "root_anchor": [
+        24,
+        60
+      ],
+      "ground_bottom_pixel_y": 60,
+      "frame_bboxes": [
+        [
+          8,
+          20,
+          42,
+          61
+        ],
+        [
+          8,
+          20,
+          42,
+          61
+        ],
+        [
+          10,
+          20,
+          40,
+          61
+        ],
+        [
+          8,
+          20,
+          42,
+          61
+        ],
+        [
+          9,
+          20,
+          43,
+          61
+        ],
+        [
+          9,
+          20,
+          43,
+          61
+        ]
+      ],
+      "unique_rgba_frames": 6,
+      "unique_lower_body_alpha": 6,
+      "exact_horizontal_frame_order": true,
+      "exact_nearest_6x": true,
+      "gif_frames": 6,
+      "gif_duration_ms": 500,
+      "sha256": "c8ecfc1c7afd3ca08cbf30fc4f4a27d9c446bf76831dc7c9e532aa5216193afd"
+    },
+    {
+      "file": "assets/chr/chr_shaolin_idle_left_v01.png",
+      "frames": 4,
+      "dimensions": [
+        192,
+        64
+      ],
+      "colors": 14,
+      "alpha": [
+        0,
+        255
+      ],
+      "root_anchor": [
+        24,
+        60
+      ],
+      "ground_bottom_pixel_y": 60,
+      "frame_bboxes": [
+        [
+          6,
+          20,
+          40,
+          61
+        ],
+        [
+          6,
+          20,
+          40,
+          61
+        ],
+        [
+          6,
+          20,
+          40,
+          61
+        ],
+        [
+          6,
+          20,
+          40,
+          61
+        ]
+      ],
+      "unique_rgba_frames": 4,
+      "unique_lower_body_alpha": 4,
+      "exact_horizontal_frame_order": true,
+      "exact_nearest_6x": true,
+      "gif_frames": 4,
+      "gif_duration_ms": 330,
+      "sha256": "a22bf03e452c1d511cee88cf657a7b91f866ddfc7acb5300d66e9b8378345820"
+    },
+    {
+      "file": "assets/chr/chr_shaolin_walk_left_v01.png",
+      "frames": 6,
+      "dimensions": [
+        288,
+        64
+      ],
+      "colors": 15,
+      "alpha": [
+        0,
+        255
+      ],
+      "root_anchor": [
+        24,
+        60
+      ],
+      "ground_bottom_pixel_y": 60,
+      "frame_bboxes": [
+        [
+          7,
+          20,
+          41,
+          61
+        ],
+        [
+          6,
+          20,
+          40,
+          61
+        ],
+        [
+          6,
+          20,
+          40,
+          61
+        ],
+        [
+          6,
+          20,
+          40,
+          61
+        ],
+        [
+          7,
+          20,
+          41,
+          61
+        ],
+        [
+          7,
+          20,
+          41,
+          61
+        ]
+      ],
+      "unique_rgba_frames": 6,
+      "unique_lower_body_alpha": 6,
+      "exact_horizontal_frame_order": true,
+      "exact_nearest_6x": true,
+      "gif_frames": 6,
+      "gif_duration_ms": 500,
+      "sha256": "d1bd42620d25594c1f58897ee7dcd8f2d732710ebb644c511f42c9839cb64c37"
+    },
+    {
+      "file": "assets/chr/chr_shaolin_idle_up_v01.png",
+      "frames": 4,
+      "dimensions": [
+        192,
+        64
+      ],
+      "colors": 14,
+      "alpha": [
+        0,
+        255
+      ],
+      "root_anchor": [
+        24,
+        60
+      ],
+      "ground_bottom_pixel_y": 60,
+      "frame_bboxes": [
+        [
+          8,
+          20,
+          42,
+          61
+        ],
+        [
+          8,
+          20,
+          42,
+          61
+        ],
+        [
+          8,
+          20,
+          42,
+          61
+        ],
+        [
+          8,
+          20,
+          42,
+          61
+        ]
+      ],
+      "unique_rgba_frames": 4,
+      "unique_lower_body_alpha": 4,
+      "exact_horizontal_frame_order": true,
+      "exact_nearest_6x": true,
+      "gif_frames": 4,
+      "gif_duration_ms": 330,
+      "sha256": "aaf611495cf065fded813f994af07e2b4355ab913da31c8b54acbe584e22846c"
+    },
+    {
+      "file": "assets/chr/chr_shaolin_walk_up_v01.png",
+      "frames": 6,
+      "dimensions": [
+        288,
+        64
+      ],
+      "colors": 15,
+      "alpha": [
+        0,
+        255
+      ],
+      "root_anchor": [
+        24,
+        60
+      ],
+      "ground_bottom_pixel_y": 60,
+      "frame_bboxes": [
+        [
+          8,
+          20,
+          42,
+          61
+        ],
+        [
+          8,
+          20,
+          42,
+          61
+        ],
+        [
+          8,
+          20,
+          42,
+          61
+        ],
+        [
+          8,
+          20,
+          42,
+          61
+        ],
+        [
+          8,
+          20,
+          42,
+          61
+        ],
+        [
+          8,
+          20,
+          42,
+          61
+        ]
+      ],
+      "unique_rgba_frames": 6,
+      "unique_lower_body_alpha": 6,
+      "exact_horizontal_frame_order": true,
+      "exact_nearest_6x": true,
+      "gif_frames": 6,
+      "gif_duration_ms": 500,
+      "sha256": "cb5a85160beb8b47ec2f7ce881cb6b77f302b8f275a90458330f05ecb2d77668"
+    }
+  ],
+  "visual_review": "原图与步态修正图、三方向逐帧总览、首尾轮廓与握棍/衣着/方向检查；源图中步态过近的问题做一次imagegen修正后采用第二行。",
+  "limitations": [
+    "12fps运行参数在JSON；GIF只能以10ms量化，4帧约330ms、6帧500ms。",
+    "根锚点恒定(24,60)；抬脚按地面投影参考，不把抬起的脚当作新地面接触。",
+    "普攻三段、受击、翻滚、倒地及三招招式未交；第9条整体仍出图中。",
+    "正式头部叠层未拆分；右侧由程序镜像left。",
+    "本轮未做Godot运行时接入或手机实机验收。"
+  ]
+}

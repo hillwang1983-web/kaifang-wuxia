@@ -1,0 +1,19 @@
+[
+  {
+    "key": "move_up_idlefix",
+    "prompt": "Use case: precise-object-edit. Target first image is Louluo masked cult thug movement atlas6columns2rows. Its TOP ROW FOUR IDLE sprites incorrectly show FRONT faces. Redraw ONLY those four upper-row sprites as true BACK/UP view, matching the rear walking figures in second reference (cropped bottom row). Rear tied black hair/topknot, back black SHORT tunic with purple collar/cuffs/sash, brown boots, knife in right hand at screenRIGHT. NO eyes, mouth, nose, or frontal purple crosslapel on backs. All four rear idle frames breathing subtly, same anatomy/scale/floorline. Upper last2 remain transparent. Bottom6 walking sprites unchanged. Preserve real transparency, compact Chinese short dao and identity; no labels.",
+    "referenced_image_paths": [
+      "/Volumes/ML_models/游戏/开放武侠/output/art-louluo-animation-20261024-1744/source/louluo_move_up_generated.png",
+      "/Volumes/ML_models/游戏/开放武侠/output/art-louluo-animation-20261024-1744/source/louluo_up_rear_reference_crop.png"
+    ],
+    "transparent_background": true
+  },
+  {
+    "key": "move_down_gaitfix",
+    "prompt": "Use case: precise-object-edit. Target Louluo DOWN/front movement atlas6columns2rows. Change ONLY bottom-row last3 sprites legs/pants/boots (columns4,5,6). First3 keep LEFT-camera boot leading. Last3 need opposite RIGHT-camera boot leading: col4 right boot large/lower/forward, left lifted behind; col5 opposite passing; col6 right contact releasing toward nextleft step. Distinct alternating knee folds/boot overlaps, both legs clear. Preserve head, mask, torso, belt, sash-side and knife hand/blade EXACTLY; do NOT mirror whole figure or move weapon. Upper4idle and all transparent cells unchanged. Root/scale/spacing fixed, real transparent background. No labels.",
+    "referenced_image_paths": [
+      "/Volumes/ML_models/游戏/开放武侠/output/art-louluo-animation-20261024-1744/source/louluo_move_down_generated.png"
+    ],
+    "transparent_background": true
+  }
+]

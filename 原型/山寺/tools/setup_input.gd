@@ -29,6 +29,8 @@ var ACTIONS := {
 	# 规格书没给手柄交谈 / 互动键，暂放十字键上。
 	"interact": [["key", KEY_E], ["pad", JOY_BUTTON_DPAD_UP]],
 	"inventory": [["key", KEY_TAB], ["pad", JOY_BUTTON_START]],
+	# 丹药快捷键（V0.4 的绷带也在 H）
+	"potion": [["key", KEY_H], ["pad", JOY_BUTTON_DPAD_DOWN]],
 	"pause": [["key", KEY_P], ["pad", JOY_BUTTON_BACK]],
 }
 

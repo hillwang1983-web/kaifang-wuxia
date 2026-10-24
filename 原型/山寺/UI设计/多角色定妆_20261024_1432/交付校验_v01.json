@@ -1,0 +1,131 @@
+{
+  "delivery": "20261024-1432",
+  "date_shanghai": "2026-10-24T14:57:14.020238+08:00",
+  "files": [
+    {
+      "path": "UI设计/多角色定妆_20261024_1432/五角色_山门实际比例_v01.png",
+      "bytes": 188669,
+      "sha256": "367c9ebae73dcfcd847c62fcc6df0620bbd139b29398a580435993d2ff6d7c4a"
+    },
+    {
+      "path": "UI设计/多角色定妆_20261024_1432/五角色同尺度定妆总览_v01.png",
+      "bytes": 6109,
+      "sha256": "a78a7f2be8c9f061288bec68ce2269c23f359f736bb0917fc324d607054cec87"
+    },
+    {
+      "path": "UI设计/多角色定妆_20261024_1432/交付说明_v01.md",
+      "bytes": 3895,
+      "sha256": "3d5ddecae10827f51530588b010e228febbb8106ced1b8df5b84c2c0d22088c7"
+    },
+    {
+      "path": "UI设计/多角色定妆_20261024_1432/净心_8倍_v01.png",
+      "bytes": 1366,
+      "sha256": "9f5533c045a145ba066ec7b2be5e9ee4228bc5afbacab53abe203045a3b512f5"
+    },
+    {
+      "path": "UI设计/多角色定妆_20261024_1432/净心_灰底_v01.png",
+      "bytes": 1350,
+      "sha256": "f7a040f4427ce1df0113bc1c3cb6a4add2efd22269b02c0a72e08b6a40b66f11"
+    },
+    {
+      "path": "UI设计/多角色定妆_20261024_1432/场景预览参数_v01.json",
+      "bytes": 1203,
+      "sha256": "381d543969343f0b80b4e752037b12b7473b0abc7ee86702292ed41b8881022a"
+    },
+    {
+      "path": "UI设计/多角色定妆_20261024_1432/处理参数_v01.json",
+      "bytes": 821,
+      "sha256": "9550f65e08302d336195b4a6629ff7e8e370f8bc50067941c8a58bc18af601d1"
+    },
+    {
+      "path": "UI设计/多角色定妆_20261024_1432/定妆参数_v01.json",
+      "bytes": 2248,
+      "sha256": "ae67b39f469f597b339378b56e19b044a5dde177ab92ed0c2ec4dd052bf69065"
+    },
+    {
+      "path": "UI设计/多角色定妆_20261024_1432/核验结果_v01.json",
+      "bytes": 3837,
+      "sha256": "ef3ce7e7386935a943dd72afb8953076e7c01738f0ee06649c1f8ceedfb1712a"
+    },
+    {
+      "path": "UI设计/多角色定妆_20261024_1432/玄诚_8倍_v01.png",
+      "bytes": 2480,
+      "sha256": "7b269aa6d120c17bf6f14a13ad0eaff9c52d9fac0658c05ce771c3eadf5b69eb"
+    },
+    {
+      "path": "UI设计/多角色定妆_20261024_1432/玄诚_灰底_v01.png",
+      "bytes": 1864,
+      "sha256": "739393033395afb60304db63568d42fa40d2dc3c9d10f8da12ea75e65ae4c429"
+    },
+    {
+      "path": "UI设计/多角色定妆_20261024_1432/生图提示词_v01.json",
+      "bytes": 14960,
+      "sha256": "2f65f427bb29f44d6b6f81e18501ed3fe20dfe46f1a0ed3850e48f227fa50583"
+    },
+    {
+      "path": "UI设计/多角色定妆_20261024_1432/调色板_v01.json",
+      "bytes": 974,
+      "sha256": "5eaf29a12e1b56386a38b6efe869cfdad7cf83cccce2869d6f09926d1628b9e3"
+    },
+    {
+      "path": "UI设计/多角色定妆_20261024_1432/邪派喽啰_8倍_v01.png",
+      "bytes": 1738,
+      "sha256": "802fe19a4bb92b66c9ffa072abc4c02b1b96d113d164cdab813deafc096da615"
+    },
+    {
+      "path": "UI设计/多角色定妆_20261024_1432/邪派喽啰_灰底_v01.png",
+      "bytes": 1345,
+      "sha256": "528ca726a62c01508c600234be48e729c4d55fd0caa71440aa8bb25e293ba5a9"
+    },
+    {
+      "path": "UI设计/多角色定妆_20261024_1432/邪派玩家_8倍_v01.png",
+      "bytes": 1755,
+      "sha256": "f8b39807e5f1bf08e00086dc31a5115d468e5e5c49259288868229a30ab2cdd3"
+    },
+    {
+      "path": "UI设计/多角色定妆_20261024_1432/邪派玩家_灰底_v01.png",
+      "bytes": 1321,
+      "sha256": "6bd2cf003421993847d5de791d8157aa0cc24e61e4d665d796c817448bbf1616"
+    },
+    {
+      "path": "assets/ref/ref_boss_xuancheng_down_v01.png",
+      "bytes": 2091,
+      "sha256": "1c512bb48e7ad86d5091c2672230dad1dfd14a4854ffef9ae1cd7866972b9d9a"
+    },
+    {
+      "path": "assets/ref/ref_chr_xiepai_down_v01.png",
+      "bytes": 1546,
+      "sha256": "bf12414fb0e3cb0f702283be9ed6d75174abb9c088ffe97c37308d8ac192719b"
+    },
+    {
+      "path": "assets/ref/ref_jingxin_source_v01.png",
+      "bytes": 408248,
+      "sha256": "0dde2d1b3c4c6d5fd74c3e9d702ad3e81fbc7f79295eccdb8c1f95871121ae25"
+    },
+    {
+      "path": "assets/ref/ref_louluo_source_v01.png",
+      "bytes": 373395,
+      "sha256": "d80c996c3e28c53cd57006f321f889626ed3fb5b5b8fe4be5e701ef13179c529"
+    },
+    {
+      "path": "assets/ref/ref_npc_jingxin_down_v01.png",
+      "bytes": 1688,
+      "sha256": "355798eedfe7fb3e10232dd945e467affc21e0187a42916ccc7e33f7a59b349a"
+    },
+    {
+      "path": "assets/ref/ref_npc_louluo_down_v01.png",
+      "bytes": 1429,
+      "sha256": "f3a800ff62b36efd403afa5c884aba5ab2ace56fe7d672798f6b957c161df02e"
+    },
+    {
+      "path": "assets/ref/ref_xiepai_source_v01.png",
+      "bytes": 388740,
+      "sha256": "07af08a14c91f8be3018d954a0b12426938cfd9643beca877f6113f8b372109f"
+    },
+    {
+      "path": "assets/ref/ref_xuancheng_source_v01.png",
+      "bytes": 590656,
+      "sha256": "a1797b5ad1e20f315247cf87542f2cfee020c1b0d0fa0750b48e36c7fd303fdd"
+    }
+  ]
+}

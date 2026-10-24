@@ -27,7 +27,18 @@ class ErrorCatcher extends Logger:
 		return out
 
 
-func _init() -> void:
+var _ran := false
+
+
+## 等主循环跑起来的第一帧再跑用例：这时场景树已经在跑，用例能把关卡挂进去走 _ready（_init / _initialize 里还不行）
+func _process(_delta: float) -> bool:
+	if not _ran:
+		_ran = true
+		_run_all()
+	return false
+
+
+func _run_all() -> void:
 	var catcher := ErrorCatcher.new()
 	OS.add_logger(catcher)
 	var total := 0
@@ -50,6 +61,7 @@ func _init() -> void:
 				continue
 			catcher.take()
 			var case = script.new()
+			case.tree = self
 			case.call(method.name)
 			total += 1
 			var problems: Array = case.failures + catcher.take()

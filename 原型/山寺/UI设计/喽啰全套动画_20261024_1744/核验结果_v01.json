@@ -1,0 +1,738 @@
+{
+  "result": "PASS",
+  "strips": 15,
+  "frames": 60,
+  "opaque_colors": 16,
+  "alpha": [
+    0,
+    255
+  ],
+  "anchor": [
+    24,
+    60
+  ],
+  "checks": [
+    "dimensions/frame counts/order",
+    "same16color palette",
+    "binary alpha",
+    "fixed metadata root",
+    "distinct frames within each action",
+    "six distinct walking lowerbodies",
+    "selected source poses uncut",
+    "6x nearest pixel exact",
+    "GIF counts/timings",
+    "final2 knockdown frames horizontal"
+  ],
+  "limits": [
+    "metadata/registration anchor validation is not independent runtime motion/collision verification",
+    "review GIF repeats nonloop moves with600ms last frame; gameJSON12fps",
+    "no Godot/mobile runtime test"
+  ],
+  "files": [
+    {
+      "file": "assets/npc/npc_louluo_idle_down_v01.png",
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 16,
+      "bboxes": [
+        [
+          4,
+          20,
+          35,
+          61
+        ],
+        [
+          4,
+          20,
+          35,
+          61
+        ],
+        [
+          4,
+          20,
+          35,
+          61
+        ],
+        [
+          4,
+          20,
+          36,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "d3f02d4aabda82874d96f0225534e049875e125c833e6c5e0ad1c5d0a4cb8afd",
+        "dfeeff8261e6fd87f68a91542636e332a66893464a4b471dc93bec6805547d13",
+        "be86a7e715502c11a752bed801bce8b8cee9f8bc01a81aed80cf3cd121812f22",
+        "c1818af715ed5665f7ffe04ba9d0f37068a6ebbb343490c1e6cd7fcd36fbe4c7"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        80
+      ]
+    },
+    {
+      "file": "assets/npc/npc_louluo_walk_down_v01.png",
+      "dimensions": [
+        288,
+        64
+      ],
+      "frames": 6,
+      "colors": 16,
+      "bboxes": [
+        [
+          4,
+          21,
+          35,
+          61
+        ],
+        [
+          5,
+          21,
+          36,
+          61
+        ],
+        [
+          5,
+          21,
+          35,
+          58
+        ],
+        [
+          4,
+          21,
+          35,
+          61
+        ],
+        [
+          5,
+          22,
+          36,
+          61
+        ],
+        [
+          4,
+          21,
+          34,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "1e8268c9feb105e1227d4c3baa965ec8bfd049f7187ec8cecfee3dc921b0b88b",
+        "a4be003b9e18ad9194a57bbca43c90d593867d7629cd626920cf43eea5570fe5",
+        "624715d44b8234760073135b28918ef0c02a66ab49c33f78502e6cb5a82a818f",
+        "16651d5e36ba1ad2742aaaf435c8663c5b10a1cfd9b91d9df0622bc928a40bed",
+        "a9ed18ccc920985e5693f88cf31428dbb3d384bc8e2cfbc0ece3cf10f3eba98d",
+        "8155e4fe504379d1af44c079f078f62b12647ff08cc7749c80bd5ac3408738f2"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        80,
+        80,
+        90
+      ]
+    },
+    {
+      "file": "assets/npc/npc_louluo_idle_left_v01.png",
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 16,
+      "bboxes": [
+        [
+          4,
+          20,
+          35,
+          61
+        ],
+        [
+          4,
+          20,
+          34,
+          61
+        ],
+        [
+          5,
+          20,
+          35,
+          61
+        ],
+        [
+          5,
+          20,
+          35,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "f4e6e51a30e93ea9304d4a7d42221db1087b8eecaac939ee5b36f6f4d8e1cc19",
+        "bcdfb03d224982197e3740f6e8ac127a46bfaf754885d7234296822b0a091522",
+        "6342db39b51e49fbd48bceca5515e71362ae3bcf674f86abfc8ac8efa0bf778f",
+        "8a973183775dcb3a6f2b80969b6ebd1978a5936fd8d09e080892d755e4cf834a"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        80
+      ]
+    },
+    {
+      "file": "assets/npc/npc_louluo_walk_left_v01.png",
+      "dimensions": [
+        288,
+        64
+      ],
+      "frames": 6,
+      "colors": 16,
+      "bboxes": [
+        [
+          8,
+          22,
+          39,
+          60
+        ],
+        [
+          6,
+          23,
+          38,
+          61
+        ],
+        [
+          7,
+          22,
+          37,
+          61
+        ],
+        [
+          9,
+          23,
+          40,
+          61
+        ],
+        [
+          7,
+          21,
+          38,
+          60
+        ],
+        [
+          7,
+          22,
+          36,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "156b9335ce0e0683d34127e73defe79eec58313aa52a576deea3a16970f605c4",
+        "ee15f9442a2b1520b1c9380a370c4315ea2407619383b4caef934d8702209df6",
+        "57a06f42c533dc4461c5ee04639e48e33c9991d2b4afe07de292c2a20a6519ea",
+        "1687f4ea614bc5e3f5ea0de77323b0c08319c50810258d856f65168c62f7c2d6",
+        "0b9fc86f8f3cb942a4f282e145862cbd5defb308351b2f8a80d716d44406585f",
+        "6ae786823ff8ee66d87301ef253f651860efbf8400d0f71166e9eb6bd4b0af30"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        80,
+        80,
+        90
+      ]
+    },
+    {
+      "file": "assets/npc/npc_louluo_idle_up_v01.png",
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 16,
+      "bboxes": [
+        [
+          13,
+          20,
+          46,
+          61
+        ],
+        [
+          13,
+          20,
+          46,
+          61
+        ],
+        [
+          13,
+          20,
+          47,
+          61
+        ],
+        [
+          13,
+          20,
+          47,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "d4df5b333b13276711dfbcf132e3e82accf74aa79c0ff0be6be6f3e565ca9b7a",
+        "eb9acea5e0ff7a33d53d9961623cbbc3a83bf2260bd23bfda9779a408eb0d33a",
+        "c1865e126fd5d0c5a74199d21868ff3303b4d3a8165005710a96ab3741065da4",
+        "b97913baabf6cf09dc5aad24f1291029e4120f0b680213a92aae987024301a55"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        80
+      ]
+    },
+    {
+      "file": "assets/npc/npc_louluo_walk_up_v01.png",
+      "dimensions": [
+        288,
+        64
+      ],
+      "frames": 6,
+      "colors": 16,
+      "bboxes": [
+        [
+          15,
+          19,
+          46,
+          60
+        ],
+        [
+          14,
+          18,
+          45,
+          60
+        ],
+        [
+          15,
+          20,
+          46,
+          61
+        ],
+        [
+          15,
+          19,
+          46,
+          61
+        ],
+        [
+          14,
+          19,
+          45,
+          61
+        ],
+        [
+          15,
+          19,
+          45,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "36c4b30ac5550d385be62932d9872399ed33e392d27f26effe0541c712292b94",
+        "fa5b4db43a6e73c3a347e7f67979d7b19037e3581848804a16de691c6044fc90",
+        "1af5aa41953c90ac5ce168a6d4ef8840a40e01fbffb0985610d6d68755e83e18",
+        "c9b9894863359d2f8ae6b0c086a387e684dabb8333e6bdcd8885c654becc3742",
+        "a59d1e2ff27d458de6b2e61defc756f74762b83df223243eec568ebc81784664",
+        "594c0a1f79eed9da1ef2b7804a29cfd33a91a84d12e4f87441c640f9fbb17a1d"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        80,
+        80,
+        90
+      ]
+    },
+    {
+      "file": "assets/npc/npc_louluo_atk_down_v01.png",
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 16,
+      "bboxes": [
+        [
+          2,
+          21,
+          38,
+          61
+        ],
+        [
+          5,
+          14,
+          35,
+          61
+        ],
+        [
+          10,
+          24,
+          40,
+          61
+        ],
+        [
+          9,
+          25,
+          40,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "87f2b5f91d6f1a31d39c34fb73d8929be03670884f7e2bc7d09ae872a87a4cd6",
+        "4a9935568b84d7711d2be4a70f7937ea9daf18dd8fa0be52e3f67ccd38c34fc8",
+        "94fe6c8c9737456d594e30396711e442423205a37a679c16220d49e54b5a4689",
+        "c4b026e2767c205d0cc3ca61fdf43e330fc64c61361b99116e890a7b4b3fa504"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        600
+      ]
+    },
+    {
+      "file": "assets/npc/npc_louluo_hit_down_v01.png",
+      "dimensions": [
+        96,
+        64
+      ],
+      "frames": 2,
+      "colors": 16,
+      "bboxes": [
+        [
+          2,
+          20,
+          34,
+          61
+        ],
+        [
+          2,
+          28,
+          34,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "3ee88e5c7ee5ec6dac94645cd1ab2d0387ced4efcf7e9f033873bbc778bc5cc4",
+        "741e4f956c5881b8dae451be08561f08a0d4e0e49e3f3f69644d87f40df2cd7e"
+      ],
+      "gif_durations_ms": [
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/npc/npc_louluo_down_down_v01.png",
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 16,
+      "bboxes": [
+        [
+          5,
+          27,
+          39,
+          61
+        ],
+        [
+          4,
+          37,
+          42,
+          61
+        ],
+        [
+          6,
+          45,
+          43,
+          61
+        ],
+        [
+          6,
+          48,
+          43,
+          62
+        ]
+      ],
+      "frame_sha256": [
+        "99bd48e353b47a9a8d064e34659b527eb929328455f88a328b6c7fc531667fa5",
+        "9933b25e307aa05f5cc5cd7bf1b063c60c4a0be6f2eb8e6f0b3331ef4ea429ca",
+        "1d8ccaeaef409417f4a829c00fbdf486e4413b2a033a0347c7fccb0cfa15309c",
+        "3be965cc19a68bd69935f0f84d5467d60660c3df17a8cef200b4162b90cb9869"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        600
+      ]
+    },
+    {
+      "file": "assets/npc/npc_louluo_atk_left_v01.png",
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 16,
+      "bboxes": [
+        [
+          8,
+          17,
+          44,
+          61
+        ],
+        [
+          8,
+          13,
+          37,
+          61
+        ],
+        [
+          1,
+          20,
+          41,
+          61
+        ],
+        [
+          9,
+          25,
+          39,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "45241317179f8187908a8c69cdc1bacb5aeaf6fc73b9a96c2012fdf3a62898c1",
+        "4f31639a1ea9086ab5d0b50aa36f732b01f8829356480939addbca0a3460bd58",
+        "d2d64d81fca643368ddfda128fef6c95c80d224bd5a04d3df6cea4beeacd1747",
+        "18a866dd702f5f700f232b181f270f808fba39670e3c4ddb81cc71507b6392e9"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        600
+      ]
+    },
+    {
+      "file": "assets/npc/npc_louluo_hit_left_v01.png",
+      "dimensions": [
+        96,
+        64
+      ],
+      "frames": 2,
+      "colors": 16,
+      "bboxes": [
+        [
+          2,
+          20,
+          37,
+          61
+        ],
+        [
+          4,
+          27,
+          39,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "6f6cffbb261c9ec7f9c897926f66b2f37fd9787c8013c95ec39572d9bdabc0eb",
+        "bdadccc77a6aee792b16a595cce45224a8d7239a3b282c31a359d81e12d1c24d"
+      ],
+      "gif_durations_ms": [
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/npc/npc_louluo_down_left_v01.png",
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 16,
+      "bboxes": [
+        [
+          9,
+          29,
+          39,
+          61
+        ],
+        [
+          8,
+          38,
+          40,
+          61
+        ],
+        [
+          4,
+          47,
+          45,
+          61
+        ],
+        [
+          3,
+          48,
+          44,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "081b52610539fdf6ff0b6f7bd2908d07936f8ee86dae9df8f7fc973aed2990a8",
+        "50e802594c43bf0cfd88ca512872032f7d7768b9842c36f6656fc007b30db78a",
+        "2dbbb200475e3b3bb30fd219da6129bc4c29033967e437ef719861e1fa3b7789",
+        "908eb974dde14f23f97719d4f5fc667345e4bf28b2b865652564b6f345291328"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        600
+      ]
+    },
+    {
+      "file": "assets/npc/npc_louluo_atk_up_v01.png",
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 16,
+      "bboxes": [
+        [
+          8,
+          16,
+          44,
+          61
+        ],
+        [
+          8,
+          16,
+          38,
+          61
+        ],
+        [
+          4,
+          17,
+          43,
+          61
+        ],
+        [
+          8,
+          23,
+          43,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "69e5fa2dfeb1f1a76ce60aac8cd103db59492109453928b66862ffdf5ed4afbf",
+        "f50a4a72273b243723f2dd3ce6c1108b85d296d44b8b728549ce2a330d8cfe2e",
+        "edf22afa806ba99b7527985d00456b3adad7b619e3acda90b087a456fc4ea156",
+        "a1983a72f259c2bb022ca1b4c4d4de420584568a114bea60b858e64b4f7de7f3"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        600
+      ]
+    },
+    {
+      "file": "assets/npc/npc_louluo_hit_up_v01.png",
+      "dimensions": [
+        96,
+        64
+      ],
+      "frames": 2,
+      "colors": 16,
+      "bboxes": [
+        [
+          9,
+          20,
+          45,
+          61
+        ],
+        [
+          7,
+          28,
+          43,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "6b68971a41db7a36ec432643ee17af6acc773dde623823bfd3dba6211a16c09c",
+        "c76281dbecd70f58deff3aa73f87c95b409f9b6a8affe57cb5569f95eace6f98"
+      ],
+      "gif_durations_ms": [
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/npc/npc_louluo_down_up_v01.png",
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 16,
+      "bboxes": [
+        [
+          6,
+          24,
+          44,
+          61
+        ],
+        [
+          10,
+          31,
+          44,
+          61
+        ],
+        [
+          4,
+          44,
+          44,
+          61
+        ],
+        [
+          4,
+          46,
+          45,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "dc6595c523866295eb2800dbc909ffc05b25bae2c5b47982342837e3ca081eb0",
+        "2e0468f2585ec03e9d81cf2bb9560cdcfc597e9b46dce462fea3ccc39f177e35",
+        "73690b040ddeae35fe11202f61dcb90e998490e2745a307c02e2a97269aea15a",
+        "9ddd0cf2b34ef31e7ae54055e3832f580aac1bcca9f6c83c7d89d0fb24d306dc"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        600
+      ]
+    }
+  ]
+}

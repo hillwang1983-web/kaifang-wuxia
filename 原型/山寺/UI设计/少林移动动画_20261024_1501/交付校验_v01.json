@@ -1,0 +1,171 @@
+{
+  "delivery": "20261024-1501",
+  "date_shanghai": "2026-10-24T15:19:49.780734+08:00",
+  "files": [
+    {
+      "path": "UI设计/少林移动动画_20261024_1501/down_逐帧总览_v01.png",
+      "bytes": 7678,
+      "sha256": "cb8a6e33df6741d057ad064c4067ca25623b6c7cccc4eab8fb388bfb120538f1"
+    },
+    {
+      "path": "UI设计/少林移动动画_20261024_1501/idle_down_6倍_v01.png",
+      "bytes": 5416,
+      "sha256": "6b0c6844a2f8f7e42e2198f9afff142254b95a2d27ec1e32363d574b1bf00b37"
+    },
+    {
+      "path": "UI设计/少林移动动画_20261024_1501/idle_down_循环_v01.gif",
+      "bytes": 15965,
+      "sha256": "e9256df4e75b2e84fc6a208cead2b57492be006a6726d59bdc6209b4472af3e8"
+    },
+    {
+      "path": "UI设计/少林移动动画_20261024_1501/idle_left_6倍_v01.png",
+      "bytes": 3777,
+      "sha256": "6695adfcfa61b86de5e2f17e27f657f698a70d4679e8acb55155153e3cfb590e"
+    },
+    {
+      "path": "UI设计/少林移动动画_20261024_1501/idle_left_循环_v01.gif",
+      "bytes": 15674,
+      "sha256": "5a9438a370e973786bd4ed7ea76a5eefe5e28d716cfd4766a100f751cbf5e7a2"
+    },
+    {
+      "path": "UI设计/少林移动动画_20261024_1501/idle_up_6倍_v01.png",
+      "bytes": 3842,
+      "sha256": "580382efed93969e7d250a742a6eb95fe244b8250ab5447d080512161bf853b6"
+    },
+    {
+      "path": "UI设计/少林移动动画_20261024_1501/idle_up_循环_v01.gif",
+      "bytes": 15382,
+      "sha256": "b78f38ded75d13c2832495eca08f2138beb4cfc167214240dccd1965410ca47f"
+    },
+    {
+      "path": "UI设计/少林移动动画_20261024_1501/left_逐帧总览_v01.png",
+      "bytes": 7542,
+      "sha256": "c41f7a543f061454fa5b4f42603a78f175804bc72a9f960fc6f9b05218db65a8"
+    },
+    {
+      "path": "UI设计/少林移动动画_20261024_1501/up_逐帧总览_v01.png",
+      "bytes": 7439,
+      "sha256": "1247d2e180170d607c9c97abfe32e2df47bca28c0418da941bc664806781f987"
+    },
+    {
+      "path": "UI设计/少林移动动画_20261024_1501/walk_down_6倍_v01.png",
+      "bytes": 5456,
+      "sha256": "7086210f4b7095a8608b4a9b7564afa08c819772891cab02b614f3edc0c13ef5"
+    },
+    {
+      "path": "UI设计/少林移动动画_20261024_1501/walk_down_循环_v01.gif",
+      "bytes": 23072,
+      "sha256": "50898737ce0fdb6cdc59e6203a9ab691042e1c83e2c01468fbeee716a5c4bb00"
+    },
+    {
+      "path": "UI设计/少林移动动画_20261024_1501/walk_left_6倍_v01.png",
+      "bytes": 7857,
+      "sha256": "218dd5dc85c0afad9428cad63498d9a4be90a9d746931603fa744ba76fb0d5f3"
+    },
+    {
+      "path": "UI设计/少林移动动画_20261024_1501/walk_left_循环_v01.gif",
+      "bytes": 22794,
+      "sha256": "e7a4d1eeff57b89124c8207ddf2213a8cb8d94cb1240550a613bd246c4c0a9ae"
+    },
+    {
+      "path": "UI设计/少林移动动画_20261024_1501/walk_up_6倍_v01.png",
+      "bytes": 7356,
+      "sha256": "fe4526fecb69b283d798d61eb50f46ce87cc435b5746f963f95b9fce50ca9fdf"
+    },
+    {
+      "path": "UI设计/少林移动动画_20261024_1501/walk_up_循环_v01.gif",
+      "bytes": 21504,
+      "sha256": "83eaf2d85f6cdde1d1935b470e1963a31b6cc193e4ccdc6e819dcd9b9e25945d"
+    },
+    {
+      "path": "UI设计/少林移动动画_20261024_1501/交付说明_v01.md",
+      "bytes": 3491,
+      "sha256": "fd2db1bf651def186556d5d4a17b9656e916bf352759a6ffa3531ca0c95e0ef7"
+    },
+    {
+      "path": "UI设计/少林移动动画_20261024_1501/动画参数_v01.json",
+      "bytes": 19530,
+      "sha256": "b6802d820bf37b5536c6480050b25c732b4da5c1fc3b10810b83677a789cd6ec"
+    },
+    {
+      "path": "UI设计/少林移动动画_20261024_1501/处理参数_v01.json",
+      "bytes": 775,
+      "sha256": "5d70828a5eda27b64adcb2ab0a91e49c1a1571cf03c3ebad17e10a952929785b"
+    },
+    {
+      "path": "UI设计/少林移动动画_20261024_1501/核验结果_v01.json",
+      "bytes": 6781,
+      "sha256": "545806ae1b40dfaf871c9180b34702f19f5366a84d8681938b7807f55a44068b"
+    },
+    {
+      "path": "UI设计/少林移动动画_20261024_1501/生图提示词_v01.json",
+      "bytes": 19649,
+      "sha256": "ad65017e91293209fe662f503ef1f9ae2978c1a32556c637de58246485654b83"
+    },
+    {
+      "path": "UI设计/少林移动动画_20261024_1501/调色板_v01.json",
+      "bytes": 211,
+      "sha256": "e764053c8be44ad2ba9d8a93b28fb73dc54c703940c0343cb1ecb0c30065838e"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_idle_down_v01.png",
+      "bytes": 4358,
+      "sha256": "cc1a94ed72048531b5a0ee87e5354291d3c603cbc39b0e83d2f56346d7e50231"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_idle_left_v01.png",
+      "bytes": 4274,
+      "sha256": "a22bf03e452c1d511cee88cf657a7b91f866ddfc7acb5300d66e9b8378345820"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_idle_up_v01.png",
+      "bytes": 4039,
+      "sha256": "aaf611495cf065fded813f994af07e2b4355ab913da31c8b54acbe584e22846c"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_walk_down_v01.png",
+      "bytes": 5677,
+      "sha256": "c8ecfc1c7afd3ca08cbf30fc4f4a27d9c446bf76831dc7c9e532aa5216193afd"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_walk_left_v01.png",
+      "bytes": 5608,
+      "sha256": "d1bd42620d25594c1f58897ee7dcd8f2d732710ebb644c511f42c9839cb64c37"
+    },
+    {
+      "path": "assets/chr/chr_shaolin_walk_up_v01.png",
+      "bytes": 5647,
+      "sha256": "cb5a85160beb8b47ec2f7ce881cb6b77f302b8f275a90458330f05ecb2d77668"
+    },
+    {
+      "path": "assets/ref/ref_chr_shaolin_move_down_gait_repair_v01.png",
+      "bytes": 888748,
+      "sha256": "38c50d8b6eccf7e3ec8969656deb82df36b3f9b5b99aceb952abca8a50f6a470"
+    },
+    {
+      "path": "assets/ref/ref_chr_shaolin_move_down_generated_v01.png",
+      "bytes": 870020,
+      "sha256": "e7d55e9cc889ae7e1b26c01d64e0e76f2a9d790a5b755dd4773463fda5acdd90"
+    },
+    {
+      "path": "assets/ref/ref_chr_shaolin_move_left_gait_repair_v01.png",
+      "bytes": 821768,
+      "sha256": "11deca2b1eaa28a71c8d746055418d7454d1c8bff88519efc5b0cb126ae1ce00"
+    },
+    {
+      "path": "assets/ref/ref_chr_shaolin_move_left_generated_v01.png",
+      "bytes": 806146,
+      "sha256": "1c5c9436fbb11bc8541ff49ca53386f157053d5a27a8aa43a1a541937165de40"
+    },
+    {
+      "path": "assets/ref/ref_chr_shaolin_move_up_gait_repair_v01.png",
+      "bytes": 859334,
+      "sha256": "8d50f135004793851b1fadec808d0f50cb7f58a34061437ad555771f4d75330c"
+    },
+    {
+      "path": "assets/ref/ref_chr_shaolin_move_up_generated_v01.png",
+      "bytes": 819588,
+      "sha256": "391ffb6e22f344213942024007d9616ce24048e0dcda27f57d249f057843dd3c"
+    }
+  ]
+}

@@ -1,0 +1,696 @@
+{
+  "result": "PASS",
+  "new_strips": 12,
+  "new_frames": 39,
+  "complete_minimum_strips": 18,
+  "complete_minimum_frames": 69,
+  "combined_opaque_colors": 16,
+  "alpha": [
+    0,
+    255
+  ],
+  "anchor": [
+    24,
+    60
+  ],
+  "checks": [
+    "native dimensions and frame counts",
+    "binary transparency and shared palette",
+    "fixed metadata anchor",
+    "all frames distinct within action",
+    "source selected frame not clipped",
+    "nearest6x exact",
+    "GIF frame counts and review hold delay",
+    "last2 knockdown frames horizontal"
+  ],
+  "limits": [
+    "fixed root is a registration/metadata check, not independent runtime locomotion or collision validation",
+    "review GIF repeats non-loop actions and extends last pose600ms; engine usesJSON12fps",
+    "no Godot or mobile runtime test performed"
+  ],
+  "files": [
+    {
+      "file": "assets/npc/npc_jingxin_idle_down_v01.png",
+      "frames": 4,
+      "colors": 15,
+      "bboxes": [
+        [
+          8,
+          22,
+          41,
+          61
+        ],
+        [
+          9,
+          22,
+          37,
+          61
+        ],
+        [
+          9,
+          22,
+          39,
+          61
+        ],
+        [
+          8,
+          22,
+          41,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "53b91367cac95650a14c8c5b1cbce9abfbddd7196193c7471ce08f59907e5b6e",
+        "9d7508b0d9031fd81c9567918ab229db5ece5d12d9835134a4d2347bebd91f6c",
+        "4d1c5be9efd74e291f11542213263f112b87cc74f96b804ca62696db83d45980",
+        "9f7243b03c7924fc3fee76d72fcc1369ab3aed18c94cf70db3e31ade6742c061"
+      ],
+      "new_batch": false
+    },
+    {
+      "file": "assets/npc/npc_jingxin_walk_down_v01.png",
+      "frames": 6,
+      "colors": 14,
+      "bboxes": [
+        [
+          8,
+          22,
+          41,
+          61
+        ],
+        [
+          11,
+          22,
+          39,
+          61
+        ],
+        [
+          8,
+          22,
+          41,
+          61
+        ],
+        [
+          10,
+          22,
+          39,
+          61
+        ],
+        [
+          8,
+          22,
+          41,
+          61
+        ],
+        [
+          8,
+          22,
+          41,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "1a83675e813150f0e2c487bbe11a157a1511c815c2920cc568049310c6aa9b92",
+        "843ed8df36ee2da8b9b151f4af62b387b0986b11a04366d140c62ecbc74a952c",
+        "66246ce733b4fd14f25bb85f6432092162f52443c635fe4b3e4ceff949d2feb1",
+        "84404c40ee648f0ddab080b7cde91b25677a5f0f7ca0b1b918bc7776beccb3c5",
+        "7b924a9f411b8ef92a9e22024c5ba5aaed6d6bc40be4996ae4efc35974db1e22",
+        "36b4d6b7bb8eea95c590b3e1fe5d6f443a4d4cec5bc91c825c186c6cbadf04fe"
+      ],
+      "new_batch": false
+    },
+    {
+      "file": "assets/npc/npc_jingxin_idle_left_v01.png",
+      "frames": 4,
+      "colors": 14,
+      "bboxes": [
+        [
+          6,
+          22,
+          39,
+          61
+        ],
+        [
+          6,
+          22,
+          39,
+          61
+        ],
+        [
+          6,
+          22,
+          39,
+          61
+        ],
+        [
+          6,
+          22,
+          39,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "c17358b05d0eb05f9084d8847df083523de5ef0a045899f268b5a018c6a35b4c",
+        "491d4a3314e5cb99177b9a26035774504730689c6ee2abde22860e782e106f82",
+        "22091ab21b6d995719de6021dbe7f0d5f773ef8504d92e1c0d66fafefe563ef2",
+        "50644e697d1bb3c6566a69b5485d677bbb1098556b63a9a03634377896413645"
+      ],
+      "new_batch": false
+    },
+    {
+      "file": "assets/npc/npc_jingxin_walk_left_v01.png",
+      "frames": 6,
+      "colors": 14,
+      "bboxes": [
+        [
+          7,
+          22,
+          40,
+          61
+        ],
+        [
+          7,
+          22,
+          40,
+          61
+        ],
+        [
+          7,
+          22,
+          40,
+          61
+        ],
+        [
+          8,
+          22,
+          41,
+          61
+        ],
+        [
+          7,
+          22,
+          40,
+          61
+        ],
+        [
+          7,
+          22,
+          40,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "a459a2aceed89b5a5292dab3107bf4d55b0d50ee45f40ca9482a6d5eb16ce4fe",
+        "eea8c6e572a771cad00de4ba7787fa3d0529c7ac50bfb23884c5d2495dcbaaee",
+        "77c0d98aed180bcc6c11568bcefe43c25bc00f8f557fa53a0986d7b6d23fa544",
+        "44c05802171be5843312def5a070df53acc3df04016c36436b37ba962dfb97c2",
+        "fd5b51e0a8736a37b2e170e9f9fcdc17534d8adb858cba1fe7a55643fa0dfca1",
+        "04f91911a48dd31f7aa8383f8c8cf117c1fcf7faec0a59e789618a213b62f4fd"
+      ],
+      "new_batch": false
+    },
+    {
+      "file": "assets/npc/npc_jingxin_idle_up_v01.png",
+      "frames": 4,
+      "colors": 14,
+      "bboxes": [
+        [
+          8,
+          22,
+          41,
+          61
+        ],
+        [
+          8,
+          22,
+          41,
+          61
+        ],
+        [
+          8,
+          22,
+          41,
+          61
+        ],
+        [
+          8,
+          22,
+          41,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "19ad0f8ab42648249faf8c47b640b6107911ce5de8522cb7a74944fb6108284b",
+        "e3e9f8b6cb21b29d814f4c1fe09c621b7d253a48afc384a9ece47007a6571a6e",
+        "27b3307574b1cc899d3f5ecd7eb7bf7c7153edfa87d2050e83a0fd94bb51147e",
+        "ed0780d474b3a4d3cc5f8e075bc19f85582fdc9dffa28b24520bfd03f72a0b6c"
+      ],
+      "new_batch": false
+    },
+    {
+      "file": "assets/npc/npc_jingxin_walk_up_v01.png",
+      "frames": 6,
+      "colors": 14,
+      "bboxes": [
+        [
+          8,
+          22,
+          41,
+          61
+        ],
+        [
+          8,
+          22,
+          41,
+          61
+        ],
+        [
+          8,
+          22,
+          41,
+          61
+        ],
+        [
+          8,
+          22,
+          41,
+          61
+        ],
+        [
+          8,
+          22,
+          41,
+          61
+        ],
+        [
+          8,
+          22,
+          41,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "eb6879240118a0964ea0469dfd66562267c0f0522817a5d48d2f5c4b137e63d7",
+        "91b8c47e238a49b52252be9ec956fe1b5e7d9028c5294d27ae27c6db4f0570fd",
+        "2445ddf65b4acce75e99eab447fcf86badf7f504eb369bb52e6a3c5938fe5154",
+        "73a0fc18a5d955a4054637f31df24f25c54ca3e28cf009c1d8a47a248fe3c36b",
+        "a0100aece2e375186684dc5b96a3674b6747478c8f995d2f06a0014027f44a84",
+        "06f8a04febfba3dce3b5320c5a673d3b2ae77023f6e4dbf15f5309a465189e9a"
+      ],
+      "new_batch": false
+    },
+    {
+      "file": "assets/npc/npc_jingxin_atk_down_v01.png",
+      "frames": 3,
+      "colors": 15,
+      "bboxes": [
+        [
+          9,
+          15,
+          41,
+          60
+        ],
+        [
+          14,
+          23,
+          33,
+          63
+        ],
+        [
+          10,
+          24,
+          47,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "62b6039564a4abd7b8fecd43965fc2c92c8e50b9f14e376efc9cf53b75745278",
+        "c8a3bc8f7b6ac2f37b79b74f07841610ba82e8a23571f52e126daef341ed28e1",
+        "5b9657165976a4fc286fb2f3fbe4202766aaeca6d2d1bce0c8c75b38019ece4c"
+      ],
+      "new_batch": true
+    },
+    {
+      "file": "assets/npc/npc_jingxin_hit_down_v01.png",
+      "frames": 2,
+      "colors": 14,
+      "bboxes": [
+        [
+          3,
+          22,
+          35,
+          60
+        ],
+        [
+          6,
+          29,
+          34,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "3e050b7920fcca4be6fcc67c725dc9e9542aa877cebf53cea6d16f31bbd282df",
+        "4e8f5c96391614445896ceb5931cb6d37f8a8507da1a975a770949af992c7069"
+      ],
+      "new_batch": true
+    },
+    {
+      "file": "assets/npc/npc_jingxin_roll_down_v01.png",
+      "frames": 4,
+      "colors": 15,
+      "bboxes": [
+        [
+          7,
+          38,
+          39,
+          60
+        ],
+        [
+          11,
+          17,
+          38,
+          58
+        ],
+        [
+          4,
+          36,
+          40,
+          60
+        ],
+        [
+          9,
+          21,
+          37,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "e439eabb4d8d19d9677b7ba3a6777078356be8a05fad58357cad2181abceff74",
+        "aabaefb43901a423f6475c32007ec9fe4d56bf01cb3b2d5a04fbf1703b663d39",
+        "20c933c5413f6566761606567e67062e53686efd3a82e904d68fff8eb3bab64b",
+        "3c596298aa110a242e6dd6c8c21a54f294b1b2b156978a685ce744cfd76dc3f5"
+      ],
+      "new_batch": true
+    },
+    {
+      "file": "assets/npc/npc_jingxin_down_down_v01.png",
+      "frames": 4,
+      "colors": 14,
+      "bboxes": [
+        [
+          9,
+          34,
+          39,
+          60
+        ],
+        [
+          7,
+          34,
+          41,
+          60
+        ],
+        [
+          3,
+          43,
+          44,
+          60
+        ],
+        [
+          2,
+          44,
+          44,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "e86972e962ce70dece44ed4aec25531946b14d91ae75e03a8237bf69d66179e9",
+        "25305343ee36299c13a7fcf51a1c86f5652006e58cc7144981cd9a21d369677d",
+        "00d8a7d13a7d04215933510e443fb30572b8971a350e2b5d7435727b8e32f57a",
+        "fcfbc4c287936a978e661dc9b387171b93d0ca26967ac47724f5a32a8ec7fadd"
+      ],
+      "new_batch": true
+    },
+    {
+      "file": "assets/npc/npc_jingxin_atk_left_v01.png",
+      "frames": 3,
+      "colors": 14,
+      "bboxes": [
+        [
+          3,
+          16,
+          35,
+          60
+        ],
+        [
+          5,
+          30,
+          36,
+          60
+        ],
+        [
+          1,
+          30,
+          38,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "ee67cb9ef97069a2dbb24da122f58574775dd4eb2817335586eb4c403c0c6848",
+        "ec09d821d629042e94de99c232b618a270a2c714fdd52351c0335da450ec4fff",
+        "428869d355381fb3ca2bec217b04fe2bab955a0f4e0558313bbeb4f766b0613f"
+      ],
+      "new_batch": true
+    },
+    {
+      "file": "assets/npc/npc_jingxin_hit_left_v01.png",
+      "frames": 2,
+      "colors": 13,
+      "bboxes": [
+        [
+          8,
+          26,
+          36,
+          60
+        ],
+        [
+          2,
+          30,
+          34,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "a5ee262d1ec6db2f3fabfe3ab3c6c961ba05644b9427f1e513d193de05c947b8",
+        "c56aca4f72a2358ec6e558e5c4428cd2e6b0ed7e048b1a38af5735ab577614da"
+      ],
+      "new_batch": true
+    },
+    {
+      "file": "assets/npc/npc_jingxin_roll_left_v01.png",
+      "frames": 4,
+      "colors": 13,
+      "bboxes": [
+        [
+          4,
+          38,
+          40,
+          60
+        ],
+        [
+          10,
+          21,
+          41,
+          57
+        ],
+        [
+          2,
+          38,
+          42,
+          60
+        ],
+        [
+          5,
+          25,
+          35,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "fef7a478e999dcc45353e7b9a4b4edd9ae6ce1f44f6fbe0e19cc5397e0804c74",
+        "48d8269a3bd22870ad568b4f9098b69e06422b4033bfe07188cb0c25749cbf6a",
+        "28e4829bbbcddb49845f2c78ef87ce5fcb76084a051645e73311451d19837b47",
+        "dfd19d204ddf67753fb93d94d7862708043df09ee033739a8191a7d923c9b511"
+      ],
+      "new_batch": true
+    },
+    {
+      "file": "assets/npc/npc_jingxin_down_left_v01.png",
+      "frames": 4,
+      "colors": 13,
+      "bboxes": [
+        [
+          7,
+          36,
+          41,
+          60
+        ],
+        [
+          4,
+          39,
+          45,
+          60
+        ],
+        [
+          5,
+          45,
+          42,
+          60
+        ],
+        [
+          5,
+          48,
+          43,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "11de0df19e18fa0ddc49c0b4bfd43a7d12be3938cd978f1a08003d50f0f9db6e",
+        "efde536cf2d9f8aa7fef453dd9f69c6e4bbedff99803c190cf6d7f720e425e02",
+        "b6ebd14f45d32edea03f12b19ea1f5f7235319a8b0dac6d61b043d73801330c7",
+        "cbd38fa58bee7c3da9989120bc7f50cc17c08e675d1b8a4d6fdf5e14835f1b1d"
+      ],
+      "new_batch": true
+    },
+    {
+      "file": "assets/npc/npc_jingxin_atk_up_v01.png",
+      "frames": 3,
+      "colors": 13,
+      "bboxes": [
+        [
+          6,
+          23,
+          35,
+          60
+        ],
+        [
+          12,
+          4,
+          35,
+          60
+        ],
+        [
+          7,
+          20,
+          39,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "2beb861208ead6e2d067f63ffaa5e5a038a3d10e3d36f6c6502a157a0205d3f2",
+        "cae918fc11273eee7aa9154d95b77790804784067e42dc69459545832af448d1",
+        "cde6c9d6fcc9dfe2706d68bb3b50c1326d782cee36e1344fc8cd235825d25841"
+      ],
+      "new_batch": true
+    },
+    {
+      "file": "assets/npc/npc_jingxin_hit_up_v01.png",
+      "frames": 2,
+      "colors": 12,
+      "bboxes": [
+        [
+          3,
+          25,
+          36,
+          60
+        ],
+        [
+          11,
+          30,
+          43,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "b38c91a391c0e102fbe87444e0b0d7d0c06dec9256a873fa821bd9e3c40b02ee",
+        "dbf8312bfcbde4ec885402a9cc6e9e6fbfd8c92beed6d4b1ccb397fb3adb0080"
+      ],
+      "new_batch": true
+    },
+    {
+      "file": "assets/npc/npc_jingxin_roll_up_v01.png",
+      "frames": 4,
+      "colors": 12,
+      "bboxes": [
+        [
+          8,
+          37,
+          41,
+          60
+        ],
+        [
+          12,
+          18,
+          35,
+          55
+        ],
+        [
+          8,
+          30,
+          42,
+          60
+        ],
+        [
+          8,
+          21,
+          39,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "97e396478d2b264480d4d750055e1d8204d1582bce827c2c6493c5c40f8bba9a",
+        "6d634e6dd3b17f5f409fd9bd98a5cd983d0cc705b1f006471357ed7aa101d291",
+        "3ef77ef920e853939d4c4fa408f5d3c98d78bd1cf0e1a8431b60a052c18ddc70",
+        "836c6e504d4672df7eebd3573e4974395428c70ef2d269488e66a87cd3833f4c"
+      ],
+      "new_batch": true
+    },
+    {
+      "file": "assets/npc/npc_jingxin_down_up_v01.png",
+      "frames": 4,
+      "colors": 12,
+      "bboxes": [
+        [
+          7,
+          30,
+          41,
+          60
+        ],
+        [
+          6,
+          32,
+          43,
+          60
+        ],
+        [
+          3,
+          34,
+          45,
+          60
+        ],
+        [
+          4,
+          39,
+          43,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "6fe94ec0e56f6259b84f99ddd957a99f7a8d9dbabccb2148e61d87d7dbdbd588",
+        "d22a360973558f4641cbe863b06a892d46afab080918c575abc59bbd7702beb8",
+        "8db8b70b29881e8275b6cb006d64badf211d7a66265d42ce73702e7adf94af66",
+        "336c82bbffd9c9cb74319ad8ad47aa8da01196166066e747d4114efe03272d3d"
+      ],
+      "new_batch": true
+    }
+  ]
+}

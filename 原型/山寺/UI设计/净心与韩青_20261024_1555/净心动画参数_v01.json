@@ -1,0 +1,929 @@
+[
+  {
+    "file": "assets/npc/npc_jingxin_idle_down_v01.png",
+    "action": "idle",
+    "direction": "down",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 4,
+    "fps": 12,
+    "loop": true,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_npc_jingxin_move_down_source_v01.png",
+        "source_column": 0,
+        "source_cell": [
+          0,
+          0,
+          314,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          8,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": 0.5,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_npc_jingxin_move_down_source_v01.png",
+        "source_column": 1,
+        "source_cell": [
+          314,
+          0,
+          313,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          4,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": 0.5,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": [
+          [
+            0,
+            6,
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_npc_jingxin_move_down_source_v01.png",
+        "source_column": 2,
+        "source_cell": [
+          627,
+          0,
+          313,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          6,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": 0.5,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": [
+          [
+            0,
+            6,
+            2,
+            3
+          ]
+        ]
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_npc_jingxin_move_down_source_v01.png",
+        "source_column": 3,
+        "source_cell": [
+          940,
+          0,
+          314,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          8,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": 0.5,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      }
+    ]
+  },
+  {
+    "file": "assets/npc/npc_jingxin_walk_down_v01.png",
+    "action": "walk",
+    "direction": "down",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 6,
+    "fps": 12,
+    "loop": true,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_npc_jingxin_move_down_source_v01.png",
+        "source_column": 0,
+        "source_cell": [
+          0,
+          418,
+          314,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          8,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": 0.5,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_npc_jingxin_move_down_source_v01.png",
+        "source_column": 1,
+        "source_cell": [
+          314,
+          418,
+          313,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          6,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": 0.5,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": [
+          [
+            0,
+            6,
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_npc_jingxin_move_down_source_v01.png",
+        "source_column": 4,
+        "source_cell": [
+          1254,
+          418,
+          314,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          8,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": 0.5,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_npc_jingxin_move_down_source_v01.png",
+        "source_column": 2,
+        "source_cell": [
+          627,
+          418,
+          313,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          6,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": 0.5,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      },
+      {
+        "index": 4,
+        "source": "assets/ref/ref_npc_jingxin_move_down_source_v01.png",
+        "source_column": 5,
+        "source_cell": [
+          1568,
+          418,
+          313,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          8,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": 0.5,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      },
+      {
+        "index": 5,
+        "source": "assets/ref/ref_npc_jingxin_move_down_source_v01.png",
+        "source_column": 3,
+        "source_cell": [
+          940,
+          418,
+          314,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          8,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": 0.5,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      }
+    ]
+  },
+  {
+    "file": "assets/npc/npc_jingxin_idle_left_v01.png",
+    "action": "idle",
+    "direction": "left",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 4,
+    "fps": 12,
+    "loop": true,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_npc_jingxin_move_left_source_v01.png",
+        "source_column": 0,
+        "source_cell": [
+          0,
+          0,
+          314,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          6,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": -1.0,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_npc_jingxin_move_left_source_v01.png",
+        "source_column": 1,
+        "source_cell": [
+          314,
+          0,
+          313,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          6,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": -1.0,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_npc_jingxin_move_left_source_v01.png",
+        "source_column": 2,
+        "source_cell": [
+          627,
+          0,
+          313,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          6,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": -1.0,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_npc_jingxin_move_left_source_v01.png",
+        "source_column": 3,
+        "source_cell": [
+          940,
+          0,
+          314,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          6,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": -1.0,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      }
+    ]
+  },
+  {
+    "file": "assets/npc/npc_jingxin_walk_left_v01.png",
+    "action": "walk",
+    "direction": "left",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 6,
+    "fps": 12,
+    "loop": true,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_npc_jingxin_move_left_source_v01.png",
+        "source_column": 0,
+        "source_cell": [
+          0,
+          418,
+          314,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          7,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": -1.0,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_npc_jingxin_move_left_source_v01.png",
+        "source_column": 1,
+        "source_cell": [
+          314,
+          418,
+          313,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          7,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": -1.0,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_npc_jingxin_move_left_source_v01.png",
+        "source_column": 2,
+        "source_cell": [
+          627,
+          418,
+          313,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          7,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": -1.0,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_npc_jingxin_move_left_source_v01.png",
+        "source_column": 3,
+        "source_cell": [
+          940,
+          418,
+          314,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          8,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": -1.0,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      },
+      {
+        "index": 4,
+        "source": "assets/ref/ref_npc_jingxin_move_left_source_v01.png",
+        "source_column": 4,
+        "source_cell": [
+          1254,
+          418,
+          314,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          7,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": -1.0,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      },
+      {
+        "index": 5,
+        "source": "assets/ref/ref_npc_jingxin_move_left_source_v01.png",
+        "source_column": 5,
+        "source_cell": [
+          1568,
+          418,
+          313,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          7,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": -1.0,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      }
+    ]
+  },
+  {
+    "file": "assets/npc/npc_jingxin_idle_up_v01.png",
+    "action": "idle",
+    "direction": "up",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 4,
+    "fps": 12,
+    "loop": true,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_npc_jingxin_move_up_source_v01.png",
+        "source_column": 0,
+        "source_cell": [
+          0,
+          0,
+          314,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          8,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": 0.5,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_npc_jingxin_move_up_source_v01.png",
+        "source_column": 1,
+        "source_cell": [
+          314,
+          0,
+          313,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          8,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": 0.5,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_npc_jingxin_move_up_source_v01.png",
+        "source_column": 2,
+        "source_cell": [
+          627,
+          0,
+          313,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          8,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": 0.5,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_npc_jingxin_move_up_source_v01.png",
+        "source_column": 3,
+        "source_cell": [
+          940,
+          0,
+          314,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          8,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": 0.5,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      }
+    ]
+  },
+  {
+    "file": "assets/npc/npc_jingxin_walk_up_v01.png",
+    "action": "walk",
+    "direction": "up",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 6,
+    "fps": 12,
+    "loop": true,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_npc_jingxin_move_up_source_v01.png",
+        "source_column": 0,
+        "source_cell": [
+          0,
+          418,
+          314,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          8,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": 0.5,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_npc_jingxin_move_up_source_v01.png",
+        "source_column": 1,
+        "source_cell": [
+          314,
+          418,
+          313,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          8,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": 0.5,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_npc_jingxin_move_up_source_v01.png",
+        "source_column": 2,
+        "source_cell": [
+          627,
+          418,
+          313,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          8,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": 0.5,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_npc_jingxin_move_up_gaitfix_source_v01.png",
+        "source_column": 3,
+        "source_cell": [
+          941,
+          418,
+          314,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          8,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": 0.5,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      },
+      {
+        "index": 4,
+        "source": "assets/ref/ref_npc_jingxin_move_up_gaitfix_source_v01.png",
+        "source_column": 4,
+        "source_cell": [
+          1255,
+          418,
+          313,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          8,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": 0.5,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      },
+      {
+        "index": 5,
+        "source": "assets/ref/ref_npc_jingxin_move_up_gaitfix_source_v01.png",
+        "source_column": 5,
+        "source_cell": [
+          1568,
+          418,
+          314,
+          418
+        ],
+        "content": [
+          33,
+          39
+        ],
+        "offset": [
+          8,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_to_ground_reference_delta_x": 0.5,
+        "registration": "同方向以idle首帧两鞋地面中线校准头部位置，抬脚不重新改变根锚点",
+        "alpha_cleanup_regions": []
+      }
+    ]
+  }
+]

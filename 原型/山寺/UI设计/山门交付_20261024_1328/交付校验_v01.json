@@ -1,0 +1,79 @@
+{
+  "delivery_id": "20261024-1328",
+  "rows": [
+    2,
+    3
+  ],
+  "files": [
+    {
+      "path": "UI设计/山门交付_20261024_1328/交付说明_v01.md",
+      "bytes": 3310,
+      "sha256": "eef53ffd3bfcfc2bb99b12177950d74e0c2f3ffb994394d356453771d3bab420"
+    },
+    {
+      "path": "UI设计/山门交付_20261024_1328/图层参数_v01.json",
+      "bytes": 2719,
+      "sha256": "f6782b12a653ffb47d14d8fb4f5ed8de0e742807ad2e260ddc292bd8bbfed993"
+    },
+    {
+      "path": "UI设计/山门交付_20261024_1328/山门_2倍预览_v01.png",
+      "bytes": 1029832,
+      "sha256": "305b5103e033a585c306e68dc577aaba83b37b0cccef4440cfa013e85da5f975"
+    },
+    {
+      "path": "UI设计/山门交付_20261024_1328/山门_全图概览_v01.png",
+      "bytes": 280525,
+      "sha256": "15cfb712aebe70f3dc4d7c4f8a19aa7ab9d7957ea200847b2cbd9642512b99e0"
+    },
+    {
+      "path": "UI设计/山门交付_20261024_1328/山门_操练场镜头_1比1_v01.png",
+      "bytes": 187401,
+      "sha256": "d1e62319c827665a4c2149f798513481adb2ee69b7bac7f827dfc56b0fb482a6"
+    },
+    {
+      "path": "UI设计/山门交付_20261024_1328/山门_门楼镜头_1比1_v01.png",
+      "bytes": 185169,
+      "sha256": "fe18fb8dfdf38b37a14c096712af9e05f01c8bc1bdb22e854aaf7d34e8545a14"
+    },
+    {
+      "path": "UI设计/山门交付_20261024_1328/核验结果_v01.json",
+      "bytes": 882,
+      "sha256": "a805e02cb17dee826a54db0d8c375072406cba7f0a796d982fd3459ea630d5f2"
+    },
+    {
+      "path": "UI设计/山门交付_20261024_1328/生图提示词_v01.json",
+      "bytes": 4805,
+      "sha256": "41b55cc96e9adb8cbdf30a9ae50b2c972eae74043bc819cb93af4b3571618398"
+    },
+    {
+      "path": "UI设计/山门交付_20261024_1328/门檐_透明区预览_v01.png",
+      "bytes": 9730,
+      "sha256": "f6e4e8e88aa75b1e37488c6a40bc819dd22361dcd3d3193b0b870779f14a8c69"
+    },
+    {
+      "path": "UI设计/山门交付_20261024_1328/门檐_遮挡对照_v01.png",
+      "bytes": 71218,
+      "sha256": "c035d953bed2ab6631d030a1b78b278fe8376551f58429365086d0e415b29120"
+    },
+    {
+      "path": "assets/env/env_shanmen_front_v01.png",
+      "bytes": 2499267,
+      "sha256": "a3a517042c5b3ca448a08b2d2feea638c0ff09905588940af3f8e7304d1bedae"
+    },
+    {
+      "path": "assets/env/env_shanmen_v01.png",
+      "bytes": 826331,
+      "sha256": "8416f2612d2eafe1a21551d45e3091d804afa2913161230604a017c5b17af854"
+    },
+    {
+      "path": "assets/ref/ref_env_shanmen_lions_source_v01.png",
+      "bytes": 3190437,
+      "sha256": "b059ca435a5f9d2ec7ccd8167b9ab83e97c3b5905611798e18684cdc748357f1"
+    },
+    {
+      "path": "assets/ref/ref_env_shanmen_source_v01.png",
+      "bytes": 3586289,
+      "sha256": "8b2d4659c262c165a6d04041a9873429090c9cb752e28f277f62146ea4e5b2eb"
+    }
+  ]
+}

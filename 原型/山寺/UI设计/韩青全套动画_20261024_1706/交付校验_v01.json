@@ -1,0 +1,537 @@
+{
+  "frames": 87,
+  "files": [
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/combat_prompts.json",
+      "bytes": 9742,
+      "sha256": "124f0a234c405c41edcd7d401dc17af1c32fdc91951926419f005d3fec971fb6"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/compact_fix_prompts.json",
+      "bytes": 2110,
+      "sha256": "e8d1295912e4b5ca1be3744d7867175b6adf8384893149dd396ad5d712d9e05e"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/fix_prompts.json",
+      "bytes": 4276,
+      "sha256": "7a964ccd1d663a2e253b96b01986d37761922022e3513b8a33cbd4e5b2877436"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_atk1_down_6倍_v01.png",
+      "bytes": 4061,
+      "sha256": "4cc161ecaba96bb42f3970b3f4a71e9940e84454063e949939adb136a0b45efa"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_atk1_down_播放预览_v01.gif",
+      "bytes": 10668,
+      "sha256": "3821900f803199611712f167a44c69733cdf8d380e680f79df4e9bf52250aae6"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_atk1_left_6倍_v01.png",
+      "bytes": 3778,
+      "sha256": "e6f4e68b810eaea066bcc035983e91d1103855aa8614ec7f351eae88c713a594"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_atk1_left_播放预览_v01.gif",
+      "bytes": 10295,
+      "sha256": "65413e5edd479e275893c5e6ffe48123d8e168b09a8925e9a42ad51169a3b951"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_atk1_up_6倍_v01.png",
+      "bytes": 4057,
+      "sha256": "88da4ad9260f08605ad133f748d7abe66bef801b6f8a998bdd1c6c87862b45b9"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_atk1_up_播放预览_v01.gif",
+      "bytes": 10913,
+      "sha256": "9ce2ef3d00082ad2a137311a17189ce19b37f1e135246c13792132c946012c52"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_atk2_down_6倍_v01.png",
+      "bytes": 3960,
+      "sha256": "a024dc3660434f52181378b060c7fd1bdefecb3093d828a728374e345486b2c8"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_atk2_down_播放预览_v01.gif",
+      "bytes": 10642,
+      "sha256": "9be74879b92c9ffc111be112f6d605558793e23fc327e3243d99af28890a7f53"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_atk2_left_6倍_v01.png",
+      "bytes": 3464,
+      "sha256": "88f2f5a7a5b5b28a9605efeb8faea1b7ec52cc9eb80cd3595fcec63d3dd8681a"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_atk2_left_播放预览_v01.gif",
+      "bytes": 9241,
+      "sha256": "9350eca8364ba23ac9a3789df4e57eb63082ec1f631093a1af347ecb19a7de06"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_atk2_up_6倍_v01.png",
+      "bytes": 3903,
+      "sha256": "60c01b95005b4713553158e7fe1395c386055196221400bc7b1663db4f293ecd"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_atk2_up_播放预览_v01.gif",
+      "bytes": 10137,
+      "sha256": "9b8f5ced5f9e1ec6b730438c81a23cdcdd9cefba255832b29a70f17fefe1f2c5"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_atk3_down_6倍_v01.png",
+      "bytes": 4165,
+      "sha256": "3e4103105d43e9efc13fa38ca1b2156bc6047e9cc3fee3db4cd085ad894306f2"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_atk3_down_播放预览_v01.gif",
+      "bytes": 10687,
+      "sha256": "84f00e44297311a41ba2f14b8375f6bc20e725fd9930cf1e3922db0e835d5821"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_atk3_left_6倍_v01.png",
+      "bytes": 2764,
+      "sha256": "928fd409b07d3fb95af0c4f8d8c8b77177bf3dd6a1a1120dc201efeb91ee4780"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_atk3_left_播放预览_v01.gif",
+      "bytes": 10019,
+      "sha256": "aa8ef8c5655aad0ed7116d6def9ed44598e504b879f67e1856b78c18bdd405a0"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_atk3_up_6倍_v01.png",
+      "bytes": 3782,
+      "sha256": "1033dcda65d8f55ab262550aefdf1fe43c8d40f4a90bdfac81b3fe22e6d157cd"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_atk3_up_播放预览_v01.gif",
+      "bytes": 9967,
+      "sha256": "1170664d09ceac4116f7adb842ec40095dba4df3ec7567e6bdbb2c0d689df59c"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_down_down_6倍_v01.png",
+      "bytes": 3621,
+      "sha256": "b8d3ec46fc6f75c19f098fcb245c3e832097c7317c5db0e9244259907ae151ef"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_down_down_播放预览_v01.gif",
+      "bytes": 11282,
+      "sha256": "f33d2245a404c2a1aeb4f51fbf367efd0428f1fbb5f500682e64750aad2b738a"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_down_left_6倍_v01.png",
+      "bytes": 2393,
+      "sha256": "81e2ded99fc6f78c3b18c1b9bc02931ab2d4b36bbb061430cb5df9478a7086de"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_down_left_播放预览_v01.gif",
+      "bytes": 10612,
+      "sha256": "bc2c2cbc76faeb556b060961b92c230db587de976c041de530b6aef0f22e0d73"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_down_up_6倍_v01.png",
+      "bytes": 3500,
+      "sha256": "30885e805d636d65e1369ab2eab1c5096fe4a37d732fb1a6864755ff8b34dff3"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_down_up_播放预览_v01.gif",
+      "bytes": 10896,
+      "sha256": "078300568f274978116b9b732c2dd6524adf9f322365a4c89189a79bb8f91dbb"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_hit_down_6倍_v01.png",
+      "bytes": 1729,
+      "sha256": "ff997e39c3f1c1246f62db583b6483065e1f364ac6b3f9ccc161dfe7ff4430b1"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_hit_down_播放预览_v01.gif",
+      "bytes": 6426,
+      "sha256": "016a9710dddfdc507c41800659ed28c21672897c77d75f3795536ead64f0654b"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_hit_left_6倍_v01.png",
+      "bytes": 1539,
+      "sha256": "7b60ce22a66b73bd7c30a0f47621eb807f08b77e99abd64f527d451b54e19ab9"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_hit_left_播放预览_v01.gif",
+      "bytes": 5605,
+      "sha256": "93a4445932497eb0685a6cc5b186767975edacdf1b6c11ea73bd31217fc5c439"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_hit_up_6倍_v01.png",
+      "bytes": 1683,
+      "sha256": "6d43c475c96c5344789c4c3722dc1c1e7bd9e34de621bd39df303fabef5c61a5"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_hit_up_播放预览_v01.gif",
+      "bytes": 6287,
+      "sha256": "2333c90259f249ead0c29ca8c33ef851cbdf24db1f8ebde909e9e2f65a85d297"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_idle_down_6倍_v01.png",
+      "bytes": 4699,
+      "sha256": "327ba2c646ffc9784308aae093b54aedc2c29b8df1b93fdf0fc423ac38e355d8"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_idle_down_播放预览_v01.gif",
+      "bytes": 13109,
+      "sha256": "221983619485af3fe2e0f4ed3f066641e4657cdb514c864103ab37859232d687"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_idle_left_6倍_v01.png",
+      "bytes": 4644,
+      "sha256": "dba0289c329bfbbcc3b34b3f9e03056d979d3f2af31e44761f5c8780acdad931"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_idle_left_播放预览_v01.gif",
+      "bytes": 12302,
+      "sha256": "09d2b225e98b8426d0af7686cdee2c9a16db089b83f77562ce316636f1caafc6"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_idle_up_6倍_v01.png",
+      "bytes": 3488,
+      "sha256": "1727993444122967d6ff6c273405e6f915e79570e7ae21abf72c913fea850dda"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_idle_up_播放预览_v01.gif",
+      "bytes": 12933,
+      "sha256": "1e136c4ab62f22bc5c9d64dd6d6b60990dfee3e2882df9dd1d4c4a8369c83178"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_roll_down_6倍_v01.png",
+      "bytes": 4707,
+      "sha256": "e41aca87222d5385f9209bf1c894e940110a1bc151ad2deafb20896d039a6896"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_roll_down_播放预览_v01.gif",
+      "bytes": 13880,
+      "sha256": "5517b427e4205cb98c49a3f701773d529202c8ae7b957afe4cacf7ddf4ddf197"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_roll_left_6倍_v01.png",
+      "bytes": 4087,
+      "sha256": "26cb53b52caf53885ee47c910928ac33555d3d6cc0bfd546c2a9a5226466dc94"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_roll_left_播放预览_v01.gif",
+      "bytes": 11437,
+      "sha256": "6e55a517b1767e7a08896026dba620e42f05c79d415e8ff37c9d82c25dc690a1"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_roll_up_6倍_v01.png",
+      "bytes": 3350,
+      "sha256": "22edfb3e1696abf26394aedd6048911b5a299881b1632ab3a61a20edc4e85ef7"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_roll_up_播放预览_v01.gif",
+      "bytes": 11728,
+      "sha256": "c970795ccf3a7a5fbb6b4e33ef02fba1ed03fc7473830ea8388a8248d806393c"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_walk_down_6倍_v01.png",
+      "bytes": 4872,
+      "sha256": "1dfca7119b7aa1488965ebadf15f89c42d5fc3cac3662da65e8b0eb124c7272d"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_walk_down_播放预览_v01.gif",
+      "bytes": 18710,
+      "sha256": "32e34d60500d7e11d8093b6ac78e090668ffaba3066bc87075877156de8bb8fa"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_walk_left_6倍_v01.png",
+      "bytes": 6606,
+      "sha256": "640ba252d66a135ef31bc520c967f7271736182165469098883f9643f8fa01bb"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_walk_left_播放预览_v01.gif",
+      "bytes": 17460,
+      "sha256": "4da11b4236e7c00e13cd408b3142472eff1d884a0cc032e9a78aa2aa66870d3f"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_walk_up_6倍_v01.png",
+      "bytes": 6668,
+      "sha256": "91344cf659daf8ed7217d2c9648cb78a4d3b982641e23dd02d9f0300cba3b67b"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/hanqing_walk_up_播放预览_v01.gif",
+      "bytes": 18090,
+      "sha256": "088dd50e79ba29d7cf73c81880add4e5e60b0fddadfff61d7b128fef8dedbf03"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/movement_prompts.json",
+      "bytes": 7795,
+      "sha256": "dda97e5da9b633bcb3e618bcde9084bd3895b389d1dc06f8d5eacc2aa0ad483b"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/production_plan.md",
+      "bytes": 511,
+      "sha256": "1a175a0a86e6ff7d4703114981caeb50703c5984702c8b00eca503758f357834"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/up_sweep_fix_prompt.txt",
+      "bytes": 738,
+      "sha256": "efad744a01d34246e94b202a8b96d69e7715735d0506bd4c8b75723ee24b612f"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/交付说明_v01.md",
+      "bytes": 3710,
+      "sha256": "b16b8b8fccc17dcf2db72f0a9bf41e137d3d661839cdc9da6f9d14072bc18f0c"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/山门1比1_三角色与韩青动作_v01.png",
+      "bytes": 191353,
+      "sha256": "52d4534e11c9cdf6c66ae8f81019f52236ea357968a884fcfb58fa9fb571ad07"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/战斗动画参数_v01.json",
+      "bytes": 51422,
+      "sha256": "7e3127f64be376dded796f99f58898361fcb9c1ef11f80cb355d873d1477046d"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/核验结果_v01.json",
+      "bytes": 21171,
+      "sha256": "ebf73d252b92a63e1b3fc87d1ebdc2a3c5a03df20b95f1780c363faf2479f292"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/移动动画参数_v01.json",
+      "bytes": 25915,
+      "sha256": "be963f269e161c5ba8ed58982d6a705751a65e36dee3eeaff4f6866ffd66f1cd"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/调色板_v01.json",
+      "bytes": 245,
+      "sha256": "8c04ead781abc9ab5cbb53a27f0b9692b19ca5498e40fc1609d4ff91cc4c4793"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/韩青全套动画索引_v01.json",
+      "bytes": 84454,
+      "sha256": "3d00d82fee1e14bbf9bcc96524a166eaf9565f32ba68e6e8d5bbf856a4e9919a"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/韩青战斗_down_逐帧总览_v01.png",
+      "bytes": 21604,
+      "sha256": "6fcf367cc35aa8c1d1b4a0ff9c6a12a9a1daff9c0bac8da693d326f2339d6f8e"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/韩青战斗_left_逐帧总览_v01.png",
+      "bytes": 19302,
+      "sha256": "8a7d751db6156efee93cab0ee2aa5e07ae02f1881b66a230a934ac8c2b4017e0"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/韩青战斗_up_逐帧总览_v01.png",
+      "bytes": 20545,
+      "sha256": "d6052ce9b0df4023fa1552db76e71edf3e635321a96142fd2d6b9aa84067a88f"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/韩青移动_down_逐帧总览_v01.png",
+      "bytes": 11406,
+      "sha256": "30828524a022515e7e901c7505e46c316d668bf3c69ec86e62ab5878223c1dc7"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/韩青移动_left_逐帧总览_v01.png",
+      "bytes": 11108,
+      "sha256": "31d1f9122c8d7419ae6a20b55628f72f92535d827e37947ac5edd061be165fe8"
+    },
+    {
+      "path": "UI设计/韩青全套动画_20261024_1706/韩青移动_up_逐帧总览_v01.png",
+      "bytes": 11499,
+      "sha256": "cb7150c13d91e76e4110cffa7a5203d4c9ffb173f619c86db2d1e087e83087ba"
+    },
+    {
+      "path": "assets/npc/npc_hanqing_atk1_down_v01.png",
+      "bytes": 3399,
+      "sha256": "63621a7df45789cc468624249581f48f3cdb13ccf467623b4a7e00726ad8b693"
+    },
+    {
+      "path": "assets/npc/npc_hanqing_atk1_left_v01.png",
+      "bytes": 3296,
+      "sha256": "e4ae1ecbf0ee9c3b57a3eff5dc90ab695f778dffcea1ec18ee5a6aba32053d31"
+    },
+    {
+      "path": "assets/npc/npc_hanqing_atk1_up_v01.png",
+      "bytes": 3505,
+      "sha256": "9b2cffad60f65afb2295de91dfbfbd89a1693637c73fc9bcfacd75bd47c8b917"
+    },
+    {
+      "path": "assets/npc/npc_hanqing_atk2_down_v01.png",
+      "bytes": 3467,
+      "sha256": "fab56b2354b1f717d1515dccae53a0970ef92b3a75f32ac9cb949251811b3815"
+    },
+    {
+      "path": "assets/npc/npc_hanqing_atk2_left_v01.png",
+      "bytes": 2917,
+      "sha256": "837c013e84153defc14217a2054e4c1a0a6b4d5e36ef490d4f6482931e9f5396"
+    },
+    {
+      "path": "assets/npc/npc_hanqing_atk2_up_v01.png",
+      "bytes": 3282,
+      "sha256": "088dfff28cf69d10351b73e0a0bea55bb559eab4c55e32a15c75fba9f26be050"
+    },
+    {
+      "path": "assets/npc/npc_hanqing_atk3_down_v01.png",
+      "bytes": 3428,
+      "sha256": "eea631547cdf16bf45fd995e72ad8736ca996e68690e78f5e8d82e546e11680a"
+    },
+    {
+      "path": "assets/npc/npc_hanqing_atk3_left_v01.png",
+      "bytes": 3174,
+      "sha256": "ec8e0ab8244539b081b3b686495d1f8ce5cf487e51b467c5bd600f4fe73b626e"
+    },
+    {
+      "path": "assets/npc/npc_hanqing_atk3_up_v01.png",
+      "bytes": 3300,
+      "sha256": "610b6b57920e2a13af85efedb5bd81614dc0f4920677255f6d6a5867a9b7dfc3"
+    },
+    {
+      "path": "assets/npc/npc_hanqing_down_down_v01.png",
+      "bytes": 3272,
+      "sha256": "3e319f2e561cea688343dc8a98c3d0f882791d07bf8d9bbac2d6733cebfc1b1a"
+    },
+    {
+      "path": "assets/npc/npc_hanqing_down_left_v01.png",
+      "bytes": 3004,
+      "sha256": "63db29e129271f37131bbc47dc82ee87145f3c8e8acc4b58ee05d0d8d029dbb0"
+    },
+    {
+      "path": "assets/npc/npc_hanqing_down_up_v01.png",
+      "bytes": 3119,
+      "sha256": "509c1f4bf6a315ea174afda400355d256f10b56268001107b0bbdbfc839915bf"
+    },
+    {
+      "path": "assets/npc/npc_hanqing_hit_down_v01.png",
+      "bytes": 2348,
+      "sha256": "d4fc6e4da1cb24472ae46f3472d8d6382106d4b6796b656ce557306b1452f931"
+    },
+    {
+      "path": "assets/npc/npc_hanqing_hit_left_v01.png",
+      "bytes": 1944,
+      "sha256": "39852e4e43c7204e9d5f60a98547dc3a96924358f3f381b344b343b8cf998a51"
+    },
+    {
+      "path": "assets/npc/npc_hanqing_hit_up_v01.png",
+      "bytes": 2207,
+      "sha256": "0c11d9c1e472a30b4b3b3ba51d017425906f7bafa59d9f79793c00e6aa04432f"
+    },
+    {
+      "path": "assets/npc/npc_hanqing_idle_down_v01.png",
+      "bytes": 3238,
+      "sha256": "266e726e9a3d3f258e402129174cea53f0bbec6b8adda9813ea374d1ce94072f"
+    },
+    {
+      "path": "assets/npc/npc_hanqing_idle_left_v01.png",
+      "bytes": 3011,
+      "sha256": "915c4e1e53935b94ab55922b58e0baabf0862cfe4fca98f39bca478e13b22d3a"
+    },
+    {
+      "path": "assets/npc/npc_hanqing_idle_up_v01.png",
+      "bytes": 3373,
+      "sha256": "60aebd50a4593ef12253ecad8fe0bc1a32bc08cd54b912c2e44cc22c20bfb861"
+    },
+    {
+      "path": "assets/npc/npc_hanqing_roll_down_v01.png",
+      "bytes": 4107,
+      "sha256": "9164cc1128ca32834d28d9a5b827d2228e85039d546292969a3f4da274a6a63d"
+    },
+    {
+      "path": "assets/npc/npc_hanqing_roll_left_v01.png",
+      "bytes": 3408,
+      "sha256": "ec32fca489b3d81e349a7ab83f1703e17e4a3ec6030cc30f46119918ede2ae7f"
+    },
+    {
+      "path": "assets/npc/npc_hanqing_roll_up_v01.png",
+      "bytes": 3578,
+      "sha256": "603064f3c623e3cc7f970e0db596cbfa89be3d1a398438904fc4652997568564"
+    },
+    {
+      "path": "assets/npc/npc_hanqing_walk_down_v01.png",
+      "bytes": 4706,
+      "sha256": "80496f7485d7cd557257a541ed869b059544dc77f4f8b9ab088e77d30757367c"
+    },
+    {
+      "path": "assets/npc/npc_hanqing_walk_left_v01.png",
+      "bytes": 4167,
+      "sha256": "4150a5b531917731a5e3d154b7abb08b1e6a5f2ad8c8b6afb0d400384b9bc767"
+    },
+    {
+      "path": "assets/npc/npc_hanqing_walk_up_v01.png",
+      "bytes": 4618,
+      "sha256": "8de61604db0c418606286636169665174d0a7b230340025e452ab930daea2b17"
+    },
+    {
+      "path": "assets/ref/ref_npc_hanqing_combat_down_source_v01.png",
+      "bytes": 1097327,
+      "sha256": "1c55f5d49882262f13460a673d40efb0d847342e783cbd99d601333c146db9cc"
+    },
+    {
+      "path": "assets/ref/ref_npc_hanqing_combat_down_stafffix_source_v01.png",
+      "bytes": 1113380,
+      "sha256": "ccfe16301428caf34e9f402e41c133644dd834573947fcf098342c2423d423e0"
+    },
+    {
+      "path": "assets/ref/ref_npc_hanqing_combat_left_compactfix_source_v01.png",
+      "bytes": 979284,
+      "sha256": "0477c31e14cce204e20d26cae5a28fca1bd8c6924d3e0e567b832caaca3f470c"
+    },
+    {
+      "path": "assets/ref/ref_npc_hanqing_combat_left_source_v01.png",
+      "bytes": 980527,
+      "sha256": "6a2f3fa444f54c024ba12b3b7b51e9de5b8d6776caddf0987e9c1a257c5ae033"
+    },
+    {
+      "path": "assets/ref/ref_npc_hanqing_combat_up_pronefix_source_v01.png",
+      "bytes": 981864,
+      "sha256": "8e5cfe5f6c60620b7b9353473fc65a09087be8b1b38a2f5ab8f9916960546fd3"
+    },
+    {
+      "path": "assets/ref/ref_npc_hanqing_combat_up_source_v01.png",
+      "bytes": 972788,
+      "sha256": "c7394644e2baa3cf7ed0d7cb169fe6898f3947691fc26e5bbf3f6dac5ed5a04f"
+    },
+    {
+      "path": "assets/ref/ref_npc_hanqing_combat_up_stafffix_source_v01.png",
+      "bytes": 990029,
+      "sha256": "9d1ca3b658d8593064f17c0322722a70c78ea6c2b06ba9b193cf0941daed6967"
+    },
+    {
+      "path": "assets/ref/ref_npc_hanqing_combat_up_sweepfix_source_v01.png",
+      "bytes": 950003,
+      "sha256": "1c74cb8bf921e2c4585ce1eb4090d34e26c78c40448a0cd93a539307383ef41d"
+    },
+    {
+      "path": "assets/ref/ref_npc_hanqing_move_down_gaitfix_source_v01.png",
+      "bytes": 900964,
+      "sha256": "727df7aede72382b71a3fdffbdaa18139bb476f8ea7d18c613660ff3357229fc"
+    },
+    {
+      "path": "assets/ref/ref_npc_hanqing_move_down_source_v01.png",
+      "bytes": 899064,
+      "sha256": "84ac41f462a008055cc28fe2299a4e372fd55b5c1d4b59967b6a2c78dea8c72e"
+    },
+    {
+      "path": "assets/ref/ref_npc_hanqing_move_left_source_v01.png",
+      "bytes": 788227,
+      "sha256": "08df30166e65cd163ca2c437fc48dfbe5f1d3568f9bc0eff4f9ad112975f4192"
+    },
+    {
+      "path": "assets/ref/ref_npc_hanqing_move_up_gaitfix_source_v01.png",
+      "bytes": 781890,
+      "sha256": "2997669593842ffc6160d4f13b2fe10d89b990e0befdcb6d88cc743dd1c3128d"
+    },
+    {
+      "path": "assets/ref/ref_npc_hanqing_move_up_source_v01.png",
+      "bytes": 811035,
+      "sha256": "a049fc20c5bef2ab6e7c9c42aaa6a0c56e278f0fbe143235f8db4ea5129be7e3"
+    }
+  ],
+  "existing_dependencies": [
+    {
+      "path": "assets/ref/ref_npc_hanqing_down_v01.png",
+      "bytes": 1414,
+      "sha256": "9ce869ec8d707b5a191f0a1bedee95b5487c4e902c8c56d62ae9583a429ec858"
+    },
+    {
+      "path": "assets/por/por_hanqing_v01.png",
+      "bytes": 1968,
+      "sha256": "e64463650a21f4e24687b000b4a7d691817028520202d9bc3ee3a3f6ae072511"
+    }
+  ]
+}

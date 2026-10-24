@@ -1,0 +1,472 @@
+{
+  "status": "PASS",
+  "checked_at_utc": "2026-10-24T08:24:11.790342+00:00",
+  "jingxin": {
+    "scope": "第12条基础移动部分，6条30帧；战斗动作待交",
+    "combined_opaque_colors": 15,
+    "assets": [
+      {
+        "file": "assets/npc/npc_jingxin_idle_down_v01.png",
+        "frames": 4,
+        "frame_size": [
+          48,
+          64
+        ],
+        "strip_size": [
+          192,
+          64
+        ],
+        "colors": 15,
+        "alpha": [
+          0,
+          255
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "frame_bboxes": [
+          [
+            8,
+            22,
+            41,
+            61
+          ],
+          [
+            9,
+            22,
+            37,
+            61
+          ],
+          [
+            9,
+            22,
+            39,
+            61
+          ],
+          [
+            8,
+            22,
+            41,
+            61
+          ]
+        ],
+        "unique_rgba_frames": 4,
+        "unique_lower_alpha": 4,
+        "ground_bottom_y": 60,
+        "rows61_63_transparent": true,
+        "frame_order_exact": true,
+        "nearest_6x_exact": true,
+        "gif_frames": 4,
+        "gif_duration_ms": 330,
+        "alpha_cleanup_regions": [
+          [
+            0,
+            6,
+            1,
+            2
+          ],
+          [
+            0,
+            6,
+            2,
+            3
+          ]
+        ],
+        "sha256": "bbdc2e4e3fdbfd3810a5ef94894c1c49c97e5d7eb7dc83d20258350c3288e6b7"
+      },
+      {
+        "file": "assets/npc/npc_jingxin_walk_down_v01.png",
+        "frames": 6,
+        "frame_size": [
+          48,
+          64
+        ],
+        "strip_size": [
+          288,
+          64
+        ],
+        "colors": 14,
+        "alpha": [
+          0,
+          255
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "frame_bboxes": [
+          [
+            8,
+            22,
+            41,
+            61
+          ],
+          [
+            11,
+            22,
+            39,
+            61
+          ],
+          [
+            8,
+            22,
+            41,
+            61
+          ],
+          [
+            10,
+            22,
+            39,
+            61
+          ],
+          [
+            8,
+            22,
+            41,
+            61
+          ],
+          [
+            8,
+            22,
+            41,
+            61
+          ]
+        ],
+        "unique_rgba_frames": 6,
+        "unique_lower_alpha": 6,
+        "ground_bottom_y": 60,
+        "rows61_63_transparent": true,
+        "frame_order_exact": true,
+        "nearest_6x_exact": true,
+        "gif_frames": 6,
+        "gif_duration_ms": 500,
+        "alpha_cleanup_regions": [
+          [
+            0,
+            6,
+            1,
+            2
+          ]
+        ],
+        "sha256": "582b791ce075e202e19a1120eeb1ab4277a40b2af896ee3758638b2e7a4b612e"
+      },
+      {
+        "file": "assets/npc/npc_jingxin_idle_left_v01.png",
+        "frames": 4,
+        "frame_size": [
+          48,
+          64
+        ],
+        "strip_size": [
+          192,
+          64
+        ],
+        "colors": 14,
+        "alpha": [
+          0,
+          255
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "frame_bboxes": [
+          [
+            6,
+            22,
+            39,
+            61
+          ],
+          [
+            6,
+            22,
+            39,
+            61
+          ],
+          [
+            6,
+            22,
+            39,
+            61
+          ],
+          [
+            6,
+            22,
+            39,
+            61
+          ]
+        ],
+        "unique_rgba_frames": 4,
+        "unique_lower_alpha": 4,
+        "ground_bottom_y": 60,
+        "rows61_63_transparent": true,
+        "frame_order_exact": true,
+        "nearest_6x_exact": true,
+        "gif_frames": 4,
+        "gif_duration_ms": 330,
+        "alpha_cleanup_regions": [],
+        "sha256": "b1607e67ee06d0bacbade008aa77c72a44e94e637a3321a4d0e7812205f9113e"
+      },
+      {
+        "file": "assets/npc/npc_jingxin_walk_left_v01.png",
+        "frames": 6,
+        "frame_size": [
+          48,
+          64
+        ],
+        "strip_size": [
+          288,
+          64
+        ],
+        "colors": 14,
+        "alpha": [
+          0,
+          255
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "frame_bboxes": [
+          [
+            7,
+            22,
+            40,
+            61
+          ],
+          [
+            7,
+            22,
+            40,
+            61
+          ],
+          [
+            7,
+            22,
+            40,
+            61
+          ],
+          [
+            8,
+            22,
+            41,
+            61
+          ],
+          [
+            7,
+            22,
+            40,
+            61
+          ],
+          [
+            7,
+            22,
+            40,
+            61
+          ]
+        ],
+        "unique_rgba_frames": 6,
+        "unique_lower_alpha": 6,
+        "ground_bottom_y": 60,
+        "rows61_63_transparent": true,
+        "frame_order_exact": true,
+        "nearest_6x_exact": true,
+        "gif_frames": 6,
+        "gif_duration_ms": 500,
+        "alpha_cleanup_regions": [],
+        "sha256": "a9187c5426f621c49debcbf3ec282623f3aabe0e4f4ce8f04eeec26a3c54182a"
+      },
+      {
+        "file": "assets/npc/npc_jingxin_idle_up_v01.png",
+        "frames": 4,
+        "frame_size": [
+          48,
+          64
+        ],
+        "strip_size": [
+          192,
+          64
+        ],
+        "colors": 14,
+        "alpha": [
+          0,
+          255
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "frame_bboxes": [
+          [
+            8,
+            22,
+            41,
+            61
+          ],
+          [
+            8,
+            22,
+            41,
+            61
+          ],
+          [
+            8,
+            22,
+            41,
+            61
+          ],
+          [
+            8,
+            22,
+            41,
+            61
+          ]
+        ],
+        "unique_rgba_frames": 4,
+        "unique_lower_alpha": 4,
+        "ground_bottom_y": 60,
+        "rows61_63_transparent": true,
+        "frame_order_exact": true,
+        "nearest_6x_exact": true,
+        "gif_frames": 4,
+        "gif_duration_ms": 330,
+        "alpha_cleanup_regions": [],
+        "sha256": "e8c08f70664e23b2f54d690de45decd7c55ff44c04206204a94735f196138522"
+      },
+      {
+        "file": "assets/npc/npc_jingxin_walk_up_v01.png",
+        "frames": 6,
+        "frame_size": [
+          48,
+          64
+        ],
+        "strip_size": [
+          288,
+          64
+        ],
+        "colors": 14,
+        "alpha": [
+          0,
+          255
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "frame_bboxes": [
+          [
+            8,
+            22,
+            41,
+            61
+          ],
+          [
+            8,
+            22,
+            41,
+            61
+          ],
+          [
+            8,
+            22,
+            41,
+            61
+          ],
+          [
+            8,
+            22,
+            41,
+            61
+          ],
+          [
+            8,
+            22,
+            41,
+            61
+          ],
+          [
+            8,
+            22,
+            41,
+            61
+          ]
+        ],
+        "unique_rgba_frames": 6,
+        "unique_lower_alpha": 6,
+        "ground_bottom_y": 60,
+        "rows61_63_transparent": true,
+        "frame_order_exact": true,
+        "nearest_6x_exact": true,
+        "gif_frames": 6,
+        "gif_duration_ms": 500,
+        "alpha_cleanup_regions": [],
+        "sha256": "e2863cb4dc947934e7fb17920b2ec1a89509eb4a5f624bfde5435af120526f5f"
+      }
+    ]
+  },
+  "hanqing": {
+    "scope": "第59条正面静立定妆1帧+96头像；全套动画未开始",
+    "combined_opaque_colors": 16,
+    "anchor": [
+      24,
+      60
+    ],
+    "actual_foot_contact_points": [
+      [
+        18,
+        60
+      ],
+      [
+        30,
+        60
+      ]
+    ],
+    "assets": [
+      {
+        "kind": "front",
+        "file": "assets/ref/ref_npc_hanqing_down_v01.png",
+        "size": [
+          48,
+          64
+        ],
+        "colors": 16,
+        "alpha": [
+          0,
+          255
+        ],
+        "bbox": [
+          14,
+          20,
+          32,
+          61
+        ],
+        "exact_integer_preview": true,
+        "sha256": "9ce869ec8d707b5a191f0a1bedee95b5487c4e902c8c56d62ae9583a429ec858"
+      },
+      {
+        "kind": "portrait",
+        "file": "assets/por/por_hanqing_v01.png",
+        "size": [
+          96,
+          96
+        ],
+        "colors": 16,
+        "alpha": [
+          0,
+          255
+        ],
+        "bbox": [
+          0,
+          4,
+          96,
+          96
+        ],
+        "exact_integer_preview": true,
+        "sha256": "e64463650a21f4e24687b000b4a7d691817028520202d9bc3ee3a3f6ae072511"
+      }
+    ]
+  },
+  "runtime_validation": "本助手未做Godot接入或手机实机验收；待开发回执",
+  "visual_review": "已逐张查看源图、步态修正试图、净心三方向逐帧与首尾、韩青定妆/头像原生放大、四角色山门原比例合成；角色身份、方向、服装、武器与比例自查完成。"
+}
