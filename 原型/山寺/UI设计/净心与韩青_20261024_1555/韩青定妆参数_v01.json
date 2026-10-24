@@ -1,0 +1,36 @@
+{
+  "front": "assets/ref/ref_npc_hanqing_down_v01.png",
+  "frame": [
+    48,
+    64
+  ],
+  "anchor": [
+    24,
+    60
+  ],
+  "actual_foot_contact_points": [
+    [
+      18,
+      60
+    ],
+    [
+      30,
+      60
+    ]
+  ],
+  "content_size": [
+    18,
+    41
+  ],
+  "offset": [
+    14,
+    20
+  ],
+  "portrait": "assets/por/por_hanqing_v01.png",
+  "portrait_frame": [
+    96,
+    96
+  ],
+  "stage": "正面静立定妆+头像；全套动画未开始，待本角色开发确认",
+  "source_selection": "正面采用背棍遮挡修正图，头像参考同一原始角色身份；初稿和修正图均保留"
+}

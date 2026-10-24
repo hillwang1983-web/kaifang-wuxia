@@ -14,7 +14,7 @@ $project = Split-Path -Parent $PSScriptRoot
 & $godot --headless --path $project --import | Out-Null
 & $godot --headless --path $project --script res://tests/run_tests.gd
 $unit = $LASTEXITCODE
-# 冒烟：AI 代玩茶棚 → 山门 → 藏经阁全程（四倍速），必须打到 Boss 二结算、且没有脚本报错
+# 冒烟：AI 代玩茶棚 → 山门 → 藏经阁 → 大雄宝殿全程（四倍速），必须打到 Boss 三结算、且没有脚本报错
 $out = [IO.Path]::GetTempFileName()
 $err = [IO.Path]::GetTempFileName()
 $proc = Start-Process -FilePath $godot -ArgumentList @('--headless', '--path', "`"$project`"", '--', 'auto', 'quit') `
@@ -24,6 +24,6 @@ if (-not $proc.WaitForExit(300000)) { $proc.Kill(); Write-Output '冒烟超时�
 $log = (Get-Content $out -Raw -Encoding UTF8) + (Get-Content $err -Raw -Encoding UTF8)
 Remove-Item $out, $err
 # 还要拾取玄诚掉落并自动装备上（结算里 equipped 不为空）
-$smoke = if ($log -match '自动试玩结算' -and $log -match '"equipped": "[^"]+' -and $log -match '"boss2": true' -and $log -notmatch 'SCRIPT ERROR') { 0 } else { 1 }
-if ($smoke -eq 0) { Write-Output '通过  冒烟 · AI 代玩茶棚 → 山门 → 藏经阁，打完玄诚与毒姥，拾取并装备掉落' } else { Write-Output '失败  冒烟 · AI 代玩茶棚到山门'; Write-Output $log }
+$smoke = if ($log -match '自动试玩结算' -and $log -match '"equipped": "[^"]+' -and $log -match '"boss2": true' -and $log -match '"boss3": true' -and $log -notmatch 'SCRIPT ERROR') { 0 } else { 1 }
+if ($smoke -eq 0) { Write-Output '通过  冒烟 · AI 代玩茶棚 → 山门 → 藏经阁 → 大雄宝殿，打完玄诚、毒姥与铁甲金刚，拾取并装备掉落' } else { Write-Output '失败  冒烟 · AI 代玩全程'; Write-Output $log }
 exit [Math]::Max($unit, $smoke)

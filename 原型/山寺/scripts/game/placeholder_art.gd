@@ -1,5 +1,6 @@
 ## 美术未到之前的占位场景：按美术说明的配色用色块拼出来，运行时生成贴图。
 ## 藏经阁（规格书第六节，Boss 二）：下半回廊（过渡段），中间门洞，上半藏经阁大厅，四周书架。
+## 大雄宝殿（Boss 三）：下半寺后院子（过渡段），中间殿门，上半大殿：空佛龛、四根朱红殿柱、青砖地。
 class_name PlaceholderArt
 extends RefCounted
 
@@ -10,6 +11,8 @@ const WOOD := Color("#3B2A20")
 const SCROLL := Color("#C9A66B")
 const MIST := Color("#4C6B55")
 const LAMP := Color("#FFC83D")
+const PILLAR := Color("#7A2E22")
+const BRONZE := Color("#4E6B58")
 
 
 static func _rect(img: Image, r: Rect2i, c: Color) -> void:
@@ -64,3 +67,41 @@ static func cangjingge() -> Texture2D:
 	# 地面边缘一圈雾绿：说明这里的毒雾会从四边压进来
 	_rect(img, Rect2i(240, 700, 1440, 4), MIST)
 	return ImageTexture.create_from_image(img)
+
+
+static func daxiongbaodian() -> Texture2D:
+	var img := Image.create(1920, 1080, false, Image.FORMAT_RGB8)
+	img.fill(NIGHT)
+	# 大殿地面：青砖，正中一道浅色御路通向佛龛
+	_rect(img, Rect2i(240, 110, 1440, 680), STONE_DARK)
+	for y in range(110, 790, 40):
+		for x in range(240, 1680, 64):
+			_rect(img, Rect2i(x + (32 if (y / 40) % 2 else 0), y, 62, 38), STONE if (x + y) % 3 else STONE.darkened(0.1))
+	_rect(img, Rect2i(920, 220, 80, 560), STONE.lightened(0.08))
+	# 殿墙与空佛龛（台基碰撞在关卡里）
+	_rect(img, Rect2i(240, 90, 1440, 80), WOOD)
+	_rect(img, Rect2i(240, 170, 60, 610), WOOD.darkened(0.2))
+	_rect(img, Rect2i(1620, 170, 60, 610), WOOD.darkened(0.2))
+	_rect(img, Rect2i(820, 150, 280, 70), WOOD.lightened(0.1))
+	_rect(img, Rect2i(840, 120, 240, 40), Color("#8C6A2E"))
+	# 四根朱红殿柱
+	for p in [Vector2i(600, 320), Vector2i(1280, 320), Vector2i(600, 600), Vector2i(1280, 600)]:
+		_rect(img, Rect2i(p, Vector2i(40, 40)), PILLAR)
+		_rect(img, Rect2i(p + Vector2i(0, 36), Vector2i(40, 4)), PILLAR.darkened(0.4))
+	# 殿中央弩车底座的位置：一圈浅色砖
+	for i in 12:
+		var a := TAU * i / 12.0
+		_rect(img, Rect2i(960 + int(cos(a) * 46) - 3, 620 + int(sin(a) * 26) - 2, 6, 4), STONE.lightened(0.2))
+	# 殿门与院子
+	_rect(img, Rect2i(900, 780, 120, 60), STONE_DARK)
+	_rect(img, Rect2i(240, 780, 660, 60), PILLAR.darkened(0.45))
+	_rect(img, Rect2i(1020, 780, 660, 60), PILLAR.darkened(0.45))
+	_rect(img, Rect2i(600, 840, 720, 240), STONE_DARK)
+	for y in range(840, 1080, 40):
+		for x in range(600, 1320, 64):
+			_rect(img, Rect2i(x + (32 if (y / 40) % 2 else 0), y, 62, 38), STONE.darkened(0.05))
+	# 殿内长明灯
+	for p in [Vector2i(320, 200), Vector2i(1590, 200), Vector2i(320, 740), Vector2i(1590, 740), Vector2i(880, 800), Vector2i(1030, 800)]:
+		_rect(img, Rect2i(p, Vector2i(8, 8)), LAMP)
+	return ImageTexture.create_from_image(img)
+

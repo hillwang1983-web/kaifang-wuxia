@@ -94,6 +94,21 @@ const ENEMIES := {
 		"prop": true, "attacks": {}},
 	"jar": {"name": "酒坛", "hp": 20, "radius": 9, "speed": 0.0, "aggro": 0.0, "flinch": false, "stance": false,
 		"prop": true, "attacks": {}},
+	# 大雄宝殿两侧的零件堆：打碎了掉关卡指定的那样零件（或一点钱药）
+	"pile": {"name": "零件堆", "hp": 40, "radius": 13, "speed": 0.0, "aggro": 0.0, "flinch": false, "stance": false,
+		"prop": true, "attacks": {}},
+	# Boss 三（规格书第六节）：铁甲对非裂口伤害减免 99%，裂口只能由重弩打出。数值是草稿，待试玩标定。
+	"jingang": {"name": "铁甲金刚", "hp": 10000, "radius": 26, "speed": 45.0, "aggro": 9999.0, "boss": true,
+		"flinch": false, "stance": false, "armor_cut": 0.99,
+		"charge_every": 25.0, "first_charge": 15.0, "quake_every": 9.0, "grab_every": 13.0, "deflect_stagger": 3.0,
+		"attacks": {
+			# 冲撞：朝弩车（没拼好就朝最近的人）直线冲；预警 2.5 秒（留出摆合击 / 阵法撞偏的时间），冲 0.8 秒
+			"charge": {"shape": "line", "range": 520.0, "width": 30.0, "tele": 2.5, "dash_time": 0.8, "dmg": 120, "rec": 1.2, "reach": 9999.0},
+			# 踏地震：全场环形冲击波，0.8 秒红区，翻滚或梯云纵的无敌时间能躲
+			"quake": {"shape": "quake", "range": 9999.0, "tele": 0.8, "dmg": 140, "rec": 1.0, "reach": 9999.0},
+			# 抓人：抓最近的非操弩者往弩车扔，落点离弩车近就砸中弩车
+			"grab": {"shape": "circle", "range": 70.0, "tele": 0.6, "dmg": 80, "rec": 0.8, "reach": 70.0, "throw": 220.0},
+		}},
 	# Boss 二（规格书第六节）。血量是草稿：三个满操作 AI 约四轮破罩打完（单测里打印），
 	# 真人输出低一些会多一两轮，对着规格书「三到四轮」偏长一点，待试玩标定。
 	"dulao": {"name": "毒姥 · 护法", "hp": 5500, "radius": 16, "speed": 30.0, "aggro": 9999.0, "boss": true,
@@ -120,3 +135,18 @@ const ENEMIES := {
 ## 净心（AI 队友）：少林棍法，输出打折
 const PARTNER := {"hp": 800, "dmg_scale": 0.6, "react": 0.25, "dodge_chance": 0.8,
 	"invite_react": [0.5, 1.0], "follow": 70.0, "invite_every": 24.0}
+
+## 弩车（规格书第八节）：唯一一处要求联机状态一致的机关，状态全在 SimWorld.ballista，只由 SimBallista 改。
+const BALLISTA := {
+	"parts": ["chassis", "arm", "winch"],
+	"part_names": {"chassis": "底盘", "arm": "弓臂", "winch": "绞盘"},
+	"build_time": 3.0, "reach": 56.0, "hp": 3,
+	# 蓄力三档：按住普攻蓄力，松开发射；档位决定裂口大小与弩箭伤害
+	"charge_steps": [0.5, 1.1], "max_charge": 1.5,
+	"bolt_speed": 700.0, "bolt_range": 900.0, "bolt_dmg": [40, 70, 110],
+	"breach_radius": [10.0, 16.0, 24.0], "breach_time": 20.0,
+	"carry_reach": 24.0,
+}
+
+## 通关箱（规格书第七节）：金刚倒下后出现，每人开一件，底子随机，品质魔法六成、稀有四成
+const CHEST := {"quality": {"magic": 6, "rare": 4}}

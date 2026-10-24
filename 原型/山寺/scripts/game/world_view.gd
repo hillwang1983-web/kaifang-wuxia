@@ -9,6 +9,9 @@ const WOOD := Color("#5A3F29")
 const STEEL := Color("#C9C2B2")
 const BLOOD_TEXT := Color("#F08A6A")
 const TEAL := Color("#7FD0BE")
+const BREACH := Color("#FF9A3C")    # 铁甲裂口：露出里面发光的齿轮
+const BRONZE := Color("#4E6B58")    # 铁甲金刚：青铜锈绿
+const PART_COLORS := {"chassis": Color("#7A5A3C"), "arm": Color("#C9A66B"), "winch": Color("#9AA3A8")}
 
 var world: SimWorld
 var me_id := -1
@@ -138,6 +141,31 @@ func _on_event(e: Dictionary) -> void:
 			_fx("burst", e.pos + Vector2(0, -26), 0.5, {"color": UiKit.MUTED, "r": 14.0})
 		"shield_hit":
 			_fx("ring", e.pos + Vector2(0, -16), 0.2, {"color": UiKit.QI, "r": 24.0})
+		"quake":
+			_fx("shock", e.pos, 0.7, {})
+			shake = maxf(shake, 5.0)
+			hitstop = maxf(hitstop, 0.1)
+		"bolt_fire":
+			shake = maxf(shake, 1.0 + e.tier)
+		"breach":
+			_fx("burst", e.pos + Vector2(0, -30), 0.5, {"color": BREACH, "r": 18.0 + 8.0 * e.tier})
+			_text(e.pos + Vector2(0, -20), ["小裂口", "裂口", "大裂口"][e.tier], BREACH, e.tier == 2)
+			hitstop = maxf(hitstop, 0.08 + 0.04 * e.tier)
+		"deflect":
+			_text(e.pos + Vector2(0, -30), "撞偏！", UiKit.QI, true)
+			_fx("ring", e.pos + Vector2(0, -30), 0.5, {"color": UiKit.GOLD_WHITE, "r": 60.0})
+			shake = maxf(shake, 4.0)
+		"ballista_hit":
+			_text(e.pos + Vector2(0, -20), "弩车 -1", BLOOD_TEXT, true)
+			shake = maxf(shake, 3.0)
+		"ballista_break":
+			_fx("burst", e.pos + Vector2(0, -16), 0.6, {"color": WOOD, "r": 50.0})
+		"part_install", "ballista_built":
+			_fx("ring", world.ballista.center + Vector2(0, -10), 0.4, {"color": UiKit.QI, "r": 40.0})
+		"grab":
+			_text(e.pos, "被抓！", BLOOD_TEXT)
+		"chest":
+			_fx("burst", e.pos + Vector2(0, -20), 0.6, {"color": UiKit.QI, "r": 30.0})
 
 
 # ---------- 绘制 ----------
@@ -162,7 +190,15 @@ func _draw() -> void:
 	_draw_combo()
 	_draw_aim()
 	for it in world.interactables:
-		_torch(it)
+		if it.kind == "chest":
+			_chest(it)
+		else:
+			_torch(it)
+	if not world.ballista.is_empty():
+		_draw_ballista()
+		for pt in world.parts:
+			if pt.carrier == -1:
+				_part(pt.part, pt.pos, true)
 	for g in world.ground_items:
 		_ground_item(g)
 	for id in trails:
@@ -175,10 +211,22 @@ func _draw() -> void:
 	list.sort_custom(func(a, b): return a.pos.y < b.pos.y)
 	for f in list:
 		_fighter(f)
+	for pt in world.parts:
+		if pt.carrier != -1:
+			_part(pt.part, pt.pos + Vector2(0, -44), false)
+	var rider := world.fighter(world.ballista.get("rider", -1)) if not world.ballista.is_empty() else null
+	if rider:
+		_draw_ballista_aim(rider)
 	for n in npcs:
 		_npc(n)
 	_draw_fog()
 	for pr in world.projectiles:
+		if pr.has("bolt"):
+			var d: Vector2 = pr.vel.normalized()
+			var c: Vector2 = pr.pos + Vector2(0, -16)
+			draw_line(c - d * 26.0, c, Color("#3B2A20"), 3.0 + pr.bolt)
+			draw_line(c - d * 6.0, c + d * 4.0, STEEL, 3.0 + pr.bolt)
+			continue
 		draw_circle(pr.pos + Vector2(0, -16), 5.0, UiKit.PURPLE)
 		draw_circle(pr.pos + Vector2(0, -16) - pr.vel.normalized() * 6.0, 3.0, Color(UiKit.POISON, 0.7))
 	if foreground:
@@ -243,7 +291,7 @@ func _telegraph(e: SimFighter) -> void:
 			draw_polyline(pts, edge, 1.0)
 		"line":
 			var side: Vector2 = e.facing.orthogonal() * a.width
-			var far: Vector2 = e.facing * a.range
+			var far: Vector2 = e.facing * float(e.timers.get("dash_len", a.range))
 			var poly := PackedVector2Array([e.pos + side, e.pos + far + side, e.pos + far - side, e.pos - side])
 			draw_colored_polygon(poly, fill)
 			poly.append(poly[0])
@@ -254,6 +302,12 @@ func _telegraph(e: SimFighter) -> void:
 		"spot":
 			_ellipse(e.aim_point, a.radius, fill, 0.6)
 			_ellipse_line(e.aim_point, a.radius, edge, 0.6, 2.0)
+		"quake":
+			# 全场：一圈一圈往外推的红环，越接近落地越亮
+			for i in 4:
+				var r := fmod(p * 900.0 + i * 240.0, 960.0) + 40.0
+				_ellipse_line(e.pos, r, Color(UiKit.WARN, (0.3 + 0.6 * p) * (1.0 - r / 1000.0)), 0.55, 3.0)
+			_ellipse(e.pos, 60.0 + 30.0 * p, fill, 0.55)
 
 
 ## 毒雾：安全圈外一圈雾绿掺暗紫（美术说明第三节），边缘亮一道毒绿；扩散时能看出圈在缩
@@ -399,7 +453,7 @@ func _fighter(f: SimFighter) -> void:
 	if f.poison_stacks > 0 or f.poison_t > 0.0:
 		for i in (3 if f.poison_t > 0 else f.poison_stacks):
 			draw_circle(f.pos + Vector2(-6 + i * 6, 4), 2.5, UiKit.POISON)
-	if (f.kind == "louluo" or f.kind == "crate" or f.kind == "jar") and f.alive and f.hp < f.max_hp:
+	if (f.kind == "louluo" or f.kind == "crate" or f.kind == "jar" or f.kind == "pile") and f.alive and f.hp < f.max_hp:
 		draw_rect(Rect2(f.pos + Vector2(-14, -48), Vector2(28, 3)), Color(0, 0, 0, 0.6))
 		draw_rect(Rect2(f.pos + Vector2(-14, -48), Vector2(28 * f.hp / f.max_hp, 3)), UiKit.HEALTH)
 
@@ -407,9 +461,14 @@ func _fighter(f: SimFighter) -> void:
 ## 占位人形：脚底在 at。按身份配色：少林褐红短褂土黄束带、邪派墨黑暗紫衣纹毒绿滚边、
 ## 净心光头褐红僧袍、喽啰墨黑蒙面、玄诚高一号僧袍外罩墨黑半臂。
 func _body(f: SimFighter, at: Vector2, tint: Color) -> void:
-	if f.kind == "crate" or f.kind == "jar":
+	if f.kind == "crate" or f.kind == "jar" or f.kind == "pile":
 		_prop(f, at, tint)
 		return
+	if f.kind == "jingang":
+		_jingang(f, at, tint)
+		return
+	if f.state == "thrown":
+		at += Vector2(0, -24.0 * sin(PI * clampf(1.0 - f.dodge_t / 0.45, 0.0, 1.0)))
 	var scale := 1.3 if f.kind == "xuancheng" else (1.2 if f.kind == "dulao" else (0.95 if f.kind == "partner" else 1.0))
 	var flash := f.flash_t > 0.0
 	var robe := UiKit.MONK
@@ -471,6 +530,15 @@ func _prop(f: SimFighter, at: Vector2, tint: Color) -> void:
 	var c := (Color("#7A5A3C") if f.kind == "crate" else Color("#4A3A30")) * tint
 	if f.flash_t > 0.0:
 		c = UiKit.GOLD_WHITE
+	if f.kind == "pile":
+		# 零件堆：几块木板压着一捆铁件；带零件的堆顶上露出零件的颜色
+		draw_rect(Rect2(at + Vector2(-16, -14), Vector2(32, 14)), c)
+		draw_rect(Rect2(at + Vector2(-12, -24), Vector2(22, 10)), Color("#5A3F29") * tint)
+		draw_line(at + Vector2(-16, -14), at + Vector2(14, -26), Color("#3B2A20") * tint, 2.0)
+		var part: String = world.pile_parts.get(f.id, "")
+		if part != "":
+			draw_rect(Rect2(at + Vector2(-4, -30), Vector2(10, 6)), PART_COLORS[part] * tint)
+		return
 	if f.kind == "crate":
 		draw_rect(Rect2(at + Vector2(-11, -20), Vector2(22, 20)), c)
 		draw_rect(Rect2(at + Vector2(-11, -20), Vector2(22, 20)), Color("#3B2A20") * tint, false, 1.0)
@@ -552,3 +620,117 @@ func _effect(fx: Dictionary) -> void:
 			for i in rays:
 				var a := TAU * i / rays + k
 				draw_line(fx.pos + Vector2(0, -12), fx.pos + Vector2(cos(a), sin(a) * 0.55) * r * 1.4 + Vector2(0, -12), Color(UiKit.GOLD_WHITE, 1.0 - k), 2.0)
+
+
+# ---------- 大雄宝殿：弩车、零件、铁甲金刚、通关箱（美术到之前的占位形体） ----------
+
+## 零件：底盘（木架）、弓臂（长弓）、绞盘（铁鼓）；ground 为真时在地上画光圈和名字
+func _part(part: String, at: Vector2, ground: bool) -> void:
+	var c: Color = PART_COLORS[part]
+	var bob: float = sin(world.time * 4.0 + at.x) * 1.5 if ground else 0.0
+	if ground:
+		_ellipse(at, 16, Color(UiKit.QI, 0.18 + 0.1 * sin(world.time * 5.0)), 0.5)
+	var o := at + Vector2(0, -12 + bob)
+	match part:
+		"chassis":
+			draw_rect(Rect2(o + Vector2(-12, -5), Vector2(24, 10)), c)
+			draw_circle(o + Vector2(-8, 6), 3.0, Color("#3B2A20"))
+			draw_circle(o + Vector2(8, 6), 3.0, Color("#3B2A20"))
+		"arm":
+			draw_arc(o + Vector2(0, 8), 16.0, PI * 1.15, PI * 1.85, 12, c, 3.0)
+		"winch":
+			draw_rect(Rect2(o + Vector2(-7, -7), Vector2(14, 14)), c)
+			draw_line(o + Vector2(-10, 0), o + Vector2(10, 0), Color("#55524A"), 2.0)
+	if ground:
+		var label: String = SimData.BALLISTA.part_names[part]
+		UiKit.text(self, at + Vector2(-UiKit.text_width(label) / 2.0, -42 + bob), label, 12, UiKit.QI)
+
+
+## 弩车：没拼好时是底座上装好的零件；拼好后是整车，朝瞄准方向；上方耐久格、拼装读条
+func _draw_ballista() -> void:
+	var b := world.ballista
+	var c: Vector2 = b.center
+	_ellipse_line(c, 48.0, Color(UiKit.QI, 0.25 + 0.15 * sin(world.time * 3.0)), 0.55, 1.0)
+	if not b.built:
+		for i in b.installed.size():
+			_part(b.installed[i], c + Vector2(-22 + 22 * i, 6), false)
+		if b.build_by != -1:
+			var ratio: float = b.build_t / SimData.BALLISTA.build_time
+			draw_arc(c + Vector2(0, -40), 16, 0, TAU, 24, Color(0, 0, 0, 0.5), 4.0)
+			draw_arc(c + Vector2(0, -40), 16, -PI / 2, -PI / 2 + TAU * ratio, 24, UiKit.QI, 4.0)
+		return
+	var d: Vector2 = b.aim
+	var side := d.orthogonal()
+	var body := PackedVector2Array([c + side * 14 - d * 18, c + side * 14 + d * 10, c - side * 14 + d * 10, c - side * 14 - d * 18])
+	draw_colored_polygon(body, PART_COLORS.chassis)
+	draw_circle(c + side * 16 - d * 10, 5.0, Color("#3B2A20"))
+	draw_circle(c - side * 16 - d * 10, 5.0, Color("#3B2A20"))
+	var bend: float = 6.0 + (8.0 * b.charge_t / SimData.BALLISTA.max_charge if b.charging else 0.0)
+	draw_polyline(PackedVector2Array([c + side * 26 + d * 4, c + d * (18 - bend), c - side * 26 + d * 4]), PART_COLORS.arm, 3.0)
+	draw_line(c + side * 26 + d * 4, c - d * bend, Color("#E8E2D2"), 1.0)
+	draw_line(c - side * 26 + d * 4, c - d * bend, Color("#E8E2D2"), 1.0)
+	draw_rect(Rect2(c - d * 16 - Vector2(6, 6), Vector2(12, 12)), PART_COLORS.winch)
+	draw_line(c - d * bend, c + d * 30, STEEL, 2.0)
+	for i in SimData.BALLISTA.hp:
+		var pip := Rect2(c + Vector2(-17 + i * 12, -46), Vector2(10, 4))
+		draw_rect(pip, UiKit.QI if i < b.hp else Color(0, 0, 0, 0.5))
+
+
+## 车上的人：画弩箭走向与蓄力档位（圈上三个刻度：一档、二档、满档）；队友在车上时画淡一些，看得出他瞄哪
+func _draw_ballista_aim(f: SimFighter) -> void:
+	var b := world.ballista
+	var c: Vector2 = b.center + Vector2(0, -16)
+	var tier := SimBallista.charge_tier(b.charge_t) if b.charging else -1
+	var col: Color = [UiKit.TEXT, UiKit.QI, BREACH][maxi(tier, 0)]
+	var mine := f.id == me_id
+	draw_line(c, c + b.aim * 420.0, Color(col, (0.35 if tier < 0 else 0.7) * (1.0 if mine else 0.5)), 2.0)
+	draw_circle(c + b.aim * 420.0, 4.0, Color(col, 0.7))
+	if not mine and not b.charging:
+		return
+	var steps: Array = SimData.BALLISTA.charge_steps
+	var marks := [steps[0], steps[1], SimData.BALLISTA.max_charge]
+	var ratio: float = b.charge_t / SimData.BALLISTA.max_charge if b.charging else 0.0
+	var ring := c + Vector2(0, -36)
+	draw_arc(ring, 18, 0, TAU, 32, Color(0, 0, 0, 0.5), 4.0)
+	draw_arc(ring, 18, -PI / 2, -PI / 2 + TAU * ratio, 32, col, 4.0)
+	for m in marks:
+		var a: float = -PI / 2 + TAU * m / SimData.BALLISTA.max_charge
+		draw_circle(ring + Vector2(cos(a), sin(a)) * 18.0, 2.5, UiKit.GOLD_WHITE)
+
+
+## 铁甲金刚：青铜巨人（占位色块），胸口铜镜；身上的裂口露出发光齿轮，快合上时渐暗
+func _jingang(f: SimFighter, at: Vector2, tint: Color) -> void:
+	var flash := f.flash_t > 0.0
+	var body := (UiKit.GOLD_WHITE if flash else BRONZE) * tint
+	var kneel := f.state == "sit"
+	var h := 64.0 if not kneel else 40.0
+	var top := at + Vector2(-24, -h)
+	draw_rect(Rect2(top, Vector2(48, h)), body)
+	draw_rect(Rect2(top + Vector2(-10, 6), Vector2(10, h * 0.6)), body.darkened(0.2))
+	draw_rect(Rect2(top + Vector2(48, 6), Vector2(10, h * 0.6)), body.darkened(0.2))
+	draw_rect(Rect2(top + Vector2(12, -18), Vector2(24, 18)), body.darkened(0.1))
+	var mirror := top + Vector2(24, 18)
+	draw_circle(mirror, 7.0, Color("#FFE9A8") if not kneel else Color("#55524A"))
+	if not kneel:
+		draw_rect(Rect2(top + Vector2(12, -12) + f.facing * 3.0, Vector2(24, 3)), UiKit.WARN)
+	if f.state == "stagger":
+		for i in 3:
+			var a := world.time * 6.0 + TAU * i / 3.0
+			draw_circle(at + Vector2(cos(a) * 18.0, -h - 26 + sin(a) * 5.0), 2.5, UiKit.QI)
+	for br in f.breaches:
+		var fade: float = clampf(br.t / 3.0, 0.3, 1.0)
+		var bp: Vector2 = at + br.off * 1.6 + Vector2(0, -32)
+		draw_circle(bp, br.r * 0.8, Color(BREACH, 0.75 * fade))
+		draw_circle(bp, br.r * 0.4, Color(UiKit.GOLD_WHITE, 0.8 * fade))
+		draw_arc(bp, br.r * 0.8 + 2.0, 0, TAU, 16, Color("#3B2A20"), 2.0)
+
+
+func _chest(it: Dictionary) -> void:
+	var p: Vector2 = it.pos
+	if it.on:
+		_ellipse(p, 26, Color(UiKit.QI, 0.15 + 0.1 * sin(world.time * 4.0)), 0.5)
+	draw_rect(Rect2(p + Vector2(-16, -20), Vector2(32, 20)), Color("#5A3F29"))
+	draw_rect(Rect2(p + Vector2(-16, -26 if it.on else -34), Vector2(32, 8)), Color("#7A5A3C"))
+	draw_rect(Rect2(p + Vector2(-16, -20), Vector2(32, 20)), UiKit.QI, false, 1.0)
+	draw_rect(Rect2(p + Vector2(-3, -16), Vector2(6, 6)), UiKit.QI)
+

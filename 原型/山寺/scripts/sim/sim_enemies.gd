@@ -14,6 +14,9 @@ static func step(w: SimWorld, e: SimFighter, dt: float) -> void:
 	if e.kind == "dulao":
 		_dulao(w, e, k, dt)
 		return
+	if e.kind == "jingang":
+		_jingang(w, e, k, dt)
+		return
 	var target := _nearest_hero(w, e)
 	if e.kind == "xuancheng":
 		_boss_phase(w, e, k, dt)
@@ -166,10 +169,10 @@ static func _nearest_hero(w: SimWorld, e: SimFighter) -> SimFighter:
 	return best
 
 
-## 预警区判定：cone 扇形、circle 圆、line 直线冲刺、field 全场、spot 落点圆（point 为落点）
+## 预警区判定：cone 扇形、circle 圆、line 直线冲刺、field 全场读条、quake 全场踏地震（可闪）、spot 落点圆（point 为落点）
 static func in_zone(a: Dictionary, origin: Vector2, face: Vector2, p: Vector2, r: float, point := Vector2.INF) -> bool:
 	match a.shape:
-		"field":
+		"field", "quake":
 			return true
 		"spot":
 			return point != Vector2.INF and point.distance_to(p) <= a.radius + r
@@ -250,3 +253,135 @@ static func _dulao(w: SimWorld, e: SimFighter, k: Dictionary, dt: float) -> void
 				e.state = "chase"
 				e.atk = {}
 				e.atk_id = ""
+
+
+## 铁甲金刚（Boss 三，规格书第六节）：慢步逼近最近的人；铁甲减伤由世界按裂口结算。
+## 冲撞：每 25 秒一次，朝弩车（没拼好就朝最近的人）预警 2.5 秒后直冲，撞上弩车扣 1 耐久；
+##   预警期间合击 / 阵法成立就被撞偏（SimWorld.deflect_charges）。
+## 踏地震：全场冲击波，0.8 秒预警，翻滚 / 梯云纵的无敌时间能躲。
+## 抓人：抓最近的、不在弩车上的人，往弩车扔；落点砸在弩车上扣 1 耐久。
+static func _jingang(w: SimWorld, e: SimFighter, k: Dictionary, dt: float) -> void:
+	if e.state == "idle":
+		e.state = "chase"
+	e.in_combat = true
+	# 计时不论在做什么都走（失衡、收招时也走），到点了等回到追击再出手：冲撞稳定每 25 秒一次
+	for key in ["charge", "quake", "grab"]:
+		e.timers[key] = float(e.timers.get(key, {"charge": k.first_charge, "quake": 6.0, "grab": 10.0}[key])) - dt
+	match e.state:
+		"stagger":
+			if e.stagger_t <= 0.0:
+				e.state = "chase"
+		"chase":
+			# 追最近的、不在弩车上的人（小说里它追净心）；只剩操弩者时才去找车上的人
+			var target := _grab_target(w, e)
+			if target == null:
+				target = _nearest_hero(w, e)
+			if target == null:
+				return
+			var b := w.ballista
+			if e.timers.charge <= 0.0:
+				e.timers["charge"] = k.charge_every
+				var at: Vector2 = b.center if not b.is_empty() and b.built else target.pos
+				e.facing = (at - e.pos).normalized()
+				e.aim_point = at
+				e.timers["dash_len"] = clampf(e.pos.distance_to(at) + 30.0, 120.0, k.attacks.charge.range)
+				_begin(w, e, "charge", k.attacks.charge, "windup")
+				return
+			if e.timers.quake <= 0.0:
+				e.timers["quake"] = k.quake_every
+				_begin(w, e, "quake", k.attacks.quake, "windup")
+				return
+			var victim := _grab_target(w, e)
+			var goal := target
+			if e.timers.grab <= 0.0 and victim:
+				goal = victim
+				if victim.pos.distance_to(e.pos) <= k.attacks.grab.range + victim.radius:
+					e.timers["grab"] = k.grab_every
+					e.target_id = victim.id
+					e.facing = (victim.pos - e.pos).normalized()
+					_begin(w, e, "grab", k.attacks.grab, "windup")
+					return
+			var to := goal.pos - e.pos
+			e.facing = to.normalized()
+			if to.length() > e.radius + goal.radius + 20.0 and e.root_t <= 0.0:
+				w._move(e, w.steer(e.pos, goal.pos) * e.speed * (1.0 - e.slow) * dt)
+				e.moving = true
+		"windup":
+			e.t += dt
+			if e.t < e.atk.tele:
+				return
+			match e.atk_id:
+				"charge":
+					e.state = "dash"
+					e.t = 0.0
+					e.timers["hit_ids"] = []
+					w.emit("strike", {"id": e.id, "atk": "charge", "pos": e.pos, "dir": e.facing})
+				"quake":
+					w.emit("quake", {"id": e.id, "pos": e.pos})
+					for h in w.heroes():
+						_hit_hero(w, e, h)
+					_recover(e)
+				"grab":
+					_grab(w, e)
+					_recover(e)
+		"dash":
+			e.t += dt
+			w._move(e, e.facing * float(e.timers.dash_len) / e.atk.dash_time * dt)
+			var hit_ids: Array = e.timers.hit_ids
+			for h in w.heroes():
+				if not (h.id in hit_ids) and h.pos.distance_to(e.pos) < e.radius + h.radius + 6.0:
+					hit_ids.append(h.id)
+					_hit_hero(w, e, h)
+			var b := w.ballista
+			if not b.is_empty() and b.built and e.pos.distance_to(b.center) < e.radius + 28.0:
+				SimBallista.damage(w, "charge")
+				_recover(e)
+			elif e.t >= e.atk.dash_time:
+				_recover(e)
+		"recover":
+			e.t += dt
+			if e.t >= e.atk.get("rec", 0.5):
+				e.state = "chase"
+				e.atk = {}
+				e.atk_id = ""
+
+
+## 抓人的目标：最近的、不在弩车上的英雄
+static func _grab_target(w: SimWorld, e: SimFighter) -> SimFighter:
+	var best: SimFighter = null
+	for h in w.heroes():
+		if h.state == "mounted":
+			continue
+		if best == null or h.pos.distance_to(e.pos) < best.pos.distance_to(e.pos):
+			best = h
+	return best
+
+
+## 抓住就往弩车扔（没拼好就往外甩）；闪掉了或已经跑出范围就落空
+static func _grab(w: SimWorld, e: SimFighter) -> void:
+	var a := e.atk
+	var v := w.fighter(e.target_id)
+	if v == null or not v.alive or v.state == "mounted" or v.pos.distance_to(e.pos) > a.range + v.radius:
+		w.emit("grab_miss", {"id": e.id, "pos": e.pos})
+		return
+	if v.inv_t > 0.0:
+		w.emit("evade", {"id": v.id, "pos": v.pos, "from": e.id})
+		return
+	w.damage(e, v, a.dmg, {"heavy": true})
+	if not v.alive:
+		return
+	var b := w.ballista
+	var dir := (v.pos - e.pos).normalized()
+	var dist: float = a.throw
+	if not b.is_empty() and b.built:
+		dir = (b.center - v.pos).normalized()
+		dist = minf(a.throw, v.pos.distance_to(b.center))
+	if v.state == "build":
+		SimBallista.cancel_build(w, v, "grab")
+	v.state = "thrown"
+	v.active_skill = ""
+	v.dodge_dir = dir
+	v.dodge_t = 0.45
+	v.timers["throw_v"] = dist / 0.45
+	w.emit("grab", {"id": e.id, "victim": v.id, "pos": v.pos, "dir": dir})
+

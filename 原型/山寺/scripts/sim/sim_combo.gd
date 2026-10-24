@@ -108,7 +108,8 @@ func _succeed(kind: String) -> void:
 	w.emit("combo_freeze", {"kind": kind, "from": pending.from, "with": pending.with, "level": lv, "point": pending.point})
 
 
-## 定格结束：光圈里的敌人吃伤害、读条被打断并失衡；附近的毒罩被震碎（阵法 10 秒、合击 5 秒）
+## 定格结束：光圈里的敌人吃伤害、读条被打断并失衡；附近的毒罩被震碎（阵法 10 秒、合击 5 秒）；
+## 正在预警冲撞的铁甲金刚被撞偏
 func on_freeze_end() -> void:
 	if pending.is_empty():
 		return
@@ -122,7 +123,8 @@ func on_freeze_end() -> void:
 		if e.pos.distance_to(pending.point) <= r + e.radius:
 			var boost := 1.0 + (src.stat("combo_dmg") / 100.0 if src else 0.0)
 			w.damage(src, e, C.dmg * mult * boost, {"skill": true, "interrupt": true, "stagger": C.stagger,
-				"heavy": true, "knockback": 30.0, "dir": (e.pos - pending.point).normalized()})
+				"heavy": true, "knockback": 30.0, "dir": (e.pos - pending.point).normalized(), "from": pending.point})
+	w.deflect_charges(pending.point)
 	w.break_wards(pending.point, r, C.break_formation if kind == "formation" else C.break_combo)
 	pending = {}
 

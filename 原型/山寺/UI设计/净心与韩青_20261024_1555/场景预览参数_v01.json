@@ -1,0 +1,60 @@
+{
+  "background": "assets/env/env_shanmen_v01.png",
+  "crop": [
+    480,
+    0,
+    960,
+    540
+  ],
+  "placements": [
+    {
+      "role": "少林",
+      "native_scale": 1,
+      "ground": [
+        320,
+        350
+      ],
+      "offset": [
+        296,
+        290
+      ]
+    },
+    {
+      "role": "净心",
+      "native_scale": 1,
+      "ground": [
+        420,
+        350
+      ],
+      "offset": [
+        396,
+        290
+      ]
+    },
+    {
+      "role": "韩青",
+      "native_scale": 1,
+      "ground": [
+        520,
+        350
+      ],
+      "offset": [
+        496,
+        290
+      ]
+    },
+    {
+      "role": "玄诚",
+      "native_scale": 1,
+      "ground": [
+        620,
+        350
+      ],
+      "offset": [
+        588,
+        274
+      ]
+    }
+  ],
+  "purpose": "静态1:1合成，不是游戏运行时截图"
+}

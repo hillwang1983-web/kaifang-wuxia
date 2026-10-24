@@ -1,0 +1,236 @@
+{
+  "tool": "built-in imagegen",
+  "initial": [
+    {
+      "role": "jingxin",
+      "direction": "down",
+      "references": [
+        "/Volumes/ML_models/游戏/开放武侠/output/art-roles-ref-20261024-1432/delivery/UI设计/多角色定妆_20261024_1432/净心_8倍_v01.png",
+        "/Volumes/ML_models/游戏/开放武侠/output/ui-delivery-20261024/delivery/assets/por/por_jingxin_normal_v01.png"
+      ],
+      "layout": [
+        6,
+        2
+      ],
+      "native_cell": [
+        48,
+        64
+      ],
+      "idle_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "walk_cells": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          1
+        ]
+      ],
+      "prompt": "Use case: identity-preserve. Asset type: production PIXEL GAME ANIMATION SOURCE SHEET for the ALREADY APPROVED NPC JINGXIN. Image1 is his approved game sprite, Image2 his accepted portrait; preserve the SAME17-YEAR-OLD Chinese adolescent monk. Almost adult height but slim and slightly shorter than the player, NOT a small child or chibi, not an older muscular monk. Narrow youthful face, shaved BALD HEAD WITHOUT RITUAL SCARS or spots, modest determined expression. Plain worn brown-red SHORT monk robe #8C3B2E, ochre yellow sash #D8A64A, brown trousers, humble STRAW SANDALS with visible simple straps, one tiny string of dark wooden prayer beads at the collar. No topknot, headband, hair, jewelry, elaborate cape or armor. ONE plain eyebrow-length WOODEN STAFF,39-42 native pixels long, held in BOTH HANDS in all frames. Keep same head/body ratio, slender silhouette and palette as Image1.\nCAMERA: top-down3/4 orthographic about45degrees, same as approved reference; head top and shoulders visible, no eye-level portrait, no30degree isometric. Large native pixel clusters,1native-pixel dark material-colored outline, hard two-step shading, light upper left. Max16 opaque colors, no pure black/magenta, gradients, soft alpha, antialiasing, fabric noise, blurred effects, floor or cast shadow. REAL alpha transparency, no text, labels, gridlines, UI, duplicate weapons or scenery.\nCRITICAL LAYOUT: exact6 equally spaced COLUMNS x2 ROWS on one transparent sheet, native288x128, each cell48x64, clean6x display1728x768 if possible. NO GUTTERS, no visible grid, no frame overlap. Each complete figure fits inside its own cell. Human height about39 native pixels, head top aroundlocal y22, ground root at local(24,60),4 pixels bottom margin. Character stays centered on this root in place; no between-cell translation. Staff fully inside cell and above sole line, not a giant spear.\nFIRST ROW: FOUR idle breathing frames in columns1..4, columns5 and6 EMPTY/transparent. Neutral -> subtle inhale -> relaxed full inhale -> exhale. Feet planted unchanged, head bob<=1native pixel, shoulders/hands/staff0-1native pixel movement, same face and body size.\nSECOND ROW: SIX sequential frames of one natural WALK cycle,12fps, smooth clear leg action:1 LEFT forward heel contact / RIGHT back;2 left support knee compresses, rear right heel lifts and approaches center;3 RIGHT knee passes under hips, narrow stance and right foot raised;4 RIGHT forward heel contact / LEFT back, opposite broad stride;5 right support knee compresses, rear left heel lifts toward center;6 LEFT knee passes under hips, narrow opposite passing pose, ready to return to1. Use left support for first3 frames and right support for last3, NOT L/R/L/R every adjacent frame. Clear broad/narrow/broad/narrow rhythm, modest sash/robe follow-through and slight arm counter-motion while BOTH hands still grip the SAME staff. No running, lunging, jumping, attack, huge head bob or foot sliding caused by translating the whole body. Grounded foot touches local y60, lifted foot stays higher; NO pixels in rows61..63. Keep same size, face, hairless head, clothes and weapon length in every frame. ALL ten figures in a sheet face ONE direction only.  FACING FOR ALL TEN FRAMES: DOWN/front toward the viewer, front of bald face and shoulders visible. Staff rests diagonally lower-left to upper-right across the torso as in Image1. Walk toward viewer in place."
+    },
+    {
+      "role": "jingxin",
+      "direction": "left",
+      "references": [
+        "/Volumes/ML_models/游戏/开放武侠/output/art-roles-ref-20261024-1432/delivery/UI设计/多角色定妆_20261024_1432/净心_8倍_v01.png",
+        "/Volumes/ML_models/游戏/开放武侠/output/ui-delivery-20261024/delivery/assets/por/por_jingxin_normal_v01.png"
+      ],
+      "layout": [
+        6,
+        2
+      ],
+      "native_cell": [
+        48,
+        64
+      ],
+      "idle_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "walk_cells": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          1
+        ]
+      ],
+      "prompt": "Use case: identity-preserve. Asset type: production PIXEL GAME ANIMATION SOURCE SHEET for the ALREADY APPROVED NPC JINGXIN. Image1 is his approved game sprite, Image2 his accepted portrait; preserve the SAME17-YEAR-OLD Chinese adolescent monk. Almost adult height but slim and slightly shorter than the player, NOT a small child or chibi, not an older muscular monk. Narrow youthful face, shaved BALD HEAD WITHOUT RITUAL SCARS or spots, modest determined expression. Plain worn brown-red SHORT monk robe #8C3B2E, ochre yellow sash #D8A64A, brown trousers, humble STRAW SANDALS with visible simple straps, one tiny string of dark wooden prayer beads at the collar. No topknot, headband, hair, jewelry, elaborate cape or armor. ONE plain eyebrow-length WOODEN STAFF,39-42 native pixels long, held in BOTH HANDS in all frames. Keep same head/body ratio, slender silhouette and palette as Image1.\nCAMERA: top-down3/4 orthographic about45degrees, same as approved reference; head top and shoulders visible, no eye-level portrait, no30degree isometric. Large native pixel clusters,1native-pixel dark material-colored outline, hard two-step shading, light upper left. Max16 opaque colors, no pure black/magenta, gradients, soft alpha, antialiasing, fabric noise, blurred effects, floor or cast shadow. REAL alpha transparency, no text, labels, gridlines, UI, duplicate weapons or scenery.\nCRITICAL LAYOUT: exact6 equally spaced COLUMNS x2 ROWS on one transparent sheet, native288x128, each cell48x64, clean6x display1728x768 if possible. NO GUTTERS, no visible grid, no frame overlap. Each complete figure fits inside its own cell. Human height about39 native pixels, head top aroundlocal y22, ground root at local(24,60),4 pixels bottom margin. Character stays centered on this root in place; no between-cell translation. Staff fully inside cell and above sole line, not a giant spear.\nFIRST ROW: FOUR idle breathing frames in columns1..4, columns5 and6 EMPTY/transparent. Neutral -> subtle inhale -> relaxed full inhale -> exhale. Feet planted unchanged, head bob<=1native pixel, shoulders/hands/staff0-1native pixel movement, same face and body size.\nSECOND ROW: SIX sequential frames of one natural WALK cycle,12fps, smooth clear leg action:1 LEFT forward heel contact / RIGHT back;2 left support knee compresses, rear right heel lifts and approaches center;3 RIGHT knee passes under hips, narrow stance and right foot raised;4 RIGHT forward heel contact / LEFT back, opposite broad stride;5 right support knee compresses, rear left heel lifts toward center;6 LEFT knee passes under hips, narrow opposite passing pose, ready to return to1. Use left support for first3 frames and right support for last3, NOT L/R/L/R every adjacent frame. Clear broad/narrow/broad/narrow rhythm, modest sash/robe follow-through and slight arm counter-motion while BOTH hands still grip the SAME staff. No running, lunging, jumping, attack, huge head bob or foot sliding caused by translating the whole body. Grounded foot touches local y60, lifted foot stays higher; NO pixels in rows61..63. Keep same size, face, hairless head, clothes and weapon length in every frame. ALL ten figures in a sheet face ONE direction only.  FACING FOR ALL TEN FRAMES: LEFT: nose, face and sandals point screen-left in a clear left-facing side view with the same top-down tilt. Walk left in place. Staff diagonal in front, upper tip toward upper-left, both hands gripping. No front-facing or right-facing frame."
+    },
+    {
+      "role": "jingxin",
+      "direction": "up",
+      "references": [
+        "/Volumes/ML_models/游戏/开放武侠/output/art-roles-ref-20261024-1432/delivery/UI设计/多角色定妆_20261024_1432/净心_8倍_v01.png",
+        "/Volumes/ML_models/游戏/开放武侠/output/ui-delivery-20261024/delivery/assets/por/por_jingxin_normal_v01.png"
+      ],
+      "layout": [
+        6,
+        2
+      ],
+      "native_cell": [
+        48,
+        64
+      ],
+      "idle_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "walk_cells": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          1
+        ]
+      ],
+      "prompt": "Use case: identity-preserve. Asset type: production PIXEL GAME ANIMATION SOURCE SHEET for the ALREADY APPROVED NPC JINGXIN. Image1 is his approved game sprite, Image2 his accepted portrait; preserve the SAME17-YEAR-OLD Chinese adolescent monk. Almost adult height but slim and slightly shorter than the player, NOT a small child or chibi, not an older muscular monk. Narrow youthful face, shaved BALD HEAD WITHOUT RITUAL SCARS or spots, modest determined expression. Plain worn brown-red SHORT monk robe #8C3B2E, ochre yellow sash #D8A64A, brown trousers, humble STRAW SANDALS with visible simple straps, one tiny string of dark wooden prayer beads at the collar. No topknot, headband, hair, jewelry, elaborate cape or armor. ONE plain eyebrow-length WOODEN STAFF,39-42 native pixels long, held in BOTH HANDS in all frames. Keep same head/body ratio, slender silhouette and palette as Image1.\nCAMERA: top-down3/4 orthographic about45degrees, same as approved reference; head top and shoulders visible, no eye-level portrait, no30degree isometric. Large native pixel clusters,1native-pixel dark material-colored outline, hard two-step shading, light upper left. Max16 opaque colors, no pure black/magenta, gradients, soft alpha, antialiasing, fabric noise, blurred effects, floor or cast shadow. REAL alpha transparency, no text, labels, gridlines, UI, duplicate weapons or scenery.\nCRITICAL LAYOUT: exact6 equally spaced COLUMNS x2 ROWS on one transparent sheet, native288x128, each cell48x64, clean6x display1728x768 if possible. NO GUTTERS, no visible grid, no frame overlap. Each complete figure fits inside its own cell. Human height about39 native pixels, head top aroundlocal y22, ground root at local(24,60),4 pixels bottom margin. Character stays centered on this root in place; no between-cell translation. Staff fully inside cell and above sole line, not a giant spear.\nFIRST ROW: FOUR idle breathing frames in columns1..4, columns5 and6 EMPTY/transparent. Neutral -> subtle inhale -> relaxed full inhale -> exhale. Feet planted unchanged, head bob<=1native pixel, shoulders/hands/staff0-1native pixel movement, same face and body size.\nSECOND ROW: SIX sequential frames of one natural WALK cycle,12fps, smooth clear leg action:1 LEFT forward heel contact / RIGHT back;2 left support knee compresses, rear right heel lifts and approaches center;3 RIGHT knee passes under hips, narrow stance and right foot raised;4 RIGHT forward heel contact / LEFT back, opposite broad stride;5 right support knee compresses, rear left heel lifts toward center;6 LEFT knee passes under hips, narrow opposite passing pose, ready to return to1. Use left support for first3 frames and right support for last3, NOT L/R/L/R every adjacent frame. Clear broad/narrow/broad/narrow rhythm, modest sash/robe follow-through and slight arm counter-motion while BOTH hands still grip the SAME staff. No running, lunging, jumping, attack, huge head bob or foot sliding caused by translating the whole body. Grounded foot touches local y60, lifted foot stays higher; NO pixels in rows61..63. Keep same size, face, hairless head, clothes and weapon length in every frame. ALL ten figures in a sheet face ONE direction only.  FACING FOR ALL TEN FRAMES: UP/back away from viewer: back of BALD head, plain red short robe back, yellow sash knot and sandal heels. NO face, nose, eyes or scars. Staff visible diagonally at side/shoulder, both hands holding, not strapped to the back. Walk away in place."
+    },
+    {
+      "role": "hanqing",
+      "stage": "front_reference",
+      "references": [
+        "/Volumes/ML_models/游戏/开放武侠/output/art-roles-ref-20261024-1432/delivery/UI设计/多角色定妆_20261024_1432/净心_8倍_v01.png"
+      ],
+      "frame": [
+        48,
+        64
+      ],
+      "anchor": [
+        24,
+        60
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: ONE front standing reference sprite for new temporary AI companion HANQING in the SAME wuxia game. The attached approved Jingxin sprite is a RENDERING AND SCALE reference ONLY, not the identity or clothing. Create an ordinary adult Chinese wandering young swordsman-type traveler, but his only weapon is a SHORT WOODEN STAFF carried diagonally ON HIS BACK, no sword. Serious modest face, ordinary DARK HAIR simply tied with a plain cloth band; he is NOT a monk, no bald head, ritual scars, prayer beads or religious symbol. Worn plain BLUE-GRAY LONG ROBE #4A5A6B with a hard darker blue-gray shadow #2E3D4D, ochre-yellow waist sash #D8A64A, dark brown trousers and cloth shoes. Robe below knees with a simple split hem so shoes/lower legs are readable; no fancy embroidery, armor, hat, jewelry, jade hairpin, faction badge, clan mark or extra objects. One plain brown short staff strapped diagonally behind the shoulders and waist, about28-32 native pixels long, top end visible over one shoulder and lower end beside opposite waist, definitely not a huge pole or sword sheath. Hands relaxed naturally at sides in neutral front/down standing pose. Mature modest proportions, not anime big eyes or chibi, body about41 native pixels tall, slightly taller than39px Jingxin. Top-down3/4 orthographic45degree view, visible head top, same camera/light/pixel rendering as reference. EXACT native canvas48x64, shown at clean8x enlargement if needed; head top aroundy20, both shoe soles on y60, two foot contact midpoint exactly(24,60),4 pixels below, complete staff and body inside frame. Genuine alpha transparency. At most16 opaque colors, hard2-shade flat clusters,1native-pixel own-dark outline, upper-left light. No gradients, antialiasing, intermediate alpha, texture noise, pure black/magenta, floor, shadow, effect, scene, UI, letters, grid, watermark, extra views or extra people. Exactly ONE new blue-gray-robed traveler with ONE short staff on his back. Same art style as attached image."
+    }
+  ],
+  "hanqing_staff_and_portrait": [
+    {
+      "id": "hanqing_backstaff",
+      "refs": [
+        "/Users/hill/.codex/generated_images/01a16bc4-aa14-7661-a2e6-9af5cabaee1e/exec-0fc09630-b52d-48c8-8d70-70284224aae2.png"
+      ],
+      "prompt": "Use case: precise-object-edit. Edit target is the attached Hanqing traveler sprite. Keep the exact same full-body pose, young adult face, tied dark hair, blue-gray cloth band, blue-gray long robe, yellow sash, brown trousers/shoes, scale, pixel style, canvas and real alpha. Correct ONLY the layer placement of the SHORT WOODEN STAFF: it must be carried ON HIS BACK. The current diagonal brown wood shaft runs visibly across the chest and front of the sash. Hide that entire middle shaft BEHIND his torso and robe: the blue-gray robe and yellow sash must occlude the wood in the chest/waist region. Keep only the short upper brown staff end visible above his viewer-right shoulder and its short lower end emerging beside his viewer-left waist. The whole staff is28-32 native pixels long and stays behind the body. A thin FLAT DARK CLOTH CARRYING STRAP may cross the front diagonally but is ONLY1native pixel wide, not a thick wooden shaft, with no shiny fittings. Both hands are empty and relaxed beside the robe, neither hand grasps the staff. No front-carried weapon, no sword sheath, no sword or extra staff. Do not alter head, hair, face, outfit design, boot position, or add ornaments, scenery, floor, shadow, text or effects. All other pixels and proportions unchanged. Keep genuine alpha transparency and hard pixel clusters."
+    },
+    {
+      "id": "hanqing_portrait",
+      "refs": [
+        "/Users/hill/.codex/generated_images/01a16bc4-aa14-7661-a2e6-9af5cabaee1e/exec-0fc09630-b52d-48c8-8d70-70284224aae2.png",
+        "/Volumes/ML_models/游戏/开放武侠/output/ui-delivery-20261024/delivery/assets/por/por_jingxin_normal_v01.png"
+      ],
+      "prompt": "Use case: identity-preserve. Asset type:96x96 GAME DIALOGUE PORTRAIT for HANQING, head and shoulders, genuine transparent PNG. Image1 is the new Hanqing character IDENTITY reference: preserve exactly his ordinary adult Chinese young-man face, simple tied dark brown hair and plain blue-gray cloth headband, blue-gray long robe #4A5A6B, no beard or ornaments. He is an anonymous wandering fighter, not a monk, no bald head, prayer beads, scars, hat, faction emblem, jewelry, hairpin or armor. His only weapon is a short plain wooden staff strapped ON HIS BACK: show only a small simple brown wood end behind one shoulder, no weapon across the face or chest. Image2 is an existing accepted dialogue portrait for STYLE AND FRAMING only; do NOT copy Jingxin's bald identity or brown-red clothing. Hanqing looks calmly attentive and modestly determined, mouth relaxed, not smiling theatrically or menacing. Three-quarter face turned slightly toward screen-left, ordinary narrow eyes, no anime big eyes. HEAD AND SHOULDERS ONLY, no hands, full body or feet. Actual native96x96 grid, head top aroundy6, face/head about56pixels tall, shoulders and plain robe collar fill lower part and crop naturally at bottom edge96. Transparent margin on top/sides, NO background panel, circular frame, vignette or floor. Serious rustic16bit pixel art, crisp1native-pixel own-dark outline and clean hard2-step shading, upper-left light, max16 opaque colors, no gradients, soft alpha, antialiasing, skin pores, brush texture, dithering or pure black/magenta. Use the same subdued blue-gray fabric, tan skin and brown hair tones as Image1. Render on native96x96 grid enlarged cleanly10x to960x960 if needed. No letters, captions, gridlines, watermark, duplicate faces or extra objects. One matching Hanqing portrait for the already shown blue-gray-robed traveler."
+    }
+  ],
+  "jingxin_gait_trials": [
+    {
+      "id": "jingxin_down_gaitfix",
+      "direction": "down",
+      "reference": "/Users/hill/.codex/generated_images/01a16bc4-aa14-7661-a2e6-9af5cabaee1e/exec-42068338-87ca-403b-8ef9-b04aee2a540f.png",
+      "prompt": "Use case: precise-object-edit. Technical animation gait correction for the attached Jingxin sprite sheet. Keep the exact SAME canvas size, six-column two-row layout, character, bald head, red robe, hands, prayer beads, staff, camera, palette, pixel style and transparency. Keep ALL FOUR FIRST-ROW IDLE FIGURES unchanged. Keep SECOND-ROW COLUMNS1,2,3 unchanged. Fix ONLY THE LEGS BELOW THE SHORT ROBE in SECOND-ROW COLUMNS4,5,6: currently their legs repeat the first three poses, creating two short uneven steps instead of one full left/right cycle. In those LAST THREE WALK CELLS reverse WHICH LEG is forward/supporting, without turning the character or moving the upper body:\nWALK FRAME4 (row2,column4): RIGHT leg/foot is forward and supports weight; LEFT foot is behind. Opposite of frame1, broad contact pose.\nWALK FRAME5 (row2,column5): RIGHT foot planted, right support knee slightly compressed; LEFT heel comes forward behind it, opposite of frame2.\nWALK FRAME6 (row2,column6): LEFT knee/foot passes forward UNDER THE HIPS but remains raised, RIGHT foot remains planted. Opposite passing pose to frame3, narrow leg silhouette, returning to frame1.\nALL figures still face DOWN toward viewer, soles/toes visible in the same camera. Do not simply flip the entire person: head, body, robe, arms, staff and two-hand grip remain exactly unchanged. Only swap the forward/back relationship of the legs in these three lower-row cells. No extra leg/foot, running, lunge, changing clothing, particles, shadow, floor, text, grid or new objects. Planted foot reaches the same existing ground baseline; lifted foot is higher; preserve overall in-place body/root. Preserve the exact serious17-year-old slim monk identity, straw sandal straps and actual transparent alpha."
+    },
+    {
+      "id": "jingxin_up_gaitfix",
+      "direction": "up",
+      "reference": "/Users/hill/.codex/generated_images/01a16bc4-aa14-7661-a2e6-9af5cabaee1e/exec-70da219c-1dbf-4f83-844a-906141e5207d.png",
+      "prompt": "Use case: precise-object-edit. Technical animation gait correction for the attached Jingxin sprite sheet. Keep the exact SAME canvas size, six-column two-row layout, character, bald head, red robe, hands, prayer beads, staff, camera, palette, pixel style and transparency. Keep ALL FOUR FIRST-ROW IDLE FIGURES unchanged. Keep SECOND-ROW COLUMNS1,2,3 unchanged. Fix ONLY THE LEGS BELOW THE SHORT ROBE in SECOND-ROW COLUMNS4,5,6: currently their legs repeat the first three poses, creating two short uneven steps instead of one full left/right cycle. In those LAST THREE WALK CELLS reverse WHICH LEG is forward/supporting, without turning the character or moving the upper body:\nWALK FRAME4 (row2,column4): RIGHT leg/foot is forward and supports weight; LEFT foot is behind. Opposite of frame1, broad contact pose.\nWALK FRAME5 (row2,column5): RIGHT foot planted, right support knee slightly compressed; LEFT heel comes forward behind it, opposite of frame2.\nWALK FRAME6 (row2,column6): LEFT knee/foot passes forward UNDER THE HIPS but remains raised, RIGHT foot remains planted. Opposite passing pose to frame3, narrow leg silhouette, returning to frame1.\nALL figures still face UP away from viewer, sandal heels and back of legs visible, NO face. Do not simply flip the entire person: head, body, robe, arms, staff and two-hand grip remain exactly unchanged. Only swap the forward/back relationship of the legs in these three lower-row cells. No extra leg/foot, running, lunge, changing clothing, particles, shadow, floor, text, grid or new objects. Planted foot reaches the same existing ground baseline; lifted foot is higher; preserve overall in-place body/root. Preserve the exact serious17-year-old slim monk identity, straw sandal straps and actual transparent alpha."
+    }
+  ],
+  "selection": "净心down走路原图列顺序0,1,4,2,5,3；up走路前三帧原图、后三帧采用步态修正图；left与各idle原图。down修正试图未采用、保留原图。韩青采用背棍修正定妆及同身份头像。"
+}

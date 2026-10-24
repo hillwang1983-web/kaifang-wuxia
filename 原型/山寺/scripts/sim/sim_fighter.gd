@@ -6,7 +6,7 @@ const HEROES := 0
 const FOES := 1
 
 var id := 0
-var kind := ""        # player / partner / louluo / xuancheng
+var kind := ""        # player / partner / ally / louluo / xuancheng / dulao / jingang / 可破坏物
 var team := HEROES
 var name := ""
 var sect := ""        # 英雄：shaolin / xiepai
@@ -29,7 +29,7 @@ var base_hp := 0.0
 var base_qi := 0.0
 var base_speed := 0.0
 
-## 状态机。英雄：idle attack dodge charge aim skill；敌人：idle chase windup dash recover cast stagger flinch sit
+## 状态机。英雄：idle attack dodge charge aim skill mounted（在弩车上）build（拼弩车）thrown（被金刚扔出）；敌人：idle chase windup dash recover cast stagger flinch sit
 var state := "idle"
 var t := 0.0
 
@@ -76,7 +76,8 @@ var heavy_timer := 0.0
 var dash_hit := false
 var ward_t := 0.0         # 毒姥：毒罩被震碎后还剩几秒（≤0 为罩着）
 var target_id := -1      # 点名招式的目标（摄魂指）
-var timers := {}         # Boss 自己的计时（毒蛊、摄魂指、开战时长……）
+var timers := {}         # Boss 自己的计时（毒蛊、摄魂指、开战时长……）；英雄被扔出时存飞行速度
+var breaches: Array = []  # 铁甲金刚身上的裂口 {off 相对本体的位置, r, t, tier}
 var in_combat := false
 var combat_t := 0.0      # 离上次交手的时间
 

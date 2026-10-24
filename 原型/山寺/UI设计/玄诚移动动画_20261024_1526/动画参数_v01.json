@@ -1,0 +1,1962 @@
+[
+  {
+    "file": "assets/boss/boss_xuancheng_idle_down_v01.png",
+    "action": "idle",
+    "direction": "down",
+    "frame_size": [
+      64,
+      80
+    ],
+    "frame_count": 4,
+    "fps": 12,
+    "loop": true,
+    "anchor": [
+      32,
+      76
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "hold_frames": [],
+    "sole_line_y": 76,
+    "no_pixels_below_y": 76,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_boss_xuancheng_move_down_generated_v01.png",
+        "source_cell": [
+          0,
+          0,
+          324,
+          404
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          14,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            24,
+            76
+          ],
+          [
+            40,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              8,
+              45,
+              8,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              21,
+              45,
+              8,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_boss_xuancheng_move_down_generated_v01.png",
+        "source_cell": [
+          324,
+          0,
+          323,
+          404
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          14,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            24,
+            76
+          ],
+          [
+            40,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              8,
+              45,
+              8,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              21,
+              45,
+              8,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_boss_xuancheng_move_down_generated_v01.png",
+        "source_cell": [
+          647,
+          0,
+          324,
+          404
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          14,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            24,
+            76
+          ],
+          [
+            40,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              8,
+              45,
+              8,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              21,
+              45,
+              8,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_boss_xuancheng_move_down_generated_v01.png",
+        "source_cell": [
+          971,
+          0,
+          324,
+          404
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          14,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            24,
+            76
+          ],
+          [
+            40,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              8,
+              45,
+              8,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              21,
+              45,
+              8,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      }
+    ]
+  },
+  {
+    "file": "assets/boss/boss_xuancheng_walk_down_v01.png",
+    "action": "walk",
+    "direction": "down",
+    "frame_size": [
+      64,
+      80
+    ],
+    "frame_count": 6,
+    "fps": 12,
+    "loop": true,
+    "anchor": [
+      32,
+      76
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "hold_frames": [],
+    "sole_line_y": 76,
+    "no_pixels_below_y": 76,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_boss_xuancheng_move_down_generated_v01.png",
+        "source_cell": [
+          0,
+          404,
+          324,
+          405
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          14,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            21,
+            76
+          ],
+          [
+            43,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              5,
+              45,
+              9,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              23,
+              45,
+              10,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_boss_xuancheng_move_down_generated_v01.png",
+        "source_cell": [
+          324,
+          404,
+          323,
+          405
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          12,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            25,
+            76
+          ],
+          [
+            39,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              11,
+              45,
+              8,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              23,
+              45,
+              7,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_boss_xuancheng_move_down_generated_v01.png",
+        "source_cell": [
+          647,
+          404,
+          324,
+          405
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          13,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            29,
+            76
+          ],
+          [
+            35,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              14,
+              45,
+              5,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              20,
+              45,
+              6,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_boss_xuancheng_move_down_generated_v01.png",
+        "source_cell": [
+          971,
+          404,
+          324,
+          405
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          14,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            21,
+            76
+          ],
+          [
+            43,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              5,
+              45,
+              9,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              23,
+              45,
+              10,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      },
+      {
+        "index": 4,
+        "source": "assets/ref/ref_boss_xuancheng_move_down_generated_v01.png",
+        "source_cell": [
+          1295,
+          404,
+          323,
+          405
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          12,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            25,
+            76
+          ],
+          [
+            39,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              11,
+              45,
+              8,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              23,
+              45,
+              7,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      },
+      {
+        "index": 5,
+        "source": "assets/ref/ref_boss_xuancheng_move_down_generated_v01.png",
+        "source_cell": [
+          1618,
+          404,
+          324,
+          405
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          14,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            28,
+            76
+          ],
+          [
+            36,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              12,
+              45,
+              6,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              19,
+              45,
+              6,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      }
+    ]
+  },
+  {
+    "file": "assets/boss/boss_xuancheng_idle_left_v01.png",
+    "action": "idle",
+    "direction": "left",
+    "frame_size": [
+      64,
+      80
+    ],
+    "frame_count": 4,
+    "fps": 12,
+    "loop": true,
+    "anchor": [
+      32,
+      76
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "hold_frames": [],
+    "sole_line_y": 76,
+    "no_pixels_below_y": 76,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_boss_xuancheng_move_left_generated_v01.png",
+        "source_cell": [
+          0,
+          0,
+          322,
+          406
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          12,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            23,
+            76
+          ],
+          [
+            41,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              8,
+              45,
+              8,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              26,
+              45,
+              7,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_boss_xuancheng_move_left_generated_v01.png",
+        "source_cell": [
+          322,
+          0,
+          323,
+          406
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          9,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            24,
+            76
+          ],
+          [
+            40,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              13,
+              45,
+              7,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              28,
+              45,
+              6,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": [
+          0,
+          46,
+          1,
+          2
+        ]
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_boss_xuancheng_move_left_generated_v01.png",
+        "source_cell": [
+          645,
+          0,
+          322,
+          406
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          11,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            24,
+            76
+          ],
+          [
+            40,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              10,
+              45,
+              8,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              26,
+              45,
+              7,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_boss_xuancheng_move_left_generated_v01.png",
+        "source_cell": [
+          967,
+          0,
+          322,
+          406
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          12,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            23,
+            76
+          ],
+          [
+            41,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              9,
+              45,
+              8,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              26,
+              45,
+              7,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      }
+    ]
+  },
+  {
+    "file": "assets/boss/boss_xuancheng_walk_left_v01.png",
+    "action": "walk",
+    "direction": "left",
+    "frame_size": [
+      64,
+      80
+    ],
+    "frame_count": 6,
+    "fps": 12,
+    "loop": true,
+    "anchor": [
+      32,
+      76
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "hold_frames": [],
+    "sole_line_y": 76,
+    "no_pixels_below_y": 76,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_boss_xuancheng_move_left_generated_v01.png",
+        "source_cell": [
+          0,
+          406,
+          322,
+          407
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          10,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            19,
+            76
+          ],
+          [
+            45,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              6,
+              45,
+              9,
+              7
+            ],
+            "translate": [
+              0,
+              1
+            ]
+          },
+          {
+            "window": [
+              29,
+              45,
+              9,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_boss_xuancheng_move_left_generated_v01.png",
+        "source_cell": [
+          322,
+          406,
+          323,
+          407
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          9,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            24,
+            76
+          ],
+          [
+            40,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              13,
+              45,
+              6,
+              7
+            ],
+            "translate": [
+              0,
+              1
+            ]
+          },
+          {
+            "window": [
+              28,
+              45,
+              7,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": [
+          0,
+          44,
+          2,
+          4
+        ]
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_boss_xuancheng_move_left_generated_v01.png",
+        "source_cell": [
+          645,
+          406,
+          322,
+          407
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          10,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            28,
+            76
+          ],
+          [
+            36,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              15,
+              45,
+              8,
+              7
+            ],
+            "translate": [
+              0,
+              1
+            ]
+          },
+          {
+            "window": [
+              24,
+              45,
+              6,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_boss_xuancheng_move_left_generated_v01.png",
+        "source_cell": [
+          967,
+          406,
+          322,
+          407
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          12,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            20,
+            76
+          ],
+          [
+            44,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              6,
+              45,
+              8,
+              7
+            ],
+            "translate": [
+              0,
+              1
+            ]
+          },
+          {
+            "window": [
+              27,
+              45,
+              9,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      },
+      {
+        "index": 4,
+        "source": "assets/ref/ref_boss_xuancheng_move_left_generated_v01.png",
+        "source_cell": [
+          1289,
+          406,
+          323,
+          407
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          12,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            24,
+            76
+          ],
+          [
+            40,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              10,
+              45,
+              7,
+              7
+            ],
+            "translate": [
+              0,
+              1
+            ]
+          },
+          {
+            "window": [
+              24,
+              45,
+              6,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      },
+      {
+        "index": 5,
+        "source": "assets/ref/ref_boss_xuancheng_move_left_generated_v01.png",
+        "source_cell": [
+          1612,
+          406,
+          322,
+          407
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          11,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            29,
+            76
+          ],
+          [
+            35,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              16,
+              45,
+              6,
+              7
+            ],
+            "translate": [
+              0,
+              1
+            ]
+          },
+          {
+            "window": [
+              22,
+              45,
+              6,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      }
+    ]
+  },
+  {
+    "file": "assets/boss/boss_xuancheng_idle_up_v01.png",
+    "action": "idle",
+    "direction": "up",
+    "frame_size": [
+      64,
+      80
+    ],
+    "frame_count": 4,
+    "fps": 12,
+    "loop": true,
+    "anchor": [
+      32,
+      76
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "hold_frames": [],
+    "sole_line_y": 76,
+    "no_pixels_below_y": 76,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_boss_xuancheng_move_up_generated_v01.png",
+        "source_cell": [
+          0,
+          0,
+          324,
+          404
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          13,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            25,
+            76
+          ],
+          [
+            39,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              10,
+              45,
+              7,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              22,
+              45,
+              8,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_boss_xuancheng_move_up_generated_v01.png",
+        "source_cell": [
+          324,
+          0,
+          323,
+          404
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          13,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            26,
+            76
+          ],
+          [
+            38,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              11,
+              45,
+              6,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              22,
+              45,
+              8,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_boss_xuancheng_move_up_generated_v01.png",
+        "source_cell": [
+          647,
+          0,
+          324,
+          404
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          12,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            26,
+            76
+          ],
+          [
+            38,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              11,
+              45,
+              7,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              22,
+              45,
+              8,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_boss_xuancheng_move_up_generated_v01.png",
+        "source_cell": [
+          971,
+          0,
+          324,
+          404
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          12,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            26,
+            76
+          ],
+          [
+            38,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              11,
+              45,
+              7,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              22,
+              45,
+              7,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      }
+    ]
+  },
+  {
+    "file": "assets/boss/boss_xuancheng_walk_up_v01.png",
+    "action": "walk",
+    "direction": "up",
+    "frame_size": [
+      64,
+      80
+    ],
+    "frame_count": 6,
+    "fps": 12,
+    "loop": true,
+    "anchor": [
+      32,
+      76
+    ],
+    "horizontal_strip": true,
+    "gap": 0,
+    "frame_order": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "hold_frames": [],
+    "sole_line_y": 76,
+    "no_pixels_below_y": 76,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_boss_xuancheng_move_up_ground_repair_v01.png",
+        "source_cell": [
+          0,
+          404,
+          324,
+          405
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          14,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            25,
+            76
+          ],
+          [
+            39,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              9,
+              45,
+              8,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              22,
+              45,
+              7,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_boss_xuancheng_move_up_ground_repair_v01.png",
+        "source_cell": [
+          324,
+          404,
+          323,
+          405
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          13,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            26,
+            76
+          ],
+          [
+            38,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              11,
+              45,
+              7,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              23,
+              45,
+              7,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_boss_xuancheng_move_up_ground_repair_v01.png",
+        "source_cell": [
+          647,
+          404,
+          324,
+          405
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          12,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            27,
+            76
+          ],
+          [
+            37,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              12,
+              45,
+              7,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              22,
+              45,
+              7,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_boss_xuancheng_move_up_ground_repair_v01.png",
+        "source_cell": [
+          971,
+          404,
+          324,
+          405
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          13,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            25,
+            76
+          ],
+          [
+            39,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              10,
+              45,
+              7,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              24,
+              45,
+              7,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      },
+      {
+        "index": 4,
+        "source": "assets/ref/ref_boss_xuancheng_move_up_ground_repair_v01.png",
+        "source_cell": [
+          1295,
+          404,
+          323,
+          405
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          12,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            26,
+            76
+          ],
+          [
+            38,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              12,
+              45,
+              7,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              24,
+              45,
+              7,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      },
+      {
+        "index": 5,
+        "source": "assets/ref/ref_boss_xuancheng_move_up_ground_repair_v01.png",
+        "source_cell": [
+          1618,
+          404,
+          324,
+          405
+        ],
+        "normalized_content": [
+          39,
+          53
+        ],
+        "offset": [
+          12,
+          24
+        ],
+        "anchor": [
+          32,
+          76
+        ],
+        "actual_foot_contact_points": [
+          [
+            27,
+            76
+          ],
+          [
+            37,
+            76
+          ]
+        ],
+        "foot_patch_registration": [
+          {
+            "window": [
+              13,
+              45,
+              6,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          },
+          {
+            "window": [
+              22,
+              45,
+              7,
+              8
+            ],
+            "translate": [
+              0,
+              0
+            ]
+          }
+        ],
+        "alpha_cleanup_region": null
+      }
+    ]
+  }
+]

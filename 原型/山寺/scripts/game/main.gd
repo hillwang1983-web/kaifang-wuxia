@@ -1,4 +1,5 @@
-## 第一里程碑流程：开始界面 → 选门派 → 茶棚（节点 0）→ 进山门前选通用技 → 山门（节点 1–3）→ 结算。
+## 第一里程碑流程：开始界面 → 选门派 → 茶棚（节点 0）→ 进山门前选通用技 → 山门（节点 1–3）
+## → 藏经阁（节点 4–5）→ 大雄宝殿（节点 6–7）→ 三段合并结算 → 回开始界面。
 ## 界面按 UI设计/01–03 效果图：临时山门背景压暗，左侧或居中「墨底金边」面板。
 extends Node
 
@@ -12,7 +13,8 @@ var _layer: CanvasLayer
 
 ## 开发用开关：命令行 `-- skip auto quit xiepai yungong`，网页 `?skip&auto`。
 ## skip 直接进山门；auto 由 AI 代玩、自动翻对话，从茶棚走到山门结算（冒烟测试用）；quit 打完退出并打印结算；
-## fresh 先清空存档；mobile 强制手机界面（在电脑上看触屏布局用）；items 塞样品物品到单独的演示存档；torch 山门出生在火把旁；boss2 直接进藏经阁（Boss 二）；shots=秒,秒 存画面截图（原生窗口）。
+## fresh 先清空存档；mobile 强制手机界面（在电脑上看触屏布局用）；items 塞样品物品到单独的演示存档；torch 山门出生在火把旁；
+## boss2 直接进藏经阁（Boss 二）；boss3 直接进大雄宝殿（Boss 三）；shots=秒,秒 存画面截图（原生窗口）。
 var dev := {}
 
 
@@ -32,14 +34,16 @@ func _ready() -> void:
 	profile = Profile.load_or_new()
 	if dev.has("items"):
 		_demo_items()
-	if dev.has("skip") or dev.has("auto") or dev.has("boss2"):
+	if dev.has("skip") or dev.has("auto") or dev.has("boss2") or dev.has("boss3"):
 		sect = "xiepai" if dev.has("xiepai") else "shaolin"
 		for u in SimData.UTILITIES:
 			if dev.has(u):
 				utility = u
 		if dev.has("auto"):
 			Engine.time_scale = 4.0 if not OS.has_feature("web") else 1.0
-		if dev.has("boss2"):
+		if dev.has("boss3"):
+			_daxiong()
+		elif dev.has("boss2"):
 			_cangjingge()
 		elif dev.has("auto"):
 			_chapeng()  # 代玩从茶棚走起，覆盖三张地图
@@ -71,22 +75,40 @@ func _demo_items() -> void:
 	profile.studying = "luohanquan"
 
 
-## 开发开关 shots=8,14,20：按真实秒数把画面存成 user://shot_秒数.png（原生窗口运行才有画面），最后一张存完退出
+## 开发开关 shots=8,14,20：按真实秒数把画面存成 user://shot_秒数.png（原生窗口运行才有画面），最后一张存完退出。
+## 也可以写事件名（shots=aim,deflect）：关卡里发生这件事时调 snap(名字)，稍等一下存成 user://shot_名字.png
 var _shot_times: Array = []
+var _shot_names: Array = []
+var _shot_pending := {}      # 名字 -> 还要等几秒（真实时间）再拍，让特效先出来
 var _shot_clock := 0.0
 
 
+func snap(shot_name: String) -> void:
+	if shot_name in _shot_names:
+		_shot_names.erase(shot_name)
+		_shot_pending[shot_name] = 0.12
+
+
+func _save_shot(path: String) -> void:
+	get_viewport().get_texture().get_image().save_png(path)
+	print("截图：", ProjectSettings.globalize_path(path))
+	if _shot_times.is_empty() and _shot_names.is_empty() and _shot_pending.is_empty():
+		get_tree().quit(0)
+
+
 func _process(dt: float) -> void:
+	var real := dt / maxf(Engine.time_scale, 0.001)
+	for k in _shot_pending.keys():
+		_shot_pending[k] -= real
+		if _shot_pending[k] <= 0.0:
+			_shot_pending.erase(k)
+			_save_shot("user://shot_%s.png" % k)
 	if _shot_times.is_empty():
 		return
-	_shot_clock += dt / maxf(Engine.time_scale, 0.001)
+	_shot_clock += real
 	if _shot_clock >= float(_shot_times[0]):
 		var t: float = _shot_times.pop_front()
-		var path := "user://shot_%02d.png" % int(t)
-		get_viewport().get_texture().get_image().save_png(path)
-		print("截图：", ProjectSettings.globalize_path(path))
-		if _shot_times.is_empty():
-			get_tree().quit(0)
+		_save_shot("user://shot_%02d.png" % int(t))
 
 
 func _is_phone() -> bool:
@@ -103,7 +125,11 @@ func _dev_flags() -> Dictionary:
 	for a in args:
 		out[a.split("=")[0]] = true
 		if a.begins_with("shots="):
-			_shot_times = Array(a.trim_prefix("shots=").split(",")).map(func(s): return float(s))
+			for s in a.trim_prefix("shots=").split(","):
+				if s.is_valid_float():
+					_shot_times.append(float(s))
+				else:
+					_shot_names.append(s)
 	return out
 
 
@@ -301,12 +327,14 @@ func _shanmen() -> void:
 	add_child(level)
 
 
-## 山门打完接后殿藏经阁（Boss 二）；两段的结算合在一起
+## 山门打完接后殿藏经阁（Boss 二），再接大雄宝殿（Boss 三）；每段的结算存下来，最后一起显示
 var _run_stats := {}
+var _parts: Array = []      # [[段名, 这一段的结算], ...]
 
 
 func _after_shanmen(stats: Dictionary) -> void:
 	_run_stats = stats
+	_parts = [["山门", stats]]
 	_cangjingge()
 
 
@@ -323,6 +351,7 @@ func _cangjingge() -> void:
 
 
 func _after_cangjingge(stats: Dictionary) -> void:
+	_parts.append(["藏经阁", stats])
 	var s := _run_stats.duplicate()
 	s["secs"] = float(s.get("secs", 0.0)) + float(stats.secs)
 	s["combos"] = int(s.get("combos", 0)) + int(stats.combos)
@@ -332,9 +361,37 @@ func _after_cangjingge(stats: Dictionary) -> void:
 	s["moqi"] = stats.moqi
 	s["loot"] = "%s、%s" % [s.get("loot", "—"), stats.loot]
 	s["boss2"] = true
+	_run_stats = s
+	_daxiong()
+
+
+func _daxiong() -> void:
+	for c in get_children():
+		c.queue_free()
+	var level := Daxiongbaodian.new()
+	level.setup(sect, utility)
+	level.profile = profile
+	level.autoplay = dev.has("auto")
+	level.done.connect(_after_daxiong)
+	level.quit_to_title.connect(_title)
+	add_child(level)
+
+
+func _after_daxiong(stats: Dictionary) -> void:
+	_parts.append(["大雄宝殿", stats])
+	var s := _run_stats.duplicate()
+	s["secs"] = float(s.get("secs", 0.0)) + float(stats.secs)
+	s["combos"] = int(s.get("combos", 0)) + int(stats.combos)
+	s["formations"] = int(s.get("formations", 0)) + int(stats.formations)
+	s["deflects"] = stats.deflects
+	s["defeats"] = int(s.get("defeats", 0)) + int(stats.defeats)
+	s["moqi"] = stats.moqi
+	s["loot"] = "%s、%s" % [s.get("loot", "—"), stats.loot] if s.has("loot") else stats.loot
+	s["boss3"] = true
 	_end(s)
 
 
+## 结算（规格书第九节）：三段各一行（用时、合击 / 阵法 / 破罩 / 撞偏），下面是总计与全部所获，看完回开始界面
 func _end(stats: Dictionary) -> void:
 	if dev.has("auto"):
 		print("自动试玩结算：", stats)
@@ -342,22 +399,33 @@ func _end(stats: Dictionary) -> void:
 			get_tree().quit(0)
 			return
 	_reset()
-	_backdrop(0.45)
-	var p := _panel(Rect2(270, 90, 420, 360))
-	_label(p, "山门与藏经阁 · 完", Vector2(0, 28), 24, UiKit.QI, 420)
-	_label(p, "叛僧教头 · 护法毒姥", Vector2(0, 64), 12, UiKit.TEXT, 420)
-	var lines := [
-		"门派：%s　　通用技：%s" % [SimData.SECTS[sect].name, SimData.SKILLS[utility].name],
-		"用时：%d 分 %02d 秒" % [int(stats.secs) / 60, int(stats.secs) % 60],
-		"合击 %d 次　　阵法 %d 次　　破罩 %d 次　　默契 %d" % [stats.combos, stats.get("formations", 0), stats.get("breaks", 0), stats.moqi],
-		"打断 %d 次　　闪过 %d 次　　败退 %d 次" % [stats.interrupts, stats.evades, stats.defeats],
-		"所获：%s" % stats.get("loot", "—"),
-		"一年之约。大雄宝殿里那个铁东西，不认人。——待续",
-	]
-	for i in lines.size():
-		_label(p, lines[i], Vector2(0, 100 + i * 28), 12, UiKit.TEXT if i < 5 else UiKit.MUTED, 420)
-	var again := MenuButtonUi.make("再来一次")
-	again.position = Vector2(100, 280)
+	_backdrop(0.5)
+	var p := _panel(Rect2(150, 40, 660, 460))
+	_label(p, "慈云寺 · 一夜", Vector2(0, 22), 24, UiKit.QI, 660)
+	_label(p, "门派：%s　　通用技：%s" % [SimData.SECTS[sect].name, SimData.SKILLS[utility].name], Vector2(0, 58), 12, UiKit.TEXT, 660)
+	var y := 92
+	for part in _parts:
+		var s: Dictionary = part[1]
+		var detail := "合击 %d" % int(s.get("combos", 0))
+		if s.has("formations"):
+			detail += " · 阵法 %d" % int(s.formations)
+		if part[0] == "山门":
+			detail += " · 打断 %d · 闪过 %d" % [int(s.get("interrupts", 0)), int(s.get("evades", 0))]
+		elif part[0] == "藏经阁":
+			detail += " · 破罩 %d" % int(s.get("breaks", 0))
+		else:
+			detail += " · 撞偏 %d · 弩箭 %d · 弩车散架 %d" % [int(s.get("deflects", 0)), int(s.get("bolts", 0)), int(s.get("breaks", 0))]
+		_label(p, "%s　%d 分 %02d 秒　%s" % [part[0], int(s.get("secs", 0.0)) / 60, int(s.get("secs", 0.0)) % 60, detail], Vector2(0, y), 12, UiKit.TEXT, 660)
+		_label(p, "所获：%s" % s.get("loot", "—"), Vector2(0, y + 20), 12, UiKit.MUTED, 660)
+		y += 52
+	if _parts.is_empty():
+		_label(p, "（开发开关直接进的这一段）", Vector2(0, y), 12, UiKit.MUTED, 660)
+		y += 28
+	_label(p, "总用时 %d 分 %02d 秒　　败退 %d 次　　最终默契 %d" % [int(stats.secs) / 60, int(stats.secs) % 60, int(stats.get("defeats", 0)), int(stats.get("moqi", 0))],
+		Vector2(0, y + 8), 12, UiKit.QI, 660)
+	_label(p, "师父只剩一年。——待续", Vector2(0, y + 40), 12, UiKit.MUTED, 660)
+	var again := MenuButtonUi.make("回到开始界面")
+	again.position = Vector2(220, 392)
 	again.pressed.connect(_title)
 	p.add_child(again)
 	again.grab_focus()

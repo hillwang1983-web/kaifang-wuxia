@@ -1,0 +1,683 @@
+{
+  "status": "PASS",
+  "checked_at_utc": "2026-10-24T07:46:45.325599+00:00",
+  "row": 15,
+  "frames": 30,
+  "strips": 6,
+  "combined_opaque_colors": 16,
+  "assets": [
+    {
+      "file": "assets/boss/boss_xuancheng_idle_down_v01.png",
+      "dimensions": [
+        256,
+        80
+      ],
+      "frames": 4,
+      "colors": 15,
+      "alpha": [
+        0,
+        255
+      ],
+      "frame_bboxes": [
+        [
+          14,
+          24,
+          53,
+          77
+        ],
+        [
+          14,
+          24,
+          53,
+          77
+        ],
+        [
+          14,
+          24,
+          53,
+          77
+        ],
+        [
+          14,
+          24,
+          53,
+          77
+        ]
+      ],
+      "anchor": [
+        32,
+        76
+      ],
+      "actual_foot_contact_points": [
+        [
+          [
+            24,
+            76
+          ],
+          [
+            40,
+            76
+          ]
+        ],
+        [
+          [
+            24,
+            76
+          ],
+          [
+            40,
+            76
+          ]
+        ],
+        [
+          [
+            24,
+            76
+          ],
+          [
+            40,
+            76
+          ]
+        ],
+        [
+          [
+            24,
+            76
+          ],
+          [
+            40,
+            76
+          ]
+        ]
+      ],
+      "both_soles_y76_each_frame": true,
+      "rows77_79_all_transparent": true,
+      "no_disconnected_alpha_fragments": true,
+      "unique_rgba_frames": 4,
+      "unique_lower_body_alpha": 4,
+      "exact_strip_frame_order": true,
+      "exact_nearest_4x": true,
+      "gif_frames": 4,
+      "gif_duration_ms": 330,
+      "sha256": "ad825cf1e5460e9b8f0dda471d1c3f7758774e84f52f7bac6147fd53ea1209fd"
+    },
+    {
+      "file": "assets/boss/boss_xuancheng_walk_down_v01.png",
+      "dimensions": [
+        384,
+        80
+      ],
+      "frames": 6,
+      "colors": 15,
+      "alpha": [
+        0,
+        255
+      ],
+      "frame_bboxes": [
+        [
+          14,
+          24,
+          53,
+          77
+        ],
+        [
+          15,
+          24,
+          51,
+          77
+        ],
+        [
+          17,
+          24,
+          52,
+          77
+        ],
+        [
+          14,
+          24,
+          53,
+          77
+        ],
+        [
+          15,
+          24,
+          51,
+          77
+        ],
+        [
+          14,
+          24,
+          53,
+          77
+        ]
+      ],
+      "anchor": [
+        32,
+        76
+      ],
+      "actual_foot_contact_points": [
+        [
+          [
+            21,
+            76
+          ],
+          [
+            43,
+            76
+          ]
+        ],
+        [
+          [
+            25,
+            76
+          ],
+          [
+            39,
+            76
+          ]
+        ],
+        [
+          [
+            29,
+            76
+          ],
+          [
+            35,
+            76
+          ]
+        ],
+        [
+          [
+            21,
+            76
+          ],
+          [
+            43,
+            76
+          ]
+        ],
+        [
+          [
+            25,
+            76
+          ],
+          [
+            39,
+            76
+          ]
+        ],
+        [
+          [
+            28,
+            76
+          ],
+          [
+            36,
+            76
+          ]
+        ]
+      ],
+      "both_soles_y76_each_frame": true,
+      "rows77_79_all_transparent": true,
+      "no_disconnected_alpha_fragments": true,
+      "unique_rgba_frames": 6,
+      "unique_lower_body_alpha": 6,
+      "exact_strip_frame_order": true,
+      "exact_nearest_4x": true,
+      "gif_frames": 6,
+      "gif_duration_ms": 500,
+      "sha256": "222f1070be26995358a891dc226ff8bcca3f27e020e4142e16ba7d7afc3a14ac"
+    },
+    {
+      "file": "assets/boss/boss_xuancheng_idle_left_v01.png",
+      "dimensions": [
+        256,
+        80
+      ],
+      "frames": 4,
+      "colors": 16,
+      "alpha": [
+        0,
+        255
+      ],
+      "frame_bboxes": [
+        [
+          12,
+          24,
+          51,
+          77
+        ],
+        [
+          15,
+          24,
+          48,
+          77
+        ],
+        [
+          11,
+          24,
+          50,
+          77
+        ],
+        [
+          12,
+          24,
+          51,
+          77
+        ]
+      ],
+      "anchor": [
+        32,
+        76
+      ],
+      "actual_foot_contact_points": [
+        [
+          [
+            23,
+            76
+          ],
+          [
+            41,
+            76
+          ]
+        ],
+        [
+          [
+            24,
+            76
+          ],
+          [
+            40,
+            76
+          ]
+        ],
+        [
+          [
+            24,
+            76
+          ],
+          [
+            40,
+            76
+          ]
+        ],
+        [
+          [
+            23,
+            76
+          ],
+          [
+            41,
+            76
+          ]
+        ]
+      ],
+      "both_soles_y76_each_frame": true,
+      "rows77_79_all_transparent": true,
+      "no_disconnected_alpha_fragments": true,
+      "unique_rgba_frames": 4,
+      "unique_lower_body_alpha": 4,
+      "exact_strip_frame_order": true,
+      "exact_nearest_4x": true,
+      "gif_frames": 4,
+      "gif_duration_ms": 330,
+      "sha256": "caedb8180ac9268c25cbec404a067c312e201777b792f355a650272a35a640a2"
+    },
+    {
+      "file": "assets/boss/boss_xuancheng_walk_left_v01.png",
+      "dimensions": [
+        384,
+        80
+      ],
+      "frames": 6,
+      "colors": 16,
+      "alpha": [
+        0,
+        255
+      ],
+      "frame_bboxes": [
+        [
+          10,
+          24,
+          49,
+          77
+        ],
+        [
+          14,
+          24,
+          48,
+          77
+        ],
+        [
+          10,
+          24,
+          49,
+          77
+        ],
+        [
+          12,
+          24,
+          51,
+          77
+        ],
+        [
+          12,
+          24,
+          47,
+          77
+        ],
+        [
+          11,
+          24,
+          50,
+          77
+        ]
+      ],
+      "anchor": [
+        32,
+        76
+      ],
+      "actual_foot_contact_points": [
+        [
+          [
+            19,
+            76
+          ],
+          [
+            45,
+            76
+          ]
+        ],
+        [
+          [
+            24,
+            76
+          ],
+          [
+            40,
+            76
+          ]
+        ],
+        [
+          [
+            28,
+            76
+          ],
+          [
+            36,
+            76
+          ]
+        ],
+        [
+          [
+            20,
+            76
+          ],
+          [
+            44,
+            76
+          ]
+        ],
+        [
+          [
+            24,
+            76
+          ],
+          [
+            40,
+            76
+          ]
+        ],
+        [
+          [
+            29,
+            76
+          ],
+          [
+            35,
+            76
+          ]
+        ]
+      ],
+      "both_soles_y76_each_frame": true,
+      "rows77_79_all_transparent": true,
+      "no_disconnected_alpha_fragments": true,
+      "unique_rgba_frames": 6,
+      "unique_lower_body_alpha": 6,
+      "exact_strip_frame_order": true,
+      "exact_nearest_4x": true,
+      "gif_frames": 6,
+      "gif_duration_ms": 500,
+      "sha256": "d280f66173877309128036149b865f87843b8d30bd189bb29e93cf5f93c5a84e"
+    },
+    {
+      "file": "assets/boss/boss_xuancheng_idle_up_v01.png",
+      "dimensions": [
+        256,
+        80
+      ],
+      "frames": 4,
+      "colors": 15,
+      "alpha": [
+        0,
+        255
+      ],
+      "frame_bboxes": [
+        [
+          13,
+          24,
+          52,
+          77
+        ],
+        [
+          13,
+          24,
+          52,
+          77
+        ],
+        [
+          12,
+          24,
+          51,
+          77
+        ],
+        [
+          12,
+          24,
+          51,
+          77
+        ]
+      ],
+      "anchor": [
+        32,
+        76
+      ],
+      "actual_foot_contact_points": [
+        [
+          [
+            25,
+            76
+          ],
+          [
+            39,
+            76
+          ]
+        ],
+        [
+          [
+            26,
+            76
+          ],
+          [
+            38,
+            76
+          ]
+        ],
+        [
+          [
+            26,
+            76
+          ],
+          [
+            38,
+            76
+          ]
+        ],
+        [
+          [
+            26,
+            76
+          ],
+          [
+            38,
+            76
+          ]
+        ]
+      ],
+      "both_soles_y76_each_frame": true,
+      "rows77_79_all_transparent": true,
+      "no_disconnected_alpha_fragments": true,
+      "unique_rgba_frames": 4,
+      "unique_lower_body_alpha": 4,
+      "exact_strip_frame_order": true,
+      "exact_nearest_4x": true,
+      "gif_frames": 4,
+      "gif_duration_ms": 330,
+      "sha256": "f587b0ac6bf41baf7d8a7e2cbaf13cace59c24091ad877dd7ae3871467a33f75"
+    },
+    {
+      "file": "assets/boss/boss_xuancheng_walk_up_v01.png",
+      "dimensions": [
+        384,
+        80
+      ],
+      "frames": 6,
+      "colors": 15,
+      "alpha": [
+        0,
+        255
+      ],
+      "frame_bboxes": [
+        [
+          14,
+          24,
+          53,
+          77
+        ],
+        [
+          13,
+          24,
+          52,
+          77
+        ],
+        [
+          12,
+          24,
+          51,
+          77
+        ],
+        [
+          13,
+          24,
+          52,
+          77
+        ],
+        [
+          12,
+          24,
+          51,
+          77
+        ],
+        [
+          12,
+          24,
+          51,
+          77
+        ]
+      ],
+      "anchor": [
+        32,
+        76
+      ],
+      "actual_foot_contact_points": [
+        [
+          [
+            25,
+            76
+          ],
+          [
+            39,
+            76
+          ]
+        ],
+        [
+          [
+            26,
+            76
+          ],
+          [
+            38,
+            76
+          ]
+        ],
+        [
+          [
+            27,
+            76
+          ],
+          [
+            37,
+            76
+          ]
+        ],
+        [
+          [
+            25,
+            76
+          ],
+          [
+            39,
+            76
+          ]
+        ],
+        [
+          [
+            26,
+            76
+          ],
+          [
+            38,
+            76
+          ]
+        ],
+        [
+          [
+            27,
+            76
+          ],
+          [
+            37,
+            76
+          ]
+        ]
+      ],
+      "both_soles_y76_each_frame": true,
+      "rows77_79_all_transparent": true,
+      "no_disconnected_alpha_fragments": true,
+      "unique_rgba_frames": 6,
+      "unique_lower_body_alpha": 6,
+      "exact_strip_frame_order": true,
+      "exact_nearest_4x": true,
+      "gif_frames": 6,
+      "gif_duration_ms": 500,
+      "sha256": "04572a3ee7d86a2ecea70a9caa20ca6aa58d30afba0cf9ba1ee6e6095dddb5be"
+    }
+  ],
+  "visual_review": "原图、背面鞋底修正源图和三方向逐帧总览已检查；短发茬、褐红袍与黑半臂、长木棍、正侧背方向、宽窄步态、双脚平地和循环首尾。左侧两处相邻格碎片已清理；六帧左侧鞋片只作1px脚线注册。",
+  "limitations": [
+    "只交第15条待机/走；第16-19条尚未交。",
+    "GIF以10ms量化；运行按JSON12fps。",
+    "遵照开发补充，采用双鞋底同脚线的贴地小步，需开发实机核对步速和滑步观感。",
+    "本轮未做Godot运行时接入或手机实机验收。"
+  ]
+}

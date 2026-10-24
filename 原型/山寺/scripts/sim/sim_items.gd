@@ -116,12 +116,19 @@ static func roll_drops(rng: RandomNumberGenerator, kind: String) -> Dictionary:
 	if d.has("slot"):
 		var options := bases_for_slot(d.slot)
 		out.items.append(roll_equipment(rng, options[rng.randi_range(0, options.size() - 1)]))
-	# 弩车零件接口（阶段 D）：可破坏物按 part_chance 掉一种零件，现在概率为 0
+	# 弩车零件接口：可破坏物按 part_chance 掉一种零件（大雄宝殿的零件堆由关卡直接指定，这里的概率都是 0）
 	out["parts"] = []
 	if float(d.get("part_chance", 0.0)) > 0.0 and rng.randf() < float(d.part_chance):
 		var parts: Array = data().parts.list
 		out.parts.append(parts[rng.randi_range(0, parts.size() - 1)])
 	return out
+
+
+## 通关箱（规格书第七节）：底子在全部装备底子里随机，品质按 SimData.CHEST（魔法六成、稀有四成）
+static func roll_chest(rng: RandomNumberGenerator) -> Dictionary:
+	var bases: Array = data().bases.keys()
+	bases.sort()
+	return roll_equipment(rng, bases[rng.randi_range(0, bases.size() - 1)], _weighted(rng, SimData.CHEST.quality))
 
 
 ## 一组装备的属性合计（底子属性 + 词缀，同名相加）

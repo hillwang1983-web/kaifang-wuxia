@@ -223,6 +223,9 @@ func _draw_boss(at: Vector2) -> void:
 	if boss.kind == "dulao":
 		_boss_dulao_status(at)
 		return
+	if boss.kind == "jingang":
+		_boss_jingang_status(at)
+		return
 	if boss.state == "cast":
 		label = "重击蓄力 · 快打断！"
 		ratio = boss.t / boss.atk.cast
@@ -258,6 +261,45 @@ func _boss_dulao_status(at: Vector2) -> void:
 	elif boss.state == "sit":
 		label = "毒姥收手了"
 		color = UiKit.TEXT
+	UiKit.text(self, at + Vector2(16, 50), label, 12, color)
+	if right != "":
+		UiKit.text_r(self, at + Vector2(432, 50), right, 12, color)
+	UiKit.fill(self, Rect2(at + Vector2(16, 67), Vector2(416, 6)), ratio, color)
+
+
+## 铁甲金刚：出招预警优先（冲撞要摆阵撞偏、踏地震要翻滚）；其次裂口剩余时间；平时显示铁甲与下次冲撞
+func _boss_jingang_status(at: Vector2) -> void:
+	var k: Dictionary = SimData.ENEMIES.jingang
+	var label := "铁甲 · 非裂口伤害减免 99%（上弩车射出裂口）"
+	var color := UiKit.TEXT
+	var ratio := 0.0
+	var right := "冲撞 %d 秒后" % ceili(maxf(0.0, boss.timers.get("charge", k.first_charge)))
+	if boss.state == "windup" and boss.atk_id == "charge":
+		label = "冲撞预警 · 摆阵撞偏！"
+		color = UiKit.CAST
+		ratio = boss.t / boss.atk.tele
+		right = "%.1f / %.1f 秒" % [boss.t, boss.atk.tele]
+	elif boss.state == "windup" and boss.atk_id == "quake":
+		label = "踏地震 · 落地前翻滚"
+		color = UiKit.WARN
+		ratio = boss.t / boss.atk.tele
+		right = ""
+	elif boss.state == "stagger":
+		label = "被撞偏了，失衡"
+		color = UiKit.QI
+		ratio = boss.stagger_t / k.deflect_stagger
+		right = ""
+	elif not boss.breaches.is_empty():
+		var longest := 0.0
+		for br in boss.breaches:
+			longest = maxf(longest, br.t)
+		label = "裂口 %d 道 · 从裂口那一侧打" % boss.breaches.size()
+		color = UiKit.QI
+		ratio = longest / SimData.BALLISTA.breach_time
+		right = "%.0f 秒" % longest
+	elif boss.state == "sit":
+		label = "跪倒了"
+		right = ""
 	UiKit.text(self, at + Vector2(16, 50), label, 12, color)
 	if right != "":
 		UiKit.text_r(self, at + Vector2(432, 50), right, 12, color)
