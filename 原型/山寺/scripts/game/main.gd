@@ -10,7 +10,7 @@ var _layer: CanvasLayer
 
 
 ## 开发用开关：命令行 `-- skip auto quit xiepai yungong`，网页 `?skip&auto`。
-## skip 直接进山门；auto 由 AI 代玩、自动翻对话（冒烟测试用）；quit 打完退出并打印结算。
+## skip 直接进山门；auto 由 AI 代玩、自动翻对话，从茶棚走到山门结算（冒烟测试用）；quit 打完退出并打印结算。
 var dev := {}
 
 
@@ -23,7 +23,9 @@ func _ready() -> void:
 				utility = u
 		if dev.has("auto"):
 			Engine.time_scale = 4.0 if not OS.has_feature("web") else 1.0
-		_shanmen()
+			_chapeng()  # 代玩从茶棚走起，覆盖两张地图
+		else:
+			_shanmen()
 		return
 	_title()
 
@@ -159,32 +161,22 @@ func _sect_select() -> void:
 
 # ---------- 茶棚（节点 0）----------
 
-class ChapengBackdrop extends Control:
-	func _draw() -> void:
-		draw_rect(Rect2(0, 0, 960, 540), Color("#1C2233"))
-		draw_rect(Rect2(0, 300, 960, 240), Color("#4A3B2A"))
-		for i in 7:
-			draw_rect(Rect2(60 + i * 140, 250 - (i % 3) * 30, 70, 60 + (i % 3) * 30), Color("#24302A"))
-		draw_rect(Rect2(300, 210, 360, 18), Color("#7A6A48"))   # 茅草棚顶
-		draw_rect(Rect2(316, 228, 8, 120), Color("#3B2A20"))
-		draw_rect(Rect2(636, 228, 8, 120), Color("#3B2A20"))
-		draw_rect(Rect2(380, 300, 90, 30), Color("#5A3F29"))   # 粗桌
-		draw_rect(Rect2(520, 300, 90, 30), Color("#5A3F29"))
-		draw_circle(Vector2(700, 326), 14, Color("#6E5A44"))     # 泥炉
-		draw_rect(Rect2(790, 120, 60, 20), Color("#6E6A5E"))     # 远处寺顶
-		UiKit.panel(self, Rect2(720, 16, 224, 24))
-		UiKit.text(self, Vector2(732, 21), "场景图待出：山路茶棚", 12, UiKit.MUTED)
-
-
 func _chapeng() -> void:
-	_reset()
-	var bd := ChapengBackdrop.new()
-	bd.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_layer.add_child(bd)
-	var d := DialogueBox.new()
-	_layer.add_child(d)
-	d.finished.connect(_utility_select)
-	d.open(Story.chapeng(sect))
+	for c in get_children():
+		c.queue_free()
+	var level := Chapeng.new()
+	level.setup(sect, utility)
+	level.autoplay = dev.has("auto")
+	level.done.connect(_after_chapeng)
+	level.quit_to_title.connect(_title)
+	add_child(level)
+
+
+func _after_chapeng(_stats: Dictionary) -> void:
+	if dev.has("auto"):
+		_shanmen()
+	else:
+		_utility_select()
 
 
 # ---------- 进山门前选通用技（03） ----------

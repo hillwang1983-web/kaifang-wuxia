@@ -43,7 +43,7 @@ static func step(w: SimWorld, e: SimFighter, dt: float) -> void:
 			elif a.has("min_dist") and d < a.min_dist * 0.7:
 				e.plan = "sweep"
 			elif e.root_t <= 0.0:
-				w._move(e, e.facing * e.speed * (1.0 - e.slow) * dt)
+				w._move(e, w.steer(e.pos, target.pos) * e.speed * (1.0 - e.slow) * dt)
 				e.moving = true
 		"windup":
 			e.t += dt

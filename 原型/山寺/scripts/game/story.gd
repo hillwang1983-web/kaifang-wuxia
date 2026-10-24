@@ -8,11 +8,19 @@ static func l(who: String, text: String) -> Dictionary:
 	return {"who": who, "text": text}
 
 
-## 节点 0：茶棚相遇（小说第二章）
-static func chapeng(sect: String) -> Array:
+## 节点 0：茶棚相遇（小说第二章）。开场旁白，之后玩家自己走过去和净心说话
+static func chapeng_intro(sect: String) -> Array:
 	var out := [
 		l("", "慈云寺山脚的破茶棚。一个少年僧人蹲在棚外，三天没合眼，手里攥着一块撕下来的衣襟。"),
 		l("", "你是被茶棚老板当成疯子赶出来的——身上的衣服谁也没见过，开口就问哪里能「充电」。"),
+	]
+	if sect == "xiepai":
+		out.append(l("", "（你身上穿的是邪派的衣服。附身醒来时，这具身子刚奉命入寺夺取秘籍——却发现叛僧另有图谋。）"))
+	return out
+
+
+static func chapeng_talk() -> Array:
+	return [
 		l("", "那块布是血写的。"),
 		l("你", "那是血写的？谁写的？你要去救人？"),
 		l("净心·悲", "……我师父，在山上那座寺里。寺被邪派占了，山门有人守，后山水道也堵死了。"),
@@ -25,9 +33,6 @@ static func chapeng(sect: String) -> Array:
 		l("净心", "我叫净心。"),
 		l("你", "嗯。我……叫什么，你随便。走吧，先把门给砸了。"),
 	]
-	if sect == "xiepai":
-		out.insert(1, l("", "（你身上穿的是邪派的衣服。附身醒来时，这具身子刚奉命入寺夺取秘籍——却发现叛僧另有图谋。）"))
-	return out
 
 
 static func shanmen_intro(sect: String) -> Array:

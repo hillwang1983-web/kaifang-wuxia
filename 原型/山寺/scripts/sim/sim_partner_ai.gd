@@ -43,7 +43,7 @@ func command(dt: float) -> SimCommand:
 			_react = w.rng.randf_range(A.invite_react[0], A.invite_react[1])
 		_react -= dt
 		if _react <= 0.0:
-			cmd.move = (inv.point - me.pos).limit_length(1.0)
+			cmd.move = w.steer(me.pos, inv.point) if me.pos.distance_to(inv.point) > 4.0 else Vector2.ZERO
 			return cmd
 
 	# 2. 看红区闪避
@@ -81,7 +81,7 @@ func command(dt: float) -> SimCommand:
 		var to := target.pos - me.pos
 		var reach: float = SimData.ATTACKS[me.sect][0].range - 14.0
 		if to.length() > reach:
-			cmd.move = to.normalized()
+			cmd.move = w.steer(me.pos, target.pos)
 		else:
 			cmd.aim = to.normalized()
 			_attack_hold -= dt
@@ -91,7 +91,7 @@ func command(dt: float) -> SimCommand:
 	elif leader:
 		var to := leader.pos - me.pos
 		if to.length() > A.follow:
-			cmd.move = to.normalized() * clampf((to.length() - A.follow) / 40.0, 0.3, 1.0)
+			cmd.move = w.steer(me.pos, leader.pos) * clampf((to.length() - A.follow) / 40.0, 0.3, 1.0)
 	return cmd
 
 

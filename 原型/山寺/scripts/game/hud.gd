@@ -8,6 +8,7 @@ const DESK_X := [326, 418, 510, 602, 694, 786, 878]
 const DESK_Y := 478
 # 手机按钮：[中心 x, 中心 y, 直径]，顺序同 ACTIONS
 const MOBILE := [[824, 458, 80], [704, 354, 64], [784, 354, 64], [864, 354, 64], [744, 458, 64], [664, 458, 64], [904, 458, 64]]
+const TALK := [884, 262, 56]   # 手机上下文「交谈 / 互动」键：身边有火把、能说话的人时才出现
 const STICK_CENTER := Vector2(126, 400)
 const STICK_R := 64.0
 
@@ -17,6 +18,7 @@ var partner: SimFighter
 var boss: SimFighter
 var objectives: Array = []      # 当前目标，每行一条
 var mobile := false
+var can_talk := false           # 关卡每帧设置：身边有可互动的东西
 var toasts: Array = []          # {text, t}
 
 # 触屏状态，PlayerInput 读取
@@ -114,6 +116,8 @@ func _update_stick(pos: Vector2) -> void:
 
 
 func _button_at(pos: Vector2) -> String:
+	if can_talk and pos.distance_to(Vector2(TALK[0], TALK[1])) <= TALK[2] * 0.5 + 6.0:
+		return "interact"
 	for i in ACTIONS.size():
 		var b: Array = MOBILE[i]
 		if pos.distance_to(Vector2(b[0], b[1])) <= b[2] * 0.5 + 6.0:
@@ -323,3 +327,9 @@ func _draw_mobile_controls() -> void:
 		var c := Vector2(b[0], b[1])
 		_draw_slot(ACTIONS[i], c, b[2])
 		UiKit.text(self, c + Vector2(-40, b[2] * 0.5 + 1), _slot_name(ACTIONS[i]), 12, UiKit.TEXT, HORIZONTAL_ALIGNMENT_CENTER, 80)
+	if can_talk:
+		var c := Vector2(TALK[0], TALK[1])
+		var r := Rect2(c - Vector2(TALK[2], TALK[2]) / 2.0, Vector2(TALK[2], TALK[2]))
+		draw_texture_rect(UiKit.ui("btn_pressed" if touch_held.has("interact") else "btn_base"), r, false)
+		draw_texture_rect(UiKit.icon("btn_talk"), r, false)
+		UiKit.text(self, c + Vector2(-40, TALK[2] * 0.5 + 1), "交谈", 12, UiKit.TEXT, HORIZONTAL_ALIGNMENT_CENTER, 80)

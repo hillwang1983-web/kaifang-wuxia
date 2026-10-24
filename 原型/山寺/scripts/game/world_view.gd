@@ -13,8 +13,12 @@ const TEAL := Color("#7FD0BE")
 var world: SimWorld
 var me_id := -1
 var background: Texture2D
+var foreground: Texture2D      # 前景遮挡层（棚顶、门檐），叠在角色上面（底图 → 角色 → 前景）
+var _fg_image: Image           # 前景的像素副本，用来判断角色是不是被挡住
 var effects: Array = []        # {kind, pos, t, dur, ...}
 var trails := {}               # fighter id -> [{pos, t}]
+var hint_pos := Vector2.ZERO   # 关卡设置的互动提示（如「E 交谈」），hint_text 为空不画
+var hint_text := ""
 var hitstop := 0.0             # 由关卡读走：命中停顿
 var shake := 0.0
 
@@ -166,8 +170,27 @@ func _draw() -> void:
 	for pr in world.projectiles:
 		draw_circle(pr.pos + Vector2(0, -16), 5.0, UiKit.PURPLE)
 		draw_circle(pr.pos + Vector2(0, -16) - pr.vel.normalized() * 6.0, 3.0, Color(UiKit.POISON, 0.7))
+	if foreground:
+		draw_texture(foreground, Vector2.ZERO)
+		_draw_hidden_heroes()
+	if hint_text != "":
+		var w := UiKit.text_width(hint_text) + 10.0
+		UiKit.panel(self, Rect2(hint_pos + Vector2(-w / 2.0, -2), Vector2(w, 18)))
+		UiKit.text(self, hint_pos + Vector2(-w / 2.0 + 5, -1), hint_text)
 	for fx in effects:
 		_effect(fx)
+
+
+## 被棚顶 / 门檐挡住的玩家和净心，在前景上面补一层半透明剪影，免得看不见自己
+func _draw_hidden_heroes() -> void:
+	if _fg_image == null:
+		_fg_image = foreground.get_image()
+	for f in world.heroes():
+		var probe := Vector2i(f.pos + Vector2(0, -18))
+		if probe.x < 0 or probe.y < 0 or probe.x >= _fg_image.get_width() or probe.y >= _fg_image.get_height():
+			continue
+		if _fg_image.get_pixelv(probe).a > 0.5:
+			_body(f, f.pos, Color(1, 1, 1, 0.5))
 
 
 func _ellipse(c: Vector2, r: float, color: Color, squash := 0.55) -> void:
@@ -219,23 +242,32 @@ func _telegraph(e: SimFighter) -> void:
 			_ellipse_line(e.pos, a.range, edge, 0.75)
 
 
+## 合击光圈：美术交付的帧条（vfx_heji_ring_layout_v01.json）——展开 6 帧 0.5 秒，之后常驻 4 帧循环，
+## 叠一条三秒倒计时弧（36 帧）。帧是 96×96，按当前默契等级的光圈半径缩放。
+const RING_FRAME := 96.0
+const RING_FPS := 12.0
+
+
+func _ring_frame(sheet: String, frame: int, center: Vector2, r: float, alpha := 1.0) -> void:
+	var tex := UiKit.tex("res://assets/vfx/vfx_heji_ring_%s_v01.png" % sheet)
+	var count := int(tex.get_width() / RING_FRAME)
+	var src := Rect2(clampi(frame, 0, count - 1) * RING_FRAME, 0, RING_FRAME, RING_FRAME)
+	var size := r * 2.0 * 1.12  # 帧里的圆环约占帧宽九成
+	draw_texture_rect_region(tex, Rect2(center - Vector2(size, size) / 2.0, Vector2(size, size)), src, Color(1, 1, 1, alpha))
+
+
 func _draw_combo() -> void:
 	var c := world.combo
 	for id in c.preview:
-		var pt: Vector2 = c.preview[id]
-		_ellipse_line(pt, c.radius(), Color(UiKit.QI, 0.8), 0.55, 2.0)
-		_ellipse(pt, c.radius(), Color(UiKit.QI, 0.12))
+		_ring_frame("loop", int(world.time * RING_FPS) % 4, c.preview[id], c.radius(), 0.55)
 	if not c.invite.is_empty():
 		var pt: Vector2 = c.invite.point
-		var blink := 0.6 + 0.4 * sin(world.time * 12.0)
-		draw_texture_rect(UiKit.ui("heji_ground"), Rect2(pt - Vector2(c.radius(), c.radius() * 0.55), Vector2(c.radius() * 2, c.radius() * 1.1)), false, Color(1, 1, 1, blink))
-		var ratio: float = c.invite.t / SimData.COMBO.window
-		var pts := PackedVector2Array()
-		for i in 41:
-			var a := -PI / 2.0 + TAU * ratio * i / 40.0
-			pts.append(pt + Vector2(cos(a), sin(a) * 0.55) * (c.radius() + 4.0))
-		if pts.size() > 1:
-			draw_polyline(pts, UiKit.CAST, 2.0)
+		var elapsed: float = SimData.COMBO.window - c.invite.t
+		if elapsed < 0.5:
+			_ring_frame("open", int(elapsed / 0.5 * 6.0), pt, c.radius())
+		else:
+			_ring_frame("loop", int(world.time * RING_FPS) % 4, pt, c.radius())
+		_ring_frame("countdown", int(elapsed / SimData.COMBO.window * 36.0), pt, c.radius())
 
 
 ## 本地玩家的蓄力进度 / 瞄准指示器
@@ -273,16 +305,8 @@ func _torch(it: Dictionary) -> void:
 		draw_circle(p + Vector2(0, -42 + flick * 0.3), 6.0 + flick * 0.3, Color("#FF8A3C"))
 		draw_circle(p + Vector2(0, -44), 3.0, Color("#FFF3C4"))
 		draw_circle(p + Vector2(0, -40), 26.0, Color(1.0, 0.6, 0.2, 0.08))
-		var me := world.fighter(me_id)
-		if me and me.pos.distance_to(p) < 44.0:
-			UiKit.text(self, p + Vector2(-20, -66), "E 熄灭" if not _mobile() else "点交谈熄灭", 12, UiKit.TEXT)
 	else:
 		draw_circle(p + Vector2(0, -40), 2.0, Color(0.5, 0.5, 0.5, 0.6))
-
-
-func _mobile() -> bool:
-	var hud := get_tree().get_first_node_in_group("hud") as Hud
-	return hud != null and hud.mobile
 
 
 func _fighter(f: SimFighter) -> void:

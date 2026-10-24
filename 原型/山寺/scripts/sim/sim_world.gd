@@ -13,6 +13,8 @@ var events: Array = []        # 给画面 / 剧情的一次性事件，消费方
 var time := 0.0
 var freeze_t := 0.0           # 合击成立定格，期间世界不动
 var bounds := PackedVector2Array()  # 可走区域多边形；空 = 不限制
+var blockers: Array[PackedVector2Array] = []  # 可走区域里挖掉的障碍（石狮、桌凳、香炉……）
+var waypoints: Array[Vector2] = []  # 绕路用的路点（如山门门洞），AI 走不直时经由它们
 var rng := RandomNumberGenerator.new()
 var combo: SimCombo
 var _next_id := 1
@@ -574,7 +576,52 @@ func _move(f: SimFighter, delta: Vector2) -> void:
 
 
 func _inside(p: Vector2) -> bool:
-	return bounds.is_empty() or Geometry2D.is_point_in_polygon(p, bounds)
+	if not bounds.is_empty() and not Geometry2D.is_point_in_polygon(p, bounds):
+		return false
+	for b in blockers:
+		if Geometry2D.is_point_in_polygon(p, b):
+			return false
+	return true
+
+
+func walkable(p: Vector2) -> bool:
+	return _inside(p)
+
+
+## 两点之间能不能直着走过去（每 6 像素抽样一次）
+func clear_line(a: Vector2, b: Vector2) -> bool:
+	var n := ceili(a.distance_to(b) / 6.0)
+	for i in range(1, n + 1):
+		if not _inside(a.lerp(b, float(i) / n)):
+			return false
+	return true
+
+
+## 寻路：能直走就直走；否则挑一个看得见、总路程最短的路点先过去（够用就好，地图只有一两个门洞）
+func steer(from: Vector2, to: Vector2) -> Vector2:
+	if from.distance_to(to) < 1.0:
+		return Vector2.ZERO
+	if waypoints.is_empty() or clear_line(from, to):
+		return _avoid(from, (to - from).normalized())
+	var best := to
+	var best_cost := INF
+	for w in waypoints:
+		if from.distance_to(w) < 10.0 or not clear_line(from, w):
+			continue
+		var cost := from.distance_to(w) + w.distance_to(to) + (0.0 if clear_line(w, to) else 400.0)
+		if cost < best_cost:
+			best = w
+			best_cost = cost
+	return _avoid(from, (best - from).normalized())
+
+
+## 正前方 12 像素走不了（贴着石狮、桌角），就左右逐步偏转找能走的方向
+func _avoid(from: Vector2, dir: Vector2) -> Vector2:
+	for a in [0.0, 0.5, -0.5, 1.0, -1.0, 1.5, -1.5]:
+		var d := dir.rotated(a)
+		if _inside(from + d * 12.0):
+			return d
+	return dir
 
 
 func _separate() -> void:

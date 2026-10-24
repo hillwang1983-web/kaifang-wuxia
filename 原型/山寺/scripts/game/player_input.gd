@@ -7,7 +7,8 @@ const ACTIONS := ["attack", "skill_1", "skill_2", "skill_3", "utility", "combo",
 const MOUSE_IDLE := 2.0   # 鼠标多久不动就不再当瞄准
 
 var hud: Hud
-var mouse_pos := Vector2.ZERO
+var to_world: Callable  # 屏幕坐标 → 世界坐标（镜头会动，按帧换算）；没给就当两者相同
+var mouse_pos := Vector2.ZERO   # 屏幕坐标
 var _mouse_t := 99.0
 var _mouse_left := {"pressed": false, "held": false, "released": false}
 var _mouse_right := false
@@ -76,9 +77,10 @@ func build(me: SimFighter, dt: float) -> SimCommand:
 		cmd.point = me.pos + hud.touch_aim * SimData.COMBO.preview_reach
 		cmd.has_point = true
 	elif _mouse_t < MOUSE_IDLE and not hud.mobile:
-		var to := mouse_pos - me.pos
+		var world_pos: Vector2 = to_world.call(mouse_pos) if to_world.is_valid() else mouse_pos
+		var to := world_pos - me.pos
 		if to.length() > 6.0:
 			cmd.aim = to.normalized()
-		cmd.point = mouse_pos
+		cmd.point = world_pos
 		cmd.has_point = true
 	return cmd
