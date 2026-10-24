@@ -18,6 +18,16 @@ export function checkGodotResult(result, marker) {
   if (marker && !log.includes(marker)) throw Error('Godot 未完成：' + marker);
 }
 
+export function importShansi(project, run) {
+  // 全新归档尚无字体缓存；只在临时副本首次导入时取消主题的前置加载。
+  // 测试、通关和导出前按字节恢复原设置，仍严格检查全部引擎错误。
+  const path = join(project, 'project.godot'), original = readFileSync(path);
+  try {
+    writeFileSync(path, original.toString().replace(/^theme\/custom=.*$/m, 'theme/custom=""'));
+    run(['--import']);
+  } finally { writeFileSync(path, original); }
+}
+
 export function stageShansi(web, app, commit, source = repo) {
   mkdirSync(join(app, 'public'), { recursive: true }); mkdirSync(join(app, 'lib'));
   const names = readdirSync(web).filter(name => webAsset.test(name)).sort();
@@ -62,7 +72,7 @@ async function main() {
       const result = spawnSync(values.godot, ['--headless', '--path', project, ...args], { encoding: 'utf8', timeout: 180000, maxBuffer: 16 * 1024 * 1024 });
       process.stdout.write(result.stdout || ''); process.stderr.write(result.stderr || ''); checkGodotResult(result, marker);
     };
-    run(['--import']);
+    importShansi(project, run);
     run(['--script', 'res://tests/run_tests.gd'], '失败 0 项');
     run(['--', 'auto', 'quit'], '自动试玩结算');
     run(['--export-release', 'Web', join(web, 'index.html')]);

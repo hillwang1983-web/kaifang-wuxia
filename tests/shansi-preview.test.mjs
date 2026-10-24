@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync, readFileSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync, readFileSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { once } from 'node:events';
@@ -38,4 +38,18 @@ test('Godot 即使返回零也拒绝脚本错误和未到结算的冒烟结果',
   assert.throws(() => checkGodotResult({ status: 0, stdout: 'SCRIPT ERROR: broken', stderr: '' }), /SCRIPT ERROR/);
   assert.throws(() => checkGodotResult({ status: 0, stdout: 'started', stderr: '' }, '自动试玩结算'), /结算/);
   checkGodotResult({ status: 0, stdout: '自动试玩结算', stderr: '' }, '自动试玩结算');
+});
+
+test('首次导入仅临时取消主题依赖，成功或失败都恢复原始项目主题', async t => {
+  const { importShansi } = await import('../scripts/build-shansi-preview.mjs');
+  const project = mkdtempSync(join(tmpdir(), 'shansi-import-test-'));
+  t.after(() => rmSync(project, { recursive: true, force: true }));
+  writeFileSync(join(project, 'project.godot'), '[gui]\ntheme/custom="res://theme.tres"');
+  const original = readFileSync(join(project, 'project.godot'), 'utf8');
+  const importing = () => assert.match(readFileSync(join(project, 'project.godot'), 'utf8'), /theme\/custom=""/);
+  importShansi(project, importing);
+  assert.equal(existsSync(join(project, 'override.cfg')), false);
+  assert.throws(() => importShansi(project, () => { importing(); throw Error('import failed'); }), /import failed/);
+  assert.equal(existsSync(join(project, 'override.cfg')), false);
+  assert.equal(readFileSync(join(project, 'project.godot'), 'utf8'), original);
 });
