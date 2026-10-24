@@ -11,8 +11,9 @@ const DT := 1.0 / 60.0
 const BOUNDS := [Vector2(150, 226), Vector2(372, 214), Vector2(380, 150), Vector2(584, 150), Vector2(592, 214),
 	Vector2(770, 214), Vector2(842, 300), Vector2(846, 400), Vector2(780, 418), Vector2(270, 418),
 	Vector2(160, 344), Vector2(118, 290)]
-const TORCHES := [Vector2(262, 252), Vector2(706, 248), Vector2(806, 380)]
-const LOULUO := [Vector2(330, 290), Vector2(620, 286), Vector2(740, 350), Vector2(420, 250)]
+## 火把、喽啰都摆在手机操作区（Hud.MOBILE_ZONES）之外
+const TORCHES := [Vector2(262, 252), Vector2(690, 250), Vector2(330, 400)]
+const LOULUO := [Vector2(330, 290), Vector2(620, 286), Vector2(640, 270), Vector2(420, 250)]
 const START := Vector2(500, 400)
 const GATE := Vector2(482, 168)
 
@@ -74,6 +75,8 @@ func _ready() -> void:
 	hud.partner = jingxin
 	hud.boss = boss
 	layer.add_child(hud)
+	if hud.mobile:
+		world.bounds = mobile_bounds()
 	input = PlayerInput.new(hud)
 
 	freeze_rect = TextureRect.new()
@@ -95,6 +98,24 @@ func _ready() -> void:
 		dialogue.auto = true
 	_objectives()
 	_say(Story.shanmen_intro(sect))
+
+
+## 手机可走区 = 地面减去触屏操作区，人和红区不会钻到按键 / 摇杆底下
+static func mobile_bounds() -> PackedVector2Array:
+	var poly := PackedVector2Array(BOUNDS)
+	for z: Rect2 in Hud.MOBILE_ZONES:
+		var rect := PackedVector2Array([z.position, Vector2(z.end.x, z.position.y), z.end, Vector2(z.position.x, z.end.y)])
+		var parts := Geometry2D.clip_polygons(poly, rect)
+		parts.sort_custom(func(a, b): return _area(a) > _area(b))
+		poly = parts[0]
+	return poly
+
+
+static func _area(p: PackedVector2Array) -> float:
+	var s := 0.0
+	for i in p.size():
+		s += p[i].cross(p[(i + 1) % p.size()])
+	return absf(s) * 0.5
 
 
 func _unhandled_input(event: InputEvent) -> void:
