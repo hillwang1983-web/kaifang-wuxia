@@ -9,6 +9,11 @@ static func step(w: SimWorld, e: SimFighter, dt: float) -> void:
 	if not e.alive or e.state == "sit" or e.state == "wait" or e.state == "dead":
 		return
 	var k: Dictionary = SimData.ENEMIES[e.kind]
+	if k.get("prop", false):
+		return
+	if e.kind == "dulao":
+		_dulao(w, e, k, dt)
+		return
 	var target := _nearest_hero(w, e)
 	if e.kind == "xuancheng":
 		_boss_phase(w, e, k, dt)
@@ -161,11 +166,13 @@ static func _nearest_hero(w: SimWorld, e: SimFighter) -> SimFighter:
 	return best
 
 
-## 预警区判定：cone 扇形、circle 圆、line 直线冲刺、field 全场
-static func in_zone(a: Dictionary, origin: Vector2, face: Vector2, p: Vector2, r: float) -> bool:
+## 预警区判定：cone 扇形、circle 圆、line 直线冲刺、field 全场、spot 落点圆（point 为落点）
+static func in_zone(a: Dictionary, origin: Vector2, face: Vector2, p: Vector2, r: float, point := Vector2.INF) -> bool:
 	match a.shape:
 		"field":
 			return true
+		"spot":
+			return point != Vector2.INF and point.distance_to(p) <= a.radius + r
 		"circle":
 			return origin.distance_to(p) <= a.range + r
 		"cone":
@@ -175,3 +182,71 @@ static func in_zone(a: Dictionary, origin: Vector2, face: Vector2, p: Vector2, r
 			var along := to.dot(face)
 			return along >= -r and along <= a.range + r and absf(to.cross(face)) <= a.width + r
 	return false
+
+
+## 毒姥（Boss 二，规格书第六节）：本体带毒罩（减伤 95%），不追人，守在出生点附近；
+## 开战 10 秒后毒雾从边缘向内压（毒罩被震碎时暂停），阵法 / 合击圈里净化；
+## 毒蛊：点一名英雄脚下，0.8 秒红区预警后留毒池 15 秒；摄魂指：读条 1.5 秒，点名定身 3 秒（截脉可解）。
+static func _dulao(w: SimWorld, e: SimFighter, k: Dictionary, dt: float) -> void:
+	if e.state == "idle":
+		e.state = "chase"
+	e.in_combat = true
+	var ft: float = e.timers.get("fight", 0.0) + dt
+	e.timers["fight"] = ft
+	if ft >= k.fog_delay:
+		if w.fog.is_empty():
+			w.fog = {"center": e.home, "r": k.fog_max, "r_max": k.fog_max, "r_min": k.fog_min, "pct": k.fog_pct, "tick": 0.0}
+			w.emit("fog_start", {"id": e.id, "pos": e.home})
+		# 毒雾一直往里压到只剩中心一小块；毒罩被震碎时暂停，只有阵法 / 合击圈里是净的
+		var span: float = w.fog.r_max - w.fog.r_min
+		if e.ward_t <= 0.0:
+			w.fog.r = maxf(w.fog.r_min, w.fog.r - span / k.fog_shrink * dt)
+	match e.state:
+		"flinch":
+			e.t += dt
+			if e.t >= 0.18:
+				e.state = "chase"
+		"stagger":
+			if e.stagger_t <= 0.0:
+				e.state = "chase"
+		"chase":
+			var to_home := e.home - e.pos
+			if to_home.length() > 30.0 and e.root_t <= 0.0:
+				w._move(e, to_home.normalized() * e.speed * dt)
+				e.moving = true
+			e.timers["gu"] = e.timers.get("gu", 2.0) - dt
+			e.timers["soul"] = e.timers.get("soul", 7.0) - dt
+			var targets := w.heroes()
+			if targets.is_empty():
+				return
+			var tgt: SimFighter = targets[w.rng.randi_range(0, targets.size() - 1)]
+			e.facing = (tgt.pos - e.pos).normalized()
+			if e.timers.soul <= 0.0:
+				e.timers["soul"] = k.soul_every
+				e.target_id = tgt.id
+				_begin(w, e, "soul", k.attacks.soul, "cast")
+			elif e.timers.gu <= 0.0:
+				e.timers["gu"] = k.gu_every
+				e.aim_point = tgt.pos + Vector2(w.rng.randf_range(-24.0, 24.0), w.rng.randf_range(-16.0, 16.0))
+				_begin(w, e, "gu", k.attacks.gu, "windup")
+		"windup":
+			e.t += dt
+			if e.t >= e.atk.tele:
+				w.pools.append({"owner": e.id, "team": SimFighter.FOES, "pos": e.aim_point, "radius": e.atk.radius,
+					"t": e.atk.pool_time, "dps": e.atk.pool_dps, "slow": 0.0, "tick": 0.0, "skill": "gu"})
+				w.emit("strike", {"id": e.id, "atk": "gu", "pos": e.aim_point, "dir": e.facing})
+				_recover(e)
+		"cast":
+			e.t += dt
+			if e.t >= e.atk.cast:
+				var victim := w.fighter(e.target_id)
+				if victim and victim.alive:
+					victim.root_t = maxf(victim.root_t, e.atk.root)
+					w.emit("rooted", {"id": victim.id, "pos": victim.pos, "by": e.id})
+				_recover(e)
+		"recover":
+			e.t += dt
+			if e.t >= e.atk.get("rec", 0.5):
+				e.state = "chase"
+				e.atk = {}
+				e.atk_id = ""

@@ -1,0 +1,146 @@
+[
+  {
+    "role": "xuancheng",
+    "name": "玄诚",
+    "row": 14,
+    "file": "assets/ref/ref_boss_xuancheng_down_v01.png",
+    "frame": [
+      64,
+      80
+    ],
+    "anchor": [
+      32,
+      76
+    ],
+    "contact_points": [
+      [
+        24,
+        76
+      ],
+      [
+        40,
+        76
+      ]
+    ],
+    "offset": [
+      15,
+      25
+    ],
+    "body_height": 53,
+    "stage": "front_reference",
+    "fps": null,
+    "directions": [
+      "down"
+    ],
+    "animation_delivered": false,
+    "source": "assets/ref/ref_xuancheng_source_v01.png"
+  },
+  {
+    "role": "jingxin",
+    "name": "净心",
+    "row": 12,
+    "file": "assets/ref/ref_npc_jingxin_down_v01.png",
+    "frame": [
+      48,
+      64
+    ],
+    "anchor": [
+      24,
+      60
+    ],
+    "contact_points": [
+      [
+        17,
+        60
+      ],
+      [
+        31,
+        60
+      ]
+    ],
+    "offset": [
+      9,
+      22
+    ],
+    "body_height": 39,
+    "stage": "front_reference",
+    "fps": null,
+    "directions": [
+      "down"
+    ],
+    "animation_delivered": false,
+    "source": "assets/ref/ref_jingxin_source_v01.png"
+  },
+  {
+    "role": "louluo",
+    "name": "邪派喽啰",
+    "row": 13,
+    "file": "assets/ref/ref_npc_louluo_down_v01.png",
+    "frame": [
+      48,
+      64
+    ],
+    "anchor": [
+      24,
+      60
+    ],
+    "contact_points": [
+      [
+        17,
+        60
+      ],
+      [
+        31,
+        60
+      ]
+    ],
+    "offset": [
+      4,
+      20
+    ],
+    "body_height": 41,
+    "stage": "front_reference",
+    "fps": null,
+    "directions": [
+      "down"
+    ],
+    "animation_delivered": false,
+    "source": "assets/ref/ref_louluo_source_v01.png"
+  },
+  {
+    "role": "xiepai",
+    "name": "邪派玩家",
+    "row": 10,
+    "file": "assets/ref/ref_chr_xiepai_down_v01.png",
+    "frame": [
+      48,
+      64
+    ],
+    "anchor": [
+      24,
+      60
+    ],
+    "contact_points": [
+      [
+        17,
+        60
+      ],
+      [
+        31,
+        60
+      ]
+    ],
+    "offset": [
+      4,
+      20
+    ],
+    "body_height": 41,
+    "stage": "front_reference",
+    "fps": null,
+    "directions": [
+      "down"
+    ],
+    "animation_delivered": false,
+    "source": "assets/ref/ref_xiepai_source_v01.png"
+  }
+]

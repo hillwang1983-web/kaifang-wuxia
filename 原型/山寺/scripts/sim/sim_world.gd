@@ -9,6 +9,9 @@ var fighters: Array[SimFighter] = []
 var projectiles: Array = []   # {owner, pos, vel, life, dmg, hit}
 var pools: Array = []         # {owner, pos, radius, t, dps, slow, tick}
 var interactables: Array = [] # {id, kind, pos, on}
+var fog := {}                 # 毒雾 {center, r, r_max, r_min}；空 = 没有
+var safe_zones: Array = []    # 净化区 {pos, radius, t}：阵法 / 合击破罩时圈内不受毒雾
+var formation_enabled := false  # 三人阵法（随 Boss 二启用）
 var events: Array = []        # 给画面 / 剧情的一次性事件，消费方读完自己清空
 var time := 0.0
 var freeze_t := 0.0           # 合击成立定格，期间世界不动
@@ -39,16 +42,16 @@ func add_hero(kind: String, sect: String, utility: String, at: Vector2) -> SimFi
 	f.sect = sect
 	f.skills = SimData.SECTS[sect].skills.duplicate()
 	f.utility = utility
-	f.name = "净心" if kind == "partner" else "你"
+	f.name = "净心" if kind == "partner" else (SimData.PARTY.third.name if kind == "ally" else "你")
 	f.pos = at
 	f.radius = P.radius
 	f.speed = P.speed
-	f.max_hp = SimData.PARTNER.hp if kind == "partner" else P.hp
+	f.max_hp = SimData.PARTNER.hp if kind != "player" else P.hp
 	f.hp = f.max_hp
 	f.max_qi = P.qi
 	f.qi = f.max_qi
 	f.sp = P.sp
-	f.dmg_scale = SimData.PARTNER.dmg_scale if kind == "partner" else 1.0
+	f.dmg_scale = SimData.PARTNER.dmg_scale if kind != "player" else 1.0
 	f.base_hp = f.max_hp
 	f.base_qi = f.max_qi
 	f.base_speed = f.speed
@@ -133,6 +136,7 @@ func step(dt: float, commands: Dictionary) -> void:
 	for f in fighters:
 		_tick(f, dt)
 	_apply_pools(dt)
+	_apply_fog(dt)
 	for f in fighters:
 		if f.is_hero() and f.alive:
 			var cmd: SimCommand = commands.get(f.id, SimCommand.new())
@@ -155,6 +159,7 @@ func _tick(f: SimFighter, dt: float) -> void:
 	f.stagger_t = maxf(0.0, f.stagger_t - dt)
 	f.hurt_t = maxf(0.0, f.hurt_t - dt)
 	f.flash_t = maxf(0.0, f.flash_t - dt)
+	f.ward_t = maxf(0.0, f.ward_t - dt)
 	f.swing_t = maxf(0.0, f.swing_t - dt)
 	f.slow = 0.0
 	if f.combo_t > 0.0:
@@ -396,6 +401,10 @@ func _cast(f: SimFighter, skill: String, charge: float, free := false) -> void:
 					h.qi = minf(h.max_qi, h.qi + s.share_qi)
 					emit("share", {"from": f.id, "to": h.id})
 		"jiemai":
+			var freed := _jiemai_cleanse(f, s.range)
+			if freed:
+				emit("cleanse", {"id": freed.id, "by": f.id, "pos": freed.pos})
+				return
 			var target := _jiemai_target(f, s.range)
 			if target:
 				f.facing = (target.pos - f.pos).normalized()
@@ -452,6 +461,9 @@ func damage(src: SimFighter, target: SimFighter, amount: float, opts := {}) -> f
 	var guarded: bool = k.get("stance", false) and target.state != "stagger" and not opts.get("skill", false) and not opts.get("dot", false)
 	if guarded:
 		amt *= k.stance_cut
+	var warded: bool = k.has("ward_cut") and target.ward_t <= 0.0 and target.active()
+	if warded:
+		amt *= 1.0 - float(k.ward_cut)
 	if target.shield > 0.0:
 		var absorbed := minf(target.shield, amt)
 		target.shield -= absorbed
@@ -461,7 +473,7 @@ func damage(src: SimFighter, target: SimFighter, amount: float, opts := {}) -> f
 	target.hp -= amt
 	target.flash_t = 0.12
 	emit("hit", {"id": target.id, "src": src.id if src else -1, "pos": target.pos, "amount": roundi(amt),
-		"heavy": opts.get("heavy", false) or opts.get("skill", false), "guarded": guarded,
+		"heavy": opts.get("heavy", false) or opts.get("skill", false), "guarded": guarded, "warded": warded,
 		"dot": opts.get("dot", false), "dir": opts.get("dir", Vector2.ZERO), "crit": crit})
 	if target.is_hero():
 		_hero_hurt(target, amt, src)
@@ -492,6 +504,8 @@ func _hero_hurt(f: SimFighter, amt: float, src: SimFighter) -> void:
 
 func _foe_hurt(src: SimFighter, e: SimFighter, opts: Dictionary) -> void:
 	var k: Dictionary = SimData.ENEMIES[e.kind]
+	if k.get("prop", false):
+		return
 	e.in_combat = true
 	if e.state == "idle":
 		e.state = "chase"
@@ -509,7 +523,7 @@ func _foe_hurt(src: SimFighter, e: SimFighter, opts: Dictionary) -> void:
 	# 喽啰的出刀预兆，任何招式都能打断；玄诚只认截脉与合击
 	if not k.stance and opts.get("skill", false) and e.state == "windup":
 		interrupting = true
-	if interrupting and (e.state == "windup" or e.state == "cast"):
+	if interrupting and (e.state == "windup" or e.state == "cast") and not e.atk.get("no_interrupt", false):
 		interrupt(e, src)
 	elif opts.get("stagger", 0.0) > 0.0:
 		stagger(e, opts.stagger)
@@ -544,10 +558,13 @@ func _down(f: SimFighter) -> void:
 	f.hp = 0.0
 	if not f.is_hero():
 		_drop_loot(f)
-	if f.kind == "xuancheng":
+	if SimData.ENEMIES.get(f.kind, {}).get("boss", false):
 		f.state = "sit"
 		f.atk = {}
-		emit("boss_sit", {"id": f.id, "pos": f.pos})
+		if f.kind == "dulao":
+			fog = {}
+			safe_zones.clear()
+		emit("boss_sit", {"id": f.id, "kind": f.kind, "pos": f.pos})
 	else:
 		f.alive = false
 		f.state = "dead"
@@ -580,12 +597,63 @@ func _apply_pools(dt: float) -> void:
 		var ticking: bool = pool.tick >= 0.5
 		if ticking:
 			pool.tick -= 0.5
-		for e in foes():
+		var victims: Array[SimFighter] = heroes() if pool.get("team", SimFighter.HEROES) == SimFighter.FOES else foes()
+		for e in victims:
 			if e.pos.distance_to(pool.pos) <= pool.radius + e.radius:
 				e.slow = maxf(e.slow, pool.slow)
 				if ticking:
 					damage(fighter(pool.owner), e, pool.dps * 0.5, {"dot": true})
 	pools = pools.filter(func(p): return p.t > 0.0)
+
+
+## 毒雾：圈外每 0.5 秒掉一次最大生命的百分比；净化区里不掉
+func _apply_fog(dt: float) -> void:
+	for z in safe_zones:
+		z.t -= dt
+	safe_zones = safe_zones.filter(func(z): return z.t > 0.0)
+	if fog.is_empty():
+		return
+	fog.tick = fog.get("tick", 0.0) + dt
+	if fog.tick < 0.5:
+		return
+	fog.tick -= 0.5
+	for h in heroes():
+		if in_fog(h.pos):
+			damage(null, h, h.max_hp * fog.pct / 100.0 * 0.5, {"dot": true, "fog": true})
+
+
+func in_fog(p: Vector2) -> bool:
+	if fog.is_empty() or p.distance_to(fog.center) <= fog.r:
+		return false
+	for z in safe_zones:
+		if p.distance_to(z.pos) <= z.radius:
+			return false
+	return true
+
+
+## 合击 / 阵法成立：震碎附近带毒罩敌人的罩子，并在光圈处留一块净化区
+func break_wards(point: Vector2, radius: float, secs: float) -> void:
+	var hit := false
+	for e in foes():
+		var k: Dictionary = SimData.ENEMIES[e.kind]
+		if k.has("ward_cut") and e.pos.distance_to(point) <= SimData.COMBO.break_reach:
+			e.ward_t = maxf(e.ward_t, secs)
+			hit = true
+			emit("ward_break", {"id": e.id, "pos": e.pos, "secs": secs})
+	if hit or not fog.is_empty():
+		safe_zones.append({"pos": point, "radius": radius, "t": secs})
+
+
+## 截脉解穴：自己被定身先解自己，否则解射程内被定身的队友
+func _jiemai_cleanse(f: SimFighter, reach: float) -> SimFighter:
+	if f.root_t > 0.0:
+		f.root_t = 0.0
+		return f
+	for h in heroes():
+		if h != f and h.root_t > 0.0 and h.pos.distance_to(f.pos) <= reach:
+			h.root_t = 0.0
+			return h
+	return null
 
 
 # ---------- 几何与移动 ----------

@@ -45,7 +45,7 @@ func _ready() -> void:
 	world.waypoints.assign(GATE_PATH)
 	me = world.add_hero("player", sect, utility, START)
 	me.facing = Vector2.UP
-	jingxin = world.add_hero("partner", "shaolin", "", START + Vector2(-40, 4))
+	jingxin = world.add_hero("partner", "shaolin", SimData.PARTY.ai_utility, START + Vector2(-40, 4))
 	jingxin.facing = Vector2.UP
 	for p in TORCHES:
 		world.add_interactable("torch", p)

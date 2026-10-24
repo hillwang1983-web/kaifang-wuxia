@@ -1,0 +1,177 @@
+{
+  "status": "PASS",
+  "checked_at_utc": "2026-10-24T06:56:20.528723+00:00",
+  "assets": [
+    {
+      "role": "xuancheng",
+      "file": "assets/ref/ref_boss_xuancheng_down_v01.png",
+      "status": "PASS",
+      "frame": [
+        64,
+        80
+      ],
+      "frames": 1,
+      "direction": "down",
+      "opaque_colors": 15,
+      "alpha": [
+        0,
+        255
+      ],
+      "bbox": [
+        15,
+        25,
+        54,
+        78
+      ],
+      "anchor": [
+        32,
+        76
+      ],
+      "contact_points": [
+        [
+          24,
+          76
+        ],
+        [
+          40,
+          76
+        ]
+      ],
+      "exact_8x": "PASS",
+      "no_canvas_clipping": true,
+      "source_preserved": true,
+      "pure_black_or_magenta": false,
+      "sha256": "1c512bb48e7ad86d5091c2672230dad1dfd14a4854ffef9ae1cd7866972b9d9a"
+    },
+    {
+      "role": "jingxin",
+      "file": "assets/ref/ref_npc_jingxin_down_v01.png",
+      "status": "PASS",
+      "frame": [
+        48,
+        64
+      ],
+      "frames": 1,
+      "direction": "down",
+      "opaque_colors": 14,
+      "alpha": [
+        0,
+        255
+      ],
+      "bbox": [
+        9,
+        22,
+        42,
+        61
+      ],
+      "anchor": [
+        24,
+        60
+      ],
+      "contact_points": [
+        [
+          17,
+          60
+        ],
+        [
+          31,
+          60
+        ]
+      ],
+      "exact_8x": "PASS",
+      "no_canvas_clipping": true,
+      "source_preserved": true,
+      "pure_black_or_magenta": false,
+      "sha256": "355798eedfe7fb3e10232dd945e467affc21e0187a42916ccc7e33f7a59b349a"
+    },
+    {
+      "role": "louluo",
+      "file": "assets/ref/ref_npc_louluo_down_v01.png",
+      "status": "PASS",
+      "frame": [
+        48,
+        64
+      ],
+      "frames": 1,
+      "direction": "down",
+      "opaque_colors": 15,
+      "alpha": [
+        0,
+        255
+      ],
+      "bbox": [
+        4,
+        20,
+        34,
+        61
+      ],
+      "anchor": [
+        24,
+        60
+      ],
+      "contact_points": [
+        [
+          17,
+          60
+        ],
+        [
+          31,
+          60
+        ]
+      ],
+      "exact_8x": "PASS",
+      "no_canvas_clipping": true,
+      "source_preserved": true,
+      "pure_black_or_magenta": false,
+      "sha256": "f3a800ff62b36efd403afa5c884aba5ab2ace56fe7d672798f6b957c161df02e"
+    },
+    {
+      "role": "xiepai",
+      "file": "assets/ref/ref_chr_xiepai_down_v01.png",
+      "status": "PASS",
+      "frame": [
+        48,
+        64
+      ],
+      "frames": 1,
+      "direction": "down",
+      "opaque_colors": 15,
+      "alpha": [
+        0,
+        255
+      ],
+      "bbox": [
+        5,
+        20,
+        34,
+        61
+      ],
+      "anchor": [
+        24,
+        60
+      ],
+      "contact_points": [
+        [
+          17,
+          60
+        ],
+        [
+          31,
+          60
+        ]
+      ],
+      "exact_8x": "PASS",
+      "no_canvas_clipping": true,
+      "source_preserved": true,
+      "pure_black_or_magenta": false,
+      "sha256": "bf12414fb0e3cb0f702283be9ed6d75174abb9c088ffe97c37308d8ac192719b"
+    }
+  ],
+  "visual_review": "逐张原图、8倍灰底、五角色同尺度和山门静态合成已检查。玄诚短发茬、黑半臂褐红袍与长棍；净心清瘦少年光头无戒疤；喽啰短打蒙面短刀；邪派玩家墨黑紫绿长衣和单刀。",
+  "limitations": [
+    "只交四个角色正面静立定妆各1帧，未交动画。",
+    "邪派玩家是外衣/刀的造型参考，未作为已对齐少林身体的正式叠层；第11条头部动画叠层仍未交。",
+    "玄诚左鞋最外缘比脚底参考接触线低1px；JSON接触参考点中点固定(32,76)，后续所有动作保持同一根锚点。",
+    "静态合成不是Godot或手机实机验收；各角色动画等各自开发确认。"
+  ]
+}

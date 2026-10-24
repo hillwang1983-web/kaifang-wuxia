@@ -1,55 +1,510 @@
 {
   "_说明": "装备与掉落数值表（规格书第七节）。物品 = 底子 + 品质 + 词缀。数值全部待试玩标定；改这里不用动代码。",
   "quality": {
-    "normal": {"name": "普通", "weight": 5, "affixes": [0, 0], "color": "#C8C8C8"},
-    "magic": {"name": "魔法", "weight": 4, "affixes": [1, 2], "color": "#4FA3FF"},
-    "rare": {"name": "稀有", "weight": 1, "affixes": [3, 4], "color": "#FFD54F"}
+    "normal": {
+      "name": "普通",
+      "weight": 5,
+      "affixes": [
+        0,
+        0
+      ],
+      "color": "#C8C8C8"
+    },
+    "magic": {
+      "name": "魔法",
+      "weight": 4,
+      "affixes": [
+        1,
+        2
+      ],
+      "color": "#4FA3FF"
+    },
+    "rare": {
+      "name": "稀有",
+      "weight": 1,
+      "affixes": [
+        3,
+        4
+      ],
+      "color": "#FFD54F"
+    }
   },
-  "tier_weights": [6, 3, 1],
+  "tier_weights": [
+    6,
+    3,
+    1
+  ],
   "bases": {
-    "gun": {"name": "齐眉棍", "slot": "weapon", "size": [1, 3], "stats": {"atk_flat": [8, 14]}},
-    "dao": {"name": "单刀", "slot": "weapon", "size": [1, 3], "stats": {"atk_flat": [10, 16]}},
-    "xiujian": {"name": "袖箭", "slot": "weapon", "size": [1, 3], "stats": {"atk_flat": [6, 10], "atk_speed": [5, 10]}},
-    "sengpao": {"name": "僧袍", "slot": "armor", "size": [2, 2], "stats": {"max_hp": [40, 80], "qi_regen": [1, 2]}},
-    "pijia": {"name": "皮甲", "slot": "armor", "size": [2, 2], "stats": {"max_hp": [80, 130]}},
-    "ruanjia": {"name": "软甲", "slot": "armor", "size": [2, 2], "stats": {"max_hp": [60, 100], "move_speed": [3, 6]}},
-    "fozhu": {"name": "佛珠", "slot": "accessory", "size": [1, 1], "stats": {"max_qi": [10, 30]}},
-    "yupei": {"name": "玉佩", "slot": "accessory", "size": [1, 1], "stats": {"hp_regen": [1, 3]}}
+    "gun": {
+      "name": "齐眉棍",
+      "slot": "weapon",
+      "size": [
+        1,
+        3
+      ],
+      "stats": {
+        "atk_flat": [
+          8,
+          14
+        ]
+      }
+    },
+    "dao": {
+      "name": "单刀",
+      "slot": "weapon",
+      "size": [
+        1,
+        3
+      ],
+      "stats": {
+        "atk_flat": [
+          10,
+          16
+        ]
+      }
+    },
+    "xiujian": {
+      "name": "袖箭",
+      "slot": "weapon",
+      "size": [
+        1,
+        3
+      ],
+      "stats": {
+        "atk_flat": [
+          6,
+          10
+        ],
+        "atk_speed": [
+          5,
+          10
+        ]
+      }
+    },
+    "sengpao": {
+      "name": "僧袍",
+      "slot": "armor",
+      "size": [
+        2,
+        2
+      ],
+      "stats": {
+        "max_hp": [
+          40,
+          80
+        ],
+        "qi_regen": [
+          1,
+          2
+        ]
+      }
+    },
+    "pijia": {
+      "name": "皮甲",
+      "slot": "armor",
+      "size": [
+        2,
+        2
+      ],
+      "stats": {
+        "max_hp": [
+          80,
+          130
+        ]
+      }
+    },
+    "ruanjia": {
+      "name": "软甲",
+      "slot": "armor",
+      "size": [
+        2,
+        2
+      ],
+      "stats": {
+        "max_hp": [
+          60,
+          100
+        ],
+        "move_speed": [
+          3,
+          6
+        ]
+      }
+    },
+    "fozhu": {
+      "name": "佛珠",
+      "slot": "accessory",
+      "size": [
+        1,
+        1
+      ],
+      "stats": {
+        "max_qi": [
+          10,
+          30
+        ]
+      }
+    },
+    "yupei": {
+      "name": "玉佩",
+      "slot": "accessory",
+      "size": [
+        1,
+        1
+      ],
+      "stats": {
+        "hp_regen": [
+          1,
+          3
+        ]
+      }
+    }
   },
   "consumables": {
-    "pill": {"name": "丹药", "size": [1, 1], "stack": 20, "heal": 300, "cd": 5}
+    "pill": {
+      "name": "丹药",
+      "size": [
+        1,
+        1
+      ],
+      "stack": 20,
+      "heal": 300,
+      "cd": 5
+    }
   },
   "stats": {
-    "atk_flat": {"name": "攻击", "fmt": "+%d"},
-    "atk": {"name": "攻击力", "fmt": "+%d%%"},
-    "atk_speed": {"name": "攻速", "fmt": "+%d%%"},
-    "crit": {"name": "暴击率", "fmt": "+%d%%"},
-    "max_qi": {"name": "内力上限", "fmt": "+%d"},
-    "qi_regen": {"name": "内力回复", "fmt": "+%.1f/秒"},
-    "max_hp": {"name": "生命上限", "fmt": "+%d"},
-    "hp_regen": {"name": "生命回复", "fmt": "+%.1f/秒"},
-    "move_speed": {"name": "移速", "fmt": "+%d%%"},
-    "poison": {"name": "毒伤加成", "fmt": "+%d%%"},
-    "shield": {"name": "护盾强度", "fmt": "+%d%%"},
-    "combo_dmg": {"name": "合击伤害加成", "fmt": "+%d%%"},
-    "moqi_gain": {"name": "默契获取加成", "fmt": "+%d%%"}
+    "atk_flat": {
+      "name": "攻击",
+      "fmt": "+%d"
+    },
+    "atk": {
+      "name": "攻击力",
+      "fmt": "+%d%%"
+    },
+    "atk_speed": {
+      "name": "攻速",
+      "fmt": "+%d%%"
+    },
+    "crit": {
+      "name": "暴击率",
+      "fmt": "+%d%%"
+    },
+    "max_qi": {
+      "name": "内力上限",
+      "fmt": "+%d"
+    },
+    "qi_regen": {
+      "name": "内力回复",
+      "fmt": "+%.1f/秒"
+    },
+    "max_hp": {
+      "name": "生命上限",
+      "fmt": "+%d"
+    },
+    "hp_regen": {
+      "name": "生命回复",
+      "fmt": "+%.1f/秒"
+    },
+    "move_speed": {
+      "name": "移速",
+      "fmt": "+%d%%"
+    },
+    "poison": {
+      "name": "毒伤加成",
+      "fmt": "+%d%%"
+    },
+    "shield": {
+      "name": "护盾强度",
+      "fmt": "+%d%%"
+    },
+    "combo_dmg": {
+      "name": "合击伤害加成",
+      "fmt": "+%d%%"
+    },
+    "moqi_gain": {
+      "name": "默契获取加成",
+      "fmt": "+%d%%"
+    }
   },
   "affixes": {
-    "atk": {"tiers": [[4, 6], [7, 10], [11, 15]], "slots": ["weapon", "accessory"]},
-    "atk_speed": {"tiers": [[3, 5], [6, 9], [10, 14]], "slots": ["weapon", "accessory"]},
-    "crit": {"tiers": [[2, 4], [5, 7], [8, 12]], "slots": ["weapon", "accessory"]},
-    "max_qi": {"tiers": [[10, 20], [21, 35], [36, 50]], "slots": ["armor", "accessory"]},
-    "qi_regen": {"tiers": [[0.5, 1.0], [1.5, 2.0], [2.5, 3.0]], "slots": ["weapon", "armor", "accessory"]},
-    "max_hp": {"tiers": [[30, 60], [61, 100], [101, 150]], "slots": ["armor", "accessory"]},
-    "hp_regen": {"tiers": [[1, 2], [3, 4], [5, 6]], "slots": ["armor", "accessory"]},
-    "move_speed": {"tiers": [[3, 5], [6, 8], [9, 12]], "slots": ["armor"]},
-    "poison": {"tiers": [[10, 15], [16, 25], [26, 40]], "slots": ["weapon", "accessory"]},
-    "shield": {"tiers": [[10, 15], [16, 25], [26, 40]], "slots": ["armor", "accessory"]},
-    "combo_dmg": {"tiers": [[8, 12], [13, 20], [21, 30]], "slots": ["weapon", "accessory"]},
-    "moqi_gain": {"tiers": [[10, 15], [16, 25], [26, 40]], "slots": ["armor", "accessory"]}
+    "atk": {
+      "tiers": [
+        [
+          4,
+          6
+        ],
+        [
+          7,
+          10
+        ],
+        [
+          11,
+          15
+        ]
+      ],
+      "slots": [
+        "weapon",
+        "accessory"
+      ]
+    },
+    "atk_speed": {
+      "tiers": [
+        [
+          3,
+          5
+        ],
+        [
+          6,
+          9
+        ],
+        [
+          10,
+          14
+        ]
+      ],
+      "slots": [
+        "weapon",
+        "accessory"
+      ]
+    },
+    "crit": {
+      "tiers": [
+        [
+          2,
+          4
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          8,
+          12
+        ]
+      ],
+      "slots": [
+        "weapon",
+        "accessory"
+      ]
+    },
+    "max_qi": {
+      "tiers": [
+        [
+          10,
+          20
+        ],
+        [
+          21,
+          35
+        ],
+        [
+          36,
+          50
+        ]
+      ],
+      "slots": [
+        "armor",
+        "accessory"
+      ]
+    },
+    "qi_regen": {
+      "tiers": [
+        [
+          0.5,
+          1.0
+        ],
+        [
+          1.5,
+          2.0
+        ],
+        [
+          2.5,
+          3.0
+        ]
+      ],
+      "slots": [
+        "weapon",
+        "armor",
+        "accessory"
+      ]
+    },
+    "max_hp": {
+      "tiers": [
+        [
+          30,
+          60
+        ],
+        [
+          61,
+          100
+        ],
+        [
+          101,
+          150
+        ]
+      ],
+      "slots": [
+        "armor",
+        "accessory"
+      ]
+    },
+    "hp_regen": {
+      "tiers": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "slots": [
+        "armor",
+        "accessory"
+      ]
+    },
+    "move_speed": {
+      "tiers": [
+        [
+          3,
+          5
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          9,
+          12
+        ]
+      ],
+      "slots": [
+        "armor"
+      ]
+    },
+    "poison": {
+      "tiers": [
+        [
+          10,
+          15
+        ],
+        [
+          16,
+          25
+        ],
+        [
+          26,
+          40
+        ]
+      ],
+      "slots": [
+        "weapon",
+        "accessory"
+      ]
+    },
+    "shield": {
+      "tiers": [
+        [
+          10,
+          15
+        ],
+        [
+          16,
+          25
+        ],
+        [
+          26,
+          40
+        ]
+      ],
+      "slots": [
+        "armor",
+        "accessory"
+      ]
+    },
+    "combo_dmg": {
+      "tiers": [
+        [
+          8,
+          12
+        ],
+        [
+          13,
+          20
+        ],
+        [
+          21,
+          30
+        ]
+      ],
+      "slots": [
+        "weapon",
+        "accessory"
+      ]
+    },
+    "moqi_gain": {
+      "tiers": [
+        [
+          10,
+          15
+        ],
+        [
+          16,
+          25
+        ],
+        [
+          26,
+          40
+        ]
+      ],
+      "slots": [
+        "armor",
+        "accessory"
+      ]
+    }
   },
   "drops": {
-    "louluo": {"coin": [5, 15], "pill_chance": 0.4},
-    "xuancheng": {"slot": "weapon"}
+    "louluo": {
+      "coin": [
+        5,
+        15
+      ],
+      "pill_chance": 0.4
+    },
+    "xuancheng": {
+      "slot": "weapon"
+    },
+    "dulao": {
+      "slot": "armor"
+    },
+    "crate": {
+      "coin": [
+        2,
+        6
+      ],
+      "pill_chance": 0.25,
+      "part_chance": 0.0
+    },
+    "jar": {
+      "coin": [
+        1,
+        4
+      ],
+      "pill_chance": 0.35,
+      "part_chance": 0.0
+    }
+  },
+  "parts": {
+    "_说明": "弩车零件（阶段 D）：可破坏物按 part_chance 掉，暂为 0",
+    "list": [
+      "chassis",
+      "arm",
+      "winch"
+    ]
   }
 }

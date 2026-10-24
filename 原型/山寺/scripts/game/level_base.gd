@@ -42,12 +42,12 @@ func setup(sect_id: String, utility_id: String) -> void:
 
 
 ## 子类先建好 world / me / jingxin，再调这个把画面和界面挂上
-func build_scene(background: String, foreground := "") -> void:
+func build_scene(background: Variant, foreground := "") -> void:
 	ai = SimPartnerAI.new(world, jingxin.id, me.id)
 	view = WorldView.new()
 	view.world = world
 	view.me_id = me.id
-	view.background = UiKit.tex(background)
+	view.background = background if background is Texture2D else UiKit.tex(background)
 	if foreground != "":
 		view.foreground = UiKit.tex(foreground)
 	add_child(view)
@@ -115,12 +115,21 @@ func build_scene(background: String, foreground := "") -> void:
 	camera.reset_smoothing()
 
 
+## 物品栏开关放在 _input（早于界面和 _unhandled_input），按下就处理，不和别的节点抢事件。
+## 打不开时在控制台留一条原因，方便以后复现「第一次按 Tab 偶尔打不开」。
+func _input(event: InputEvent) -> void:
+	if not event.is_action_pressed("inventory", false, true) or inventory_ui == null or inventory_ui.visible:
+		return
+	var why := "对话中" if dialogue.visible else ("已暂停" if paused else ("已结算" if stage == "end" else ""))
+	if why != "":
+		push_warning("物品栏没打开：%s" % why)
+		return
+	open_inventory()
+	get_viewport().set_input_as_handled()
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	input.feed(event)
-	if event.is_action_pressed("inventory") and not dialogue.visible and not paused and stage != "end":
-		open_inventory()
-		get_viewport().set_input_as_handled()
-		return
 	if event.is_action_pressed("pause") or (event.is_action_pressed("cancel") and me.state != "charge" and me.state != "aim" and world.combo.preview.is_empty()):
 		if not dialogue.visible and stage != "end":
 			_set_paused(not paused)
@@ -147,6 +156,7 @@ func _physics_process(dt: float) -> void:
 	var cmds := {me.id: pc}
 	if partner_active:
 		cmds[jingxin.id] = ai.command(DT)
+	cmds.merge(extra_commands())
 	world.step(DT, cmds)
 	_item_events(world.events)
 	level_events(world.events)
@@ -205,6 +215,11 @@ func save_profile() -> void:
 
 func auto_command() -> SimCommand:
 	return auto_ai.command(DT)
+
+
+## 更多 AI 队友（藏经阁的第三人）的指令
+func extra_commands() -> Dictionary:
+	return {}
 
 
 func level_events(_events: Array) -> void:

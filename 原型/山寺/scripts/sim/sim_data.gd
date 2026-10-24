@@ -64,21 +64,51 @@ const PASSIVE := {
 	"poison_stacks": 3, "poison_dps": 20.0, "poison_time": 4.0,
 }
 
-## 双人合击与默契（规格书第四节）
+## 双人合击、三人阵法与默契（规格书第四节）。合击与阵法共用一套默契等级与反馈。
 const COMBO := {
 	"window": 3.0, "cd": 10.0, "freeze": 0.45,
 	"preview_reach": 160.0, "preview_default": 70.0,
 	"radius": [56.0, 76.0, 104.0], "mult": [1.0, 1.5, 2.0], "dmg": 150,
 	"streak_gap": 30.0, "stagger": 2.0,
+	# 三人阵法「金刚伏魔圈」：圈更大、伤害 ×1.5；两名响应者都进圈才成立
+	"formation_radius": [96.0, 116.0, 144.0], "formation_mult": 1.5,
+	# 破毒罩：阵法 10 秒、合击 5 秒；破罩期间光圈处净化毒雾
+	"break_formation": 10.0, "break_combo": 5.0, "break_reach": 420.0,
+	# 阵法成立后下一次要等 16 秒：10 秒破罩窗口过后，毒罩恢复、毒雾回压，大家得撤开、重攒默契再摆阵
+	"formation_cd": 16.0,
+}
+
+## 队伍配置。第三人：用户 2026-10-24 拍板用临时 AI 侠客，和净心同一套 AI，藏经阁入口加入。
+## enabled 关掉就只有玩家与净心（阵法用不了，只能合击破罩）。以后换方案只改这里。
+const PARTY := {
+	"third": {"enabled": true, "kind": "ally", "name": "韩青", "title": "游方侠客", "sect": "shaolin",
+		"utility": "jiemai", "join_line": "路过听见打斗——这阵势一个人摆不开，算我一个。"},
+	# AI 队友带截脉，只用来给被定身的人解穴，不替玩家打断 Boss 读条
+	"ai_utility": "jiemai",
 }
 
 ## 敌人。tele 为预警时长（规格书：可闪避攻击前 0.8 秒），cast 为可打断读条。
+## prop 为可破坏物（木箱、酒坛）：不动不打、不算进战斗，打碎了掉落。
 const ENEMIES := {
+	"crate": {"name": "木箱", "hp": 30, "radius": 11, "speed": 0.0, "aggro": 0.0, "flinch": false, "stance": false,
+		"prop": true, "attacks": {}},
+	"jar": {"name": "酒坛", "hp": 20, "radius": 9, "speed": 0.0, "aggro": 0.0, "flinch": false, "stance": false,
+		"prop": true, "attacks": {}},
+	# Boss 二（规格书第六节）。血量是草稿：三个满操作 AI 约四轮破罩打完（单测里打印），
+	# 真人输出低一些会多一两轮，对着规格书「三到四轮」偏长一点，待试玩标定。
+	"dulao": {"name": "毒姥 · 护法", "hp": 5500, "radius": 16, "speed": 30.0, "aggro": 9999.0, "boss": true,
+		"flinch": false, "stance": false, "ward_cut": 0.95,
+		"fog_delay": 10.0, "fog_max": 640.0, "fog_shrink": 24.0, "fog_min": 110.0, "fog_pct": 3.0,
+		"gu_every": 5.0, "soul_every": 12.0,
+		"attacks": {
+			"gu": {"shape": "spot", "radius": 48.0, "tele": 0.8, "dmg": 0, "pool_dps": 40.0, "pool_time": 15.0, "rec": 0.6, "reach": 9999.0, "range": 360.0},
+			"soul": {"shape": "field", "cast": 1.5, "root": 3.0, "rec": 0.8, "no_interrupt": true},
+		}},
 	"louluo": {"name": "邪派喽啰", "hp": 240, "radius": 13, "speed": 95.0, "aggro": 260.0,
 		"flinch": true, "stance": false,
 		"attacks": {"slash": {"shape": "cone", "range": 56.0, "half": 0.9, "tele": 0.7, "dmg": 90, "rec": 0.55, "reach": 46.0}}},
 	"xuancheng": {"name": "玄诚 · 叛僧教头", "hp": 5000, "radius": 18, "speed": 80.0, "aggro": 9999.0,
-		"flinch": false, "stance": true, "stance_cut": 0.5, "stance_break": 2.0, "read_window": 0.5,
+		"flinch": false, "stance": true, "stance_cut": 0.5, "stance_break": 2.0, "read_window": 0.5, "boss": true,
 		"phase2_at": 0.5, "heavy_every": 11.0,
 		"attacks": {
 			"sweep": {"shape": "cone", "range": 104.0, "half": 1.0, "tele": 0.8, "dmg": 120, "rec": 0.6, "reach": 84.0},

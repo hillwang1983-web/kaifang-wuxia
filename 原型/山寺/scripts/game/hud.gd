@@ -20,7 +20,9 @@ const STICK_R := 64.0
 var world: SimWorld
 var me: SimFighter
 var partner: SimFighter
+var extra_partners: Array = []  # 第三人等更多队友，依次往下排
 var boss: SimFighter
+var barks: Array = []           # 不挡操作的字幕 {who, text, t}，一条一条播
 var objectives: Array = []      # 当前目标，每行一条
 var mobile := false
 var force_mobile := false      # 开发开关 mobile：电脑上也显示手机界面
@@ -67,6 +69,10 @@ func take_released() -> Dictionary:
 
 
 func _process(dt: float) -> void:
+	if not barks.is_empty():
+		barks[0].t -= dt
+		if barks[0].t <= 0.0:
+			barks.pop_front()
 	for t in toasts:
 		t.t -= dt
 	toasts = toasts.filter(func(t): return t.t > 0.0)
@@ -147,16 +153,21 @@ func _draw() -> void:
 	if mobile:
 		_draw_self(Vector2(16, 16))
 		if partner:
-			_draw_party(Vector2(16, 128))
+			_draw_party(Vector2(16, 128), partner)
+		for i in extra_partners.size():
+			_draw_party(Vector2(16, 224 + i * 96), extra_partners[i], false)
 	else:
 		_draw_self(Vector2(16, 416))
 		if partner:
-			_draw_party(Vector2(16, 16))
+			_draw_party(Vector2(16, 16), partner)
+		for i in extra_partners.size():
+			_draw_party(Vector2(16, 112 + i * 96), extra_partners[i], false)
 	if boss and boss.alive and boss.state != "wait":
 		_draw_boss(Vector2(256, 16))
 	_draw_objectives()
 	_draw_invite()
 	_draw_toasts()
+	_draw_barks()
 	if mobile:
 		_draw_mobile_controls()
 		for pair in [[BAG_BTN, "囊"], [PAUSE_BTN, "Ⅱ"]]:
@@ -186,12 +197,15 @@ func _draw_self(at: Vector2) -> void:
 		UiKit.text(self, at + Vector2(150, 10), "金钟罩 %d" % me.shield, 12, UiKit.QI)
 
 
-func _draw_party(at: Vector2) -> void:
+func _draw_party(at: Vector2, who: SimFighter, show_moqi := true) -> void:
 	draw_texture(UiKit.ui("partybar"), at)
-	UiKit.text(self, at + Vector2(12, 10), partner.name + ("（倒地）" if not partner.alive else ""))
-	UiKit.text_r(self, at + Vector2(184, 10), "%d / %d" % [partner.hp, partner.max_hp], 12, UiKit.MUTED)
-	UiKit.fill(self, Rect2(at + Vector2(12, 32), Vector2(172, 9)), partner.hp / partner.max_hp, UiKit.HEALTH)
-	UiKit.fill(self, Rect2(at + Vector2(12, 49), Vector2(172, 5)), partner.qi / partner.max_qi, UiKit.QI)
+	var state := "（倒地）" if not who.alive else ("（定身）" if who.root_t > 0.0 else "")
+	UiKit.text(self, at + Vector2(12, 10), who.name + state)
+	UiKit.text_r(self, at + Vector2(184, 10), "%d / %d" % [who.hp, who.max_hp], 12, UiKit.MUTED)
+	UiKit.fill(self, Rect2(at + Vector2(12, 32), Vector2(172, 9)), who.hp / who.max_hp, UiKit.HEALTH)
+	UiKit.fill(self, Rect2(at + Vector2(12, 49), Vector2(172, 5)), who.qi / who.max_qi, UiKit.QI)
+	if not show_moqi:
+		return
 	var lv := world.combo.level()
 	UiKit.text(self, at + Vector2(12, 62), "默契")
 	draw_texture(UiKit.ui("moqi_lv%d" % (lv + 1)), at + Vector2(48, 64))
@@ -206,6 +220,9 @@ func _draw_boss(at: Vector2) -> void:
 	var label := "架势"
 	var ratio := 0.0
 	var right := ""
+	if boss.kind == "dulao":
+		_boss_dulao_status(at)
+		return
 	if boss.state == "cast":
 		label = "重击蓄力 · 快打断！"
 		ratio = boss.t / boss.atk.cast
@@ -219,6 +236,53 @@ func _draw_boss(at: Vector2) -> void:
 	if right != "":
 		UiKit.text_r(self, at + Vector2(432, 50), right, 12, UiKit.CAST)
 	UiKit.fill(self, Rect2(at + Vector2(16, 67), Vector2(416, 6)), ratio, UiKit.CAST)
+
+
+## 毒姥：读条（摄魂指）优先；其次毒罩状态——罩着显示减伤，被震碎显示剩余秒数
+func _boss_dulao_status(at: Vector2) -> void:
+	var label := "毒罩 · 减伤 95%（摆阵或合击震碎）"
+	var color := UiKit.POISON
+	var ratio := 0.0
+	var right := ""
+	if boss.state == "cast":
+		var tgt := world.fighter(boss.target_id)
+		label = "摄魂指 · 点名%s" % (("「" + tgt.name + "」") if tgt else "")
+		color = UiKit.CAST
+		ratio = boss.t / boss.atk.cast
+		right = "%.1f / %.1f 秒" % [boss.t, boss.atk.cast]
+	elif boss.ward_t > 0.0:
+		label = "毒罩已破！趁现在输出"
+		color = UiKit.QI
+		ratio = boss.ward_t / SimData.COMBO.break_formation
+		right = "%.1f 秒" % boss.ward_t
+	elif boss.state == "sit":
+		label = "毒姥收手了"
+		color = UiKit.TEXT
+	UiKit.text(self, at + Vector2(16, 50), label, 12, color)
+	if right != "":
+		UiKit.text_r(self, at + Vector2(432, 50), right, 12, color)
+	UiKit.fill(self, Rect2(at + Vector2(16, 67), Vector2(416, 6)), ratio, color)
+
+
+## 字幕：不暂停、不挡操作（规格书第九节 Boss 二后叙事）
+func bark(who: String, text: String, secs := 3.5) -> void:
+	barks.append({"who": who, "text": text, "t": secs})
+
+
+func barks_done() -> bool:
+	return barks.is_empty()
+
+
+func _draw_barks() -> void:
+	if barks.is_empty():
+		return
+	var b: Dictionary = barks[0]
+	var s: String = (b.who + "：" if b.who != "" else "") + b.text
+	var w := minf(UiKit.text_width(s) + 24.0, 620.0)
+	var y := 300.0 if mobile else 380.0
+	var r := Rect2(Vector2(480 - w / 2.0, y), Vector2(w, 26))
+	UiKit.panel(self, r)
+	UiKit.text(self, r.position + Vector2(12, 6), s, 12, UiKit.TEXT if b.who != "" else UiKit.MUTED)
 
 
 func _draw_objectives() -> void:
@@ -236,7 +300,7 @@ func _draw_invite() -> void:
 	var at := Vector2(356, 360)
 	if not world.combo.preview.is_empty() and world.combo.preview.has(me.id):
 		UiKit.panel(self, Rect2(at, Vector2(248, 52)))
-		UiKit.text(self, at + Vector2(56, 10), "摆放合击光圈")
+		UiKit.text(self, at + Vector2(56, 10), "摆放%s光圈" % ("阵法" if world.combo.formation_ready() else "合击"))
 		UiKit.text(self, at + Vector2(56, 28), "松开发出邀请 · %s 取消" % ("拖回" if mobile else "Esc"), 12, UiKit.MUTED)
 		return
 	if inv.is_empty():
@@ -246,11 +310,14 @@ func _draw_invite() -> void:
 	draw_texture(UiKit.ui("heji_invite"), at, Color(1, 1, 1, blink if not mine else 1.0))
 	var ratio: float = inv.t / SimData.COMBO.window
 	_arc(at + Vector2(26, 26), 18.0, ratio, UiKit.CAST)
+	var formation: bool = inv.get("kind", "combo") == "formation"
+	var word := "阵法" if formation else "合击"
 	if mine:
-		UiKit.text(self, at + Vector2(56, 8), "合击邀请已发出")
-		UiKit.text(self, at + Vector2(56, 26), "等净心走进光圈 · %.1f 秒" % inv.t, 12, UiKit.MUTED)
+		UiKit.text(self, at + Vector2(56, 8), "%s邀请已发出" % word)
+		var wait := "还差 %d 人进圈" % (inv.need - inv.responders.size()) if formation else "等队友走进光圈"
+		UiKit.text(self, at + Vector2(56, 26), "%s · %.1f 秒" % [wait, inv.t], 12, UiKit.MUTED)
 	else:
-		UiKit.text(self, at + Vector2(56, 8), "合击邀请！")
+		UiKit.text(self, at + Vector2(56, 8), ("阵法邀请！（%d / %d）" % [inv.responders.size(), inv.need]) if formation else "合击邀请！")
 		UiKit.text(self, at + Vector2(56, 26), "%s 响应或走进光圈 · %.1f 秒" % ["点合击" if mobile else UiKit.KEY_HINTS.combo, inv.t], 12, UiKit.CAST)
 
 

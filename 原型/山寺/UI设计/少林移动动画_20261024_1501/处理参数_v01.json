@@ -1,0 +1,28 @@
+{
+  "alpha_threshold": "80%",
+  "source_layout": [
+    6,
+    2
+  ],
+  "source_selection": "原图第一行前4格用于idle，修正图第二行6格用于walk",
+  "grid_crop": "按源宽六等分、源高二等分取整，坐标详见动画参数",
+  "native_content_normalization": [
+    34,
+    41
+  ],
+  "native_frame": [
+    48,
+    64
+  ],
+  "filter": "point（最近邻）",
+  "palette": "沿用少林已交固定16色调色板；本批实际合用15色，关闭抖动",
+  "register_x": "首帧idle两鞋中线校准头部中心，同方向锁定头部到根锚点偏移，整像素平移",
+  "register_y": "可见内容顶部20、最低脚底像素60；根锚点(24,60)",
+  "frame_gaps": 0,
+  "preserve_originals": true,
+  "gif_delays_cs": [
+    8,
+    8,
+    9
+  ]
+}

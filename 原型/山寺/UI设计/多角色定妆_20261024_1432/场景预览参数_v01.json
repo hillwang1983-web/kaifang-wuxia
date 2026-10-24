@@ -1,0 +1,77 @@
+{
+  "preview": "五角色_山门实际比例_v01.png",
+  "base": "assets/env/env_shanmen_v01.png",
+  "camera_crop": [
+    480,
+    0,
+    960,
+    540
+  ],
+  "dimensions": [
+    960,
+    540
+  ],
+  "placements": [
+    {
+      "role": "shaolin",
+      "preview_ground": [
+        320,
+        350
+      ],
+      "native_size": true,
+      "preview_offset": [
+        296,
+        290
+      ]
+    },
+    {
+      "role": "xuancheng",
+      "preview_ground": [
+        400,
+        350
+      ],
+      "native_size": true,
+      "preview_offset": [
+        368,
+        274
+      ]
+    },
+    {
+      "role": "jingxin",
+      "preview_ground": [
+        480,
+        350
+      ],
+      "native_size": true,
+      "preview_offset": [
+        456,
+        290
+      ]
+    },
+    {
+      "role": "louluo",
+      "preview_ground": [
+        560,
+        350
+      ],
+      "native_size": true,
+      "preview_offset": [
+        536,
+        290
+      ]
+    },
+    {
+      "role": "xiepai",
+      "preview_ground": [
+        640,
+        350
+      ],
+      "native_size": true,
+      "preview_offset": [
+        616,
+        290
+      ]
+    }
+  ],
+  "purpose": "静态合成比例审阅；不是运行时截图"
+}

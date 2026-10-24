@@ -116,6 +116,11 @@ static func roll_drops(rng: RandomNumberGenerator, kind: String) -> Dictionary:
 	if d.has("slot"):
 		var options := bases_for_slot(d.slot)
 		out.items.append(roll_equipment(rng, options[rng.randi_range(0, options.size() - 1)]))
+	# 弩车零件接口（阶段 D）：可破坏物按 part_chance 掉一种零件，现在概率为 0
+	out["parts"] = []
+	if float(d.get("part_chance", 0.0)) > 0.0 and rng.randf() < float(d.part_chance):
+		var parts: Array = data().parts.list
+		out.parts.append(parts[rng.randi_range(0, parts.size() - 1)])
 	return out
 
 

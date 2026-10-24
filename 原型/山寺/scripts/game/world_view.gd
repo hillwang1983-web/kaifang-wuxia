@@ -17,6 +17,7 @@ var foreground: Texture2D      # 前景遮挡层（棚顶、门檐），叠在�
 var _fg_image: Image           # 前景的像素副本，用来判断角色是不是被挡住
 var effects: Array = []        # {kind, pos, t, dur, ...}
 var trails := {}               # fighter id -> [{pos, t}]
+var npcs: Array = []           # 剧情里只站着的人（阿萝等）{pos, name, robe, hair}
 var hint_pos := Vector2.ZERO   # 关卡设置的互动提示（如「E 交谈」），hint_text 为空不画
 var hint_text := ""
 var hitstop := 0.0             # 由关卡读走：命中停顿
@@ -147,9 +148,14 @@ func _draw() -> void:
 	if background:
 		draw_texture(background, Vector2.ZERO)
 	for pool in world.pools:
-		_ellipse(pool.pos, pool.radius, Color(UiKit.PURPLE, 0.28))
-		_ellipse(pool.pos, pool.radius * 0.7, Color(UiKit.POISON, 0.22))
-		_ellipse_line(pool.pos, pool.radius, Color(UiKit.DARK_PURPLE, 0.9))
+		var foe_pool: bool = pool.get("team", SimFighter.HEROES) == SimFighter.FOES
+		var bubble := 0.06 * sin(world.time * 6.0 + pool.pos.x)
+		_ellipse(pool.pos, pool.radius, Color(UiKit.POISON if foe_pool else UiKit.PURPLE, 0.30 + bubble))
+		_ellipse(pool.pos, pool.radius * 0.7, Color(UiKit.PURPLE if foe_pool else UiKit.POISON, 0.22))
+		_ellipse_line(pool.pos, pool.radius, Color(UiKit.DARK_PURPLE, 0.9), 0.55, 2.0 if foe_pool else 1.0)
+	for z in world.safe_zones:
+		_ellipse(z.pos, z.radius, Color(UiKit.GOLD_WHITE, 0.12))
+		_ellipse_line(z.pos, z.radius, Color(UiKit.QI, 0.8), 0.55, 2.0)
 	for f in world.foes():
 		if f.state == "windup":
 			_telegraph(f)
@@ -169,6 +175,9 @@ func _draw() -> void:
 	list.sort_custom(func(a, b): return a.pos.y < b.pos.y)
 	for f in list:
 		_fighter(f)
+	for n in npcs:
+		_npc(n)
+	_draw_fog()
 	for pr in world.projectiles:
 		draw_circle(pr.pos + Vector2(0, -16), 5.0, UiKit.PURPLE)
 		draw_circle(pr.pos + Vector2(0, -16) - pr.vel.normalized() * 6.0, 3.0, Color(UiKit.POISON, 0.7))
@@ -242,6 +251,27 @@ func _telegraph(e: SimFighter) -> void:
 		"circle":
 			_ellipse(e.pos, a.range, fill, 0.75)
 			_ellipse_line(e.pos, a.range, edge, 0.75)
+		"spot":
+			_ellipse(e.aim_point, a.radius, fill, 0.6)
+			_ellipse_line(e.aim_point, a.radius, edge, 0.6, 2.0)
+
+
+## 毒雾：安全圈外一圈雾绿掺暗紫（美术说明第三节），边缘亮一道毒绿；扩散时能看出圈在缩
+func _draw_fog() -> void:
+	if world.fog.is_empty():
+		return
+	var c: Vector2 = world.fog.center
+	var r: float = world.fog.r
+	var n := 48
+	var outer := 2400.0
+	var pulse := 0.05 * sin(world.time * 2.0)
+	for i in n:
+		var a0 := TAU * i / n
+		var a1 := TAU * (i + 1) / n
+		var poly := PackedVector2Array([c + Vector2(cos(a0), sin(a0) * 0.7) * r, c + Vector2(cos(a1), sin(a1) * 0.7) * r,
+			c + Vector2(cos(a1), sin(a1)) * outer, c + Vector2(cos(a0), sin(a0)) * outer])
+		draw_colored_polygon(poly, Color(UiKit.POISON.lerp(UiKit.DARK_PURPLE, 0.55), 0.38 + pulse))
+	_ellipse_line(c, r, Color(UiKit.POISON, 0.9), 0.7, 2.0)
 
 
 ## 合击光圈：美术交付的帧条（vfx_heji_ring_layout_v01.json）——展开 6 帧 0.5 秒，之后常驻 4 帧循环，
@@ -348,6 +378,20 @@ func _fighter(f: SimFighter) -> void:
 		var c := f.pos + Vector2(0, -28)
 		draw_arc(c, 30.0 + 4.0 * sin(world.time * 16.0), 0, TAU, 32, UiKit.CAST, 2.0)
 		UiKit.text(self, f.pos + Vector2(-6, -86), "!", 24, UiKit.CAST)
+		var victim := world.fighter(f.target_id) if f.kind == "dulao" else null
+		if victim:
+			# 摄魂指：一道紫光线连到被点名的人
+			draw_line(f.pos + Vector2(0, -24), victim.pos + Vector2(0, -20), Color(UiKit.PURPLE, 0.5 + 0.4 * sin(world.time * 14.0)), 2.0)
+	# 毒姥的毒罩：罩着时是半透明紫绿球，被震碎时闪金屑
+	if f.kind == "dulao" and f.active():
+		var c := f.pos + Vector2(0, -20)
+		if f.ward_t <= 0.0:
+			draw_circle(c, 30.0, Color(UiKit.PURPLE, 0.16))
+			draw_arc(c, 30.0, 0, TAU, 40, Color(UiKit.POISON, 0.7), 2.0)
+		else:
+			for i in 6:
+				var a := world.time * 3.0 + TAU * i / 6.0
+				draw_circle(c + Vector2(cos(a), sin(a)) * 34.0, 2.0, UiKit.QI)
 	if f.state == "stagger":
 		for i in 3:
 			var a := world.time * 6.0 + TAU * i / 3.0
@@ -355,7 +399,7 @@ func _fighter(f: SimFighter) -> void:
 	if f.poison_stacks > 0 or f.poison_t > 0.0:
 		for i in (3 if f.poison_t > 0 else f.poison_stacks):
 			draw_circle(f.pos + Vector2(-6 + i * 6, 4), 2.5, UiKit.POISON)
-	if f.kind == "louluo" and f.alive and f.hp < f.max_hp:
+	if (f.kind == "louluo" or f.kind == "crate" or f.kind == "jar") and f.alive and f.hp < f.max_hp:
 		draw_rect(Rect2(f.pos + Vector2(-14, -48), Vector2(28, 3)), Color(0, 0, 0, 0.6))
 		draw_rect(Rect2(f.pos + Vector2(-14, -48), Vector2(28 * f.hp / f.max_hp, 3)), UiKit.HEALTH)
 
@@ -363,7 +407,10 @@ func _fighter(f: SimFighter) -> void:
 ## 占位人形：脚底在 at。按身份配色：少林褐红短褂土黄束带、邪派墨黑暗紫衣纹毒绿滚边、
 ## 净心光头褐红僧袍、喽啰墨黑蒙面、玄诚高一号僧袍外罩墨黑半臂。
 func _body(f: SimFighter, at: Vector2, tint: Color) -> void:
-	var scale := 1.3 if f.kind == "xuancheng" else (0.95 if f.kind == "partner" else 1.0)
+	if f.kind == "crate" or f.kind == "jar":
+		_prop(f, at, tint)
+		return
+	var scale := 1.3 if f.kind == "xuancheng" else (1.2 if f.kind == "dulao" else (0.95 if f.kind == "partner" else 1.0))
 	var flash := f.flash_t > 0.0
 	var robe := UiKit.MONK
 	var trim := UiKit.SASH
@@ -381,6 +428,13 @@ func _body(f: SimFighter, at: Vector2, tint: Color) -> void:
 		"xuancheng":
 			trim = UiKit.CULT
 			head_hair = Color("#5A4A40")
+		"dulao":
+			robe = UiKit.CULT
+			trim = UiKit.POISON
+			head_hair = Color("#E8E2D2")  # 白发
+		"ally":
+			robe = Color("#4A5A6B")      # 第三人（临时 AI 侠客）：青灰长衫、土黄束带
+			trim = UiKit.SASH
 	if flash:
 		robe = UiKit.GOLD_WHITE
 		trim = UiKit.GOLD_WHITE
@@ -412,9 +466,36 @@ func _body(f: SimFighter, at: Vector2, tint: Color) -> void:
 	_weapon(f, head + Vector2(0, 10 * scale), scale, tint)
 
 
+## 可破坏物：木箱、酒坛（美术说明第六节，图到之前的色块）
+func _prop(f: SimFighter, at: Vector2, tint: Color) -> void:
+	var c := (Color("#7A5A3C") if f.kind == "crate" else Color("#4A3A30")) * tint
+	if f.flash_t > 0.0:
+		c = UiKit.GOLD_WHITE
+	if f.kind == "crate":
+		draw_rect(Rect2(at + Vector2(-11, -20), Vector2(22, 20)), c)
+		draw_rect(Rect2(at + Vector2(-11, -20), Vector2(22, 20)), Color("#3B2A20") * tint, false, 1.0)
+		draw_line(at + Vector2(-11, -20), at + Vector2(11, 0), Color("#3B2A20") * tint, 1.0)
+	else:
+		draw_circle(at + Vector2(0, -9), 9.0, c)
+		draw_rect(Rect2(at + Vector2(-4, -20), Vector2(8, 4)), Color("#8C3B2E") * tint)
+
+
+func _npc(n: Dictionary) -> void:
+	var at: Vector2 = n.pos
+	_ellipse(at, 12, Color(0, 0, 0, 0.35), 0.45)
+	draw_rect(Rect2(at + Vector2(-7, -24), Vector2(14, 24)), n.robe)
+	draw_circle(at + Vector2(0, -29), 6.0, Color("#E0C8B0"))
+	draw_rect(Rect2(at + Vector2(-6, -35), Vector2(12, 6)), n.hair)
+	var w := UiKit.text_width(n.name)
+	UiKit.text(self, at + Vector2(-w / 2.0, -54), n.name, 12, UiKit.TEXT)
+
+
 func _weapon(f: SimFighter, hand: Vector2, scale: float, tint: Color) -> void:
 	if f.state == "sit":
 		draw_line(hand + Vector2(-16, 14), hand + Vector2(16, 14), WOOD * tint, 2.0)
+		return
+	if f.kind == "dulao":
+		draw_line(hand + Vector2(10, -8), hand + Vector2(14, 22), WOOD * tint, 2.0)  # 蛇纹拐杖
 		return
 	var staff := f.kind != "louluo" and not (f.kind == "player" and f.sect == "xiepai")
 	var length := (34.0 if staff else 18.0) * scale

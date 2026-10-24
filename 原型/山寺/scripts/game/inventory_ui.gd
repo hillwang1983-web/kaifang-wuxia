@@ -192,7 +192,7 @@ func _input(event: InputEvent) -> void:
 	if not visible:
 		return
 	get_viewport().set_input_as_handled()
-	if event.is_action_pressed("inventory") or (event.is_action_pressed("ui_cancel") and held.is_empty()):
+	if event.is_action_pressed("inventory", false, true) or (event.is_action_pressed("ui_cancel") and held.is_empty()):
 		close()
 		return
 	if event.is_action_pressed("skill_2"):

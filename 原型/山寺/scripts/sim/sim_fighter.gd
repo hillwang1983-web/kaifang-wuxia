@@ -74,6 +74,9 @@ var home := Vector2.ZERO
 var phase := 1
 var heavy_timer := 0.0
 var dash_hit := false
+var ward_t := 0.0         # 毒姥：毒罩被震碎后还剩几秒（≤0 为罩着）
+var target_id := -1      # 点名招式的目标（摄魂指）
+var timers := {}         # Boss 自己的计时（毒蛊、摄魂指、开战时长……）
 var in_combat := false
 var combat_t := 0.0      # 离上次交手的时间
 
