@@ -25,6 +25,13 @@ const GATE_PATH := [Vector2(960, 760), Vector2(960, 620), Vector2(960, 500)]
 const TORCHES := [Vector2(590, 860), Vector2(1330, 860), Vector2(1290, 980)]
 const LOULUO := [Vector2(820, 880), Vector2(1100, 880), Vector2(740, 990), Vector2(1180, 1000)]
 const START := Vector2(960, 1030)
+## 第二处分叉「进寺方式」：山门前的出生点与门前的人按出身不同（进了门洞即合流）
+const ENTRY := {
+	"shenjia": {"at": Vector2(960, 1030), "npc": ["知客僧", Vector2(1010, 960), Color("#8C3B2E"), Color("#E0C8B0")]},
+	"tiejiang": {"at": Vector2(760, 1010), "npc": ["邪派管事", Vector2(820, 960), Color("#2B2328"), Color("#2B2320")]},
+	"xiban": {"at": Vector2(1160, 1010), "npc": ["守门喽啰", Vector2(1100, 960), Color("#2B2328"), Color("#2B2320")]},
+	"langzhong": {"at": Vector2(960, 1030), "npc": []},
+}
 const BOSS_WAIT := Vector2(960, 300)
 const ARENA_ENTRY := 520.0       # 玩家走过这条线（进了操练场）就触发玄诚
 const ARENA_START := Vector2(960, 470)
@@ -52,6 +59,10 @@ func _ready() -> void:
 	for p in LOULUO:
 		world.add_enemy("louluo", p)
 	boss = world.add_enemy("xuancheng", BOSS_WAIT, true)
+	var entry: Dictionary = ENTRY.get(origin, {})
+	if not entry.is_empty():
+		me.pos = entry.at
+		jingxin.pos = entry.at + Vector2(-40, 4)
 	build_scene("res://assets/env/env_shanmen_v01.png", "res://assets/env/env_shanmen_front_v01.png")
 	# 开发开关 torch：出生在第一处火把旁边（截图核对「交谈」键用）
 	if get_parent() and get_parent().get("dev") is Dictionary and get_parent().dev.has("torch"):
@@ -60,8 +71,10 @@ func _ready() -> void:
 		camera.position = me.pos
 		camera.reset_smoothing()
 	hud.boss = boss
+	if not entry.is_empty() and not entry.npc.is_empty():
+		view.npcs = [{"name": entry.npc[0], "pos": entry.npc[1], "robe": entry.npc[2], "hair": entry.npc[3]}]
 	_objectives()
-	say(Story.shanmen_intro(sect))
+	say(Story.shanmen_intro(sect, origin))
 
 
 ## 代玩：先熄还亮着的火把；火把熄完、喽啰清完就穿门洞进操练场；战斗交给 AI，玄诚读条时用通用技
@@ -126,7 +139,7 @@ func level_events(events: Array) -> void:
 				stage = "down_talk"
 				world.combo.invite = {}
 				world.combo.preview.clear()
-				say(Story.boss_down())
+				say(Story.boss_down(origin))  # 共用的真相 + 第三处分叉：按出身的收尾一段
 			"hero_down":
 				if e.id == me.id:
 					_down_t = 2.0

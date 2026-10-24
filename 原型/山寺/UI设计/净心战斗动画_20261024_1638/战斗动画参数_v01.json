@@ -1,0 +1,1571 @@
+[
+  {
+    "file": "assets/npc/npc_jingxin_atk_down_v01.png",
+    "action": "atk",
+    "direction": "down",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 3,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "return_to_idle_by_controller",
+    "preview_last_frame_delay_ms": 600,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_npc_jingxin_down_combat_source_v01.png",
+        "source_component_id": 1,
+        "source_crop_xywh": [
+          56,
+          92,
+          216,
+          301
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          32,
+          45
+        ],
+        "source_projected_ground_point": [
+          158,
+          392
+        ],
+        "offset": [
+          9,
+          15
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_npc_jingxin_down_combat_source_v01.png",
+        "source_component_id": 2,
+        "source_crop_xywh": [
+          349,
+          141,
+          129,
+          269
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          19,
+          40
+        ],
+        "source_projected_ground_point": [
+          414,
+          389
+        ],
+        "offset": [
+          14,
+          23
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_npc_jingxin_down_combat_source_v01.png",
+        "source_component_id": 3,
+        "source_crop_xywh": [
+          600,
+          160,
+          246,
+          243
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          37,
+          36
+        ],
+        "source_projected_ground_point": [
+          685,
+          401
+        ],
+        "offset": [
+          10,
+          24
+        ],
+        "integer_margin_registration": [
+          -1,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      }
+    ]
+  },
+  {
+    "file": "assets/npc/npc_jingxin_hit_down_v01.png",
+    "action": "hit",
+    "direction": "down",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 2,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "return_to_idle_by_controller",
+    "preview_last_frame_delay_ms": 600,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_npc_jingxin_down_combat_source_v01.png",
+        "source_component_id": 6,
+        "source_crop_xywh": [
+          32,
+          493,
+          212,
+          254
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          32,
+          38
+        ],
+        "source_projected_ground_point": [
+          169,
+          745
+        ],
+        "offset": [
+          3,
+          22
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_npc_jingxin_down_combat_source_v01.png",
+        "source_component_id": 7,
+        "source_crop_xywh": [
+          309,
+          529,
+          187,
+          206
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          28,
+          31
+        ],
+        "source_projected_ground_point": [
+          431,
+          733
+        ],
+        "offset": [
+          6,
+          29
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      }
+    ]
+  },
+  {
+    "file": "assets/npc/npc_jingxin_roll_down_v01.png",
+    "action": "roll",
+    "direction": "down",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 4,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "return_to_idle_by_controller",
+    "preview_last_frame_delay_ms": 600,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_npc_jingxin_down_combat_source_v01.png",
+        "source_component_id": 11,
+        "source_crop_xywh": [
+          17,
+          947,
+          215,
+          148
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          32,
+          22
+        ],
+        "source_projected_ground_point": [
+          134,
+          1093
+        ],
+        "offset": [
+          7,
+          38
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_npc_jingxin_down_combat_source_v01.png",
+        "source_component_id": 8,
+        "source_crop_xywh": [
+          329,
+          803,
+          179,
+          276
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          27,
+          41
+        ],
+        "source_projected_ground_point": [
+          418,
+          1092
+        ],
+        "offset": [
+          11,
+          17
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_npc_jingxin_down_combat_source_v01.png",
+        "source_component_id": 10,
+        "source_crop_xywh": [
+          548,
+          932,
+          243,
+          163
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          36,
+          24
+        ],
+        "source_projected_ground_point": [
+          682,
+          1093
+        ],
+        "offset": [
+          4,
+          36
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_npc_jingxin_down_combat_source_v01.png",
+        "source_component_id": 9,
+        "source_crop_xywh": [
+          850,
+          827,
+          187,
+          260
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          28,
+          39
+        ],
+        "source_projected_ground_point": [
+          947,
+          1085
+        ],
+        "offset": [
+          9,
+          21
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      }
+    ]
+  },
+  {
+    "file": "assets/npc/npc_jingxin_down_down_v01.png",
+    "action": "down",
+    "direction": "down",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 4,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [
+      3
+    ],
+    "end_behavior": "hold_last_until_state_change",
+    "preview_last_frame_delay_ms": 600,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_npc_jingxin_down_combat_source_v01.png",
+        "source_component_id": 14,
+        "source_crop_xywh": [
+          44,
+          1217,
+          200,
+          176
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          30,
+          26
+        ],
+        "source_projected_ground_point": [
+          144,
+          1391
+        ],
+        "offset": [
+          9,
+          34
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_npc_jingxin_down_combat_source_v01.png",
+        "source_component_id": 15,
+        "source_crop_xywh": [
+          278,
+          1226,
+          228,
+          172
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          34,
+          26
+        ],
+        "source_projected_ground_point": [
+          395,
+          1395
+        ],
+        "offset": [
+          7,
+          34
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_npc_jingxin_down_combat_source_v01.png",
+        "source_component_id": 17,
+        "source_crop_xywh": [
+          516,
+          1276,
+          272,
+          114
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          41,
+          17
+        ],
+        "source_projected_ground_point": [
+          654,
+          1388
+        ],
+        "offset": [
+          3,
+          43
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_npc_jingxin_down_combat_source_v01.png",
+        "source_component_id": 18,
+        "source_crop_xywh": [
+          779,
+          1285,
+          283,
+          105
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          42,
+          16
+        ],
+        "source_projected_ground_point": [
+          925,
+          1388
+        ],
+        "offset": [
+          2,
+          44
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      }
+    ]
+  },
+  {
+    "file": "assets/npc/npc_jingxin_atk_left_v01.png",
+    "action": "atk",
+    "direction": "left",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 3,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "return_to_idle_by_controller",
+    "preview_last_frame_delay_ms": 600,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_npc_jingxin_left_combat_source_v01.png",
+        "source_component_id": 1,
+        "source_crop_xywh": [
+          32,
+          96,
+          212,
+          294
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          32,
+          44
+        ],
+        "source_projected_ground_point": [
+          169,
+          388
+        ],
+        "offset": [
+          3,
+          16
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_npc_jingxin_left_strikefix_combat_source_v01.png",
+        "source_component_id": 3,
+        "source_crop_xywh": [
+          354,
+          196,
+          220,
+          209
+        ],
+        "uniform_scale": 0.14156626506024095,
+        "scaled_size": [
+          31,
+          30
+        ],
+        "source_projected_ground_point": [
+          488,
+          403
+        ],
+        "offset": [
+          5,
+          30
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_npc_jingxin_left_combat_source_v01.png",
+        "source_component_id": 3,
+        "source_crop_xywh": [
+          583,
+          192,
+          244,
+          197
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          37,
+          30
+        ],
+        "source_projected_ground_point": [
+          738,
+          387
+        ],
+        "offset": [
+          1,
+          30
+        ],
+        "integer_margin_registration": [
+          1,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      }
+    ]
+  },
+  {
+    "file": "assets/npc/npc_jingxin_hit_left_v01.png",
+    "action": "hit",
+    "direction": "left",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 2,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "return_to_idle_by_controller",
+    "preview_last_frame_delay_ms": 600,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_npc_jingxin_left_combat_source_v01.png",
+        "source_component_id": 4,
+        "source_crop_xywh": [
+          46,
+          524,
+          188,
+          229
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          28,
+          34
+        ],
+        "source_projected_ground_point": [
+          153,
+          751
+        ],
+        "offset": [
+          8,
+          26
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_npc_jingxin_left_combat_source_v01.png",
+        "source_component_id": 5,
+        "source_crop_xywh": [
+          299,
+          558,
+          216,
+          199
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          32,
+          30
+        ],
+        "source_projected_ground_point": [
+          447,
+          755
+        ],
+        "offset": [
+          2,
+          30
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      }
+    ]
+  },
+  {
+    "file": "assets/npc/npc_jingxin_roll_left_v01.png",
+    "action": "roll",
+    "direction": "left",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 4,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "return_to_idle_by_controller",
+    "preview_last_frame_delay_ms": 600,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_npc_jingxin_left_combat_source_v01.png",
+        "source_component_id": 10,
+        "source_crop_xywh": [
+          22,
+          948,
+          241,
+          147
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          36,
+          22
+        ],
+        "source_projected_ground_point": [
+          154,
+          1093
+        ],
+        "offset": [
+          4,
+          38
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_npc_jingxin_left_combat_source_v01.png",
+        "source_component_id": 7,
+        "source_crop_xywh": [
+          325,
+          837,
+          207,
+          237
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          31,
+          36
+        ],
+        "source_projected_ground_point": [
+          420,
+          1091
+        ],
+        "offset": [
+          10,
+          21
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_npc_jingxin_left_combat_source_v01.png",
+        "source_component_id": 9,
+        "source_crop_xywh": [
+          549,
+          943,
+          264,
+          144
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          40,
+          22
+        ],
+        "source_projected_ground_point": [
+          692,
+          1086
+        ],
+        "offset": [
+          2,
+          38
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_npc_jingxin_left_combat_source_v01.png",
+        "source_component_id": 8,
+        "source_crop_xywh": [
+          840,
+          857,
+          197,
+          235
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          30,
+          35
+        ],
+        "source_projected_ground_point": [
+          964,
+          1090
+        ],
+        "offset": [
+          5,
+          25
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      }
+    ]
+  },
+  {
+    "file": "assets/npc/npc_jingxin_down_left_v01.png",
+    "action": "down",
+    "direction": "left",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 4,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [
+      3
+    ],
+    "end_behavior": "hold_last_until_state_change",
+    "preview_last_frame_delay_ms": 600,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_npc_jingxin_left_combat_source_v01.png",
+        "source_component_id": 11,
+        "source_crop_xywh": [
+          31,
+          1203,
+          227,
+          163
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          34,
+          24
+        ],
+        "source_projected_ground_point": [
+          145,
+          1364
+        ],
+        "offset": [
+          7,
+          36
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_npc_jingxin_left_combat_source_v01.png",
+        "source_component_id": 12,
+        "source_crop_xywh": [
+          274,
+          1231,
+          276,
+          142
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          41,
+          21
+        ],
+        "source_projected_ground_point": [
+          411,
+          1372
+        ],
+        "offset": [
+          4,
+          39
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_npc_jingxin_left_combat_source_v01.png",
+        "source_component_id": 13,
+        "source_crop_xywh": [
+          543,
+          1275,
+          249,
+          103
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          37,
+          15
+        ],
+        "source_projected_ground_point": [
+          670,
+          1376
+        ],
+        "offset": [
+          5,
+          45
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_npc_jingxin_left_combat_source_v01.png",
+        "source_component_id": 14,
+        "source_crop_xywh": [
+          810,
+          1300,
+          256,
+          78
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          38,
+          12
+        ],
+        "source_projected_ground_point": [
+          938,
+          1376
+        ],
+        "offset": [
+          5,
+          48
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      }
+    ]
+  },
+  {
+    "file": "assets/npc/npc_jingxin_atk_up_v01.png",
+    "action": "atk",
+    "direction": "up",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 3,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "return_to_idle_by_controller",
+    "preview_last_frame_delay_ms": 600,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_npc_jingxin_up_combat_source_v01.png",
+        "source_component_id": 3,
+        "source_crop_xywh": [
+          35,
+          157,
+          192,
+          245
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          29,
+          37
+        ],
+        "source_projected_ground_point": [
+          157,
+          400
+        ],
+        "offset": [
+          6,
+          23
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_npc_jingxin_up_combat_source_v01.png",
+        "source_component_id": 1,
+        "source_crop_xywh": [
+          344,
+          28,
+          154,
+          374
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          23,
+          56
+        ],
+        "source_projected_ground_point": [
+          422,
+          400
+        ],
+        "offset": [
+          12,
+          4
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_npc_jingxin_up_combat_source_v01.png",
+        "source_component_id": 2,
+        "source_crop_xywh": [
+          572,
+          139,
+          215,
+          268
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          32,
+          40
+        ],
+        "source_projected_ground_point": [
+          683,
+          405
+        ],
+        "offset": [
+          7,
+          20
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      }
+    ]
+  },
+  {
+    "file": "assets/npc/npc_jingxin_hit_up_v01.png",
+    "action": "hit",
+    "direction": "up",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 2,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "return_to_idle_by_controller",
+    "preview_last_frame_delay_ms": 600,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_npc_jingxin_up_combat_source_v01.png",
+        "source_component_id": 5,
+        "source_crop_xywh": [
+          25,
+          501,
+          217,
+          235
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          33,
+          35
+        ],
+        "source_projected_ground_point": [
+          160,
+          734
+        ],
+        "offset": [
+          3,
+          25
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_npc_jingxin_up_combat_source_v01.png",
+        "source_component_id": 6,
+        "source_crop_xywh": [
+          344,
+          526,
+          211,
+          202
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          32,
+          30
+        ],
+        "source_projected_ground_point": [
+          432,
+          726
+        ],
+        "offset": [
+          11,
+          30
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      }
+    ]
+  },
+  {
+    "file": "assets/npc/npc_jingxin_roll_up_v01.png",
+    "action": "roll",
+    "direction": "up",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 4,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "return_to_idle_by_controller",
+    "preview_last_frame_delay_ms": 600,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_npc_jingxin_up_combat_source_v01.png",
+        "source_component_id": 10,
+        "source_crop_xywh": [
+          69,
+          907,
+          223,
+          154
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          33,
+          23
+        ],
+        "source_projected_ground_point": [
+          174,
+          1059
+        ],
+        "offset": [
+          8,
+          37
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_npc_jingxin_up_combat_source_v01.png",
+        "source_component_id": 8,
+        "source_crop_xywh": [
+          346,
+          810,
+          152,
+          247
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          23,
+          37
+        ],
+        "source_projected_ground_point": [
+          422,
+          1090
+        ],
+        "offset": [
+          12,
+          18
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_npc_jingxin_up_combat_source_v01.png",
+        "source_component_id": 9,
+        "source_crop_xywh": [
+          577,
+          867,
+          224,
+          200
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          34,
+          30
+        ],
+        "source_projected_ground_point": [
+          685,
+          1065
+        ],
+        "offset": [
+          8,
+          30
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_npc_jingxin_up_combat_source_v01.png",
+        "source_component_id": 7,
+        "source_crop_xywh": [
+          851,
+          803,
+          206,
+          259
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          31,
+          39
+        ],
+        "source_projected_ground_point": [
+          954,
+          1060
+        ],
+        "offset": [
+          8,
+          21
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      }
+    ]
+  },
+  {
+    "file": "assets/npc/npc_jingxin_down_up_v01.png",
+    "action": "down",
+    "direction": "up",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 4,
+    "fps": 12,
+    "loop": false,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [
+      3
+    ],
+    "end_behavior": "hold_last_until_state_change",
+    "preview_last_frame_delay_ms": 600,
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_npc_jingxin_up_combat_source_v01.png",
+        "source_component_id": 11,
+        "source_crop_xywh": [
+          62,
+          1163,
+          224,
+          203
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          34,
+          30
+        ],
+        "source_projected_ground_point": [
+          172,
+          1364
+        ],
+        "offset": [
+          7,
+          30
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_npc_jingxin_up_combat_source_v01.png",
+        "source_component_id": 12,
+        "source_crop_xywh": [
+          308,
+          1184,
+          247,
+          186
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          37,
+          28
+        ],
+        "source_projected_ground_point": [
+          425,
+          1368
+        ],
+        "offset": [
+          6,
+          32
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_npc_jingxin_up_combat_source_v01.png",
+        "source_component_id": 13,
+        "source_crop_xywh": [
+          532,
+          1213,
+          282,
+          170
+        ],
+        "uniform_scale": 0.15,
+        "scaled_size": [
+          42,
+          26
+        ],
+        "source_projected_ground_point": [
+          676,
+          1381
+        ],
+        "offset": [
+          3,
+          34
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_npc_jingxin_up_stafffix_combat_source_v01.png",
+        "source_component_id": 13,
+        "source_crop_xywh": [
+          780,
+          1279,
+          271,
+          147
+        ],
+        "uniform_scale": 0.14442379182156134,
+        "scaled_size": [
+          39,
+          21
+        ],
+        "source_projected_ground_point": [
+          916,
+          1424
+        ],
+        "offset": [
+          4,
+          39
+        ],
+        "integer_margin_registration": [
+          0,
+          0
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "registration": "站姿以地面中点，翻滚/倒地以投影身体根参考注册；保留局部动作变形与方向，帧原点不变，位移由程序完成"
+      }
+    ]
+  }
+]

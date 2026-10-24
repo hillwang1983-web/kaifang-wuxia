@@ -23,6 +23,9 @@ var trails := {}               # fighter id -> [{pos, t}]
 var npcs: Array = []           # 剧情里只站着的人（阿萝等）{pos, name, robe, hair}
 var hint_pos := Vector2.ZERO   # 关卡设置的互动提示（如「E 交谈」），hint_text 为空不画
 var hint_text := ""
+var markers: Array = []        # 开场教学：地上发光的目标点 {pos}
+var flash := 0.0               # 附身醒来的白光，按秒淡出
+var trainer_look := Color("#6B5A48")  # 开场引导人（教闪避的在场 NPC）的衣色
 var hitstop := 0.0             # 由关卡读走：命中停顿
 var shake := 0.0
 
@@ -34,6 +37,7 @@ func consume_events() -> void:
 
 
 func _process(dt: float) -> void:
+	flash = maxf(0.0, flash - dt)
 	for fx in effects:
 		fx.t += dt
 	effects = effects.filter(func(fx): return fx.t < fx.dur)
@@ -187,6 +191,10 @@ func _draw() -> void:
 	for f in world.foes():
 		if f.state == "windup":
 			_telegraph(f)
+	for m in markers:
+		var pulse := 0.5 + 0.5 * sin(world.time * 5.0)
+		_ellipse(m.pos, 22.0, Color(UiKit.QI, 0.12 + 0.12 * pulse), 0.55)
+		_ellipse_line(m.pos, 22.0 + 4.0 * pulse, Color(UiKit.QI, 0.9), 0.55, 2.0)
 	_draw_combo()
 	_draw_aim()
 	for it in world.interactables:
@@ -238,6 +246,8 @@ func _draw() -> void:
 		UiKit.text(self, hint_pos + Vector2(-w / 2.0 + 5, -1), hint_text)
 	for fx in effects:
 		_effect(fx)
+	if flash > 0.0:
+		draw_rect(Rect2(Vector2.ZERO, Vector2(1920, 1080)), Color(1, 1, 1, minf(1.0, flash / 0.6)))
 
 
 ## 被棚顶 / 门檐挡住的玩家和净心，在前景上面补一层半透明剪影，免得看不见自己
@@ -453,6 +463,9 @@ func _fighter(f: SimFighter) -> void:
 	if f.poison_stacks > 0 or f.poison_t > 0.0:
 		for i in (3 if f.poison_t > 0 else f.poison_stacks):
 			draw_circle(f.pos + Vector2(-6 + i * 6, 4), 2.5, UiKit.POISON)
+	if f.kind == "trainer" and f.alive:
+		var w := UiKit.text_width(f.name)
+		UiKit.text(self, f.pos + Vector2(-w / 2.0, -54), f.name, 12, UiKit.TEXT)
 	if (f.kind == "louluo" or f.kind == "crate" or f.kind == "jar" or f.kind == "pile") and f.alive and f.hp < f.max_hp:
 		draw_rect(Rect2(f.pos + Vector2(-14, -48), Vector2(28, 3)), Color(0, 0, 0, 0.6))
 		draw_rect(Rect2(f.pos + Vector2(-14, -48), Vector2(28 * f.hp / f.max_hp, 3)), UiKit.HEALTH)
@@ -494,6 +507,9 @@ func _body(f: SimFighter, at: Vector2, tint: Color) -> void:
 		"ally":
 			robe = Color("#4A5A6B")      # 第三人（临时 AI 侠客）：青灰长衫、土黄束带
 			trim = UiKit.SASH
+		"trainer":
+			robe = trainer_look          # 开场教闪避的在场 NPC（福伯、刘婶、班主、黑衣人）
+			trim = Color("#3B2A20")
 	if flash:
 		robe = UiKit.GOLD_WHITE
 		trim = UiKit.GOLD_WHITE

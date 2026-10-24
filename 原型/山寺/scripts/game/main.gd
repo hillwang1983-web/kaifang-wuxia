@@ -1,5 +1,6 @@
-## 第一里程碑流程：开始界面 → 选门派 → 茶棚（节点 0）→ 进山门前选通用技 → 山门（节点 1–3）
-## → 藏经阁（节点 4–5）→ 大雄宝殿（节点 6–7）→ 三段合并结算 → 回开始界面。
+## 流程：开始界面 → 选出身（四选一）→ 选门派 → 出身开场（现代十秒、附身醒来、开场演出与教学，可整段跳过）
+## → 进山门前选通用技 → 山门（节点 1–3，进寺对话与 Boss 一收尾按出身分叉）→ 藏经阁（节点 4–5）
+## → 大雄宝殿（节点 6–7）→ 三段合并结算 → 回开始界面。出身和门派分开选，出身不改任何战斗数值。
 ## 界面按 UI设计/01–03 效果图：临时山门背景压暗，左侧或居中「墨底金边」面板。
 extends Node
 
@@ -7,12 +8,15 @@ const BG := "res://assets/env/env_shanmen_placeholder_v01.png"
 
 var sect := "shaolin"
 var utility := "jiemai"
+var origin := "langzhong"
 var profile: Profile
 var _layer: CanvasLayer
 
 
 ## 开发用开关：命令行 `-- skip auto quit xiepai yungong`，网页 `?skip&auto`。
-## skip 直接进山门；auto 由 AI 代玩、自动翻对话，从茶棚走到山门结算（冒烟测试用）；quit 打完退出并打印结算；
+## skip 直接进山门；auto 由 AI 代玩、自动翻对话，从出身开场一路打到结算（冒烟测试用）；quit 打完退出并打印结算；
+## origin=shenjia|tiejiang|xiban|langzhong 指定出身（代玩默认郎中）；skipintro 开场一开始就走「跳过开场」；
+## until=shanmen 走到山门就打印代玩计时并退出；
 ## fresh 先清空存档；mobile 强制手机界面（在电脑上看触屏布局用）；items 塞样品物品到单独的演示存档；torch 山门出生在火把旁；
 ## boss2 直接进藏经阁（Boss 二）；boss3 直接进大雄宝殿（Boss 三）；shots=秒,秒 存画面截图（原生窗口）。
 var dev := {}
@@ -39,6 +43,9 @@ func _ready() -> void:
 		for u in SimData.UTILITIES:
 			if dev.has(u):
 				utility = u
+		if dev.get("origin", "") in Story.ORIGINS:
+			origin = dev.origin
+		Story.player_name = Story.origin(origin).get("default_name", "")
 		if dev.has("auto"):
 			Engine.time_scale = 4.0 if not OS.has_feature("web") else 1.0
 		if dev.has("boss3"):
@@ -46,7 +53,7 @@ func _ready() -> void:
 		elif dev.has("boss2"):
 			_cangjingge()
 		elif dev.has("auto"):
-			_chapeng()  # 代玩从茶棚走起，覆盖三张地图
+			_prologue()  # 代玩从出身开场走起，覆盖全部地图
 		else:
 			_shanmen()
 		return
@@ -97,6 +104,8 @@ func _save_shot(path: String) -> void:
 
 
 func _process(dt: float) -> void:
+	if _clock_on:
+		_run_clock += dt
 	var real := dt / maxf(Engine.time_scale, 0.001)
 	for k in _shot_pending.keys():
 		_shot_pending[k] -= real
@@ -123,7 +132,8 @@ func _dev_flags() -> Dictionary:
 		if q is String:
 			args += Array(q.trim_prefix("?").split("&"))
 	for a in args:
-		out[a.split("=")[0]] = true
+		var kv: PackedStringArray = a.split("=", true, 1)
+		out[kv[0]] = kv[1] if kv.size() > 1 else true
 		if a.begins_with("shots="):
 			for s in a.trim_prefix("shots=").split(","):
 				if s.is_valid_float():
@@ -192,7 +202,7 @@ func _title() -> void:
 	_label(p, "慈云寺 · 山门风波", Vector2(0, 122), 12, UiKit.TEXT, 336)
 	var start := MenuButtonUi.make("开始游戏")
 	start.position = Vector2(58, 194)
-	start.pressed.connect(_sect_select)
+	start.pressed.connect(_origin_select)
 	p.add_child(start)
 	var wipe := MenuButtonUi.make("清空存档")
 	wipe.position = Vector2(58, 254)
@@ -202,6 +212,8 @@ func _title() -> void:
 	if profile.exists:
 		var inv := SimInventory.from_dict(profile.inventory)
 		_label(p, "存档：金钱 %d · 物品 %d 件 · 已装备 %d 件" % [inv.coins, inv.entries.size(), inv.equipped_items().size()], Vector2(0, 306), 12, UiKit.MUTED, 336)
+		if profile.origin in Story.ORIGINS:
+			_label(p, "上次出身：%s" % Story.origin_name(profile.origin), Vector2(0, 280), 12, UiKit.MUTED, 336)
 	_label(p, "第一里程碑试玩 · 角色与场景为占位图", Vector2(0, 336), 12, UiKit.MUTED, 336)
 	_label(p, "确认：Enter / A / 点按", Vector2(0, 400), 12, UiKit.MUTED, 336)
 	start.grab_focus()
@@ -215,6 +227,52 @@ func _confirm_wipe(b: Button) -> void:
 	Profile.wipe()
 	profile = Profile.load_or_new()
 	_title()
+
+
+# ---------- 选出身（规格书第九节：四选一，定稿不再加；和门派分开选） ----------
+
+func _origin_select() -> void:
+	_reset()
+	_backdrop()
+	_label(_layer, "选择出身", Vector2(0, 40), 24, UiKit.QI, 960)
+	_label(_layer, "出身决定你是谁、为什么要进慈云寺；不影响任何战斗数值。门派下一步再选。", Vector2(0, 76), 12, UiKit.TEXT, 960)
+	var confirm := MenuButtonUi.make("确认出身")
+	confirm.position = Vector2(370, 476)
+	var name_box := LineEdit.new()
+	name_box.position = Vector2(370, 434)
+	name_box.size = Vector2(220, 30)
+	name_box.max_length = 6
+	name_box.placeholder_text = "小旦的名字"
+	name_box.hide()
+	_layer.add_child(name_box)
+	var pick := func(o: String):
+		origin = o
+		var od := Story.origin(o)
+		name_box.visible = od.get("renamable", false)
+		if name_box.visible and name_box.text == "":
+			name_box.text = profile.player_name if profile.player_name != "" else od.default_name
+		confirm.text = "确认 · " + od.name
+		confirm.grab_focus()
+	var first: Button
+	for i in Story.ORIGINS.size():
+		var o: String = Story.ORIGINS[i]
+		var od := Story.origin(o)
+		var c := _card(Rect2(40 + i * 224, 108, 208, 316), od.name, UiKit.QI, null, Vector2.ZERO, od.card, pick.bind(o))
+		_label(c, "%s线" % od.weight, Vector2(0, 52), 12, UiKit.MUTED, 208)
+		var desc: Label = c.get_child(c.get_child_count() - 2)
+		desc.position.y = 96
+		desc.size.y = 200
+		if o == (profile.origin if profile.origin in Story.ORIGINS else "langzhong"):
+			first = c
+	confirm.pressed.connect(func():
+		Story.player_name = name_box.text.strip_edges() if name_box.visible and name_box.text.strip_edges() != "" else Story.origin(origin).get("default_name", "")
+		profile.origin = origin
+		profile.player_name = Story.player_name
+		profile.save()
+		_sect_select())
+	_layer.add_child(confirm)
+	first.pressed.emit()
+	first.grab_focus()
 
 
 # ---------- 选门派（02） ----------
@@ -258,27 +316,44 @@ func _sect_select() -> void:
 		"棍 · 近身强攻，蓄力护体", pick.bind("shaolin"))
 	_card(Rect2(512, 112, 352, 336), "邪派", UiKit.PURPLE, UiKit.ui("faction_xiepai"), Vector2(192, 224),
 		"刀 · 中距施毒，控场牵制", pick.bind("xiepai"))
-	confirm.pressed.connect(_chapeng)
+	confirm.pressed.connect(_prologue)
 	_layer.add_child(confirm)
 	confirm.text = "确认 · 少林"
 	a.grab_focus()
 
 
-# ---------- 茶棚（节点 0）----------
+# ---------- 出身开场（节点 0）----------
 
-func _chapeng() -> void:
+## 从开场开始计的游戏时间（代玩计时：规格书第九节「任选一种出身，五分钟内能走到山门」）
+var _run_clock := 0.0
+var _clock_on := false
+var _intro_stats := {}
+
+
+## 所有关卡都这样建：门派、通用技、出身、存档、代玩
+func _level(level: LevelBase, on_done: Callable) -> void:
 	for c in get_children():
 		c.queue_free()
-	var level := Chapeng.new()
 	level.setup(sect, utility)
+	level.origin = origin
 	level.profile = profile
 	level.autoplay = dev.has("auto")
-	level.done.connect(_after_chapeng)
+	level.done.connect(on_done)
 	level.quit_to_title.connect(_title)
 	add_child(level)
 
 
-func _after_chapeng(_stats: Dictionary) -> void:
+func _prologue() -> void:
+	_run_clock = 0.0
+	_clock_on = true
+	var level := Prologue.new()
+	_level(level, _after_prologue)
+	if dev.has("skipintro"):
+		get_tree().create_timer(0.5).timeout.connect(level.skip_intro)
+
+
+func _after_prologue(stats: Dictionary) -> void:
+	_intro_stats = stats
 	if dev.has("auto"):
 		_shanmen()
 	else:
@@ -316,15 +391,14 @@ func _utility_select() -> void:
 # ---------- 山门 ----------
 
 func _shanmen() -> void:
-	for c in get_children():
-		c.queue_free()
-	var level := Shanmen.new()
-	level.setup(sect, utility)
-	level.profile = profile
-	level.autoplay = dev.has("auto")
-	level.done.connect(_after_shanmen)
-	level.quit_to_title.connect(_title)
-	add_child(level)
+	if _clock_on:
+		_clock_on = false
+		print("代玩计时：出身 %s%s，从开场到山门 %.0f 秒（游戏时间）" % [Story.origin_name(origin),
+			"（跳过开场）" if _intro_stats.get("skipped", false) else "", _run_clock])
+		if dev.get("until", "") == "shanmen":
+			get_tree().quit(0)
+			return
+	_level(Shanmen.new(), _after_shanmen)
 
 
 ## 山门打完接后殿藏经阁（Boss 二），再接大雄宝殿（Boss 三）；每段的结算存下来，最后一起显示
@@ -339,15 +413,7 @@ func _after_shanmen(stats: Dictionary) -> void:
 
 
 func _cangjingge() -> void:
-	for c in get_children():
-		c.queue_free()
-	var level := Cangjingge.new()
-	level.setup(sect, utility)
-	level.profile = profile
-	level.autoplay = dev.has("auto")
-	level.done.connect(_after_cangjingge)
-	level.quit_to_title.connect(_title)
-	add_child(level)
+	_level(Cangjingge.new(), _after_cangjingge)
 
 
 func _after_cangjingge(stats: Dictionary) -> void:
@@ -366,15 +432,7 @@ func _after_cangjingge(stats: Dictionary) -> void:
 
 
 func _daxiong() -> void:
-	for c in get_children():
-		c.queue_free()
-	var level := Daxiongbaodian.new()
-	level.setup(sect, utility)
-	level.profile = profile
-	level.autoplay = dev.has("auto")
-	level.done.connect(_after_daxiong)
-	level.quit_to_title.connect(_title)
-	add_child(level)
+	_level(Daxiongbaodian.new(), _after_daxiong)
 
 
 func _after_daxiong(stats: Dictionary) -> void:
@@ -393,6 +451,7 @@ func _after_daxiong(stats: Dictionary) -> void:
 
 ## 结算（规格书第九节）：三段各一行（用时、合击 / 阵法 / 破罩 / 撞偏），下面是总计与全部所获，看完回开始界面
 func _end(stats: Dictionary) -> void:
+	stats["origin"] = origin
 	if dev.has("auto"):
 		print("自动试玩结算：", stats)
 		if dev.has("quit"):
@@ -402,7 +461,7 @@ func _end(stats: Dictionary) -> void:
 	_backdrop(0.5)
 	var p := _panel(Rect2(150, 40, 660, 460))
 	_label(p, "慈云寺 · 一夜", Vector2(0, 22), 24, UiKit.QI, 660)
-	_label(p, "门派：%s　　通用技：%s" % [SimData.SECTS[sect].name, SimData.SKILLS[utility].name], Vector2(0, 58), 12, UiKit.TEXT, 660)
+	_label(p, "出身：%s　　门派：%s　　通用技：%s" % [Story.origin_name(origin), SimData.SECTS[sect].name, SimData.SKILLS[utility].name], Vector2(0, 58), 12, UiKit.TEXT, 660)
 	var y := 92
 	for part in _parts:
 		var s: Dictionary = part[1]

@@ -119,6 +119,10 @@ const ENEMIES := {
 			"gu": {"shape": "spot", "radius": 48.0, "tele": 0.8, "dmg": 0, "pool_dps": 40.0, "pool_time": 15.0, "rec": 0.6, "reach": 9999.0, "range": 360.0},
 			"soul": {"shape": "field", "cast": 1.5, "root": 3.0, "rec": 0.8, "no_interrupt": true},
 		}},
+	# 开场教学（规格书第九节教学三项之「闪避」）：在场 NPC 走近、比划一下，伤害为 0；名字由开场关卡按出身改
+	"trainer": {"name": "引导人", "hp": 99999, "radius": 12, "speed": 80.0, "aggro": 9999.0,
+		"flinch": false, "stance": false,
+		"attacks": {"slash": {"shape": "cone", "range": 60.0, "half": 1.0, "tele": 1.0, "dmg": 0, "rec": 1.6, "reach": 46.0}}},
 	"louluo": {"name": "邪派喽啰", "hp": 240, "radius": 13, "speed": 95.0, "aggro": 260.0,
 		"flinch": true, "stance": false,
 		"attacks": {"slash": {"shape": "cone", "range": 56.0, "half": 0.9, "tele": 0.7, "dmg": 90, "rec": 0.55, "reach": 46.0}}},

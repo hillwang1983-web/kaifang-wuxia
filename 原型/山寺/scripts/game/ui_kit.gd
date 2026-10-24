@@ -72,13 +72,10 @@ static func fill(c: CanvasItem, trough: Rect2, ratio: float, color: Color) -> vo
 		c.draw_rect(inner, color)
 
 
-## 顺时针扇形遮罩（技能冷却）
+## 顺时针扇形遮罩（技能冷却）。画成半径 r/2、线宽 r 的粗圆弧，不走多边形三角化——
+## 扇形快转满一圈时首尾两点几乎重合，draw_colored_polygon 会三角化失败并刷屏报错
 static func cooldown_pie(c: CanvasItem, center: Vector2, r: float, ratio: float) -> void:
 	if ratio <= 0.0:
 		return
-	var pts := PackedVector2Array([center])
-	var steps := 32
-	for i in steps + 1:
-		var a := -PI / 2.0 + TAU * ratio * float(i) / steps
-		pts.append(center + Vector2(cos(a), sin(a)) * r)
-	c.draw_colored_polygon(pts, Color(0, 0, 0, 0.62))
+	var start := -PI / 2.0
+	c.draw_arc(center, r * 0.5, start, start + TAU * minf(ratio, 1.0), maxi(4, ceili(48.0 * ratio)), Color(0, 0, 0, 0.62), r)

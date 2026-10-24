@@ -233,7 +233,7 @@ func test_chest_quality_weights() -> void:
 		bases[it.base] = true
 	check_eq(n.size(), 2, "只出魔法、稀有：%s" % [n])
 	check(n.magic > 540 and n.magic < 660, "魔法约六成（%d / 1000）" % n.magic)
-	check(bases.size() == SimItems.data().bases.size(), "底子随机，全部底子都能出")
+	check(bases.size() == SimItems.droppable_bases().size() and not bases.has("chui"), "底子随机，能掉的底子都能出（不出起始锤子）")
 	var w := _world()
 	var p := w.add_hero("player", "shaolin", "jiemai", CENTER)
 	var j := w.add_hero("partner", "shaolin", "jiemai", CENTER)

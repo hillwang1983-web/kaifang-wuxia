@@ -1,148 +1,114 @@
-## 第一里程碑台词：小说《山寺归僧》任务节点 0–3（茶棚相遇、破山门、师父的拳、断掌）。
-## 规格书第九节要求最终台词由策划改写，这里先按小说原句节选，便于试玩时看流程。
+## 台词：全部在 res://data/story.json（草稿，规格书第九节要求最终稿由 Mark 写，直接替换那个文件即可）。
+## 这里只负责按键名取出来，换成对话框要的 {who, text}。出身的开场、进寺、Boss 一收尾是三处分叉，其余四条线共用。
 class_name Story
 extends RefCounted
 
+const DATA_PATH := "res://data/story.json"
+const ORIGINS := ["shenjia", "tiejiang", "xiban", "langzhong"]
 
-static func l(who: String, text: String) -> Dictionary:
-	return {"who": who, "text": text}
+static var _data := {}
+static var player_name := ""   # 戏班小旦可改名（默认「玉儿」）；台词里的 {name} 换成它
 
 
-## 节点 0：茶棚相遇（小说第二章）。开场旁白，之后玩家自己走过去和净心说话
-static func chapeng_intro(sect: String) -> Array:
-	var out := [
-		l("", "慈云寺山脚的破茶棚。一个少年僧人蹲在棚外，三天没合眼，手里攥着一块撕下来的衣襟。"),
-		l("", "你是被茶棚老板当成疯子赶出来的——身上的衣服谁也没见过，开口就问哪里能「充电」。"),
-	]
+static func data() -> Dictionary:
+	if _data.is_empty():
+		_data = JSON.parse_string(FileAccess.get_file_as_string(DATA_PATH))
+	return _data
+
+
+static func _lines(rows: Array) -> Array:
+	return rows.map(func(r): return {"who": r[0], "text": String(r[1]).replace("{name}", player_name)})
+
+
+static func shared(key: String) -> Array:
+	return _lines(data().shared[key])
+
+
+static func origin(id: String) -> Dictionary:
+	return data().origins[id]
+
+
+static func origin_name(id: String) -> String:
+	return origin(id).name if id != "" else "（未选）"
+
+
+# ---------- 开场（每条出身） ----------
+
+static func modern() -> Array:
+	return _lines(data().modern)
+
+
+static func wake(id: String) -> Array:
+	return _lines(origin(id).wake)
+
+
+## 教学三项的引导：move / attack / dodge，由在场 NPC 说（字幕，不挡操作）
+static func tutorial(id: String, step: String) -> Dictionary:
+	return _lines([origin(id).tutorial[step]])[0]
+
+
+static func info(id: String) -> Array:
+	return _lines(origin(id).info)
+
+
+static func leave(id: String) -> Dictionary:
+	return _lines([origin(id).leave])[0]
+
+
+## 第二处分叉：山门前一小段对话；邪派加一句进寺理由（规格书第九节）
+static func entry(id: String, sect: String) -> Array:
+	var out := _lines(origin(id).entry) if id != "" else []
 	if sect == "xiepai":
-		out.append(l("", "（你身上穿的是邪派的衣服。附身醒来时，这具身子刚奉命入寺夺取秘籍——却发现叛僧另有图谋。）"))
+		out.append(_lines([data().shared.xiepai_line])[0])
 	return out
 
 
-static func chapeng_talk() -> Array:
-	return [
-		l("", "那块布是血写的。"),
-		l("你", "那是血写的？谁写的？你要去救人？"),
-		l("净心·悲", "……我师父，在山上那座寺里。寺被邪派占了，山门有人守，后山水道也堵死了。"),
-		l("你", "你师父在哪、关人的地方在哪、守门的有几个？"),
-		l("净心", "你不问我师父为什么叛变？"),
-		l("你", "先把能做的事做了。给我看看那块布。"),
-		l("信", "师父，姥姥的毒要用我的命来解。她说再有三个月。我不怪她，可我想活。慈云寺后山有条水道，能进来。阿萝。"),
-		l("净心", "师父看了这封信，就下山了。三年，一个字也没回来。"),
-		l("你", "一个人进不去，那就两个人进。你会打，我会想办法。走吧。"),
-		l("净心", "我叫净心。"),
-		l("你", "嗯。我……叫什么，你随便。走吧，先把门给砸了。"),
-	]
+## 第三处分叉：玄诚倒地后按出身的收尾（赎罪 / 报仇 / 查纸条 / 治病）
+static func coda(id: String) -> Array:
+	return _lines(origin(id).coda) if id != "" else []
 
 
-static func shanmen_intro(sect: String) -> Array:
-	var out := [
-		l("", "深夜，慈云寺山门。火把把整片操练场照得通亮。"),
-		l("净心", "施主，山门就在前面。先熄了火把，再寻机会近前。"),
-	]
-	if sect == "xiepai":
-		out.append(l("", "奉命入寺夺取秘籍，却发现叛僧另有图谋。"))
-	return out
+# ---------- 副本内共用 ----------
+
+static func shanmen_intro(sect: String, origin_id := "") -> Array:
+	return shared("shanmen_intro") + entry(origin_id, sect)
 
 
-## 节点 1 → 2：铜锣响，教头现身
 static func boss_intro() -> Array:
-	return [
-		l("", "铜锣响了。山门内的操练场上，只站着一个人。黑衣，光头，手里一根长棍。"),
-		l("净心·悲", "师父。"),
-		l("玄诚", "回去。"),
-		l("净心", "我来带你回去。"),
-		l("玄诚", "我回不去了。你走，趁他们还没围过来。"),
-		l("", "净心把血布从怀里拿出来，举起来给师父看。"),
-		l("玄诚", "净心，你要是不走，我就只能打你。打到你走为止。"),
-		l("净心", "那你打。"),
-	]
+	return shared("boss_intro")
 
 
-## 节点 2 → 3：阶段二，蓄力重击
 static func phase2() -> Array:
-	return [
-		l("", "铜锣声更近了。玄诚的招式变了——不再是少林的拳，是一套阴狠路数。"),
-		l("", "他忽然收手，双手举棍过头，周身的气开始往棍上聚。"),
-		l("你", "他在蓄一招大的——打断他！现在！"),
-	]
+	return shared("phase2")
 
 
-## 节点 3：断掌，玄诚坐地
-static func boss_down() -> Array:
-	return [
-		l("玄诚·笑", "教会了。"),
-		l("", "他盘腿坐下，不再打了。净心扔了棍，蹲在他面前。"),
-		l("玄诚", "阿萝在偏殿药房，毒姥看着。我在邪派三年，一直没拿到解药——解药不是一瓶药，是毒姥自己，她的血能压住蛊。"),
-		l("玄诚", "大雄宝殿里那个铁东西，是邪派的退路，也是机关。打不过它，除非有重弩。寺后库房里有零件，我这三年偷偷攒的。"),
-		l("净心", "师父，你跟我一起去。"),
-		l("", "玄诚摇头，撩起黑衣的下摆。腰上有一道黑紫色的印，像一条蛇盘在皮肤底下。"),
-		l("玄诚", "我进邪派的投名状，是让毒姥在我身上也种了蛊。离开慈云寺十里，就死。所以我回不去了，净心。不是不想。"),
-		l("净心", "那我去把毒姥打了，把阿萝救出来，再把你的蛊解了，然后我们一起回去。"),
-		l("玄诚·笑", "站直了。去吧。"),
-	]
+static func boss_down(origin_id := "") -> Array:
+	return shared("boss_down") + coda(origin_id)
 
 
-## 过渡：玄诚指路，穿后院回廊去藏经阁（节点 3 → 4）
 static func houdian_intro() -> Array:
-	return [
-		l("", "玄诚指了路：穿过后院回廊就是藏经阁，阿萝在那里，毒姥看着。回廊里还守着几个邪派的人。"),
-	]
+	return shared("houdian_intro")
 
 
-## 节点 4：药房的雾（小说第四章，规格书把地点定在藏经阁）
 static func dulao_intro() -> Array:
-	return [
-		l("", "藏经阁里书架林立，药炉常年不熄，药气混着墨香，呛得人睁不开眼。"),
-		l("毒姥", "玄诚那个和尚，到底还是把人引来了。我早知道。"),
-		l("净心", "把阿萝交出来。"),
-		l("毒姥", "交出来？她是我的命。我中的毒，只有一个从小用药喂大的身子能解。我喂了她十年。"),
-		l("你", "所以你三个月前就该动手了。你为什么没动？"),
-		l("毒姥", "因为她写了那封血书。那一天我才知道，她不是药，她是个人。……可我还是怕死。"),
-		l("", "她袖子一抖，满阁的油灯同时暗了，绿色的雾从地缝里涌了上来。"),
-	]
+	return shared("dulao_intro")
 
 
-## 节点 5：毒姥留血、离场（不挡操作的字幕，按顺序播）
 static func dulao_down() -> Array:
-	return [
-		l("毒姥", "你写那封信的时候，恨我吗？"),
-		l("阿萝", "恨。可你也是我唯一的姥姥。"),
-		l("毒姥", "这三滴血能压住玄诚身上的蛊，压一年。一年后他要是还想活，来找我——如果我还在的话。"),
-		l("毒姥", "阿萝身上的蛊，谁也取不出来。只要我不碰她，她能活。你们带她走吧。"),
-		l("毒姥", "大雄宝殿里那个铁东西，不认人。你们小心。"),
-		l("", "毒姥走进了后殿的雾里。"),
-	]
+	return shared("dulao_down")
 
 
-## 节点 6：拼弩车的过渡（小说第五章开头）：库房的零件已经被邪派的人搬进殿里堆着
 static func daxiong_intro() -> Array:
-	return [
-		l("", "天快亮了。大雄宝殿的门从里面锁死，玄诚攒的那堆零件，库房里只剩空架子。"),
-		l("净心", "零件被搬进殿里了。底盘、弓臂、绞盘，堆在两边。"),
-		l("你", "那就进去拿。殿里那个铁东西，你拦住它，我来拼。"),
-	]
+	return shared("daxiong_intro")
 
 
-## 节点 7：撞开殿门（铁甲金刚没有台词）
 static func jingang_intro() -> Array:
-	return [
-		l("", "殿里没有佛像，佛龛空着。正中间立着一尊青铜巨人，通体锈绿，胸口嵌着一块发光的铜镜。"),
-		l("", "门槛一响，铜镜亮了，巨人的头缓缓转过来。它不是人，不懂恨，也不懂怕：谁进殿，碾谁。"),
-		l("你", "它的壳太厚。先拿零件拼弩车，我要射它胸口那块镜子。"),
-	]
+	return shared("jingang_intro")
 
 
-## 金刚跪倒（字幕，不挡操作）
 static func jingang_down() -> Array:
-	return [
-		l("", "巨人停住了，头歪了一下，膝盖一弯，跪在空荡荡的佛龛前。"),
-		l("净心", "痛快。"),
-		l("你", "痛快。"),
-	]
+	return shared("jingang_down")
 
 
-## 结算前净心的最后一句（悬念，正式版接「一年之约」）
 static func daxiong_last() -> String:
-	return "师父只剩一年。天亮了，先回山门——一年里找不到毒姥，我就去找别的法子。"
-
+	return data().shared.daxiong_last[1]

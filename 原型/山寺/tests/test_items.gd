@@ -24,7 +24,7 @@ func test_quality_weights() -> void:
 func test_affix_rules() -> void:
 	var r := _rng(2)
 	for i in 500:
-		var base_id: String = SimItems.data().bases.keys()[i % 8]
+		var base_id: String = SimItems.droppable_bases()[i % 8]
 		var it := SimItems.roll_equipment(r, base_id)
 		var rng_: Array = SimItems.data().quality[it.quality].affixes
 		check(it.affixes.size() >= rng_[0] and it.affixes.size() <= rng_[1], "%s 词缀条数 %d 合乎品质" % [it.quality, it.affixes.size()])

@@ -14,6 +14,8 @@ var proficiency := {}      # 武功 id -> 熟练度
 var studying := ""         # 参悟中的武功，一次只能一门
 var study_t := 0.0
 var runs: Array = []       # 预留：每局结算记录
+var origin := ""           # 出身（规格书第九节，开局四选一）；空 = 还没选过
+var player_name := ""      # 戏班小旦可改名（默认「玉儿」）
 var exists := false
 
 
@@ -31,6 +33,8 @@ static func load_or_new() -> Profile:
 	p.studying = str(d.get("studying", ""))
 	p.study_t = float(d.get("study_t", 0.0))
 	p.runs = d.get("runs", [])
+	p.origin = str(d.get("origin", ""))
+	p.player_name = str(d.get("player_name", ""))
 	return p
 
 
@@ -40,7 +44,7 @@ func save() -> void:
 		push_warning("存档写不进去：%s" % error_string(FileAccess.get_open_error()))
 		return
 	f.store_string(JSON.stringify({"version": VERSION, "inventory": inventory, "proficiency": proficiency,
-		"studying": studying, "study_t": study_t, "runs": runs}, "\t"))
+		"studying": studying, "study_t": study_t, "runs": runs, "origin": origin, "player_name": player_name}, "\t"))
 	exists = true
 
 

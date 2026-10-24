@@ -10,6 +10,7 @@ const DT := 1.0 / 60.0
 const CAMERA_LEAD := 36.0   # 镜头朝瞄准方向的提前量（规格书第五节）
 
 var sect := "shaolin"
+var origin := ""             # 出身（Story.ORIGINS 之一）：只影响开场、进寺对话与 Boss 一收尾，不改任何战斗数值
 var utility := "jiemai"
 var autoplay := false        # 开发用：AI 代玩玩家、自动翻对话
 var map_size := Vector2(960, 540)
@@ -32,7 +33,8 @@ var freeze_rect: TextureRect
 var pause_layer: Control
 var stage := "intro"
 var paused := false
-var partner_active := true   # 净心是否由 AI 驱动（茶棚开场时他蹲着不动）
+var partner_active := true   # 净心是否由 AI 驱动（郎中开场时他蹲着不动）
+var skippable := false       # 出身开场：暂停菜单里多一项「跳过开场」
 var _tips := {}
 
 
@@ -43,7 +45,10 @@ func setup(sect_id: String, utility_id: String) -> void:
 
 ## 子类先建好 world / me / jingxin，再调这个把画面和界面挂上
 func build_scene(background: Variant, foreground := "") -> void:
-	ai = SimPartnerAI.new(world, jingxin.id, me.id)
+	if jingxin:
+		ai = SimPartnerAI.new(world, jingxin.id, me.id)
+	else:
+		partner_active = false  # 开场里没有净心（郎中线除外）
 	view = WorldView.new()
 	view.world = world
 	view.me_id = me.id
@@ -110,7 +115,7 @@ func build_scene(background: Variant, foreground := "") -> void:
 	layer.add_child(pause_layer)
 
 	if autoplay:
-		auto_ai = SimPartnerAI.new(world, me.id, jingxin.id)
+		auto_ai = SimPartnerAI.new(world, me.id, jingxin.id if jingxin else me.id)
 		dialogue.auto = true
 	camera.reset_smoothing()
 
@@ -154,7 +159,7 @@ func _physics_process(dt: float) -> void:
 		_swallow_t -= dt
 		pc.pressed.clear()
 	var cmds := {me.id: pc}
-	if partner_active:
+	if partner_active and jingxin:
 		cmds[jingxin.id] = ai.command(DT)
 	cmds.merge(extra_commands())
 	world.step(DT, cmds)
@@ -332,7 +337,10 @@ func _make_pause() -> Control:
 	box.size = Vector2(220, 200)
 	box.add_theme_constant_override("separation", 12)
 	root.add_child(box)
-	for pair in [["继续", _resume], ["重新开始这一段", _restart_section], ["返回标题", quit_to_title.emit]]:
+	var items := [["继续", _resume], ["重新开始这一段", _restart_section], ["返回标题", quit_to_title.emit]]
+	if skippable:
+		items.insert(1, ["跳过开场", _skip_from_menu])
+	for pair in items:
 		var b := MenuButtonUi.make(pair[0])
 		b.pressed.connect(pair[1])
 		box.add_child(b)
@@ -350,6 +358,16 @@ func _restart_section() -> void:
 
 ## 子类覆写：这一段从头来
 func retry() -> void:
+	pass
+
+
+func _skip_from_menu() -> void:
+	_set_paused(false)
+	skip_intro()
+
+
+## 子类覆写：跳过开场（只有出身开场用）
+func skip_intro() -> void:
 	pass
 
 

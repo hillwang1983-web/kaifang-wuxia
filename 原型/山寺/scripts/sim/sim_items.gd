@@ -95,11 +95,11 @@ static func make_consumable(base_id: String, count := 1) -> Dictionary:
 	return {"uid": 0, "base": base_id, "quality": "normal", "stats": {}, "affixes": [], "count": count}
 
 
-## 某个槽位能出的底子
+## 某个槽位能出的底子（start_only 的起始武器——铁匠之子的锤子——不进任何掉落）
 static func bases_for_slot(slot: String) -> Array:
 	var out := []
 	for k in data().bases:
-		if data().bases[k].slot == slot:
+		if data().bases[k].slot == slot and not data().bases[k].get("start_only", false):
 			out.append(k)
 	out.sort()
 	return out
@@ -126,9 +126,23 @@ static func roll_drops(rng: RandomNumberGenerator, kind: String) -> Dictionary:
 
 ## 通关箱（规格书第七节）：底子在全部装备底子里随机，品质按 SimData.CHEST（魔法六成、稀有四成）
 static func roll_chest(rng: RandomNumberGenerator) -> Dictionary:
-	var bases: Array = data().bases.keys()
-	bases.sort()
+	var bases: Array = droppable_bases()
 	return roll_equipment(rng, bases[rng.randi_range(0, bases.size() - 1)], _weighted(rng, SimData.CHEST.quality))
+
+
+## 能掉落 / 开箱出的底子（去掉只做起始武器的）
+static func droppable_bases() -> Array:
+	var out: Array = data().bases.keys().filter(func(k): return not data().bases[k].get("start_only", false))
+	out.sort()
+	return out
+
+
+## 出身的起始武器（规格书第九节：只有铁匠之子是锤子，其余按门派默认、不给物品）。
+## 锤子没有任何属性、不带词缀——出身不改战斗数值
+static func start_weapon(origin: String) -> Dictionary:
+	if origin != "tiejiang":
+		return {}
+	return {"uid": 0, "base": "chui", "quality": "normal", "stats": {}, "affixes": [], "count": 1}
 
 
 ## 一组装备的属性合计（底子属性 + 词缀，同名相加）
