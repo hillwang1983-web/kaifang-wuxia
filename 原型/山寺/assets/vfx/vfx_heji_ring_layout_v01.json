@@ -1,0 +1,60 @@
+{
+  "version": "v01",
+  "frame": {
+    "width": 96,
+    "height": 96,
+    "anchor": [
+      48,
+      48
+    ],
+    "perspective": "3/4 top-down flattened ground ellipse"
+  },
+  "colors": [
+    "#FFD24A",
+    "#FFF3C4",
+    "#FFC83D"
+  ],
+  "alpha": [
+    0,
+    255
+  ],
+  "fps": 12,
+  "open": {
+    "file": "vfx_heji_ring_open_v01.png",
+    "columns": 6,
+    "rows": 1,
+    "frames": 6,
+    "loop": false,
+    "duration_seconds": 0.5
+  },
+  "idle": {
+    "file": "vfx_heji_ring_loop_v01.png",
+    "columns": 4,
+    "rows": 1,
+    "frames": 4,
+    "loop": true
+  },
+  "countdown": {
+    "file": "vfx_heji_ring_countdown_v01.png",
+    "columns": 36,
+    "rows": 1,
+    "frames": 36,
+    "loop": false,
+    "duration_seconds": 3,
+    "start_at_top": true,
+    "remaining_arc_direction": "clockwise",
+    "hide_at_end": true
+  },
+  "baked_invitation": {
+    "file": "vfx_heji_ring_invite_v01.png",
+    "columns": 36,
+    "rows": 1,
+    "frames": 36,
+    "loop": false,
+    "duration_seconds": 3,
+    "hide_at_end": true,
+    "note": "四帧常驻莲圈与三秒倒计时的合成版本；与分层版本二选一，不重复叠加。"
+  },
+  "timing_note": "展开和三秒邀请是独立阶段；由开发在实际发起/摆位确定时选择计时起点。本次仅交美术资源，未改运行时计时。",
+  "source_note": "内置imagegen生成十帧莲纹环；ImageMagick按帧裁切、最近邻整理至96、固定中心和三色透明通道；精确倒计时弧为几何层。"
+}

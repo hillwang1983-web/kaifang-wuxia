@@ -2,7 +2,17 @@
 
 把 `参考资料/` 里《武侠 ARPG 垂直切片功能规格书》、小说《山寺归僧》和《美术说明（AI 生图用）》做成可玩的垂直切片。2026-10-23 决定用 **Godot 4.7** 做，不再沿用网页原型的代码；`原型/V0.4/`《青石渡风波》本身不改。
 
-当前状态：**工程骨架、输入映射和测试入口已就绪，还没有游戏代码**；主场景只是一行「开发中」占位。先由策划按 `UI设计/交换清单_第一里程碑.md` 出图，再按图开发。
+当前状态：**第一里程碑可以从头玩到尾**（2026-10-24）：开始界面 → 选门派 → 茶棚（节点 0）→ 进山门前选通用技 → 山门熄火把、击退四名喽啰（节点 1）→ 玄诚两阶段（节点 2–3）→ 坐地交代 → 结算。界面、图标、头像、合击定格用的是美术第一批交付；**场景、角色与招式特效还是占位**：山门背景借用效果图同源的 `assets/env/env_shanmen_placeholder_v01.png`，茶棚用代码画的色块，人物和特效是代码画的形体（按美术说明配色）。等交换清单里的场景、角色、Boss、特效到了逐项替换。
+
+## 第一里程碑做了什么
+
+- **两门派**：少林（罗汉拳点按三连、金钟罩蓄力护盾、大力金刚掌拖动瞄准扇形击退；被动受击积内力，满了下一招带硬直）；邪派（毒砂掌点按飞掌、化功散拖动落点毒池减速、摄魂术蓄力射线，蓄满定身；被动叠毒三层引爆）。普攻三连、按住连击、闪避耗身法带无敌帧，沿用 V0.4 手感。
+- **通用技三选一**：梯云纵（短距闪现）、运功疗伤（自疗，身边队友回血渡气）、截脉（打断读条）。
+- **合击与默契**（规格书第四节）：按住合击键摆光圈、松开发邀请，三秒内队友按合击键或走进光圈即成立；全屏定格 0.45 秒后光圈内敌人吃伤害、读条被打断并失衡；没人响应就退化为门派招式（不耗内力、不进合击冷却），默契归零。默契按局计算、分三级，三十秒内连续成功额外加一。
+- **AI 净心**：和玩家一样只产出操作指令（「搭档接口」）。会跟随、普攻、看红区闪避；玩家发邀请时走进光圈；玄诚读条时自己发邀请等玩家响应，不替玩家包办打断。
+- **玄诚**：带架势（普攻只吃一半），预警末段闪过横扫或被打断会失衡 2 秒（吃满伤害）。半血进入阶段二，加入 2 秒读条的重击，不打断就全场重伤 350。血量归零坐地，不死。
+- **败退**：玩家倒下两秒后两人回山门口重来（打玄诚时他也回满血）；净心倒下八秒后自己爬起来。
+- **操作**：键鼠、手柄、手机触屏（左摇杆 + 右侧按键群，拖动技能键瞄准，支持多点同时按）。
 
 ## 打开与测试
 
@@ -14,11 +24,13 @@ winget install --id GodotEngine.GodotEngine --exact
 
 打开 Godot → 导入 → 选本目录的 `project.godot`；F5 运行。
 
-无界面测试（会先导入一遍资源，再跑 `tests/test_*.gd`，失败时退出码为 1）：
+无界面测试（先导入资源，再跑 `tests/test_*.gd` 的规则用例，最后让 AI 代玩整段山门做冒烟；任何一项失败或脚本报错，退出码为 1）：
 
 ```bash
 powershell -ExecutionPolicy Bypass -File 原型/山寺/tools/test.ps1
 ```
+
+开发开关：命令行 `Godot_v4.7.2-stable_win64_console.exe --path 原型/山寺 -- skip auto quit xiepai yungong`，网页地址加 `?skip&auto`。`skip` 直接进山门；`auto` 由 AI 代玩、自动翻对话（命令行四倍速）；`quit` 打完退出并打印结算；`xiepai`、`tiyunzong` / `yungong` / `jiemai` 指定门派和通用技。
 
 工程设置：内部分辨率 960×540、窗口 1920×1080、整数倍拉伸，贴图默认最近邻、2D 变换吸附整像素（像素风不糊）；渲染器用 Compatibility（网页导出走 WebGL2）。
 
@@ -32,9 +44,10 @@ powershell -ExecutionPolicy Bypass -File 原型/山寺/tools/export_web.ps1
 
 本机预览用 `.claude/launch.json` 的 `shansi-web` 配置（`python -m http.server 8772 --directory 原型/山寺/build/web`，只听 127.0.0.1）。
 
-- 导出用单线程版本（`variant/thread_support=false`），不需要 COOP / COEP 响应头，iPhone Safari 也能跑；开了 PWA，可「添加到主屏幕」横屏全屏。
+- 导出用单线程版本（`variant/thread_support=false`），不需要 COOP / COEP 响应头，iPhone Safari 也能跑。
+- **PWA 已关闭**（2026-10-24）：开着时 Service Worker 会一直拿最早缓存的 `index.pck`，部署新版后试玩的人还在玩旧版。试玩期先关；「添加到主屏幕」全屏等版本稳定后再开，届时要先解决缓存更新。
 - 体积：`index.wasm` 约 39.5 MB（引擎本体，未压缩；服务器开 gzip / brotli 后约十分之一到四分之一），`index.pck` 是游戏内容。手机第一次打开要等下载。
-- 画面按设备实际像素整数倍放大：iPhone 横屏（DPR 3）放大 2 倍，左右留黑边（手机比 16:9 宽）。要不要改成「两边多露场景」等第一张场景图出来再定。
+- 画面按设备实际像素整数倍放大（布局参数的约定）：iPhone 横屏（DPR 3）放大 2 倍，左右留黑边。**小屏安卓（如 740×360、DPR 2）只能放大 1 倍，画面只占屏幕约三分之二、12 像素字偏小**——要不要在手机上改成非整数放大铺满，需要拍板。
 - 网页里没有系统中文字体可回落，界面字体用工程自带的 Fusion Pixel 12px 简体（`assets/fonts/fusion-pixel/`，SIL OFL 1.1，许可文件同目录），主题在 `scenes/default_theme.tres`，字号按 12 的整数倍用。
 - 还没接到公网试玩发布流程（`scripts/update-preview.mjs`），手机目前只能在同一局域网另起服务访问。
 - 导出模板 4.7.2 已装在 `%APPDATA%\Godot\export_templates\4.7.2.stable\`（含 Windows，以后要出 exe 也能直接导）。
@@ -46,18 +59,18 @@ powershell -ExecutionPolicy Bypass -File 原型/山寺/tools/export_web.ps1
 | 动作 | 键鼠 | 手柄 |
 |---|---|---|
 | 移动 | WASD / 方向键 | 左摇杆 |
-| 瞄准 | （鼠标位置，开发时接） | 右摇杆 |
-| 普攻 | J / 鼠标左键 | A |
+| 瞄准 | 鼠标位置（两秒不动就改回自动瞄准） | 右摇杆 |
+| 普攻（按住连击） | J / 鼠标左键 | A |
 | 主动一 / 二 / 三 | U / I / O | X / Y / B |
 | 通用技 | K | RB |
 | 合击 | F | RT |
 | 闪避 | 空格 | LB |
-| 取消蓄力 / 瞄准 | Esc / 鼠标右键 | LT |
+| 取消蓄力 / 瞄准 / 光圈 | Esc / 鼠标右键 | LT |
 | 交谈 / 互动 | E | 十字键上 |
 | 物品栏 | Tab | Start |
-| 暂停 | P | Back |
+| 暂停 | P / Esc（没在蓄力瞄准时） | Back |
 
-和规格书第五节不同的三处：三主动从 Q W E 改为 U I O（W 与移动冲突）；手柄取消从 B 改为 LT（B 是主动三）；规格书没给交谈 / 互动和暂停键，暂定如上。
+和规格书第五节不同的三处：三主动从 Q W E 改为 U I O（W 与移动冲突）；手柄取消从 B 改为 LT（B 是主动三）；规格书没给交谈 / 互动和暂停键，暂定如上。鼠标左右键不进输入映射（网页上触屏会模拟鼠标），由 `scripts/game/player_input.gd` 在非触屏时单独读。手机：左半屏按下即摇杆，右侧按键群按效果图摆放，按住技能键拖动即瞄准方向 / 落点。
 
 ## 已定取舍（2026-10-23）
 
@@ -78,10 +91,12 @@ powershell -ExecutionPolicy Bypass -File 原型/山寺/tools/export_web.ps1
 │   ├── env/  obj/  chr/  npc/  boss/  vfx/  ico/  ui/  por/
 │   ├── fonts/       Fusion Pixel 中文像素字体与 OFL 许可
 │   └── ref/         母图、定妆图、GPT 原图（不进游戏）
-├── scenes/          场景（.tscn）：现在只有 main.tscn 占位；之后是茶棚、山门、角色、界面
+├── scenes/          main.tscn（流程入口）、default_theme.tres（像素字体主题）
 ├── scripts/
-│   ├── sim/         纯逻辑：世界状态、门派招式、合击与默契、Boss、AI 净心
-│   └── game/        画面、输入、镜头、界面、对话
+│   ├── sim/         纯逻辑，不碰场景树：sim_data 数值表、sim_world 世界与战斗、sim_fighter 角色状态、
+│   │                sim_command 操作指令、sim_enemies 喽啰与玄诚、sim_combo 合击默契、sim_partner_ai AI 净心
+│   └── game/        main 流程与菜单、shanmen 山门关卡、world_view 画面、hud 战斗界面与触屏、
+│                    player_input 键鼠手柄触屏合成指令、dialogue_box 对话框、story 台词、ui_kit / menu_button_ui 界面共用
 ├── tests/           无界面测试：run_tests.gd 入口、test_case.gd 基类、test_*.gd 用例
 ├── tools/           setup_input.gd 生成键位、test.ps1 跑测试、export_web.ps1 导出网页版
 └── export_presets.cfg  网页导出预设
@@ -89,4 +104,10 @@ powershell -ExecutionPolicy Bypass -File 原型/山寺/tools/export_web.ps1
 
 各目录里的 `.gitkeep` 只是让空目录进 Git，放进文件后可以删。`*.gd.uid` 是 Godot 4.4 起自动生成的脚本 ID，要和脚本一起提交。
 
-还没做的准备：网页版接进公网试玩发布流程。
+## 待试玩标定与待拍板
+
+- **数值**全部在 `scripts/sim/sim_data.gd`，按 V0.4 手感起步、待真人试玩复核。玄诚 5000 血：两个满操作 AI 约 37 秒（单测里会打印），按真人约一半输出估到规格书「约九十秒」；喽啰四个、各 240 血，靠净心和合击清得很快。
+- **手机缩放**：见上文，小屏安卓要不要非整数铺满。
+- **台词**：按小说原句节选（`scripts/game/story.gd`），规格书要求最终由策划改写。
+- 还没接公网试玩发布流程（等第一批场景、角色图和玩法稳定后再接）。
+- 自动化只覆盖规则、流程和「不报错打完」；没有真人试玩、没在实体手机和手柄上验过。

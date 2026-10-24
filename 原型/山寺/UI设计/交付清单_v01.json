@@ -1,0 +1,487 @@
+{
+  "date": "2026-10-24",
+  "style": "墨底金边",
+  "native": [
+    960,
+    540
+  ],
+  "font": "Fusion Pixel 12px",
+  "files": [
+    {
+      "path": "assets/ico/ico_skill_luohanquan_v01.png",
+      "width": 64,
+      "height": 64,
+      "role": "透明图标/头像",
+      "sha256": "bfb020d394bc8ba636fcc00623d34572d06ac6bc6c4c4f594d23ce7a64d48f01"
+    },
+    {
+      "path": "assets/ico/ico_skill_jinzhongzhao_v01.png",
+      "width": 64,
+      "height": 64,
+      "role": "透明图标/头像",
+      "sha256": "bb067ae99d8ce031479a9fe9b8ea0de772905cb314cedb4f7516c0b24f6bd1fe"
+    },
+    {
+      "path": "assets/ico/ico_skill_dalijingangzhang_v01.png",
+      "width": 64,
+      "height": 64,
+      "role": "透明图标/头像",
+      "sha256": "00d9e1610f8ca9081b59522ccac3bcf3c98f5081a51f6bdfe7650e36a96c67cc"
+    },
+    {
+      "path": "assets/ico/ico_skill_dushazhang_v01.png",
+      "width": 64,
+      "height": 64,
+      "role": "透明图标/头像",
+      "sha256": "170b1ad2d1706d30457929b33fa5a975700b294aa0fcfe68aa30d5cf2ffb7d43"
+    },
+    {
+      "path": "assets/ico/ico_skill_huagongsan_v01.png",
+      "width": 64,
+      "height": 64,
+      "role": "透明图标/头像",
+      "sha256": "38c7c75b14c14cbdf509bc8c934c16ddce492221ad2906579dc0821853be2f24"
+    },
+    {
+      "path": "assets/ico/ico_skill_shehunshu_v01.png",
+      "width": 64,
+      "height": 64,
+      "role": "透明图标/头像",
+      "sha256": "85ff8f232e5d937487c3628b0eb7e69c079f1b26f576ba434ed3ed359f6556cd"
+    },
+    {
+      "path": "assets/ico/ico_skill_tiyunzong_v01.png",
+      "width": 64,
+      "height": 64,
+      "role": "透明图标/头像",
+      "sha256": "13bb6c0ccf130853b3345a02e926cfb51a402d87b900ee22d45830cc8289a476"
+    },
+    {
+      "path": "assets/ico/ico_skill_yungong_v01.png",
+      "width": 64,
+      "height": 64,
+      "role": "透明图标/头像",
+      "sha256": "fe146f2397526cc053e92ac51b60fcc0c4f7f9705431b0d0729f79c4f372da04"
+    },
+    {
+      "path": "assets/ico/ico_skill_jiemai_v01.png",
+      "width": 64,
+      "height": 64,
+      "role": "透明图标/头像",
+      "sha256": "8a122cf58a9cdafbb3e87cfaf4be4babf4853db471a1eb3619121ab1d86f40ee"
+    },
+    {
+      "path": "assets/ico/ico_btn_attack_v01.png",
+      "width": 64,
+      "height": 64,
+      "role": "透明图标/头像",
+      "sha256": "b5690fb1a71a850bf04683dc59293b0a4a0907f46e6a13b7907f3921b08f4435"
+    },
+    {
+      "path": "assets/ico/ico_btn_dodge_v01.png",
+      "width": 64,
+      "height": 64,
+      "role": "透明图标/头像",
+      "sha256": "e4204c16bad06092c9c17aebe0fe99ed33978c7acba68ad12b716a4e376f6572"
+    },
+    {
+      "path": "assets/ico/ico_btn_talk_v01.png",
+      "width": 64,
+      "height": 64,
+      "role": "透明图标/头像",
+      "sha256": "4f6e6d82b25f09ac06e969867abc3301cf50cad10396db868b918dbf65eb26a2"
+    },
+    {
+      "path": "assets/ico/ico_skill_heji_v01.png",
+      "width": 64,
+      "height": 64,
+      "role": "透明图标/头像",
+      "sha256": "e8e7c20999770907a48d4d97e118521b91ff9474481f9f0d225e7609d90a6e30"
+    },
+    {
+      "path": "assets/por/por_jingxin_normal_v01.png",
+      "width": 96,
+      "height": 96,
+      "role": "透明图标/头像",
+      "sha256": "9abfd97e31c0396812f068d6a71c6b336d2e9858f2db2f63487e194adf5972d1"
+    },
+    {
+      "path": "assets/por/por_jingxin_sad_v01.png",
+      "width": 96,
+      "height": 96,
+      "role": "透明图标/头像",
+      "sha256": "9e9f6b400f56d12d0887b23f08a2b7a11e66fba3fbe1d486c57954ff4b62f5c3"
+    },
+    {
+      "path": "assets/por/por_xuancheng_cold_v01.png",
+      "width": 96,
+      "height": 96,
+      "role": "透明图标/头像",
+      "sha256": "d37909ffc5415497d89819747077447bbba053cba2d5ee8ed6ed797d4ff10e32"
+    },
+    {
+      "path": "assets/por/por_xuancheng_smile_v01.png",
+      "width": 96,
+      "height": 96,
+      "role": "透明图标/头像",
+      "sha256": "591745863b20f8809c3184e755e1efb586ff3442f434b680fd457504dc9f5d3b"
+    },
+    {
+      "path": "assets/ui/ui_faction_shaolin_v01.png",
+      "width": 192,
+      "height": 224,
+      "role": "门派选择插图",
+      "sha256": "cad53f477e94ae64f56f13d69b9ab6fc5de573fd4cc8abbb45a94a841f86a0e4"
+    },
+    {
+      "path": "assets/ui/ui_faction_xiepai_v01.png",
+      "width": 192,
+      "height": 224,
+      "role": "门派选择插图",
+      "sha256": "63b4094d5214ffff44d5d0c8c2ad0d12dba13d7927354b363f8e5603db9950fc"
+    },
+    {
+      "path": "assets/ui/ui_bossbar_v01.png",
+      "width": 448,
+      "height": 88,
+      "role": "UI切图",
+      "sha256": "46f9a6bb84b9a6ff7b8bf75dac16e597753ee7fab00ff57c73cb8933f14fcb24"
+    },
+    {
+      "path": "assets/ui/ui_selfbar_v01.png",
+      "width": 224,
+      "height": 108,
+      "role": "UI切图",
+      "sha256": "2dcbb295ae23a6d1e29182544f101ec53c7dff3af66698dcd1454b402daaf05e"
+    },
+    {
+      "path": "assets/ui/ui_partybar_v01.png",
+      "width": 196,
+      "height": 88,
+      "role": "UI切图",
+      "sha256": "6b28c64b2d80f88159e57e297805ffe4298ef73af050db8c2ab9d00900a7b241"
+    },
+    {
+      "path": "assets/ui/ui_moqi_lv1_v01.png",
+      "width": 48,
+      "height": 12,
+      "role": "UI切图",
+      "sha256": "767669c4b339a25b246e0a3bb416a2969a4c7070d4c09e531367f970a1e7a3f3"
+    },
+    {
+      "path": "assets/ui/ui_moqi_lv2_v01.png",
+      "width": 48,
+      "height": 12,
+      "role": "UI切图",
+      "sha256": "a56a144511d1e1d85fb4f764b0210898ff97913052b87ba2e71f7d3d5f66c225"
+    },
+    {
+      "path": "assets/ui/ui_moqi_lv3_v01.png",
+      "width": 48,
+      "height": 12,
+      "role": "UI切图",
+      "sha256": "1a57fa9218e4ea83231d7837336dcb8fe73585736a638b4e13a258eb92e7f04f"
+    },
+    {
+      "path": "assets/ui/ui_fill_health_v01.png",
+      "width": 1,
+      "height": 1,
+      "role": "UI切图",
+      "sha256": "8dd614b00a63abbb895e10068e2c399f7b21efbef1e386c0144128fea90fc16b"
+    },
+    {
+      "path": "assets/ui/ui_fill_qi_v01.png",
+      "width": 1,
+      "height": 1,
+      "role": "UI切图",
+      "sha256": "c0ba7591a113ce5775c1066124b97e220239ae347e0442231395e2cf256a9e7c"
+    },
+    {
+      "path": "assets/ui/ui_fill_dex_v01.png",
+      "width": 1,
+      "height": 1,
+      "role": "UI切图",
+      "sha256": "2b7bfd5e14363b1376fc18cc37aa00c5d8e7b6868e5750415c1722e61146f49b"
+    },
+    {
+      "path": "assets/ui/ui_fill_cast_v01.png",
+      "width": 1,
+      "height": 1,
+      "role": "UI切图",
+      "sha256": "95f1a68beed267f461cae7ab690feb1fa99bd7bfe21a7469a27fa1ae7771645e"
+    },
+    {
+      "path": "assets/ui/ui_heji_invite_v01.png",
+      "width": 248,
+      "height": 52,
+      "role": "UI切图",
+      "sha256": "7c145a59813d9bff9c53484adb356292bdd9077194d8af5683d6bc2467333297"
+    },
+    {
+      "path": "assets/ui/ui_dialog_v01.png",
+      "width": 928,
+      "height": 132,
+      "role": "UI切图",
+      "sha256": "acc6641fa536140da67d81f8374ad1b7292f5c9a96af676f4ddbb0a334253bf2"
+    },
+    {
+      "path": "assets/ui/ui_taskbar_v01.png",
+      "width": 184,
+      "height": 80,
+      "role": "UI切图",
+      "sha256": "62b48eea91e37b217c532d7c3fdb9a08819ec175691eca68940b311ebd5685fe"
+    },
+    {
+      "path": "assets/ui/ui_pause_v01.png",
+      "width": 320,
+      "height": 352,
+      "role": "UI切图",
+      "sha256": "9a52cb61e2428e9800f6d504964e7c507de101f23a2716f31959a5c9aea9968a"
+    },
+    {
+      "path": "assets/ui/ui_tooltip_v01.png",
+      "width": 280,
+      "height": 64,
+      "role": "UI切图",
+      "sha256": "1895561a59e1840f9bcd1dc4bed50995c637e46929eb7cd6faa048db2a899e62"
+    },
+    {
+      "path": "assets/ui/ui_button_normal_v01.png",
+      "width": 220,
+      "height": 44,
+      "role": "UI切图",
+      "sha256": "a20d09ec48180b633a0ba89bd2b80ff148f38d8a2975cec9ce6fcb58db82087e"
+    },
+    {
+      "path": "assets/ui/ui_btn_base_v01.png",
+      "width": 64,
+      "height": 64,
+      "role": "UI切图",
+      "sha256": "46aa39c1d590bbbaf5d10135d49cd59099eaf9c11db128bfd89509ec30507f3c"
+    },
+    {
+      "path": "assets/ui/ui_button_pressed_v01.png",
+      "width": 220,
+      "height": 44,
+      "role": "UI切图",
+      "sha256": "57dd1ec821827be433f068a3904fc3acf57575c6c6bbd6e1d7492432c8f10f7e"
+    },
+    {
+      "path": "assets/ui/ui_btn_pressed_v01.png",
+      "width": 64,
+      "height": 64,
+      "role": "UI切图",
+      "sha256": "87c9393b0422069224023ab400d8621b3c4aea555e5fe7fc901ce78248f8904c"
+    },
+    {
+      "path": "assets/ui/ui_button_disabled_v01.png",
+      "width": 220,
+      "height": 44,
+      "role": "UI切图",
+      "sha256": "d3eae572c123e751cf6fb4eade804fcbfdc9bc025f6830ca9cd75c00659923b2"
+    },
+    {
+      "path": "assets/ui/ui_btn_disabled_v01.png",
+      "width": 64,
+      "height": 64,
+      "role": "UI切图",
+      "sha256": "468d5ddc1c009f661e94a0b198ed75c736eb5bbd5ff87e48ff6106b7cd2bb60c"
+    },
+    {
+      "path": "assets/ui/ui_skill_disabled_v01.png",
+      "width": 64,
+      "height": 64,
+      "role": "UI切图",
+      "sha256": "9f54f447e76b7aae9094cbb9d10c528728c158e61c157e0cbe302d6ce515295b"
+    },
+    {
+      "path": "assets/ui/ui_skill_cooldown_v01.png",
+      "width": 64,
+      "height": 64,
+      "role": "UI切图",
+      "sha256": "9a1fa003e549de8a6b8537e6ff134dd4e54a533e7349a898f70203f49cd96db2"
+    },
+    {
+      "path": "assets/ui/ui_stick_base_v01.png",
+      "width": 128,
+      "height": 128,
+      "role": "UI切图",
+      "sha256": "138eda65a417d2b908139a295ebe44df5d490fe99fb70b48b64f0c05cfd40a60"
+    },
+    {
+      "path": "assets/ui/ui_stick_knob_v01.png",
+      "width": 56,
+      "height": 56,
+      "role": "UI切图",
+      "sha256": "b5622a645641d4a677c3254e4f52ce1f97a7123c6038692686c331f0fa5cfdf3"
+    },
+    {
+      "path": "assets/ui/ui_stick_knob_pressed_v01.png",
+      "width": 56,
+      "height": 56,
+      "role": "UI切图",
+      "sha256": "dbde76b6476689b0795924dcd0eb3d5dd168e9fc72e167649f035c6ac9edb150"
+    },
+    {
+      "path": "assets/ui/ui_charge_v01.png",
+      "width": 96,
+      "height": 96,
+      "role": "UI切图",
+      "sha256": "25663164cfa87e2a2346abd2c3895a63ae109a6b556d85c056adb901c1484dc7"
+    },
+    {
+      "path": "assets/ui/ui_charge_progress_v01.png",
+      "width": 96,
+      "height": 96,
+      "role": "UI切图",
+      "sha256": "a6b907f61cdb559f89d9a1a00b28700e682c6b943258bad3fb76d77b08a387e8"
+    },
+    {
+      "path": "assets/ui/ui_aim_arrow_v01.png",
+      "width": 128,
+      "height": 128,
+      "role": "UI切图",
+      "sha256": "bb69119b0fb546d6cd7eeb98c6572f3ca592ffb1793768ad1eff7be0d87a90af"
+    },
+    {
+      "path": "assets/ui/ui_aim_spot_v01.png",
+      "width": 96,
+      "height": 64,
+      "role": "UI切图",
+      "sha256": "162b425dacb32ecbadc2532dbc1c67793278bf4858fa6fa987cf3f2b01449a23"
+    },
+    {
+      "path": "assets/ui/ui_heji_countdown_v01.png",
+      "width": 48,
+      "height": 48,
+      "role": "UI切图",
+      "sha256": "8c0384a848a951a23ae6b703fadc4a2cc7751ebee1a4002817885769b26ec8ea"
+    },
+    {
+      "path": "assets/ui/ui_heji_ground_v01.png",
+      "width": 96,
+      "height": 96,
+      "role": "UI切图",
+      "sha256": "9686130533f9c216db11e890bbfe7c6df5728691f95ec7fe5528918239bd9977"
+    },
+    {
+      "path": "UI设计/01_开始界面_v01.png",
+      "width": 960,
+      "height": 540,
+      "role": "界面效果图",
+      "sha256": "bcee7ad98bedafb5a579b64ac635e8f0bb38ccbb00a63430c05aca1a5749d62b"
+    },
+    {
+      "path": "UI设计/02_门派选择_v01.png",
+      "width": 960,
+      "height": 540,
+      "role": "界面效果图",
+      "sha256": "fe432e5d0bb5206c14314deef751d5dc6d9590de2d4e8cf87749e363f7355dba"
+    },
+    {
+      "path": "UI设计/03_通用技选择_v01.png",
+      "width": 960,
+      "height": 540,
+      "role": "界面效果图",
+      "sha256": "235db0e75463540f2978919f0aa97a67bfbe19142239d2663a5ce2efdd4bd983"
+    },
+    {
+      "path": "UI设计/04_战斗HUD_v01.png",
+      "width": 960,
+      "height": 540,
+      "role": "界面效果图",
+      "sha256": "8b31e50da696e497911a22ae588a123b8f243123c5aafb207c2078ed78f012bd"
+    },
+    {
+      "path": "UI设计/04_战斗HUD_手机_v01.png",
+      "width": 960,
+      "height": 540,
+      "role": "界面效果图",
+      "sha256": "273183d4ebfff96f7c669ef60af21bea5954a6e54303d4a5adf99df75ae247e5"
+    },
+    {
+      "path": "UI设计/04_战斗HUD_Xbox_v01.png",
+      "width": 960,
+      "height": 540,
+      "role": "界面效果图",
+      "sha256": "e733eedd7c13867574c23d9c5fb20df938c8a715e74e0cfe427a6372783320e1"
+    },
+    {
+      "path": "UI设计/04_战斗HUD_PS_v01.png",
+      "width": 960,
+      "height": 540,
+      "role": "界面效果图",
+      "sha256": "84d30702fa2adc8d1d272f4d3ccbee9cd42f70f6f1f68112fa6e16d20f94133e"
+    },
+    {
+      "path": "UI设计/04_战斗HUD_手机安全区_v01.png",
+      "width": 960,
+      "height": 540,
+      "role": "界面效果图",
+      "sha256": "6854c7844cc205c02d48a8bee0ff02c55e11878cc8242ba52851aeee49942eb2"
+    },
+    {
+      "path": "UI设计/05_任务与暂停_v01.png",
+      "width": 960,
+      "height": 540,
+      "role": "界面效果图",
+      "sha256": "7423b1951c30ceb60defb3c767d856d9b38ff141a503df572ebd181a6da55410"
+    },
+    {
+      "path": "UI设计/06_对话_净心_v01.png",
+      "width": 960,
+      "height": 540,
+      "role": "界面效果图",
+      "sha256": "caaae92d59aeb0af5e9fd029e95f7f6805a4f71bdbc6afe2f953876e30d8ffe2"
+    },
+    {
+      "path": "UI设计/06_对话_玄诚_v01.png",
+      "width": 960,
+      "height": 540,
+      "role": "界面效果图",
+      "sha256": "44d002f80759592dec11a4dc2ce6559e99cf928db34672082b4fa4850f253379"
+    },
+    {
+      "path": "UI设计/07_释放机制_v01.png",
+      "width": 960,
+      "height": 540,
+      "role": "界面效果图",
+      "sha256": "f5cab59fdbc023f7bde1f044d51eba676c3c917a1271b38fb8e45c8eb6310278"
+    },
+    {
+      "path": "UI设计/08_按钮与默契状态_v01.png",
+      "width": 960,
+      "height": 540,
+      "role": "界面效果图",
+      "sha256": "1f17776927b046f1b0f9fffb075924a6c35b5efa55ed468bb09325c8977c2b6a"
+    },
+    {
+      "path": "assets/vfx/vfx_heji_freeze_v01.png",
+      "width": 960,
+      "height": 540,
+      "role": "合击成立静态定格，最长0.5秒",
+      "sha256": "39a76d8b784d775a7db902998096aafd5de833dd1b28811900907d9901134839"
+    },
+    {
+      "path": "UI设计/09_合击成立定格_v01.png",
+      "width": 960,
+      "height": 540,
+      "role": "界面效果图",
+      "sha256": "d9271a53784ecc13f53143ee34fb231cfd269a01f0f21ead848455b0e09812f0"
+    },
+    {
+      "path": "UI设计/10_图标总览_v01.png",
+      "width": 960,
+      "height": 540,
+      "role": "界面效果图",
+      "sha256": "6721a7d8ac1707c2a9af0bd75d3b6057a5da61db68aa183ec237534e94fb493a"
+    },
+    {
+      "path": "UI设计/11_任务提示气泡_v01.png",
+      "width": 960,
+      "height": 540,
+      "role": "界面效果图",
+      "sha256": "f4644e6ee8fda8d337482f40a4c07a211613251b094360828a8a8972c656dbcb"
+    }
+  ]
+}

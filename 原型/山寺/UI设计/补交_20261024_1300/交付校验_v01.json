@@ -1,0 +1,90 @@
+{
+  "version": "v01",
+  "delivery_id": "20261024-1300",
+  "items": [
+    0,
+    33
+  ],
+  "files": [
+    {
+      "path": "UI设计/补交_20261024_1300/交付说明_v01.md",
+      "bytes": 3712,
+      "sha256": "4ecda361b1d75c0c53d896b4b2e451cc23e66ba6dc1579bd75e143e98059bee1"
+    },
+    {
+      "path": "UI设计/补交_20261024_1300/光圈帧参数_v01.json",
+      "bytes": 1488,
+      "sha256": "6977dbc4760f2dc4d5dd86a81767b941124c25819502b5427cd43a7375e74ea1"
+    },
+    {
+      "path": "UI设计/补交_20261024_1300/合击光圈_倒计时预览_v01.png",
+      "bytes": 2964,
+      "sha256": "d06dbd7c96a05a2316f55ce75b5cbbceb3884122cb35045b5da40b390d78d785"
+    },
+    {
+      "path": "UI设计/补交_20261024_1300/合击光圈_动画预览_v01.gif",
+      "bytes": 159870,
+      "sha256": "fb4d5c79cd4ffc7539267a94e47ccf144d0010a1021cf1a1b7e13e18a97a9d55"
+    },
+    {
+      "path": "UI设计/补交_20261024_1300/合击光圈_十帧预览_v01.png",
+      "bytes": 5689,
+      "sha256": "49874c9faed83c904e7c416af55edca656df3e8d23ac59e2649e5989cd0ed110"
+    },
+    {
+      "path": "UI设计/补交_20261024_1300/合击光圈_实际比例预览_v01.png",
+      "bytes": 1036495,
+      "sha256": "7ccd77209d77a6c1e8c5e43bd94930a6c7a5c9fdd220d414a297aedcbd719f12"
+    },
+    {
+      "path": "UI设计/补交_20261024_1300/核验结果_v01.json",
+      "bytes": 1364,
+      "sha256": "b8e7f9be555d4135980dff45a1fa04d6988d393d424c4f46fa7131b8e1ab92f2"
+    },
+    {
+      "path": "UI设计/补交_20261024_1300/生图提示词_v01.txt",
+      "bytes": 2659,
+      "sha256": "b5f4aa41cd712bb2f69bcd709f4aa59cfd9eef2184743192d4f3d8ee3d1b8de9"
+    },
+    {
+      "path": "assets/ref/master_shanmen_source_v01.png",
+      "bytes": 2877180,
+      "sha256": "9116b807d512fb649803aada8cbf8307d90ff72ab3a043e6df77a3ccc3e40d3b"
+    },
+    {
+      "path": "assets/ref/master_shanmen_v01.png",
+      "bytes": 268651,
+      "sha256": "daee29b320413a75c615ba44defa121646fe04869748d144f5d24aaf84210d9e"
+    },
+    {
+      "path": "assets/ref/ref_vfx_heji_ring_sheet_v01.png",
+      "bytes": 792064,
+      "sha256": "0547d3911efe69781e3890b602bb6972e151e52b7dbca1653ac90a9e7e79c516"
+    },
+    {
+      "path": "assets/vfx/vfx_heji_ring_countdown_v01.png",
+      "bytes": 4740,
+      "sha256": "9dd9ed212d96450588c1b8a9288c11d5c3679b25b02eefaae8f53de79ea4d98d"
+    },
+    {
+      "path": "assets/vfx/vfx_heji_ring_invite_v01.png",
+      "bytes": 12353,
+      "sha256": "be904965b18a0d4f43a76d0c3018d92fbcae051fd9ab8ff65c5686b327a0bd4c"
+    },
+    {
+      "path": "assets/vfx/vfx_heji_ring_layout_v01.json",
+      "bytes": 1488,
+      "sha256": "6977dbc4760f2dc4d5dd86a81767b941124c25819502b5427cd43a7375e74ea1"
+    },
+    {
+      "path": "assets/vfx/vfx_heji_ring_loop_v01.png",
+      "bytes": 4299,
+      "sha256": "faeacf9da5cccd4e96194626817c000011a7be58a2084a08c78048a4f68f41c2"
+    },
+    {
+      "path": "assets/vfx/vfx_heji_ring_open_v01.png",
+      "bytes": 4342,
+      "sha256": "75c87fe8afec478e5b05884debbafbe494b31b508822b1ea8de15bc7a29e9152"
+    }
+  ]
+}

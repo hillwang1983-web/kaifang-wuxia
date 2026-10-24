@@ -1,5 +1,6 @@
-# 导出山寺网页版到 原型/山寺/build/web/（手机与电脑浏览器试玩用）。需要已装 Godot 4.7.2 导出模板。
+﻿# 导出山寺网页版到 原型/山寺/build/web/（手机与电脑浏览器试玩用）。需要已装 Godot 4.7.2 导出模板。
 $ErrorActionPreference = 'Stop'
+[Console]::OutputEncoding = [Text.Encoding]::UTF8
 $godot = $env:GODOT
 if (-not $godot) {
   $hit = Get-Command 'Godot_v4*_console.exe' -ErrorAction SilentlyContinue | Select-Object -First 1

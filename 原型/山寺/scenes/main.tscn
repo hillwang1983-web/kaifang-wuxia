@@ -1,10 +1,6 @@
 [gd_scene format=3]
 
-[node name="Main" type="Node2D"]
+[ext_resource type="Script" path="res://scripts/game/main.gd" id="1"]
 
-[node name="Placeholder" type="Label" parent="."]
-offset_left = 24.0
-offset_top = 24.0
-offset_right = 424.0
-offset_bottom = 64.0
-text = "山寺 · 开发中（等 UI 设计图）"
+[node name="Main" type="Node"]
+script = ExtResource("1")

@@ -1,0 +1,784 @@
+{
+  "files": [
+    {
+      "path": "UI设计/01_开始界面_v01.png",
+      "sha256": "bcee7ad98bedafb5a579b64ac635e8f0bb38ccbb00a63430c05aca1a5749d62b",
+      "bytes": 859775
+    },
+    {
+      "path": "UI设计/02_门派选择_v01.png",
+      "sha256": "fe432e5d0bb5206c14314deef751d5dc6d9590de2d4e8cf87749e363f7355dba",
+      "bytes": 792225
+    },
+    {
+      "path": "UI设计/03_通用技选择_v01.png",
+      "sha256": "235db0e75463540f2978919f0aa97a67bfbe19142239d2663a5ce2efdd4bd983",
+      "bytes": 789673
+    },
+    {
+      "path": "UI设计/04_战斗HUD_PS_v01.png",
+      "sha256": "84d30702fa2adc8d1d272f4d3ccbee9cd42f70f6f1f68112fa6e16d20f94133e",
+      "bytes": 1006576
+    },
+    {
+      "path": "UI设计/04_战斗HUD_Xbox_v01.png",
+      "sha256": "e733eedd7c13867574c23d9c5fb20df938c8a715e74e0cfe427a6372783320e1",
+      "bytes": 1006619
+    },
+    {
+      "path": "UI设计/04_战斗HUD_v01.png",
+      "sha256": "8b31e50da696e497911a22ae588a123b8f243123c5aafb207c2078ed78f012bd",
+      "bytes": 1006897
+    },
+    {
+      "path": "UI设计/04_战斗HUD_手机_v01.png",
+      "sha256": "273183d4ebfff96f7c669ef60af21bea5954a6e54303d4a5adf99df75ae247e5",
+      "bytes": 1025720
+    },
+    {
+      "path": "UI设计/04_战斗HUD_手机安全区_v01.png",
+      "sha256": "6854c7844cc205c02d48a8bee0ff02c55e11878cc8242ba52851aeee49942eb2",
+      "bytes": 984231
+    },
+    {
+      "path": "UI设计/05_任务与暂停_v01.png",
+      "sha256": "7423b1951c30ceb60defb3c767d856d9b38ff141a503df572ebd181a6da55410",
+      "bytes": 701854
+    },
+    {
+      "path": "UI设计/06_对话_净心_v01.png",
+      "sha256": "caaae92d59aeb0af5e9fd029e95f7f6805a4f71bdbc6afe2f953876e30d8ffe2",
+      "bytes": 1037572
+    },
+    {
+      "path": "UI设计/06_对话_玄诚_v01.png",
+      "sha256": "44d002f80759592dec11a4dc2ce6559e99cf928db34672082b4fa4850f253379",
+      "bytes": 1037315
+    },
+    {
+      "path": "UI设计/07_释放机制_v01.png",
+      "sha256": "f5cab59fdbc023f7bde1f044d51eba676c3c917a1271b38fb8e45c8eb6310278",
+      "bytes": 9564
+    },
+    {
+      "path": "UI设计/08_按钮与默契状态_v01.png",
+      "sha256": "1f17776927b046f1b0f9fffb075924a6c35b5efa55ed468bb09325c8977c2b6a",
+      "bytes": 12079
+    },
+    {
+      "path": "UI设计/09_合击成立定格_v01.png",
+      "sha256": "d9271a53784ecc13f53143ee34fb231cfd269a01f0f21ead848455b0e09812f0",
+      "bytes": 29824
+    },
+    {
+      "path": "UI设计/10_图标总览_v01.png",
+      "sha256": "6721a7d8ac1707c2a9af0bd75d3b6057a5da61db68aa183ec237534e94fb493a",
+      "bytes": 26623
+    },
+    {
+      "path": "UI设计/11_任务提示气泡_v01.png",
+      "sha256": "f4644e6ee8fda8d337482f40a4c07a211613251b094360828a8a8972c656dbcb",
+      "bytes": 1158238
+    },
+    {
+      "path": "UI设计/交付清单_v01.json",
+      "sha256": "7e1f0de0c8317e36d66b056406fc9b185eed06a092b7a11082e8956881e4e15e",
+      "bytes": 14985
+    },
+    {
+      "path": "UI设计/交付说明_v01.md",
+      "sha256": "bdce8254dcfc19eeaff01d47dd060eb2e1f34c767ad711ca45a8e42ad90d4ce1",
+      "bytes": 3876
+    },
+    {
+      "path": "UI设计/切图/ico_btn_attack_v01.png",
+      "sha256": "b5690fb1a71a850bf04683dc59293b0a4a0907f46e6a13b7907f3921b08f4435",
+      "bytes": 1168
+    },
+    {
+      "path": "UI设计/切图/ico_btn_dodge_v01.png",
+      "sha256": "e4204c16bad06092c9c17aebe0fe99ed33978c7acba68ad12b716a4e376f6572",
+      "bytes": 1010
+    },
+    {
+      "path": "UI设计/切图/ico_btn_talk_v01.png",
+      "sha256": "4f6e6d82b25f09ac06e969867abc3301cf50cad10396db868b918dbf65eb26a2",
+      "bytes": 1057
+    },
+    {
+      "path": "UI设计/切图/ico_skill_dalijingangzhang_v01.png",
+      "sha256": "00d9e1610f8ca9081b59522ccac3bcf3c98f5081a51f6bdfe7650e36a96c67cc",
+      "bytes": 1425
+    },
+    {
+      "path": "UI设计/切图/ico_skill_dushazhang_v01.png",
+      "sha256": "170b1ad2d1706d30457929b33fa5a975700b294aa0fcfe68aa30d5cf2ffb7d43",
+      "bytes": 1525
+    },
+    {
+      "path": "UI设计/切图/ico_skill_heji_v01.png",
+      "sha256": "e8e7c20999770907a48d4d97e118521b91ff9474481f9f0d225e7609d90a6e30",
+      "bytes": 1776
+    },
+    {
+      "path": "UI设计/切图/ico_skill_huagongsan_v01.png",
+      "sha256": "38c7c75b14c14cbdf509bc8c934c16ddce492221ad2906579dc0821853be2f24",
+      "bytes": 1155
+    },
+    {
+      "path": "UI设计/切图/ico_skill_jiemai_v01.png",
+      "sha256": "8a122cf58a9cdafbb3e87cfaf4be4babf4853db471a1eb3619121ab1d86f40ee",
+      "bytes": 1404
+    },
+    {
+      "path": "UI设计/切图/ico_skill_jinzhongzhao_v01.png",
+      "sha256": "bb067ae99d8ce031479a9fe9b8ea0de772905cb314cedb4f7516c0b24f6bd1fe",
+      "bytes": 1506
+    },
+    {
+      "path": "UI设计/切图/ico_skill_luohanquan_v01.png",
+      "sha256": "bfb020d394bc8ba636fcc00623d34572d06ac6bc6c4c4f594d23ce7a64d48f01",
+      "bytes": 1393
+    },
+    {
+      "path": "UI设计/切图/ico_skill_shehunshu_v01.png",
+      "sha256": "85ff8f232e5d937487c3628b0eb7e69c079f1b26f576ba434ed3ed359f6556cd",
+      "bytes": 1526
+    },
+    {
+      "path": "UI设计/切图/ico_skill_tiyunzong_v01.png",
+      "sha256": "13bb6c0ccf130853b3345a02e926cfb51a402d87b900ee22d45830cc8289a476",
+      "bytes": 1564
+    },
+    {
+      "path": "UI设计/切图/ico_skill_yungong_v01.png",
+      "sha256": "fe146f2397526cc053e92ac51b60fcc0c4f7f9705431b0d0729f79c4f372da04",
+      "bytes": 1588
+    },
+    {
+      "path": "UI设计/切图/por_jingxin_normal_v01.png",
+      "sha256": "9abfd97e31c0396812f068d6a71c6b336d2e9858f2db2f63487e194adf5972d1",
+      "bytes": 4047
+    },
+    {
+      "path": "UI设计/切图/por_jingxin_sad_v01.png",
+      "sha256": "9e9f6b400f56d12d0887b23f08a2b7a11e66fba3fbe1d486c57954ff4b62f5c3",
+      "bytes": 3591
+    },
+    {
+      "path": "UI设计/切图/por_xuancheng_cold_v01.png",
+      "sha256": "d37909ffc5415497d89819747077447bbba053cba2d5ee8ed6ed797d4ff10e32",
+      "bytes": 4086
+    },
+    {
+      "path": "UI设计/切图/por_xuancheng_smile_v01.png",
+      "sha256": "591745863b20f8809c3184e755e1efb586ff3442f434b680fd457504dc9f5d3b",
+      "bytes": 4178
+    },
+    {
+      "path": "UI设计/切图/ui_aim_arrow_v01.png",
+      "sha256": "bb69119b0fb546d6cd7eeb98c6572f3ca592ffb1793768ad1eff7be0d87a90af",
+      "bytes": 683
+    },
+    {
+      "path": "UI设计/切图/ui_aim_spot_v01.png",
+      "sha256": "162b425dacb32ecbadc2532dbc1c67793278bf4858fa6fa987cf3f2b01449a23",
+      "bytes": 564
+    },
+    {
+      "path": "UI设计/切图/ui_bossbar_v01.png",
+      "sha256": "46f9a6bb84b9a6ff7b8bf75dac16e597753ee7fab00ff57c73cb8933f14fcb24",
+      "bytes": 616
+    },
+    {
+      "path": "UI设计/切图/ui_btn_base_v01.png",
+      "sha256": "46aa39c1d590bbbaf5d10135d49cd59099eaf9c11db128bfd89509ec30507f3c",
+      "bytes": 498
+    },
+    {
+      "path": "UI设计/切图/ui_btn_disabled_v01.png",
+      "sha256": "468d5ddc1c009f661e94a0b198ed75c736eb5bbd5ff87e48ff6106b7cd2bb60c",
+      "bytes": 501
+    },
+    {
+      "path": "UI设计/切图/ui_btn_pressed_v01.png",
+      "sha256": "87c9393b0422069224023ab400d8621b3c4aea555e5fe7fc901ce78248f8904c",
+      "bytes": 500
+    },
+    {
+      "path": "UI设计/切图/ui_button_disabled_v01.png",
+      "sha256": "d3eae572c123e751cf6fb4eade804fcbfdc9bc025f6830ca9cd75c00659923b2",
+      "bytes": 304
+    },
+    {
+      "path": "UI设计/切图/ui_button_normal_v01.png",
+      "sha256": "a20d09ec48180b633a0ba89bd2b80ff148f38d8a2975cec9ce6fcb58db82087e",
+      "bytes": 306
+    },
+    {
+      "path": "UI设计/切图/ui_button_pressed_v01.png",
+      "sha256": "57dd1ec821827be433f068a3904fc3acf57575c6c6bbd6e1d7492432c8f10f7e",
+      "bytes": 309
+    },
+    {
+      "path": "UI设计/切图/ui_charge_progress_v01.png",
+      "sha256": "a6b907f61cdb559f89d9a1a00b28700e682c6b943258bad3fb76d77b08a387e8",
+      "bytes": 618
+    },
+    {
+      "path": "UI设计/切图/ui_charge_v01.png",
+      "sha256": "25663164cfa87e2a2346abd2c3895a63ae109a6b556d85c056adb901c1484dc7",
+      "bytes": 689
+    },
+    {
+      "path": "UI设计/切图/ui_dialog_v01.png",
+      "sha256": "acc6641fa536140da67d81f8374ad1b7292f5c9a96af676f4ddbb0a334253bf2",
+      "bytes": 1017
+    },
+    {
+      "path": "UI设计/切图/ui_faction_shaolin_v01.png",
+      "sha256": "cad53f477e94ae64f56f13d69b9ab6fc5de573fd4cc8abbb45a94a841f86a0e4",
+      "bytes": 12270
+    },
+    {
+      "path": "UI设计/切图/ui_faction_xiepai_v01.png",
+      "sha256": "63b4094d5214ffff44d5d0c8c2ad0d12dba13d7927354b363f8e5603db9950fc",
+      "bytes": 13852
+    },
+    {
+      "path": "UI设计/切图/ui_fill_cast_v01.png",
+      "sha256": "95f1a68beed267f461cae7ab690feb1fa99bd7bfe21a7469a27fa1ae7771645e",
+      "bytes": 70
+    },
+    {
+      "path": "UI设计/切图/ui_fill_dex_v01.png",
+      "sha256": "2b7bfd5e14363b1376fc18cc37aa00c5d8e7b6868e5750415c1722e61146f49b",
+      "bytes": 70
+    },
+    {
+      "path": "UI设计/切图/ui_fill_health_v01.png",
+      "sha256": "8dd614b00a63abbb895e10068e2c399f7b21efbef1e386c0144128fea90fc16b",
+      "bytes": 70
+    },
+    {
+      "path": "UI设计/切图/ui_fill_qi_v01.png",
+      "sha256": "c0ba7591a113ce5775c1066124b97e220239ae347e0442231395e2cf256a9e7c",
+      "bytes": 70
+    },
+    {
+      "path": "UI设计/切图/ui_heji_countdown_v01.png",
+      "sha256": "8c0384a848a951a23ae6b703fadc4a2cc7751ebee1a4002817885769b26ec8ea",
+      "bytes": 340
+    },
+    {
+      "path": "UI设计/切图/ui_heji_ground_v01.png",
+      "sha256": "9686130533f9c216db11e890bbfe7c6df5728691f95ec7fe5528918239bd9977",
+      "bytes": 641
+    },
+    {
+      "path": "UI设计/切图/ui_heji_invite_v01.png",
+      "sha256": "7c145a59813d9bff9c53484adb356292bdd9077194d8af5683d6bc2467333297",
+      "bytes": 334
+    },
+    {
+      "path": "UI设计/切图/ui_moqi_lv1_v01.png",
+      "sha256": "767669c4b339a25b246e0a3bb416a2969a4c7070d4c09e531367f970a1e7a3f3",
+      "bytes": 132
+    },
+    {
+      "path": "UI设计/切图/ui_moqi_lv2_v01.png",
+      "sha256": "a56a144511d1e1d85fb4f764b0210898ff97913052b87ba2e71f7d3d5f66c225",
+      "bytes": 133
+    },
+    {
+      "path": "UI设计/切图/ui_moqi_lv3_v01.png",
+      "sha256": "1a57fa9218e4ea83231d7837336dcb8fe73585736a638b4e13a258eb92e7f04f",
+      "bytes": 118
+    },
+    {
+      "path": "UI设计/切图/ui_partybar_v01.png",
+      "sha256": "6b28c64b2d80f88159e57e297805ffe4298ef73af050db8c2ab9d00900a7b241",
+      "bytes": 470
+    },
+    {
+      "path": "UI设计/切图/ui_pause_v01.png",
+      "sha256": "9a52cb61e2428e9800f6d504964e7c507de101f23a2716f31959a5c9aea9968a",
+      "bytes": 1328
+    },
+    {
+      "path": "UI设计/切图/ui_selfbar_v01.png",
+      "sha256": "2dcbb295ae23a6d1e29182544f101ec53c7dff3af66698dcd1454b402daaf05e",
+      "bytes": 588
+    },
+    {
+      "path": "UI设计/切图/ui_skill_cooldown_v01.png",
+      "sha256": "9a1fa003e549de8a6b8537e6ff134dd4e54a533e7349a898f70203f49cd96db2",
+      "bytes": 430
+    },
+    {
+      "path": "UI设计/切图/ui_skill_disabled_v01.png",
+      "sha256": "9f54f447e76b7aae9094cbb9d10c528728c158e61c157e0cbe302d6ce515295b",
+      "bytes": 386
+    },
+    {
+      "path": "UI设计/切图/ui_stick_base_v01.png",
+      "sha256": "138eda65a417d2b908139a295ebe44df5d490fe99fb70b48b64f0c05cfd40a60",
+      "bytes": 1470
+    },
+    {
+      "path": "UI设计/切图/ui_stick_knob_pressed_v01.png",
+      "sha256": "dbde76b6476689b0795924dcd0eb3d5dd168e9fc72e167649f035c6ac9edb150",
+      "bytes": 407
+    },
+    {
+      "path": "UI设计/切图/ui_stick_knob_v01.png",
+      "sha256": "b5622a645641d4a677c3254e4f52ce1f97a7123c6038692686c331f0fa5cfdf3",
+      "bytes": 401
+    },
+    {
+      "path": "UI设计/切图/ui_taskbar_v01.png",
+      "sha256": "62b48eea91e37b217c532d7c3fdb9a08819ec175691eca68940b311ebd5685fe",
+      "bytes": 395
+    },
+    {
+      "path": "UI设计/切图/ui_tooltip_v01.png",
+      "sha256": "1895561a59e1840f9bcd1dc4bed50995c637e46929eb7cd6faa048db2a899e62",
+      "bytes": 386
+    },
+    {
+      "path": "UI设计/切图/vfx_heji_freeze_v01.png",
+      "sha256": "39a76d8b784d775a7db902998096aafd5de833dd1b28811900907d9901134839",
+      "bytes": 16500
+    },
+    {
+      "path": "UI设计/布局参数_v01.json",
+      "sha256": "630af21e833d6256b8d29315b21ca5150e6c32c3d7ce0998820e52b3c257fb97",
+      "bytes": 1825
+    },
+    {
+      "path": "UI设计/核验结果_v01.json",
+      "sha256": "b39c45ede892aec4aba47d467b35fa1544318ca0de1744ad5ece6f539b604ac3",
+      "bytes": 548
+    },
+    {
+      "path": "UI设计/源文件/build_delivery.mjs",
+      "sha256": "619414f3b309e0c5d30ee7db499e7a256abdecb38e4bd547ce03a8699fcc72dc",
+      "bytes": 19193
+    },
+    {
+      "path": "UI设计/源文件/source/background.png",
+      "sha256": "1ed70ca966f15ec0d52a5d2155db4ae315dfec38eefa723c63e52c5cf83a86eb",
+      "bytes": 1173461
+    },
+    {
+      "path": "UI设计/源文件/source/background_empty.png",
+      "sha256": "0bbcb4be2d4767e27672297422d6b9da7b17fbec0fdcf7a95d1a733521a5f37a",
+      "bytes": 1034887
+    },
+    {
+      "path": "UI设计/源文件/source/buttons_strip.png",
+      "sha256": "c5e997ee2db4c41d804958a36ccddac9199eee9621b1a841f9124e5b7271d16e",
+      "bytes": 699492
+    },
+    {
+      "path": "UI设计/源文件/source/combo_freeze.png",
+      "sha256": "310d12d74d85a6d0174b917937dd091eeb6ad7a68b62d452a92c799997d7cb9c",
+      "bytes": 1559952
+    },
+    {
+      "path": "UI设计/源文件/source/combo_icon.png",
+      "sha256": "453791e84c1ba73d43f2a90e78e6113985ee535a500947ff5c3514091e93a817",
+      "bytes": 8327
+    },
+    {
+      "path": "UI设计/源文件/source/factions_strip.png",
+      "sha256": "9e85d9eafc165cc7c11cec6a6c74328b8b926c525823973ad1ed63805cd13342",
+      "bytes": 1622121
+    },
+    {
+      "path": "UI设计/源文件/source/font-licenses/00_OFL.txt",
+      "sha256": "bc518cf64b8032c07690f33cc270c35c179255a6ac8efa7c165ebae7e8f76a63",
+      "bytes": 4418
+    },
+    {
+      "path": "UI设计/源文件/source/font-licenses/01_OFL.txt",
+      "sha256": "3ab41567e68e3988ba1ef16dd2644eca95ca5648ea12e7d46e6287fc0bbe5aee",
+      "bytes": 4412
+    },
+    {
+      "path": "UI设计/源文件/source/font-licenses/02_OFL.txt",
+      "sha256": "bdd640c94530f5845de621089875aefcaec17585dbd4dab191c97118539bf92f",
+      "bytes": 5363
+    },
+    {
+      "path": "UI设计/源文件/source/font-licenses/03_LICENSE.txt",
+      "sha256": "86a3ee9495f942f0243f18c103da9faca27adb88142613edb8bb852e56c892c1",
+      "bytes": 4360
+    },
+    {
+      "path": "UI设计/源文件/source/font.ttf",
+      "sha256": "b556cf8c588f1fbd237f7f44af142781d50f7dba6d82ae57eae16c154cde2ae9",
+      "bytes": 6988648
+    },
+    {
+      "path": "UI设计/源文件/source/icons_grid.png",
+      "sha256": "75461b4217db6c22ae65a34b9e6e3745b13d95c4148a00cead969f81ad1de56d",
+      "bytes": 1200226
+    },
+    {
+      "path": "UI设计/源文件/source/jingxin_strip.png",
+      "sha256": "d9978e1162ef292c8254fc8bd24899c9f62b90b00ac9f9833c5f8647e165fc39",
+      "bytes": 1020848
+    },
+    {
+      "path": "UI设计/源文件/source/prompts.json",
+      "sha256": "3ad96ff6d0f44931dd1742728d313e0c87b66770930e64c229b0e0416273d409",
+      "bytes": 7761
+    },
+    {
+      "path": "UI设计/源文件/source/xuancheng_strip.png",
+      "sha256": "47daa5a820d5d6f973b82549b0e592125e007031481a506a6ec2b0606c9b07a3",
+      "bytes": 1155220
+    },
+    {
+      "path": "UI设计/预览2倍/01_开始界面_v01_2x.png",
+      "sha256": "4072f8287c7db44bfd432692fe8e84e18636c5ca933fe5764fed9eb9d5a9850f",
+      "bytes": 1061721
+    },
+    {
+      "path": "UI设计/预览2倍/02_门派选择_v01_2x.png",
+      "sha256": "c961def1ca45f857ee8a159d6ecec2743faa6a240ff7c2eb1d53fd81e295205b",
+      "bytes": 979617
+    },
+    {
+      "path": "UI设计/预览2倍/03_通用技选择_v01_2x.png",
+      "sha256": "8dcbed794f61e4bf9151c65b971701da5a658d3fe9453d42e6333bf460636855",
+      "bytes": 980850
+    },
+    {
+      "path": "UI设计/预览2倍/04_战斗HUD_PS_v01_2x.png",
+      "sha256": "ab24707241772f786297f66a511b7da3075988539fdac764ff181c343ff5dc1f",
+      "bytes": 1239921
+    },
+    {
+      "path": "UI设计/预览2倍/04_战斗HUD_Xbox_v01_2x.png",
+      "sha256": "e8ccffa32ff320db6f51eb27142b567d2297a983be9194a60749af75d72af05b",
+      "bytes": 1240017
+    },
+    {
+      "path": "UI设计/预览2倍/04_战斗HUD_v01_2x.png",
+      "sha256": "ce6aa5ca907f48ccb15b5a2a0bce2b694cbb716697335afd3893fb35a8af8f30",
+      "bytes": 1240186
+    },
+    {
+      "path": "UI设计/预览2倍/04_战斗HUD_手机_v01_2x.png",
+      "sha256": "43618aa3214e73580d29ebbcd9156288a739d6d352a2124dfe72a7995c1a2d65",
+      "bytes": 1261865
+    },
+    {
+      "path": "UI设计/预览2倍/04_战斗HUD_手机安全区_v01_2x.png",
+      "sha256": "9947a2dc7d1cbaf507014eab579b9cd378bf9b4f59e8faf31881e7420b2037b5",
+      "bytes": 1210623
+    },
+    {
+      "path": "UI设计/预览2倍/05_任务与暂停_v01_2x.png",
+      "sha256": "ad283d74697c62c7889f43c0332eb09c88f1e506c117759ae16bbe64e1efc41f",
+      "bytes": 867095
+    },
+    {
+      "path": "UI设计/预览2倍/06_对话_净心_v01_2x.png",
+      "sha256": "a56224fdd670565b62df784df21ea6c86cf91c164112d1e837f506c14de164fb",
+      "bytes": 1275633
+    },
+    {
+      "path": "UI设计/预览2倍/06_对话_玄诚_v01_2x.png",
+      "sha256": "f6985da23def363aecbf5ceb4163484571f3052555677f84e4afd35e3c81041b",
+      "bytes": 1275458
+    },
+    {
+      "path": "UI设计/预览2倍/07_释放机制_v01_2x.png",
+      "sha256": "ebd96ecb2261dbdaa073c33641497698390d2f77a0dbf260f0f4c60e5adf6076",
+      "bytes": 11512
+    },
+    {
+      "path": "UI设计/预览2倍/08_按钮与默契状态_v01_2x.png",
+      "sha256": "c7c232b5f91072bffae46c070d9710148ca450131b18472748ea777be9e54731",
+      "bytes": 9044
+    },
+    {
+      "path": "UI设计/预览2倍/09_合击成立定格_v01_2x.png",
+      "sha256": "58233abe7cbadf34c9c0f563db564e42bdaf82175970950e8ab7522ad1e3f73b",
+      "bytes": 20361
+    },
+    {
+      "path": "UI设计/预览2倍/10_图标总览_v01_2x.png",
+      "sha256": "464db80c499b6d20795758056e55d2cd914b8b721f100c58ac7b894dce2e5753",
+      "bytes": 18417
+    },
+    {
+      "path": "UI设计/预览2倍/11_任务提示气泡_v01_2x.png",
+      "sha256": "4ab1c9c0d12e8c6cb1882c7d5f4a35ac81900b9a6ff51f40d0608f3090e6e517",
+      "bytes": 1425086
+    },
+    {
+      "path": "assets/ico/ico_btn_attack_v01.png",
+      "sha256": "b5690fb1a71a850bf04683dc59293b0a4a0907f46e6a13b7907f3921b08f4435",
+      "bytes": 1168
+    },
+    {
+      "path": "assets/ico/ico_btn_dodge_v01.png",
+      "sha256": "e4204c16bad06092c9c17aebe0fe99ed33978c7acba68ad12b716a4e376f6572",
+      "bytes": 1010
+    },
+    {
+      "path": "assets/ico/ico_btn_talk_v01.png",
+      "sha256": "4f6e6d82b25f09ac06e969867abc3301cf50cad10396db868b918dbf65eb26a2",
+      "bytes": 1057
+    },
+    {
+      "path": "assets/ico/ico_skill_dalijingangzhang_v01.png",
+      "sha256": "00d9e1610f8ca9081b59522ccac3bcf3c98f5081a51f6bdfe7650e36a96c67cc",
+      "bytes": 1425
+    },
+    {
+      "path": "assets/ico/ico_skill_dushazhang_v01.png",
+      "sha256": "170b1ad2d1706d30457929b33fa5a975700b294aa0fcfe68aa30d5cf2ffb7d43",
+      "bytes": 1525
+    },
+    {
+      "path": "assets/ico/ico_skill_heji_v01.png",
+      "sha256": "e8e7c20999770907a48d4d97e118521b91ff9474481f9f0d225e7609d90a6e30",
+      "bytes": 1776
+    },
+    {
+      "path": "assets/ico/ico_skill_huagongsan_v01.png",
+      "sha256": "38c7c75b14c14cbdf509bc8c934c16ddce492221ad2906579dc0821853be2f24",
+      "bytes": 1155
+    },
+    {
+      "path": "assets/ico/ico_skill_jiemai_v01.png",
+      "sha256": "8a122cf58a9cdafbb3e87cfaf4be4babf4853db471a1eb3619121ab1d86f40ee",
+      "bytes": 1404
+    },
+    {
+      "path": "assets/ico/ico_skill_jinzhongzhao_v01.png",
+      "sha256": "bb067ae99d8ce031479a9fe9b8ea0de772905cb314cedb4f7516c0b24f6bd1fe",
+      "bytes": 1506
+    },
+    {
+      "path": "assets/ico/ico_skill_luohanquan_v01.png",
+      "sha256": "bfb020d394bc8ba636fcc00623d34572d06ac6bc6c4c4f594d23ce7a64d48f01",
+      "bytes": 1393
+    },
+    {
+      "path": "assets/ico/ico_skill_shehunshu_v01.png",
+      "sha256": "85ff8f232e5d937487c3628b0eb7e69c079f1b26f576ba434ed3ed359f6556cd",
+      "bytes": 1526
+    },
+    {
+      "path": "assets/ico/ico_skill_tiyunzong_v01.png",
+      "sha256": "13bb6c0ccf130853b3345a02e926cfb51a402d87b900ee22d45830cc8289a476",
+      "bytes": 1564
+    },
+    {
+      "path": "assets/ico/ico_skill_yungong_v01.png",
+      "sha256": "fe146f2397526cc053e92ac51b60fcc0c4f7f9705431b0d0729f79c4f372da04",
+      "bytes": 1588
+    },
+    {
+      "path": "assets/por/por_jingxin_normal_v01.png",
+      "sha256": "9abfd97e31c0396812f068d6a71c6b336d2e9858f2db2f63487e194adf5972d1",
+      "bytes": 4047
+    },
+    {
+      "path": "assets/por/por_jingxin_sad_v01.png",
+      "sha256": "9e9f6b400f56d12d0887b23f08a2b7a11e66fba3fbe1d486c57954ff4b62f5c3",
+      "bytes": 3591
+    },
+    {
+      "path": "assets/por/por_xuancheng_cold_v01.png",
+      "sha256": "d37909ffc5415497d89819747077447bbba053cba2d5ee8ed6ed797d4ff10e32",
+      "bytes": 4086
+    },
+    {
+      "path": "assets/por/por_xuancheng_smile_v01.png",
+      "sha256": "591745863b20f8809c3184e755e1efb586ff3442f434b680fd457504dc9f5d3b",
+      "bytes": 4178
+    },
+    {
+      "path": "assets/ui/ui_aim_arrow_v01.png",
+      "sha256": "bb69119b0fb546d6cd7eeb98c6572f3ca592ffb1793768ad1eff7be0d87a90af",
+      "bytes": 683
+    },
+    {
+      "path": "assets/ui/ui_aim_spot_v01.png",
+      "sha256": "162b425dacb32ecbadc2532dbc1c67793278bf4858fa6fa987cf3f2b01449a23",
+      "bytes": 564
+    },
+    {
+      "path": "assets/ui/ui_bossbar_v01.png",
+      "sha256": "46f9a6bb84b9a6ff7b8bf75dac16e597753ee7fab00ff57c73cb8933f14fcb24",
+      "bytes": 616
+    },
+    {
+      "path": "assets/ui/ui_btn_base_v01.png",
+      "sha256": "46aa39c1d590bbbaf5d10135d49cd59099eaf9c11db128bfd89509ec30507f3c",
+      "bytes": 498
+    },
+    {
+      "path": "assets/ui/ui_btn_disabled_v01.png",
+      "sha256": "468d5ddc1c009f661e94a0b198ed75c736eb5bbd5ff87e48ff6106b7cd2bb60c",
+      "bytes": 501
+    },
+    {
+      "path": "assets/ui/ui_btn_pressed_v01.png",
+      "sha256": "87c9393b0422069224023ab400d8621b3c4aea555e5fe7fc901ce78248f8904c",
+      "bytes": 500
+    },
+    {
+      "path": "assets/ui/ui_button_disabled_v01.png",
+      "sha256": "d3eae572c123e751cf6fb4eade804fcbfdc9bc025f6830ca9cd75c00659923b2",
+      "bytes": 304
+    },
+    {
+      "path": "assets/ui/ui_button_normal_v01.png",
+      "sha256": "a20d09ec48180b633a0ba89bd2b80ff148f38d8a2975cec9ce6fcb58db82087e",
+      "bytes": 306
+    },
+    {
+      "path": "assets/ui/ui_button_pressed_v01.png",
+      "sha256": "57dd1ec821827be433f068a3904fc3acf57575c6c6bbd6e1d7492432c8f10f7e",
+      "bytes": 309
+    },
+    {
+      "path": "assets/ui/ui_charge_progress_v01.png",
+      "sha256": "a6b907f61cdb559f89d9a1a00b28700e682c6b943258bad3fb76d77b08a387e8",
+      "bytes": 618
+    },
+    {
+      "path": "assets/ui/ui_charge_v01.png",
+      "sha256": "25663164cfa87e2a2346abd2c3895a63ae109a6b556d85c056adb901c1484dc7",
+      "bytes": 689
+    },
+    {
+      "path": "assets/ui/ui_dialog_v01.png",
+      "sha256": "acc6641fa536140da67d81f8374ad1b7292f5c9a96af676f4ddbb0a334253bf2",
+      "bytes": 1017
+    },
+    {
+      "path": "assets/ui/ui_faction_shaolin_v01.png",
+      "sha256": "cad53f477e94ae64f56f13d69b9ab6fc5de573fd4cc8abbb45a94a841f86a0e4",
+      "bytes": 12270
+    },
+    {
+      "path": "assets/ui/ui_faction_xiepai_v01.png",
+      "sha256": "63b4094d5214ffff44d5d0c8c2ad0d12dba13d7927354b363f8e5603db9950fc",
+      "bytes": 13852
+    },
+    {
+      "path": "assets/ui/ui_fill_cast_v01.png",
+      "sha256": "95f1a68beed267f461cae7ab690feb1fa99bd7bfe21a7469a27fa1ae7771645e",
+      "bytes": 70
+    },
+    {
+      "path": "assets/ui/ui_fill_dex_v01.png",
+      "sha256": "2b7bfd5e14363b1376fc18cc37aa00c5d8e7b6868e5750415c1722e61146f49b",
+      "bytes": 70
+    },
+    {
+      "path": "assets/ui/ui_fill_health_v01.png",
+      "sha256": "8dd614b00a63abbb895e10068e2c399f7b21efbef1e386c0144128fea90fc16b",
+      "bytes": 70
+    },
+    {
+      "path": "assets/ui/ui_fill_qi_v01.png",
+      "sha256": "c0ba7591a113ce5775c1066124b97e220239ae347e0442231395e2cf256a9e7c",
+      "bytes": 70
+    },
+    {
+      "path": "assets/ui/ui_heji_countdown_v01.png",
+      "sha256": "8c0384a848a951a23ae6b703fadc4a2cc7751ebee1a4002817885769b26ec8ea",
+      "bytes": 340
+    },
+    {
+      "path": "assets/ui/ui_heji_ground_v01.png",
+      "sha256": "9686130533f9c216db11e890bbfe7c6df5728691f95ec7fe5528918239bd9977",
+      "bytes": 641
+    },
+    {
+      "path": "assets/ui/ui_heji_invite_v01.png",
+      "sha256": "7c145a59813d9bff9c53484adb356292bdd9077194d8af5683d6bc2467333297",
+      "bytes": 334
+    },
+    {
+      "path": "assets/ui/ui_moqi_lv1_v01.png",
+      "sha256": "767669c4b339a25b246e0a3bb416a2969a4c7070d4c09e531367f970a1e7a3f3",
+      "bytes": 132
+    },
+    {
+      "path": "assets/ui/ui_moqi_lv2_v01.png",
+      "sha256": "a56a144511d1e1d85fb4f764b0210898ff97913052b87ba2e71f7d3d5f66c225",
+      "bytes": 133
+    },
+    {
+      "path": "assets/ui/ui_moqi_lv3_v01.png",
+      "sha256": "1a57fa9218e4ea83231d7837336dcb8fe73585736a638b4e13a258eb92e7f04f",
+      "bytes": 118
+    },
+    {
+      "path": "assets/ui/ui_partybar_v01.png",
+      "sha256": "6b28c64b2d80f88159e57e297805ffe4298ef73af050db8c2ab9d00900a7b241",
+      "bytes": 470
+    },
+    {
+      "path": "assets/ui/ui_pause_v01.png",
+      "sha256": "9a52cb61e2428e9800f6d504964e7c507de101f23a2716f31959a5c9aea9968a",
+      "bytes": 1328
+    },
+    {
+      "path": "assets/ui/ui_selfbar_v01.png",
+      "sha256": "2dcbb295ae23a6d1e29182544f101ec53c7dff3af66698dcd1454b402daaf05e",
+      "bytes": 588
+    },
+    {
+      "path": "assets/ui/ui_skill_cooldown_v01.png",
+      "sha256": "9a1fa003e549de8a6b8537e6ff134dd4e54a533e7349a898f70203f49cd96db2",
+      "bytes": 430
+    },
+    {
+      "path": "assets/ui/ui_skill_disabled_v01.png",
+      "sha256": "9f54f447e76b7aae9094cbb9d10c528728c158e61c157e0cbe302d6ce515295b",
+      "bytes": 386
+    },
+    {
+      "path": "assets/ui/ui_stick_base_v01.png",
+      "sha256": "138eda65a417d2b908139a295ebe44df5d490fe99fb70b48b64f0c05cfd40a60",
+      "bytes": 1470
+    },
+    {
+      "path": "assets/ui/ui_stick_knob_pressed_v01.png",
+      "sha256": "dbde76b6476689b0795924dcd0eb3d5dd168e9fc72e167649f035c6ac9edb150",
+      "bytes": 407
+    },
+    {
+      "path": "assets/ui/ui_stick_knob_v01.png",
+      "sha256": "b5622a645641d4a677c3254e4f52ce1f97a7123c6038692686c331f0fa5cfdf3",
+      "bytes": 401
+    },
+    {
+      "path": "assets/ui/ui_taskbar_v01.png",
+      "sha256": "62b48eea91e37b217c532d7c3fdb9a08819ec175691eca68940b311ebd5685fe",
+      "bytes": 395
+    },
+    {
+      "path": "assets/ui/ui_tooltip_v01.png",
+      "sha256": "1895561a59e1840f9bcd1dc4bed50995c637e46929eb7cd6faa048db2a899e62",
+      "bytes": 386
+    },
+    {
+      "path": "assets/vfx/vfx_heji_freeze_v01.png",
+      "sha256": "39a76d8b784d775a7db902998096aafd5de833dd1b28811900907d9901134839",
+      "bytes": 16500
+    }
+  ]
+}

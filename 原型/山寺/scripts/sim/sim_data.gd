@@ -1,0 +1,92 @@
+## 山寺切片的全部数值表。单位：长度为 960×540 画面像素，时间为秒。
+## 起点是 V0.4 第一轮战斗调整后的手感（三连普攻、闪避、预警、架势与失衡），
+## 伤害 ×3，玩家生命 1000。玄诚 5000：两个满操作 AI 约 40 秒，按真人约一半输出估到规格书的「约九十秒」；全部待试玩复核。
+class_name SimData
+extends RefCounted
+
+const PLAYER := {
+	"hp": 1000, "qi": 200, "sp": 100, "radius": 12, "speed": 140.0,
+	"qi_regen_combat": 3.0, "qi_regen_idle": 12.0, "qi_on_hit": 6.0,
+	"sp_regen": 21.0, "dodge_cost": 30.0, "dodge_time": 0.23, "dodge_speed": 430.0,
+	"dodge_inv": 0.30, "dodge_cd": 0.5,
+	"combo_window": 0.8, "hurt_knockback": 18.0,
+}
+
+## 三连普攻，按门派武器分；half 为扇形半角（弧度）。
+const ATTACKS := {
+	"shaolin": [
+		{"dmg": 30, "range": 76.0, "half": 1.15, "cd": 0.27},
+		{"dmg": 36, "range": 76.0, "half": 1.15, "cd": 0.27},
+		{"dmg": 54, "range": 90.0, "half": 1.6, "cd": 0.39},
+	],
+	"xiepai": [
+		{"dmg": 30, "range": 68.0, "half": 1.0, "cd": 0.25},
+		{"dmg": 34, "range": 68.0, "half": 1.0, "cd": 0.25},
+		{"dmg": 50, "range": 80.0, "half": 1.4, "cd": 0.37},
+	],
+}
+
+## 释放机制：tap 快速点按（自动朝最近敌人）、charge 按下蓄力松开释放、aim 拖动瞄准松开释放。
+const SKILLS := {
+	# 少林：近战硬桥硬马
+	"luohanquan": {"name": "罗汉拳", "sect": "shaolin", "mode": "tap", "cost": 40, "cd": 3.0,
+		"hits": 3, "dmg": 28, "range": 64.0, "half": 0.9, "interval": 0.12, "lunge": 18.0},
+	"jinzhongzhao": {"name": "金钟罩", "sect": "shaolin", "mode": "charge", "cost": 50, "cd": 8.0,
+		"max_charge": 1.2, "shield_min": 80, "shield_max": 300, "shield_time": 6.0},
+	"dalijingangzhang": {"name": "大力金刚掌", "sect": "shaolin", "mode": "aim", "cost": 60, "cd": 6.0,
+		"dmg": 90, "range": 112.0, "half": 0.6, "knockback": 60.0},
+	# 邪派：毒功、远程、控制
+	"dushazhang": {"name": "毒砂掌", "sect": "xiepai", "mode": "tap", "cost": 35, "cd": 2.5,
+		"dmg": 60, "range": 260.0, "speed": 420.0},
+	"huagongsan": {"name": "化功散", "sect": "xiepai", "mode": "aim", "cost": 55, "cd": 9.0,
+		"reach": 220.0, "radius": 48.0, "time": 5.0, "dps": 30.0, "slow": 0.4},
+	"shehunshu": {"name": "摄魂术", "sect": "xiepai", "mode": "charge", "cost": 50, "cd": 7.0,
+		"max_charge": 1.0, "dmg": 50, "range": 240.0, "width": 18.0, "root": 2.0},
+	# 通用技槽（进山门前三选一）
+	"tiyunzong": {"name": "梯云纵", "sect": "", "mode": "tap", "cost": 0, "cd": 8.0, "blink": 110.0, "inv": 0.15},
+	"yungong": {"name": "运功疗伤", "sect": "", "mode": "tap", "cost": 0, "cd": 15.0,
+		"heal": 200, "share_range": 120.0, "share_heal": 100, "share_qi": 60},
+	"jiemai": {"name": "截脉", "sect": "", "mode": "tap", "cost": 0, "cd": 10.0, "range": 170.0, "dmg": 40},
+}
+
+const SECTS := {
+	"shaolin": {"name": "少林", "skills": ["luohanquan", "jinzhongzhao", "dalijingangzhang"], "fallback": "luohanquan",
+		"passive": "积内力：受击积蓄，满时下一招附带硬直"},
+	"xiepai": {"name": "邪派", "skills": ["dushazhang", "huagongsan", "shehunshu"], "fallback": "dushazhang",
+		"passive": "叠毒：攻击叠毒，三层引爆持续伤害"},
+}
+const UTILITIES := ["tiyunzong", "yungong", "jiemai"]
+
+## 门派被动
+const PASSIVE := {
+	"shaolin_fill": 300.0,  # 受到这么多伤害后积满
+	"shaolin_stagger": 1.0,  # 积满后下一招附带的硬直
+	"poison_stacks": 3, "poison_dps": 20.0, "poison_time": 4.0,
+}
+
+## 双人合击与默契（规格书第四节）
+const COMBO := {
+	"window": 3.0, "cd": 10.0, "freeze": 0.45,
+	"preview_reach": 160.0, "preview_default": 70.0,
+	"radius": [56.0, 76.0, 104.0], "mult": [1.0, 1.5, 2.0], "dmg": 150,
+	"streak_gap": 30.0, "stagger": 2.0,
+}
+
+## 敌人。tele 为预警时长（规格书：可闪避攻击前 0.8 秒），cast 为可打断读条。
+const ENEMIES := {
+	"louluo": {"name": "邪派喽啰", "hp": 240, "radius": 13, "speed": 95.0, "aggro": 260.0,
+		"flinch": true, "stance": false,
+		"attacks": {"slash": {"shape": "cone", "range": 56.0, "half": 0.9, "tele": 0.7, "dmg": 90, "rec": 0.55, "reach": 46.0}}},
+	"xuancheng": {"name": "玄诚 · 叛僧教头", "hp": 5000, "radius": 18, "speed": 80.0, "aggro": 9999.0,
+		"flinch": false, "stance": true, "stance_cut": 0.5, "stance_break": 2.0, "read_window": 0.5,
+		"phase2_at": 0.5, "heavy_every": 11.0,
+		"attacks": {
+			"sweep": {"shape": "cone", "range": 104.0, "half": 1.0, "tele": 0.8, "dmg": 120, "rec": 0.6, "reach": 84.0},
+			"dash": {"shape": "line", "range": 190.0, "width": 18.0, "tele": 0.8, "dmg": 100, "rec": 0.8, "reach": 210.0, "min_dist": 110.0},
+			"heavy": {"shape": "field", "cast": 2.0, "dmg": 350, "rec": 1.0},
+		}},
+}
+
+## 净心（AI 队友）：少林棍法，输出打折
+const PARTNER := {"hp": 800, "dmg_scale": 0.6, "react": 0.25, "dodge_chance": 0.8,
+	"invite_react": [0.5, 1.0], "follow": 70.0, "invite_every": 24.0}
