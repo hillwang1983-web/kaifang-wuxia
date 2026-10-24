@@ -58,9 +58,10 @@ try{
  console.log('BROWSER START PASS');
  await page.goto(base+'/shansi/?auto');
  await page.waitForFunction(()=>!document.querySelector('#status'),{},{timeout:90000});
- const until=Date.now()+180000;
+ // 三段完整流程约需 200 游戏秒，给浏览器软渲染留出余量，仍保留有界超时。
+ const until=Date.now()+600000;
  while(!logs.some(x=>x.text.includes('自动试玩结算'))){
-  if(Date.now()>until)throw Error('Web 自动通关未到结算');
+  if(Date.now()>until)throw Error('Web 自动通关未到结算（等待上限 600 秒）');
   await new Promise(r=>setTimeout(r,1000));
  }
  assert.deepEqual(errors,[]);assert.equal(logs.filter(x=>x.type==='error').length,0);
