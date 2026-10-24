@@ -1,0 +1,24 @@
+{
+  "art": {
+    "result": "PASS",
+    "canonical_pngs": 68,
+    "effects": 16,
+    "game_assets": 52,
+    "checks": [
+      "dimensions",
+      "sha256",
+      "transparent cutouts",
+      "naming",
+      "identical copies",
+      "16 exact 2x previews",
+      "three-color freeze",
+      "touch circles and horizontal safe area"
+    ]
+  },
+  "nodeBaseline": {
+    "commit": "df000957b8bb71c0eac974d6d0671978ad7e78f1",
+    "command": "npm test",
+    "exit_code": 0
+  },
+  "scope": "静态美术交付；未声称Godot接入或实体手机验收"
+}
