@@ -1,0 +1,57 @@
+name: 山寺 Godot 回归
+on:
+  pull_request:
+    paths:
+      - '原型/山寺/**'
+      - '.github/workflows/shansi.yml'
+  push:
+    branches: [main]
+    paths:
+      - '原型/山寺/**'
+      - '.github/workflows/shansi.yml'
+permissions:
+  contents: read
+env:
+  GODOT_VERSION: 4.7.2
+jobs:
+  shansi:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: 原型/山寺
+    steps:
+      - uses: actions/checkout@v4
+      - name: 缓存 Godot
+        id: godot-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/godot
+          key: godot-${{ env.GODOT_VERSION }}-linux
+      - name: 下载 Godot
+        if: steps.godot-cache.outputs.cache-hit != 'true'
+        working-directory: .
+        run: |
+          mkdir -p ~/godot && cd ~/godot
+          curl -fsSLo godot.zip "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          unzip -q godot.zip && rm godot.zip
+      - name: 导入资源
+        # 全新检出还没有字体缓存，主题会因找不到字体报错；与 scripts/build-shansi-preview.mjs 相同，
+        # 只在首次导入时临时清空 theme/custom，导入后按原样恢复，后续步骤仍严格检查引擎错误。
+        run: |
+          GODOT=~/godot/Godot_v${GODOT_VERSION}-stable_linux.x86_64
+          echo "GODOT=$GODOT" >> "$GITHUB_ENV"
+          cp project.godot "$RUNNER_TEMP/project.godot"
+          sed -i 's|^theme/custom=.*$|theme/custom=""|' project.godot
+          "$GODOT" --headless --path . --import
+          cp "$RUNNER_TEMP/project.godot" project.godot
+      - name: 规则与工程测试
+        run: |
+          "$GODOT" --headless --path . --script res://tests/run_tests.gd 2>&1 | tee "$RUNNER_TEMP/unit.log"
+          grep -q '失败 0 项' "$RUNNER_TEMP/unit.log"
+          ! grep -Eq '(SCRIPT ERROR|^ERROR:)' "$RUNNER_TEMP/unit.log"
+      - name: 冒烟 · AI 代玩山门到结算
+        run: |
+          "$GODOT" --headless --path . -- auto quit 2>&1 | tee "$RUNNER_TEMP/smoke.log"
+          grep -q '自动试玩结算' "$RUNNER_TEMP/smoke.log"
+          ! grep -Eq '(SCRIPT ERROR|^ERROR:)' "$RUNNER_TEMP/smoke.log"
