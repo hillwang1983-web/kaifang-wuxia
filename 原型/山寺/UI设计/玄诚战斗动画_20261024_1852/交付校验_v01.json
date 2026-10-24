@@ -1,0 +1,428 @@
+{
+  "delivery": "20261024-1852",
+  "rows": [
+    16,
+    17,
+    18,
+    19
+  ],
+  "new_strips": 15,
+  "new_frames": 69,
+  "combined_frames": 99,
+  "generated_sources": 11,
+  "derived_reference_crops": 4,
+  "files": [
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/combat_prompts.json",
+      "bytes": 17990,
+      "sha256": "ca5cf56bc190b9c74e4e822adda8f176dcad493628929c796aeae60cc0740a44"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/compact_fix_prompts.json",
+      "bytes": 5095,
+      "sha256": "fa00e980f6b242602d99868c322157fa41b7e1d5481e7c00a82894e4f9a9b4f6"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/heavy_down_4倍_v01.png",
+      "bytes": 12237,
+      "sha256": "ce8eef135c6526f10a1bfd1ea42dc175d45ddff4c905bd7bd1dc663321fc71e5"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/heavy_down_播放预览_v01.gif",
+      "bytes": 137703,
+      "sha256": "fe9824feed4a6a0c7fb639b3682587290ad8e00961beb586bf9ef81066419b2e"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/heavy_left_4倍_v01.png",
+      "bytes": 12055,
+      "sha256": "d73930ac6270198039490db93868abe9c8b3e1e899877b87545a6e79b30cd7ba"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/heavy_left_播放预览_v01.gif",
+      "bytes": 132268,
+      "sha256": "a0778339d9cc3d12b15609ab93629937a981703ce88243ce625f34ecd97bffa0"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/heavy_up_4倍_v01.png",
+      "bytes": 11018,
+      "sha256": "3f3c1c708c1efa3a2ad77127183f3da5c41f9314b41664342582db02c286e22a"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/heavy_up_播放预览_v01.gif",
+      "bytes": 110744,
+      "sha256": "a6493e472e5823cfb5e14cc587352b963313aa7723ca19dc310c6bd83a86fe22"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/hit_down_4倍_v01.png",
+      "bytes": 2251,
+      "sha256": "533eb665aba9bc85c4a87e3cc4e69c5e7ace8d1c608d2b397313ba01991a4f83"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/hit_down_播放预览_v01.gif",
+      "bytes": 7686,
+      "sha256": "df26f696d66e6ed3717d4a11f02b240842907915804503f686110325d597e30c"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/hit_left_4倍_v01.png",
+      "bytes": 2368,
+      "sha256": "c71bac5462c7be55272590049f19d3a49a4dafbbd5c113c55a01a682092bef01"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/hit_left_播放预览_v01.gif",
+      "bytes": 8247,
+      "sha256": "d9ff2747391c830fdc3494e2ebbf12a06f93cac7f4994e0d3329b91d761f1a13"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/hit_up_4倍_v01.png",
+      "bytes": 1945,
+      "sha256": "16f28cb4a963d89a6b89d0474a7523427a2734824b1e88a42ace6a71c86653ba"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/hit_up_播放预览_v01.gif",
+      "bytes": 6203,
+      "sha256": "0741fe92aaefa2d2f0d271297e4aefb374bf4b672a2f0e101e9c6fba4fb1dada"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/left_isolated_fix_prompt.txt",
+      "bytes": 1001,
+      "sha256": "d0f342fac98696ee77a5749e1aa1766fde1755356417413a4c49545c685d53fb"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/left_reach_fix_prompt.txt",
+      "bytes": 822,
+      "sha256": "61fcc2e574d492d8749016d9d0939054853bb4a55e273f18c19a5220b33f185d"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/production_plan.md",
+      "bytes": 1291,
+      "sha256": "358b5042c28f16112a1f20d464d23b4a50c96d2fbe5eed6ca5a85c640ce4965a"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/sit_down_4倍_v01.png",
+      "bytes": 1100,
+      "sha256": "4f45c2873a0e2504c530b20a4d01925dc9caa47469e5cab416c50622d0631587"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/sit_down_播放预览_v01.gif",
+      "bytes": 2923,
+      "sha256": "2e975c445d3cb69480cc0c94acbf6c1a59a546dda177f6472107e3b3db4a6e62"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/sit_left_4倍_v01.png",
+      "bytes": 1098,
+      "sha256": "feff5bd06e90b6843487b7aa339e9b5b94cfb7f033972963908e8c07a898544b"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/sit_left_播放预览_v01.gif",
+      "bytes": 2850,
+      "sha256": "6ffc940093e635a62e32b80dea4e65cd68e7f24002b78d86905e5a697ea0966c"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/sit_up_4倍_v01.png",
+      "bytes": 949,
+      "sha256": "a5d2ff25801aaaed5fe479afc2337787c996506690d9d0fa3f3356751aead5eb"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/sit_up_播放预览_v01.gif",
+      "bytes": 2212,
+      "sha256": "9fede5938051506ee3d15b00890f42a8fd279597c53d80fc0af94602fb621379"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/stagger_down_4倍_v01.png",
+      "bytes": 3080,
+      "sha256": "61034e96a85441f414ca8a23217a730e692e3fb86557eda8a87e2228f45e85ab"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/stagger_down_播放预览_v01.gif",
+      "bytes": 11233,
+      "sha256": "554435eae6d2efb4e068f50ad796158b33744a9b9ce02142b9537704234f5469"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/stagger_left_4倍_v01.png",
+      "bytes": 3482,
+      "sha256": "7c20ccd4cd1edccc681b64c1ecffc9814dc93b3d95c3e7acdc9f0104cf4b9e70"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/stagger_left_播放预览_v01.gif",
+      "bytes": 13159,
+      "sha256": "6553cbdff9622717c46692a02ac19dd23153c77154ec012cada80dd9007a6ef6"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/stagger_up_4倍_v01.png",
+      "bytes": 2565,
+      "sha256": "d6e13dde41c71860179a6423037af291f24aaa7b8bccbab174f20a7b557c6fa5"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/stagger_up_播放预览_v01.gif",
+      "bytes": 8549,
+      "sha256": "8a051f5497f535ac269ae8eec7f0419a007c74336d86fb06575d2efa8f929a54"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/sweep_down_4倍_v01.png",
+      "bytes": 10355,
+      "sha256": "c6c5e9ccf6db3fe85e7ffbf0c8693eb0c80dd8707627cdbdf0f7fef9fbfe51ff"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/sweep_down_播放预览_v01.gif",
+      "bytes": 31648,
+      "sha256": "157092a28b9e234b63d4afffb8b134bba9e6cf718f8789a4c61ab192bb88e489"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/sweep_left_4倍_v01.png",
+      "bytes": 9954,
+      "sha256": "4b521e2faa681487506d02c30a12bb794596851a91b010019342ffbfb211b2e3"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/sweep_left_播放预览_v01.gif",
+      "bytes": 29708,
+      "sha256": "48201d3f70e2c6c367c6013a6cc13f97368366c5e9034519d226d4b6ba373bbc"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/sweep_up_4倍_v01.png",
+      "bytes": 9088,
+      "sha256": "da5c0de25d0d6d94bed40ae3357c4a11b0ea2636f024a2d419bccdc1736c203c"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/sweep_up_播放预览_v01.gif",
+      "bytes": 26755,
+      "sha256": "acadc531210ee86ace93107ad2d46feaf6ddec95a727fc882d8b5f377c722855"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/交付说明_v01.md",
+      "bytes": 4483,
+      "sha256": "813d730f09523ea6e43c857d4b1c47204aaa4fa46346fdd92cff6644ed681a71"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/山门1比1_玄诚战斗与玩家_v01.png",
+      "bytes": 193379,
+      "sha256": "452603b6691cd46f224fa2297866a895d5d1be45fca53b16dc6c5ce5940f9b1f"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/战斗动画参数_v01.json",
+      "bytes": 91407,
+      "sha256": "1da57314349483159c1a973d649e5e8c9760c2f8762e6f6e515369da9161438b"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/核验结果_v01.json",
+      "bytes": 24331,
+      "sha256": "cc95dee14b20724d4b690c933337d788e2fdbe48fc3fb65069099dcfc54295f4"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/玄诚完整99帧索引_v01.json",
+      "bytes": 140188,
+      "sha256": "0a3e42375d3ea148f51cc75b0daed2159ba45b67867eecbaad1247f4acd28963"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/玄诚战斗_down_逐帧总览_v01.png",
+      "bytes": 32648,
+      "sha256": "9c1cd9eef15e70213af98d2a9a84037fbf9d3bce90fe0bbd04f88622529d59da"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/玄诚战斗_left_逐帧总览_v01.png",
+      "bytes": 32890,
+      "sha256": "ecef8a1f07b0eedf71a7498d9e1d1a791d7344b512f330b7e09e05945907dfff"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/玄诚战斗_up_逐帧总览_v01.png",
+      "bytes": 28763,
+      "sha256": "2cf6e18a363920f74f827da5ca154f3fb93afad2bcafce155f1a496e2984ad60"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/脚底注册记录_v01.json",
+      "bytes": 278,
+      "sha256": "7f3b7af32139f77b0e885f0cdf8816cc5b77f8db8bbf94ff7dde62be28192e20"
+    },
+    {
+      "path": "UI设计/玄诚战斗动画_20261024_1852/调色板_v01.json",
+      "bytes": 194,
+      "sha256": "c06a00d1a0e738ef09690a5fa20e103a7d225d3dd0da0842351f9d2c67dff1fd"
+    },
+    {
+      "path": "assets/boss/boss_xuancheng_heavy_down_v01.png",
+      "bytes": 16143,
+      "sha256": "2c4284894f91bc1c9a551c02f0a2b69245870415b4a52202617fbd9bb20847cd"
+    },
+    {
+      "path": "assets/boss/boss_xuancheng_heavy_left_v01.png",
+      "bytes": 14523,
+      "sha256": "d627ae635af452fb044bf6793321ac6d928504d7e3817148a528fac57b487634"
+    },
+    {
+      "path": "assets/boss/boss_xuancheng_heavy_up_v01.png",
+      "bytes": 11807,
+      "sha256": "2d20d5a10ba1a48e05008f473672eff9ce4cc22bd14da25e44d27d2e21681fc0"
+    },
+    {
+      "path": "assets/boss/boss_xuancheng_hit_down_v01.png",
+      "bytes": 3919,
+      "sha256": "09eaf6bc27b8f79ce0c21736bdfb4e2421031da5c434a958a3b16ac1ac067b95"
+    },
+    {
+      "path": "assets/boss/boss_xuancheng_hit_left_v01.png",
+      "bytes": 4062,
+      "sha256": "ace4ed5175ba2cae938c8c4442b83af0f6348ee4744b23ff26f941e99687f330"
+    },
+    {
+      "path": "assets/boss/boss_xuancheng_hit_up_v01.png",
+      "bytes": 2992,
+      "sha256": "635cf2421fd59c8b2e49518e43964271b29c86dac7f469eea2229c56a3016c70"
+    },
+    {
+      "path": "assets/boss/boss_xuancheng_sit_down_v01.png",
+      "bytes": 1678,
+      "sha256": "ae746413794054692f490bfaa8adf562c2dc4d984e84f993a38c88b56c3bfe83"
+    },
+    {
+      "path": "assets/boss/boss_xuancheng_sit_left_v01.png",
+      "bytes": 1686,
+      "sha256": "a8a3a67e0f76b60c37653e9c83ec50a262a9bc46f94d6102b43298c9c6ffddbf"
+    },
+    {
+      "path": "assets/boss/boss_xuancheng_sit_up_v01.png",
+      "bytes": 1319,
+      "sha256": "f58bcc42314ba796f6ec2dd496b4bb23a5640e4be9de58d50c8c484d2bccb7d3"
+    },
+    {
+      "path": "assets/boss/boss_xuancheng_stagger_down_v01.png",
+      "bytes": 5143,
+      "sha256": "31e05c7ad36e7041999bb6ce8f78b72c9628d9711fce29c2a721f3452702d5e2"
+    },
+    {
+      "path": "assets/boss/boss_xuancheng_stagger_left_v01.png",
+      "bytes": 6044,
+      "sha256": "e210283c812f4be5c2420b5a70cecac6ac51b4c572834503b8d91babad48acba"
+    },
+    {
+      "path": "assets/boss/boss_xuancheng_stagger_up_v01.png",
+      "bytes": 3802,
+      "sha256": "5601342e7e0098669e86d57db931d16355635c44cd8f4a2dd6c7f44ab92ad571"
+    },
+    {
+      "path": "assets/boss/boss_xuancheng_sweep_down_v01.png",
+      "bytes": 13817,
+      "sha256": "87562cd2dacef88ec457dff0aa832b1b53ff8a2032505534d043ea9aea735274"
+    },
+    {
+      "path": "assets/boss/boss_xuancheng_sweep_left_v01.png",
+      "bytes": 11569,
+      "sha256": "5310f801c6e0f19a927d258a8f7b6b5090764ea7f223b5214ec47a2f2b98486f"
+    },
+    {
+      "path": "assets/boss/boss_xuancheng_sweep_up_v01.png",
+      "bytes": 10177,
+      "sha256": "6cc5dd7f39b7736525b95c070c335eb7e74f5243ca4ae9d7de1a9ae16dbe7a0b"
+    },
+    {
+      "path": "assets/ref/ref_boss_left_heavy_follow_crop_v01.png",
+      "bytes": 53912,
+      "sha256": "8e98459d6dd1b0811bb7ecb8a0f1b40f62c9c87e60a919d0eb1728d2783a8bf3"
+    },
+    {
+      "path": "assets/ref/ref_boss_left_heavy_impact_crop_v01.png",
+      "bytes": 45026,
+      "sha256": "300e08903b5daeec7495852cbb6d5cbe7952a74b97accb28e305b0f1d1fe6f53"
+    },
+    {
+      "path": "assets/ref/ref_boss_left_sweep_last_crop_v01.png",
+      "bytes": 50038,
+      "sha256": "394db60fbeb7d44bcb2df5e9d34a0690c6be627026660495209eff8cfae3bbc2"
+    },
+    {
+      "path": "assets/ref/ref_boss_left_three_compact_reference_v01.png",
+      "bytes": 146696,
+      "sha256": "bd38c5c379fbd6d61e6180ba162f8c197da249b3738cf8ad90dc45aee8a26ba9"
+    },
+    {
+      "path": "assets/ref/ref_boss_xuancheng_attack_down_compactfix_source_v01.png",
+      "bytes": 907997,
+      "sha256": "2ae9881e751313dde8a638bd68c92475091d3070192d1f89bdcc9d0fe5fbddc9"
+    },
+    {
+      "path": "assets/ref/ref_boss_xuancheng_attack_down_source_v01.png",
+      "bytes": 881908,
+      "sha256": "7455075a5fa998c708055809536f3761aa7a904dd6571795b119e69d958aad86"
+    },
+    {
+      "path": "assets/ref/ref_boss_xuancheng_attack_left_compactfix_source_v01.png",
+      "bytes": 1712333,
+      "sha256": "47e61a85417deccba8b576bb136ced4eef1a7b3f181b6c0b376fddd904cf11d1"
+    },
+    {
+      "path": "assets/ref/ref_boss_xuancheng_attack_left_reachfix_source_v01.png",
+      "bytes": 1946085,
+      "sha256": "2ec21f13a66e484f953dae3246874b4e7e4660220c9b735e96df8a148c31ffce"
+    },
+    {
+      "path": "assets/ref/ref_boss_xuancheng_attack_left_source_v01.png",
+      "bytes": 1684437,
+      "sha256": "0c1bf8529ed60706de7e7b166ae3e58585bc03a0179b4a5d8cff6767b9d01c42"
+    },
+    {
+      "path": "assets/ref/ref_boss_xuancheng_attack_up_compactfix_source_v01.png",
+      "bytes": 831931,
+      "sha256": "60db2be9a18a5006997170eb04529341567f489f0856df9e0641356a8a60a013"
+    },
+    {
+      "path": "assets/ref/ref_boss_xuancheng_attack_up_source_v01.png",
+      "bytes": 821373,
+      "sha256": "b306a71dce511a4a1c903c792e70b886a0b9629c57342e7ffb416466bb477aad"
+    },
+    {
+      "path": "assets/ref/ref_boss_xuancheng_left_isolated_source_v01.png",
+      "bytes": 559470,
+      "sha256": "4c648dde7d92cbc84180a26af2165a0c02044750345a007f0e0e91371b20eff3"
+    },
+    {
+      "path": "assets/ref/ref_boss_xuancheng_react_down_source_v01.png",
+      "bytes": 1539256,
+      "sha256": "4895aff6994345cd324514ee609a1419cf0644cb7b28f4eee1972cfcd013126a"
+    },
+    {
+      "path": "assets/ref/ref_boss_xuancheng_react_left_source_v01.png",
+      "bytes": 1488301,
+      "sha256": "b2b5bf33991b4c8bdc44c2ec82904f86ef4e534b86ce88f8bb51ec4b0686c9c4"
+    },
+    {
+      "path": "assets/ref/ref_boss_xuancheng_react_up_source_v01.png",
+      "bytes": 1352050,
+      "sha256": "6fa7e838e8b40dace42fb890e93d4b59bfe2deda45fdd419d8ea0ed31e3bb196"
+    }
+  ],
+  "existing_dependencies": [
+    {
+      "path": "assets/boss/boss_xuancheng_idle_down_v01.png",
+      "bytes": 5224,
+      "sha256": "ad825cf1e5460e9b8f0dda471d1c3f7758774e84f52f7bac6147fd53ea1209fd"
+    },
+    {
+      "path": "assets/boss/boss_xuancheng_idle_left_v01.png",
+      "bytes": 5399,
+      "sha256": "caedb8180ac9268c25cbec404a067c312e201777b792f355a650272a35a640a2"
+    },
+    {
+      "path": "assets/boss/boss_xuancheng_idle_up_v01.png",
+      "bytes": 4240,
+      "sha256": "f587b0ac6bf41baf7d8a7e2cbaf13cace59c24091ad877dd7ae3871467a33f75"
+    },
+    {
+      "path": "assets/boss/boss_xuancheng_walk_down_v01.png",
+      "bytes": 8140,
+      "sha256": "222f1070be26995358a891dc226ff8bcca3f27e020e4142e16ba7d7afc3a14ac"
+    },
+    {
+      "path": "assets/boss/boss_xuancheng_walk_left_v01.png",
+      "bytes": 8005,
+      "sha256": "d280f66173877309128036149b865f87843b8d30bd189bb29e93cf5f93c5a84e"
+    },
+    {
+      "path": "assets/boss/boss_xuancheng_walk_up_v01.png",
+      "bytes": 6880,
+      "sha256": "04572a3ee7d86a2ecea70a9caa20ca6aa58d30afba0cf9ba1ee6e6095dddb5be"
+    },
+    {
+      "path": "assets/ref/ref_boss_xuancheng_down_v01.png",
+      "bytes": 2091,
+      "sha256": "1c512bb48e7ad86d5091c2672230dad1dfd14a4854ffef9ae1cd7866972b9d9a"
+    }
+  ]
+}

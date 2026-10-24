@@ -71,7 +71,9 @@ static func action_for(f: SimFighter) -> String:
 				return f.atk_id
 			if f.state != "recover":
 				return "atk"
-		"stagger", "flinch":
+		"stagger":
+			return "stagger"
+		"flinch":
 			return "hit"
 	if f.hurt_t > 0.0:
 		return "hit"
@@ -89,6 +91,21 @@ static func dir_for(facing: Vector2) -> String:
 	return "up" if facing.y < 0.0 else "down"
 
 
+## 这一刻该画第几帧。起手 + 出手分开的动作条（sets.windup）：预警 / 读条期间停在起手末帧（windup_loop 里的循环起手帧），
+## 出手（收招、冲刺）后从出手第一帧接着播；其余按 actions 的 loop / hold
+static func frame_of(f: SimFighter, set_: Dictionary, action: String, count: int, clock: float) -> int:
+	var act: Dictionary = data().actions.get(action, {})
+	var i := int(clock * float(data().fps))
+	var wind := int(set_.get("windup", {}).get(action, 0))
+	if wind > 0 and wind < count and not f.is_hero():
+		if f.state == "windup" or f.state == "cast":
+			return i % wind if action in set_.get("windup_loop", []) else mini(i, wind - 1)
+		return mini(wind + i, count - 1)
+	if act.get("loop", false):
+		return i % count
+	return mini(mini(i, int(act.get("hold", count - 1))), count - 1)
+
+
 ## 画一帧。clock 是这个动作已经播了多久（秒）。返回 false 表示没有可用的图，由调用方画占位
 static func draw(ci: CanvasItem, f: SimFighter, at: Vector2, clock: float, tint: Color) -> bool:
 	var prefix := prefix_for(f)
@@ -104,20 +121,7 @@ static func draw(ci: CanvasItem, f: SimFighter, at: Vector2, clock: float, tint:
 	var fw: int = set_.frame[0]
 	var fh: int = set_.frame[1]
 	var count := maxi(1, tex.get_width() / fw)
-	var act: Dictionary = data().actions.get(found[0], {})
-	var i := int(clock * float(data().fps))
-	var wind := int(set_.get("windup", {}).get(found[0], 0))
-	if wind > 0 and wind < count and not f.is_hero():
-		# 起手 + 出手分开的动作条：预警期间停在起手末帧，出手（收招、冲刺）后从出手第一帧接着播
-		if f.state == "windup" or f.state == "cast":
-			i = mini(i, wind - 1)
-		else:
-			i = mini(wind + i, count - 1)
-	elif act.get("loop", false):
-		i %= count
-	else:
-		i = mini(i, int(act.get("hold", count - 1)))
-		i = mini(i, count - 1)
+	var i := frame_of(f, set_, found[0], count, clock)
 	var anchor := Vector2(set_.anchor[0], set_.anchor[1])
 	var src := Rect2(i * fw, 0, fw, fh)
 	if mirror:

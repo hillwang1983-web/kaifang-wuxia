@@ -1,0 +1,1206 @@
+{
+  "result": "PASS",
+  "new_strips": 15,
+  "new_frames": 69,
+  "old_movement_frames": 30,
+  "combined_frames": 99,
+  "combined_colors": 16,
+  "alpha": [
+    0,
+    255
+  ],
+  "anchor": [
+    32,
+    76
+  ],
+  "checks": [
+    "exact dimensions/counts/directions/order",
+    "same <=16palette new and existing",
+    "binary alpha, no magenta/pureblack",
+    "69 new and30 existing frames actual opaque sole contacts y76 midpoint32,76, rows77–79transparent",
+    "source pose uncut and no opaque pixel loss in final canvas",
+    "every frame distinct within action",
+    "4x previews exact nearest pixels",
+    "GIF frame counts/timings incl2second heavy charge and0.8second sweep hold",
+    "phase/hold metadata"
+  ],
+  "limits": [
+    "not independent Godot/mobile/runtime movement/collision test",
+    "GIF last frame600ms for review, game byJSON12fps/state controller"
+  ],
+  "files": [
+    {
+      "file": "assets/boss/boss_xuancheng_idle_down_v01.png",
+      "existing_dependency": true,
+      "dimensions": [
+        256,
+        80
+      ],
+      "frames": 4,
+      "colors": 15,
+      "bboxes": [
+        [
+          14,
+          24,
+          53,
+          77
+        ],
+        [
+          14,
+          24,
+          53,
+          77
+        ],
+        [
+          14,
+          24,
+          53,
+          77
+        ],
+        [
+          14,
+          24,
+          53,
+          77
+        ]
+      ],
+      "frame_sha256": [
+        "44bf06b47a49ffde3bc17076dab9067f06712862aff1110d6f069ae5577ad6f8",
+        "5c7cddde11e49189a820166eb9ba1d9be4c0eb92245d1e5f6cf230a4ea1c2895",
+        "6cb4f18911a4f0a8830a05610f37acdce4cf99b5b11d58e7e2aadf137ca1c387",
+        "89e1c102b37ae2a401ebe8a9c2d7d6c081ade83e4d61e065d5f120b2c5ec06a1"
+      ],
+      "preview_frames": 0,
+      "preview_durations_ms": []
+    },
+    {
+      "file": "assets/boss/boss_xuancheng_walk_down_v01.png",
+      "existing_dependency": true,
+      "dimensions": [
+        384,
+        80
+      ],
+      "frames": 6,
+      "colors": 15,
+      "bboxes": [
+        [
+          14,
+          24,
+          53,
+          77
+        ],
+        [
+          15,
+          24,
+          51,
+          77
+        ],
+        [
+          17,
+          24,
+          52,
+          77
+        ],
+        [
+          14,
+          24,
+          53,
+          77
+        ],
+        [
+          15,
+          24,
+          51,
+          77
+        ],
+        [
+          14,
+          24,
+          53,
+          77
+        ]
+      ],
+      "frame_sha256": [
+        "4f81f07eeba7ec1b86bd83e3c284a82568d9e01c51d7e314f28bc197a8eb17a4",
+        "4126930060e6c5098d87284d8c8219814f46d5067cd26079cc57e9fc1685b679",
+        "e743abade762718aad7e0dfe6bb3be507fa6cb6f068c20487e5f4ff5593d7184",
+        "d1d620477573fe85c8f03788145e7bf41f56ef4d6908c9f38369bfd1503c9207",
+        "c7145b64a3ccf14e78dc2c4f5c648929cbe84c9df5f86decb4f676060ef9d9fa",
+        "3bad3dedd57a920bd77453a01eae5b14697915300cfb6f26f033210d814812a8"
+      ],
+      "preview_frames": 0,
+      "preview_durations_ms": []
+    },
+    {
+      "file": "assets/boss/boss_xuancheng_idle_left_v01.png",
+      "existing_dependency": true,
+      "dimensions": [
+        256,
+        80
+      ],
+      "frames": 4,
+      "colors": 16,
+      "bboxes": [
+        [
+          12,
+          24,
+          51,
+          77
+        ],
+        [
+          15,
+          24,
+          48,
+          77
+        ],
+        [
+          11,
+          24,
+          50,
+          77
+        ],
+        [
+          12,
+          24,
+          51,
+          77
+        ]
+      ],
+      "frame_sha256": [
+        "ca399fdbf7ba39f305e291db3ecb528017172346cc56b5db91e79ce5ed041ad7",
+        "b444547cb63b745a752ece316e009f4efa1e201b831f9c3abca15277754bdef8",
+        "8f60b3741a293e93433c88c3f603b9326b833a730b0fff4c603cd744c02428ce",
+        "0821614200e4a82b4751b0b22f796de31a5f8e96cf16fd6f79800a34baee19aa"
+      ],
+      "preview_frames": 0,
+      "preview_durations_ms": []
+    },
+    {
+      "file": "assets/boss/boss_xuancheng_walk_left_v01.png",
+      "existing_dependency": true,
+      "dimensions": [
+        384,
+        80
+      ],
+      "frames": 6,
+      "colors": 16,
+      "bboxes": [
+        [
+          10,
+          24,
+          49,
+          77
+        ],
+        [
+          14,
+          24,
+          48,
+          77
+        ],
+        [
+          10,
+          24,
+          49,
+          77
+        ],
+        [
+          12,
+          24,
+          51,
+          77
+        ],
+        [
+          12,
+          24,
+          47,
+          77
+        ],
+        [
+          11,
+          24,
+          50,
+          77
+        ]
+      ],
+      "frame_sha256": [
+        "b2e08a47e0bd59d2c0d28614c18156b177bb01b6e36cc1bb5b7b2e967ce9238d",
+        "4b0e3652885c1d3222e4ec0080a6d81f2f3f5225b09c7754b0ecf06c8b2a5f50",
+        "9f71e221dc8275ab442d108b473a1ee76b9a2f37e5a5b7c58abdea65b508482a",
+        "4b84c6253c81f6582a50fe9084edf24339ab8a7ceddb013a676ef68e92b29ce1",
+        "3d9c2d0cb5c91e6f0f505b1471af5b58440c5b322ad58b5554d4606167855962",
+        "29744f0dee9a5caad4277db2560ff516abbed88ea8b613c2d223c61506a02644"
+      ],
+      "preview_frames": 0,
+      "preview_durations_ms": []
+    },
+    {
+      "file": "assets/boss/boss_xuancheng_idle_up_v01.png",
+      "existing_dependency": true,
+      "dimensions": [
+        256,
+        80
+      ],
+      "frames": 4,
+      "colors": 15,
+      "bboxes": [
+        [
+          13,
+          24,
+          52,
+          77
+        ],
+        [
+          13,
+          24,
+          52,
+          77
+        ],
+        [
+          12,
+          24,
+          51,
+          77
+        ],
+        [
+          12,
+          24,
+          51,
+          77
+        ]
+      ],
+      "frame_sha256": [
+        "9b430e3bc1080124aec4d9f21242bde4072dd9503905111724f1e9c4249f837d",
+        "d5fa4241496ba1013735f822814a235ed4dd14b0ad3fdc1d90c1fdbb9be7b810",
+        "f014a52c4ceb6826197cd8fe0e2487f936970d6f8f1593eaa44cecb7fedd5795",
+        "d1e8139d3d610e8515f468098f52042dae3934f0d00aeb9d16866e003aa5b11c"
+      ],
+      "preview_frames": 0,
+      "preview_durations_ms": []
+    },
+    {
+      "file": "assets/boss/boss_xuancheng_walk_up_v01.png",
+      "existing_dependency": true,
+      "dimensions": [
+        384,
+        80
+      ],
+      "frames": 6,
+      "colors": 15,
+      "bboxes": [
+        [
+          14,
+          24,
+          53,
+          77
+        ],
+        [
+          13,
+          24,
+          52,
+          77
+        ],
+        [
+          12,
+          24,
+          51,
+          77
+        ],
+        [
+          13,
+          24,
+          52,
+          77
+        ],
+        [
+          12,
+          24,
+          51,
+          77
+        ],
+        [
+          12,
+          24,
+          51,
+          77
+        ]
+      ],
+      "frame_sha256": [
+        "4540b57b993d771abed87dcafd03691ec8717596bb3c201ee83eac30c0e06b03",
+        "7cff0cf557f01ff35caeb2c992e9b1b314a8de65e441747026353512b3f75459",
+        "dbbd6bcfea8a19e53db73e972ce0514a0f32c49e9f20af873b47d6024ead4e82",
+        "086c96d1ec5670504c90c045aa6683876643f816697e67045399a9bb47c21df6",
+        "a821a4958784776f4819e4c7c443924f648c03b551d7997b84718653ec1cb455",
+        "06317b48a2c5bb39fd9f9d66f4aab3752106e97fc652688abf98f906ae66f62a"
+      ],
+      "preview_frames": 0,
+      "preview_durations_ms": []
+    },
+    {
+      "file": "assets/boss/boss_xuancheng_sweep_down_v01.png",
+      "existing_dependency": false,
+      "dimensions": [
+        512,
+        80
+      ],
+      "frames": 8,
+      "colors": 15,
+      "bboxes": [
+        [
+          9,
+          28,
+          56,
+          77
+        ],
+        [
+          6,
+          29,
+          55,
+          77
+        ],
+        [
+          10,
+          21,
+          56,
+          77
+        ],
+        [
+          9,
+          30,
+          56,
+          77
+        ],
+        [
+          9,
+          28,
+          58,
+          77
+        ],
+        [
+          8,
+          30,
+          64,
+          77
+        ],
+        [
+          11,
+          35,
+          55,
+          77
+        ],
+        [
+          13,
+          27,
+          51,
+          77
+        ]
+      ],
+      "frame_sha256": [
+        "e96d9c92ddb1c4fc73fda223a4c574a90f2200ff767afe322dc0f1fad50c047f",
+        "5e38d0ffe7c7ec61531fc9413089ba9405d1184c81827b01903e4d70eace2933",
+        "f11a8e5b78375c6f217636d529f7a5249aefe9202a9fb15af1c2a4500c70cbda",
+        "f6d69d451d76836a694282f071b958bd4dea4e00d2e9e29cebbf0df1651f6e72",
+        "2074db3c60216e66dc55543de52951e852eb0de3eaaf85e153674153a950d110",
+        "183d24088367d3301ecd4561c7337622df4b2092ca1d57cf42dbaa851db0aa39",
+        "7f63efad21d12aeee3c7107742219a845daac958341d7f1fd7a5378660cfab28",
+        "7c46634ed7f0ef823b933c27a2c2c1a9d68ac1f7b64d51f23c6adf3fb0abf669"
+      ],
+      "preview_frames": 8,
+      "preview_durations_ms": [
+        80,
+        80,
+        800,
+        80,
+        80,
+        90,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/boss/boss_xuancheng_heavy_down_v01.png",
+      "existing_dependency": false,
+      "dimensions": [
+        576,
+        80
+      ],
+      "frames": 9,
+      "colors": 16,
+      "bboxes": [
+        [
+          10,
+          25,
+          55,
+          77
+        ],
+        [
+          10,
+          25,
+          55,
+          77
+        ],
+        [
+          9,
+          25,
+          56,
+          77
+        ],
+        [
+          10,
+          25,
+          56,
+          77
+        ],
+        [
+          9,
+          14,
+          56,
+          77
+        ],
+        [
+          11,
+          33,
+          55,
+          77
+        ],
+        [
+          10,
+          35,
+          58,
+          77
+        ],
+        [
+          12,
+          27,
+          53,
+          77
+        ],
+        [
+          12,
+          24,
+          53,
+          77
+        ]
+      ],
+      "frame_sha256": [
+        "d3a0e2fcbe74815ef754b07f1558d3ab6ab65e8606effd6c265f037526cbced1",
+        "7e556301a2687e0f6a359dd639a05363f9dbdfbea7d959115fa65f438a724ed4",
+        "a2586401b1d794b8930b9cf2e5abc9647dd6b28c2e93c8f4dc5eba4b211fc5e2",
+        "255fbc5846929df99b4ef3090900ff533d2e3928a7af0a363f74050278852dfe",
+        "8252bc8da134772c92fbb6aabd8f60710b548e65809a1fd51bf66d271e737d00",
+        "06d07dfd4695fdf17490dcfe95f59a2d9f53735310e709c5e8c94fbf890b6b3e",
+        "9f513f054bd00d38d4030940baaabb42d57000930ea5e363bddf57046fdc486c",
+        "56d8d4abe9f4799749601a0af215fa9ebd88703df334c09089febbfd74d37795",
+        "be0878c3a5fb147d57794a0adce5dca09598821c84ec1e99f25e26a482dd31cf"
+      ],
+      "preview_frames": 29,
+      "preview_durations_ms": [
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/boss/boss_xuancheng_hit_down_v01.png",
+      "existing_dependency": false,
+      "dimensions": [
+        128,
+        80
+      ],
+      "frames": 2,
+      "colors": 14,
+      "bboxes": [
+        [
+          10,
+          30,
+          54,
+          77
+        ],
+        [
+          8,
+          24,
+          49,
+          77
+        ]
+      ],
+      "frame_sha256": [
+        "14fa793c25840885ca87fb4d53b57b30df998dce25440b9a688e0423ba00c369",
+        "b567e84046bfcfad55e3d7aa095a9205b35434bb04292d84403d183cad83c25c"
+      ],
+      "preview_frames": 2,
+      "preview_durations_ms": [
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/boss/boss_xuancheng_stagger_down_v01.png",
+      "existing_dependency": false,
+      "dimensions": [
+        192,
+        80
+      ],
+      "frames": 3,
+      "colors": 14,
+      "bboxes": [
+        [
+          6,
+          27,
+          51,
+          77
+        ],
+        [
+          13,
+          33,
+          60,
+          77
+        ],
+        [
+          10,
+          33,
+          59,
+          77
+        ]
+      ],
+      "frame_sha256": [
+        "905167bb7451057f11b466d6b60077b2e19a38f8b67260624ae011f4b09ea6e7",
+        "d67268290f6f81065ac4e30f6172552cf88d7ef65dd83a07e9d1f9c67a9a3333",
+        "2ab8ae507cbde9770f49b0e3da1e12a6d5cf7acaf343598439e2be47607fa563"
+      ],
+      "preview_frames": 3,
+      "preview_durations_ms": [
+        80,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/boss/boss_xuancheng_sit_down_v01.png",
+      "existing_dependency": false,
+      "dimensions": [
+        64,
+        80
+      ],
+      "frames": 1,
+      "colors": 14,
+      "bboxes": [
+        [
+          6,
+          44,
+          59,
+          77
+        ]
+      ],
+      "frame_sha256": [
+        "3f426e18738247410378a7e04e43cf4f8429b88bced54529d40b836c04a1932b"
+      ],
+      "preview_frames": 1,
+      "preview_durations_ms": [
+        600
+      ]
+    },
+    {
+      "file": "assets/boss/boss_xuancheng_sweep_left_v01.png",
+      "existing_dependency": false,
+      "dimensions": [
+        512,
+        80
+      ],
+      "frames": 8,
+      "colors": 16,
+      "bboxes": [
+        [
+          3,
+          24,
+          55,
+          77
+        ],
+        [
+          8,
+          14,
+          56,
+          77
+        ],
+        [
+          8,
+          18,
+          56,
+          77
+        ],
+        [
+          0,
+          30,
+          55,
+          77
+        ],
+        [
+          3,
+          29,
+          56,
+          77
+        ],
+        [
+          0,
+          30,
+          58,
+          77
+        ],
+        [
+          0,
+          36,
+          56,
+          77
+        ],
+        [
+          11,
+          24,
+          50,
+          77
+        ]
+      ],
+      "frame_sha256": [
+        "ddaca05bc29a369344ad8ded1161def95692ad88291d9836df7bcc135c6190e0",
+        "9a405ac4612ac09cbaa48b00c47c6acb2bb26e4767e812747d83e63728031ebd",
+        "2980203a67fdb47307be8e589c30ce56c495ba83c75608b83d49be91323850bb",
+        "14e41be508e0116caea0b5b1d77f93a740e8978da4bf881616a8e740425ec6d4",
+        "3415ffbce9cc34bc7ba08b10dbb86801fb71462340cb5d7900d35a9299fb6158",
+        "5fefeffac38b43e9ca44dafade0205679ba99e37e1071c16d24a0657a44c2e78",
+        "d8ec937e1b2a4594355fc593ef1cf26e95f828f72f6aba3d3c8176b89cfe12ec",
+        "8a4291329413352d3f319ca88e16100af01fb2db447a8a8c438da1bc84f867a8"
+      ],
+      "preview_frames": 8,
+      "preview_durations_ms": [
+        80,
+        80,
+        800,
+        80,
+        80,
+        90,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/boss/boss_xuancheng_heavy_left_v01.png",
+      "existing_dependency": false,
+      "dimensions": [
+        576,
+        80
+      ],
+      "frames": 9,
+      "colors": 16,
+      "bboxes": [
+        [
+          8,
+          20,
+          57,
+          77
+        ],
+        [
+          8,
+          20,
+          57,
+          77
+        ],
+        [
+          8,
+          20,
+          57,
+          77
+        ],
+        [
+          8,
+          20,
+          57,
+          77
+        ],
+        [
+          1,
+          18,
+          56,
+          77
+        ],
+        [
+          5,
+          41,
+          58,
+          77
+        ],
+        [
+          4,
+          30,
+          58,
+          77
+        ],
+        [
+          1,
+          31,
+          58,
+          77
+        ],
+        [
+          12,
+          24,
+          50,
+          77
+        ]
+      ],
+      "frame_sha256": [
+        "7f055ba68d03eb2994c5515a1785d62435e82235248fe2a5fd11e2a753d3cedd",
+        "8f405c98e01189fdda71c0187017959869bcc77cdb3d7b2a54bd08077b42eec4",
+        "35b1c2a224ac926160f27df44f365a993323b1fd6ddc086e256e69bb50a80293",
+        "a03bfc9bb751f25399cf408c06e9214c7ec860e7cb9e1f83a7c90e45d51479de",
+        "c2f0872ce7a9cec8f034dc8ab58e2bc3a916e3b9f04ea0c470fb1854c3f7f6d8",
+        "8cadb7aed88f808862d023233021c9cd19311e7daa6994b29d385e8123431365",
+        "445abb294311cf7eaad16147d3cd6b56b1b560d2235f2897fa0e08be0c08ee4f",
+        "7b0d97b536e9c255f03f83560415758f57db7dd697b9febe8a6ea316012b30da",
+        "9437f0b2d7d3153db38fc18944977f11f4e8dffe544ccab7ea55081827662ecc"
+      ],
+      "preview_frames": 29,
+      "preview_durations_ms": [
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/boss/boss_xuancheng_hit_left_v01.png",
+      "existing_dependency": false,
+      "dimensions": [
+        128,
+        80
+      ],
+      "frames": 2,
+      "colors": 14,
+      "bboxes": [
+        [
+          6,
+          25,
+          54,
+          77
+        ],
+        [
+          6,
+          24,
+          49,
+          77
+        ]
+      ],
+      "frame_sha256": [
+        "086797d6696ac731bf1ad60ec344c770c6014df24526b0ce74b9ac6b929d6f33",
+        "c399ef61accf7e35d79fdf8b0e3ab9d028d5b9a98e6e51bd5a521c24890d0337"
+      ],
+      "preview_frames": 2,
+      "preview_durations_ms": [
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/boss/boss_xuancheng_stagger_left_v01.png",
+      "existing_dependency": false,
+      "dimensions": [
+        192,
+        80
+      ],
+      "frames": 3,
+      "colors": 14,
+      "bboxes": [
+        [
+          2,
+          22,
+          56,
+          77
+        ],
+        [
+          0,
+          27,
+          63,
+          77
+        ],
+        [
+          2,
+          24,
+          57,
+          77
+        ]
+      ],
+      "frame_sha256": [
+        "4d0138b4db10840f491437dba32ebaaeca8e0e1672572fe8a228cd90e77a5071",
+        "8e06e61746d7be985c00d8e9347957323dd62e02b66bc4e7da74114e25b2a362",
+        "2d3af94a18d065f86088805edc2900d02ea439a189e02254134d11fc8025e7e4"
+      ],
+      "preview_frames": 3,
+      "preview_durations_ms": [
+        80,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/boss/boss_xuancheng_sit_left_v01.png",
+      "existing_dependency": false,
+      "dimensions": [
+        64,
+        80
+      ],
+      "frames": 1,
+      "colors": 14,
+      "bboxes": [
+        [
+          12,
+          43,
+          61,
+          77
+        ]
+      ],
+      "frame_sha256": [
+        "ebbde1bdd7a643138bf6f9384742149db7a09ac9e90bce4dafa134e0585a47be"
+      ],
+      "preview_frames": 1,
+      "preview_durations_ms": [
+        600
+      ]
+    },
+    {
+      "file": "assets/boss/boss_xuancheng_sweep_up_v01.png",
+      "existing_dependency": false,
+      "dimensions": [
+        512,
+        80
+      ],
+      "frames": 8,
+      "colors": 16,
+      "bboxes": [
+        [
+          11,
+          30,
+          58,
+          77
+        ],
+        [
+          15,
+          21,
+          56,
+          77
+        ],
+        [
+          13,
+          23,
+          57,
+          77
+        ],
+        [
+          6,
+          31,
+          54,
+          77
+        ],
+        [
+          7,
+          29,
+          55,
+          77
+        ],
+        [
+          4,
+          28,
+          55,
+          77
+        ],
+        [
+          7,
+          37,
+          56,
+          77
+        ],
+        [
+          13,
+          25,
+          56,
+          77
+        ]
+      ],
+      "frame_sha256": [
+        "7424f8648bb695640018fa84b37192006693da50a6ef1c687ac98e17b2c06eba",
+        "ca8eb23b4781c177340c240cf956be5cf7d772361600ea44089fce56b837642e",
+        "2490346d95e0522a644d8c291e5059c9f9f115d08a1816a00960a9ec9e22ccff",
+        "e2b32f3be7fab2ae2a5655581a4e152496b33e45df17ce5e23f9dea142dfe150",
+        "ba4d40cb595aa61604d0cb9943abe3f2b2dccf4c9b7787f9b9f6f612bb1a748a",
+        "78cbde06f05b56a83344db5cf5cf9f3d5b52676c32a7d7319839d61f0bd7c78f",
+        "a95e82ba8ed89f1f1375d2f5bfd5d2c9c4fae8c5f6344777cae7c6b47ade00e0",
+        "172fb42d2630fb5a4fe5dd6406938c3c30b27d911ad4930a3b2a74fb9d304355"
+      ],
+      "preview_frames": 8,
+      "preview_durations_ms": [
+        80,
+        80,
+        800,
+        80,
+        80,
+        90,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/boss/boss_xuancheng_heavy_up_v01.png",
+      "existing_dependency": false,
+      "dimensions": [
+        576,
+        80
+      ],
+      "frames": 9,
+      "colors": 16,
+      "bboxes": [
+        [
+          13,
+          20,
+          52,
+          77
+        ],
+        [
+          13,
+          21,
+          52,
+          77
+        ],
+        [
+          14,
+          20,
+          53,
+          77
+        ],
+        [
+          14,
+          21,
+          52,
+          77
+        ],
+        [
+          13,
+          14,
+          55,
+          77
+        ],
+        [
+          8,
+          39,
+          55,
+          77
+        ],
+        [
+          5,
+          29,
+          54,
+          77
+        ],
+        [
+          7,
+          32,
+          53,
+          77
+        ],
+        [
+          12,
+          24,
+          53,
+          77
+        ]
+      ],
+      "frame_sha256": [
+        "b8536c0faf0c94722a965d32c189d943b1d6d436176219474458843d70ea081b",
+        "5fdabc821f6e8b6b29ea120b9a982e5270336852783927a3768d68f66f81488b",
+        "b7f23cbfa26aa9f3eedf7f5c4af0dee335b9ab42130c97803ce043d76b8996fd",
+        "d895674ed3cfb1d5fd0b89ff383fd8a3b87b408569147fca2215d48da3ba6c23",
+        "af6eee9a28f821e3d4815be12892c079101b5e56b7a8bfb75294a25da8c01dfe",
+        "793ceadd2d25429ce441b8c29ab4d15bd379c5a8319d3695a3f49d722419c576",
+        "45329b94df9c24746a87a9edf388eb8c416e4aca6f727705434746c0e26125bf",
+        "fd1f8fb36ea5ee829ed8b6bea7a30e0356c56a2ee9bb96d4016d852ac97f09c9",
+        "b181b943f02a304bec7c2846a443907e9bd362babaed0fde5aa7df33ad672077"
+      ],
+      "preview_frames": 29,
+      "preview_durations_ms": [
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/boss/boss_xuancheng_hit_up_v01.png",
+      "existing_dependency": false,
+      "dimensions": [
+        128,
+        80
+      ],
+      "frames": 2,
+      "colors": 14,
+      "bboxes": [
+        [
+          13,
+          24,
+          48,
+          77
+        ],
+        [
+          11,
+          28,
+          57,
+          77
+        ]
+      ],
+      "frame_sha256": [
+        "f48ebe3070c2e8e5b8bc0ecf7b4729917490c38f740187ba5201c4888dbc4028",
+        "128e06c54c67ee018b62b9ea7cf1fcefff6cf7ceb57f40913b9a224d01145ee2"
+      ],
+      "preview_frames": 2,
+      "preview_durations_ms": [
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/boss/boss_xuancheng_stagger_up_v01.png",
+      "existing_dependency": false,
+      "dimensions": [
+        192,
+        80
+      ],
+      "frames": 3,
+      "colors": 14,
+      "bboxes": [
+        [
+          0,
+          29,
+          48,
+          77
+        ],
+        [
+          1,
+          31,
+          47,
+          77
+        ],
+        [
+          18,
+          32,
+          64,
+          77
+        ]
+      ],
+      "frame_sha256": [
+        "f02f0d785240155422fa51e8ddb0ea916ef80a9440d4dd97935a4efed493358b",
+        "aa3fd06ff3847ec9f1fe5cee05a27a399e215d10a40cb209164a570cc5b35e7b",
+        "6b3b7babda70a4dce13f3ee4a4943bcef592b565016190303b2ccaf31cb525fe"
+      ],
+      "preview_frames": 3,
+      "preview_durations_ms": [
+        80,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/boss/boss_xuancheng_sit_up_v01.png",
+      "existing_dependency": false,
+      "dimensions": [
+        64,
+        80
+      ],
+      "frames": 1,
+      "colors": 14,
+      "bboxes": [
+        [
+          4,
+          47,
+          61,
+          77
+        ]
+      ],
+      "frame_sha256": [
+        "c07337ea82ddddb000192f11cb56b97688120f6746633b8f639530f4c8f65c3b"
+      ],
+      "preview_frames": 1,
+      "preview_durations_ms": [
+        600
+      ]
+    }
+  ]
+}

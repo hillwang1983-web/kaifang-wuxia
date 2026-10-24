@@ -25,6 +25,10 @@ func test_sprite_lib_reads_delivered_strips() -> void:
 	check(SpriteLib.resolve("boss_dulao", "idle", "down").is_empty(), "毒姥还没交图：画代码占位")
 	check_eq(SpriteLib.resolve("npc_louluo", "slash", "left")[0], "atk", "喽啰出刀用 atk（起手 2 + 出手 2）")
 	check_eq(int(SpriteLib.data().sets.npc_louluo.windup.atk), 2, "喽啰出刀登记了起手帧数")
+	check_eq(SpriteLib.resolve("boss_xuancheng", "sweep", "down")[0], "sweep", "玄诚横扫已入库")
+	check_eq(SpriteLib.resolve("boss_xuancheng", "stagger", "left")[0], "stagger", "玄诚失衡用自己的动作条")
+	check_eq(SpriteLib.resolve("npc_louluo", "stagger", "left")[0], "hit", "没有失衡条的退回受击")
+	check(SpriteLib.data().sets.boss_xuancheng.windup_loop.has("heavy"), "玄诚重击读条期间循环蓄力帧")
 	check_eq(SpriteLib.dir_for(Vector2.RIGHT), "right", "朝右用左侧镜像")
 	check_eq(SpriteLib.dir_for(Vector2(0.2, -1)), "up", "朝上")
 	for k in SpriteLib.data().sets:
@@ -114,3 +118,24 @@ func test_muted_hints_keep_combo_working() -> void:
 	check(not w.combo.invite.is_empty(), "关了提示照样收到邀请")
 	w.step(DT, {p.id: SimCommand.new().press("combo")})
 	check(w.freeze_t > 0.0, "关了提示照样能按合击键响应")
+
+
+## 玄诚横扫：起手 0–2，预警期间停在第 2 帧（剪影最清楚），出手后接 3–7；重击：读条两秒里 0–3 循环，砸地后接 4–8
+func test_xuancheng_phases_follow_telegraph() -> void:
+	var w := _world()
+	var x := w.add_enemy("xuancheng", Vector2(500, 500))
+	var set_: Dictionary = SpriteLib.data().sets.boss_xuancheng
+	x.state = "windup"
+	x.atk_id = "sweep"
+	check_eq(SpriteLib.frame_of(x, set_, "sweep", 8, 0.1), 1, "横扫起手第 0.1 秒在第 1 帧")
+	check_eq(SpriteLib.frame_of(x, set_, "sweep", 8, 0.7), 2, "横扫预警后段停在起手末帧（第 2 帧）")
+	x.state = "recover"
+	check_eq(SpriteLib.frame_of(x, set_, "sweep", 8, 0.0), 3, "出手瞬间从第 3 帧开始")
+	check_eq(SpriteLib.frame_of(x, set_, "sweep", 8, 2.0), 7, "收招停在最后一帧")
+	x.state = "cast"
+	x.atk_id = "heavy"
+	check_eq(SpriteLib.frame_of(x, set_, "heavy", 9, 0.5), 2, "重击读条循环蓄力帧（0.5 秒 = 第 6 帧 → 循环到第 2 帧）")
+	check(SpriteLib.frame_of(x, set_, "heavy", 9, 1.9) < 4, "读条两秒内一直在蓄力帧里")
+	x.state = "recover"
+	check_eq(SpriteLib.frame_of(x, set_, "heavy", 9, 0.0), 4, "砸地从第 4 帧开始")
+

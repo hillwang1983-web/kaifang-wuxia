@@ -473,6 +473,8 @@ func _shot_events(events: Array) -> void:
 			main.snap("skill")
 		elif e.type == "combo_burst":
 			main.snap("combo")
+		elif e.type == "telegraph" or e.type == "cast_start":
+			main.snap("tele_" + str(e.get("atk", "")))  # 美术替换前后对比：敌人出手预警 / 读条的那一刻
 
 
 ## 子类覆写：跳过开场（只有出身开场用）
