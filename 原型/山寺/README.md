@@ -30,6 +30,8 @@ winget install --id GodotEngine.GodotEngine --exact
 powershell -ExecutionPolicy Bypass -File 原型/山寺/tools/test.ps1
 ```
 
+CI：改动本目录的 PR 和推到 main 的提交会触发 `.github/workflows/shansi.yml`，在 Linux 上用 Godot 4.7.2 跑同样的导入、规则用例和 AI 冒烟（日志里出现 `SCRIPT ERROR` / `ERROR:` 也算失败）。全新检出没有字体缓存，首次导入会临时清空 `theme/custom`，导入后恢复，做法与 `scripts/build-shansi-preview.mjs` 相同。CI 不做网页导出，也不代替实体手机与手柄验收。
+
 开发开关：命令行 `Godot_v4.7.2-stable_win64_console.exe --path 原型/山寺 -- skip auto quit xiepai yungong`，网页地址加 `?skip&auto`。`skip` 直接进山门；`auto` 由 AI 代玩、自动翻对话（命令行四倍速）；`quit` 打完退出并打印结算；`xiepai`、`tiyunzong` / `yungong` / `jiemai` 指定门派和通用技。
 
 工程设置：内部分辨率 960×540、窗口 1920×1080、整数倍拉伸（手机上改为非整数等比缩放，见下文），贴图默认最近邻、2D 变换吸附整像素（像素风不糊）；渲染器用 Compatibility（网页导出走 WebGL2）。
