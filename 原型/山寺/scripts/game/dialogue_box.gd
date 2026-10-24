@@ -1,4 +1,4 @@
-## 底部对话框（ui_dialog_v01，928×132，左侧 96×96 头像位）。逐行显示，按 E / J / 回车 / 点按翻页。
+## 底部对话框（ui_dialog_v01，928×132，左侧 96×96 头像位；没有头像的行不留空框）。逐行显示，按 E / J / 回车 / 点按翻页。
 ## 不阻塞战斗以外的东西：对话开着时关卡自己决定要不要暂停世界。
 class_name DialogueBox
 extends Control
@@ -99,10 +99,15 @@ func _draw() -> void:
 		_wrap(shown, paper.position + Vector2(24, 52), 432, 34, Color("#8C1F1A"), 24)
 		UiKit.text(self, paper.end - Vector2(150, 30), "点按 / E 继续", 12, Color("#5A4A40"))
 		return
-	draw_texture(UiKit.ui("dialog"), RECT.position)
+	var frame := UiKit.ui("dialog")
+	draw_texture(frame, RECT.position)
 	var text_x := 152.0
 	if PORTRAITS.has(who):
 		draw_texture(UiKit.portrait(PORTRAITS[who]), Vector2(32, 408))
+	else:
+		# 旁白、没有头像的人：用框图自身的空白底盖掉头像框，文字顶到左边（#30）
+		draw_texture_rect_region(frame, Rect2(RECT.position + Vector2(12, 12), Vector2(104, 104)), Rect2(200, 12, 104, 104))
+		text_x = 32.0
 	if who != "":
 		UiKit.text(self, Vector2(text_x, 404), who.get_slice("·", 0), 24, UiKit.QI)
 	_wrap(shown, Vector2(text_x, 438 if who != "" else 418), 920.0 - text_x, 18, UiKit.TEXT if who != "" else UiKit.MUTED)
