@@ -545,21 +545,21 @@ const HERBS = [W3(490, 53), W3(513, 257)];
 const ZONE = W3(420, 117);
 const RESPAWN = W3(84, 160);
 const KIND = {
-  bandit: { name: '匪徒', hp: 45, r: 17, speed: 95, aggro: 210, leash: 330, flinch: true,
+  bandit: { name: '匪徒', hp: 80, r: 17, speed: 95, aggro: 210, leash: 330, flinch: true,
     atks: [{ id: 'slash', shape: 'cone', range: 74, half: 0.9, tele: 0.7, dmg: 9, rec: 0.55, inter: true, reach: 58 }] },
-  boss: { name: '匪首', hp: 240, r: 30, speed: 86, aggro: 9999, leash: 560, flinch: false,
+  boss: { name: '匪首', hp: 800, r: 30, speed: 86, aggro: 9999, leash: 560, flinch: false,
     atks: {
-      heavy: { id: 'heavy', shape: 'cone', range: 150, half: 0.65, tele: 1.5, dmg: 28, rec: 0.6, inter: true, reach: 118 },
+      heavy: { id: 'heavy', shape: 'cone', range: 150, half: 0.65, tele: 1.5, dmg: 35, rec: 0.6, inter: true, reach: 118 },
       sweep: { id: 'sweep', shape: 'circle', range: 78, tele: 0.6, dmg: 12, rec: 0.5, inter: false, reach: 64 },
       quick: { id: 'quick', shape: 'circle', range: 78, tele: 0.45, dmg: 10, rec: 0.6, inter: false, reach: 999 },
       charge: { id: 'charge', shape: 'line', range: 240, width: 22, tele: 1.0, dmg: 20, rec: 0.8, inter: false, reach: 260, minD: 150 },
     } },
 };
-KIND.archer={name:'弓手',hp:60,r:17,speed:90,aggro:340,leash:460,flinch:true};
-KIND.guard={...KIND.bandit,name:'护院',hp:90,aggro:360,leash:700,atks:[{id:'slash',shape:'cone',range:90,half:.8,tele:.85,dmg:14,rec:.7,inter:true,reach:70}]};
-KIND.captain={...KIND.guard,name:'护院头领',hp:180,flinch:false,atks:[{id:'heavy',shape:'cone',range:140,half:1,tele:1.3,dmg:24,rec:.85,inter:true,reach:105}]};
+KIND.archer={name:'弓手',hp:80,r:17,speed:90,aggro:340,leash:460,flinch:true};
+KIND.guard={...KIND.bandit,name:'护院',hp:140,aggro:360,leash:700,atks:[{id:'slash',shape:'cone',range:90,half:.8,tele:.85,dmg:14,rec:.7,inter:true,reach:70}]};
+KIND.captain={...KIND.guard,name:'护院头领',hp:360,flinch:false,atks:[{id:'heavy',shape:'cone',range:140,half:1,tele:1.3,dmg:24,rec:.85,inter:true,reach:105}]};
 WEAPON.guard=WEAPON.bandit; WEAPON.captain=WEAPON.boss;
-const P_ = { speed: 210, atkCd: 0.27, skCd: 0.9, skCost: 30, dgCd: 0.5, mpRegen: 6, combo: [{ dmg: 20, range: 112, half: 1.15 }, { dmg: 24, range: 112, half: 1.15 }, { dmg: 34, range: 136, half: 1.6, big: true }], skDmg: 26, qiBack: 18, bandageHeal: 0.4 };
+const P_ = { speed: 210, atkCd: 0.27, skCd: 0.9, skCost: 30, dgCd: 0.5, mpRegen: 6, combo: [{ dmg: 10, range: 112, half: 1.15 }, { dmg: 12, range: 112, half: 1.15 }, { dmg: 18, range: 136, half: 1.6, big: true }], skDmg: 26, qiBack: 18, bandageHeal: 0.4 };
 
 function mkEnemy(kind, x, y) {
   const K = KIND[kind];
@@ -641,18 +641,26 @@ function aim(maxAng) {
 }
 function canAct() { return G.started && !paused() && G.deadT <= 0; }
 function inArc(x, y, r, range, half, p = G.p) { const d = Math.hypot(x - p.x, y - p.y); if (d > range + r) return false; return d <= r || angDiff(Math.atan2(y - p.y, x - p.x), p.face) <= half; }
+// 架势：匪首与护院头领平时只吃一半普攻伤害；被打断或闪过重劈后失衡 2 秒，失衡期间普攻吃满
+const STANCE = { boss: true, captain: true }, STANCE_CUT = 0.5, STANCE_BREAK = 2;
+function staggerFoe(e) {
+  e.state='stagger';e.opening=G.orn==='破势';e.t=(G.orn==='破势'?-.8:0)-(STANCE[e.kind]?STANCE_BREAK-.9:0);
+  if(STANCE[e.kind]){fxText(e.x,e.y-118,'失衡！','#F2D27A');tip('stanceBreak',KIND[e.kind].name+'失衡了：这 2 秒普攻能打满，趁现在');}
+}
 function damageFoe(e, dmg, isSkill, big, face, skillId) {
   const K=KIND[e.kind], p=G.p;
   const bonus=!isSkill&&G.orn==='破势'&&e.state==='stagger'&&e.opening?8:0;
   if(bonus){e.opening=false;trackCombat('counters');fxText(e.x,e.y-100,'破势追击 +8','#F2D27A');}
-  e.hp-=dmg+bonus;e.flash=.12;e.sfHeavy=!!(big||isSkill);
-  fxText(e.x,e.y-66,'-'+(dmg+bonus),big||isSkill?'#F2D27A':'#EFE6D2',true);
+  const guarded=!isSkill&&STANCE[e.kind]&&e.state!=='stagger',hit=guarded?Math.round(dmg*STANCE_CUT):dmg;
+  if(guarded)tip('stance',K.name+'架势很稳，硬砍只伤一半；闪过他的重劈或打断蓄力，就能让他失衡');
+  e.hp-=hit+bonus;e.flash=.12;e.sfHeavy=!!(big||isSkill);
+  fxText(e.x,e.y-66,'-'+(hit+bonus),big||isSkill?'#F2D27A':'#EFE6D2',true);
   G.fx.push({type:'songfengSpark',x:e.x,y:e.y-15,face,heavy:!!(big||isSkill),t:0,dur:.22});
   const d=Math.hypot(e.x-p.x,e.y-p.y)||1,kb=big?26:isSkill?16:8;
   if(K.flinch||e.state==='idle')move(e,(e.x-p.x)/d*kb,(e.y-p.y)/d*kb,K.r);
   if(e.state==='idle')e.state='chase';
   if(isSkill&&(G.orn==='破势'||skillId==='break')&&e.state==='windup'&&e.atk.inter){
-    e.state='stagger';e.opening=G.orn==='破势';e.t=G.orn==='破势'?-.8:0;G.stats.interrupts++;trackCombat('interrupts');
+    staggerFoe(e);G.stats.interrupts++;trackCombat('interrupts');
     fxText(e.x,e.y-98,'打断！','#F08A6A');toast((G.orn==='破势'?'破势打断！接普攻可追击 +8：':'截流剑打断：')+K.name);
     SFX.interrupt();
   }else if(K.flinch&&e.state!=='windup'&&e.state!=='dash'){e.state='flinch';e.t=0;}
@@ -714,7 +722,7 @@ function attack() {
 function skill(slot=0) {
   const p=G.p,c=G.chapter,id=c.skills[slot],s=Chapter.SKILLS[id];
   if(!canAct()||c.cooldowns[slot]>0||p.dodge>.06)return;
-  if(p.mp<s.cost){trackCombat('noMp');toast('内力不足，先用普攻周旋；战斗中自然回气较慢');return;}
+  if(p.mp<s.cost){trackCombat('noMp');toast('内力不足，先用普攻周旋；战斗中不会自然回气');return;}
   startActionBattle(s.range+s.dash);trackCombat('casts');p.mp-=s.cost;c.cooldowns[slot]=s.cd;p.skCd=s.cd;p.activeSkill=id;
   aim(id==='sweep'?Math.PI:1.7);
   for(let n=0;n<Math.ceil(s.dash/8);n++){move(p,Math.cos(p.face)*Math.min(8,s.dash-n*8),Math.sin(p.face)*Math.min(8,s.dash-n*8),16);addTrail(p);}
@@ -761,7 +769,10 @@ function dodge() {
   const p = G.p; if (!canAct() || p.dgCd > 0 || p.dodge > 0 || p.sp < 30) return;
   let dx = p.ix || 0, dy = p.iy || 0; const l = Math.hypot(dx, dy);
   if (l < 0.2) { dx = Math.cos(p.face); dy = Math.sin(p.face); } else { dx /= l; dy /= l; }
-  cancelSwings();p.sp -= 30; p.dodge = 0.23; p.inv = 0.3; p.dgCd = P_.dgCd; p.dvx = dx * 650; p.dvy = dy * 650; p.trail = [];
+  cancelSwings();trackCombat('dodges');
+  // 重劈出手前 0.5 秒内闪避，不论是用无敌帧硬闪还是闪出范围，都算看破这一刀
+  for (const e of G.enemies) if (STANCE[e.kind] && activeFoe(e) && e.state === 'windup' && e.atk?.id === 'heavy' && e.t >= e.atk.tele - 0.5 && Math.hypot(e.x - p.x, e.y - p.y) < e.atk.range + 60) e.read = true;
+  p.sp -= 30; p.dodge = 0.23; p.inv = 0.3; p.dgCd = P_.dgCd; p.dvx = dx * 650; p.dvy = dy * 650; p.trail = [];
   burst(p.x, p.y, 5, ['#9B8263', '#B3A58C'], 60, 10); SFX.dodge();
 }
 function useBandage() {
@@ -803,7 +814,7 @@ function respawn() {
       if (e.hostile && !e.spar) { G.f.lostBoss = true; if (!G.mem.boss.k.includes('beat_player')) G.mem.boss.k.push('beat_player'); if (!G.log.includes('你在匪营败给了匪首，退回青石渡')) G.log.push('你在匪营败给了匪首，退回青石渡'); }
       e.hostile = false; e.spar = false;
     }
-    Object.assign(e, { x: e.hx, y: e.hy, hp: K.hp, maxHp: K.hp, state: 'idle', t: 0, atk: null, plan: null, flash: 0 });
+    Object.assign(e, { x: e.hx, y: e.hy, hp: K.hp, maxHp: K.hp, state: 'idle', t: 0, atk: null, plan: null, cnt: 0, flash: 0 });
   }
   toast('你回到青石渡，伤已经养好；用掉的绷带回不来');
   saveNow(false);
@@ -866,7 +877,8 @@ function updEnemy(e, dt) {
       if (a.minD && d < a.minD * 0.7) { e.plan = pickAtk(e, d); if (e.plan.minD) e.plan = K.atks.heavy; break; }
       if (busyMate && d < 120) { e.state = 'strafe'; e.t = 0; e.strafeDir = Math.random() < 0.5 ? 1 : -1; break; }
       if (d <= a.reach && (!a.minD || d >= a.minD * 0.7)) {
-        e.state = 'windup'; e.t = 0; e.atk = a; e.plan = null; e.dashHit = false;
+        e.state = 'windup'; e.t = 0; e.atk = a; e.plan = null; e.dashHit = false; e.read = false;
+        trackCombat('windups'); if (a.id === 'heavy') trackCombat('heavyWindups');
         if (a.tele >= 1) SFX.tele(); else SFX.teleS();
         if (Math.hypot(e.x - p.x, e.y - p.y) < 320) tip('tele', '红色范围就是要挨打的地方，看到就闪避（空格 / 闪避键）');
       } else { move(e, (dx / d) * K.speed * dt, (dy / d) * K.speed * dt, K.r); e.moving = true; }
@@ -883,20 +895,20 @@ function updEnemy(e, dt) {
       e.t += dt;
       if (e.t >= e.atk.tele) {
         if (e.atk.shape === 'line') { e.state = 'dash'; e.t = 0; G.fx.push({ type: 'zone', x: e.x, y: e.y, face: e.face, shape: 'line', range: e.atk.range, width: e.atk.width, t: 0, dur: 0.25 }); }
-        else { enemyStrike(e); e.state = 'recover'; e.t = 0; }
+        else if (!enemyStrike(e)) { e.state = 'recover'; e.t = 0; }
       }
       break;
     case 'dash': {
       e.t += dt; const sp = e.atk.range / 0.25;
       move(e, Math.cos(e.face) * sp * dt, Math.sin(e.face) * sp * dt, K.r); burst(e.x, e.y, 1, ['#9B8263'], 40, 5);
-      if (!e.dashHit && Math.hypot(p.x - e.x, p.y - e.y) < K.r + 22) { e.dashHit = true; if (p.inv > 0) { fxText(p.x, p.y - 76, '闪过', '#7FD0BE'); G.stats.evades++; SFX.evade(); } else hurtPlayer(e.atk.dmg, e.x - Math.cos(e.face) * 10, e.y - Math.sin(e.face) * 10); }
+      if (!e.dashHit && Math.hypot(p.x - e.x, p.y - e.y) < K.r + 22) { e.dashHit = true; if (p.inv > 0) { fxText(p.x, p.y - 76, '闪过', '#7FD0BE'); G.stats.evades++; trackCombat('evades'); SFX.evade(); } else hurtPlayer(e.atk.dmg, e.x - Math.cos(e.face) * 10, e.y - Math.sin(e.face) * 10); }
       if (e.t >= 0.25) { e.state = 'recover'; e.t = 0; G.shake = Math.max(G.shake, 2); }
       break;
     }
     case 'recover':
       e.t += dt;
       if (e.t >= e.atk.rec) {
-        if (bossLow(e) && e.atk.id === 'heavy' && Math.random() < 0.6) { e.state = 'windup'; e.t = 0; e.atk = K.atks.quick; SFX.teleS(); break; }
+        if (bossLow(e) && e.atk.id === 'heavy' && Math.random() < 0.6) { e.state = 'windup'; e.t = 0; e.atk = K.atks.quick; trackCombat('windups'); SFX.teleS(); break; }
         if (e.kind === 'boss' && Math.random() < 0.35) { e.state = 'strafe'; e.t = 0; e.strafeDir = Math.random() < 0.5 ? 1 : -1; break; }
         e.state = 'chase';
       }
@@ -930,9 +942,18 @@ function enemyStrike(e) {
   const a = e.atk, p = G.p;
   G.fx.push({ type: 'zone', x: e.x, y: e.y, face: e.face, shape: a.shape, range: a.range, half: a.half || 0, t: 0, dur: 0.2 });
   G.shake = Math.max(G.shake, a.id === 'heavy' ? 3 : 1);
-  if (!inZone(a, e.x, e.y, e.face, p.x, p.y, 14)) return;
-  if (p.inv > 0) { fxText(p.x, p.y - 76, '闪过', '#7FD0BE'); G.stats.evades++; SFX.evade(); return; }
+  const read = e.read; e.read = false;
+  if (!inZone(a, e.x, e.y, e.face, p.x, p.y, 14)) {
+    if (read && STANCE[e.kind] && a.id === 'heavy') { staggerFoe(e); return true; }
+    return false;
+  }
+  if (p.inv > 0) {
+    fxText(p.x, p.y - 76, '闪过', '#7FD0BE'); G.stats.evades++; trackCombat('evades'); SFX.evade();
+    if (STANCE[e.kind] && a.id === 'heavy') { staggerFoe(e); return true; }
+    return false;
+  }
   hurtPlayer(a.dmg, e.x, e.y);
+  return false;
 }
 function separate() {
   const es = G.enemies.filter((e) => e.alive && e.state !== 'dying');
@@ -953,12 +974,12 @@ function updDummy(dt) {
   dd.hit = Math.max(0, dd.hit - dt);
   if (d > 190) { dd.state = 'idle'; dd.t = 0; return; }
   dd.t += dt;
-  if (dd.state === 'idle') { dd.face = Math.atan2(p.y - DUMMY_POS.y, p.x - DUMMY_POS.x); if (dd.t > 1.4) { dd.state = 'windup'; dd.t = 0; SFX.tele(); } }
+  if (dd.state === 'idle') { dd.face = Math.atan2(p.y - DUMMY_POS.y, p.x - DUMMY_POS.x); if (dd.t > 1.4) { dd.state = 'windup'; dd.t = 0; trackCombat('windups'); SFX.tele(); } }
   else if (dd.state === 'windup') {
     if (dd.t >= dd.atk.tele) {
       G.fx.push({ type: 'zone', x: DUMMY_POS.x, y: DUMMY_POS.y, face: dd.face, shape: 'cone', range: dd.atk.range, half: dd.atk.half, t: 0, dur: 0.2 });
       if (inZone(dd.atk, DUMMY_POS.x, DUMMY_POS.y, dd.face, p.x, p.y, 14)) {
-        if (p.inv > 0) { fxText(p.x, p.y - 76, '闪过', '#7FD0BE'); SFX.evade(); G.stats.evades++; tip('dummyOk', '漂亮！实战里也一样：看到红色范围，闪出去'); }
+        if (p.inv > 0) { fxText(p.x, p.y - 76, '闪过', '#7FD0BE'); SFX.evade(); G.stats.evades++; trackCombat('evades'); tip('dummyOk', '漂亮！实战里也一样：看到红色范围，闪出去'); }
         else { fxText(p.x, p.y - 76, '被打中（练习）', '#F08A6A'); SFX.hit(); G.shake = 1; }
       }
       dd.state = 'recover'; dd.t = 0;
@@ -1193,7 +1214,7 @@ function doAct(key) {
       const r=commit(op,'与匪首交手',d=>{const b=d.enemies[2];Object.assign(b,{hostile:true,spar:false,state:'chase',plan:null});d.f.fought=true;lg(d,'你向匪首动了手');});
       if(r.ok){toast('匪首拔刀了！看准他的蓄力');closeDlg();}break;}
     case 'spar': {
-      const r=commit(op,'开始切磋',d=>{Object.assign(d.enemies[2],{hostile:true,spar:true,state:'chase',plan:null,hp:KIND.boss.hp});});
+      const r=commit(op,'开始切磋',d=>{Object.assign(d.enemies[2],{hostile:true,spar:true,state:'chase',plan:null,cnt:0,hp:KIND.boss.hp});});
       if(r.ok){toast('切磋开始：点到为止');closeDlg();}break;}
     case 'give_tell': deliver(true, op); break;
     case 'give_quiet': deliver(false, op); break;
@@ -1253,7 +1274,7 @@ function chapterDialog(id) {
     return {who:'陆平',id,text:c.clues.length>=2?'你手里的两份东西，倒是对得上。真要对账，就到渡口，当着人的面谈。':'运费、工钱、修船钱，哪有你想得这么清楚。真想打听，就拿出凭据。',opts:[{label:'决定怎样处理',key:'choices'},{label:'告辞',key:'close'}]};
   }
   if(id==='zhou'){
-    return {who:'周砚',id,text:'剑有三路：追风刺追人，截流剑断招，回澜斩解围。带哪两路由你。剑饰另算：破势延长打断并让下一次普攻追击 +8；回气每次剑招命中返 18 内力，空挥不返。',note:'木人桩在铺旁：破势打断后接普攻，追击 +8；回气剑招命中返 18 内力（空挥不返）。练习和战斗每秒回 1.5，离开后回 6。',opts:[{label:'挑选携带的两招',key:'atlas_skills',primary:true},{label:'做一件「破势」',sub:'木料 2、废铁 1、铜钱 5；替换旧剑饰',key:'craft_ps'},{label:'做一件「回气」',sub:'木料 2、废铁 1、铜钱 5；替换旧剑饰',key:'craft_hq'},...(f.zhouBuys<2?[{label:'买一份料（10 铜钱）',key:'buy_zhou'}]:[]),{label:'告辞',key:'close'}]};
+    return {who:'周砚',id,text:'剑有三路：追风刺追人，截流剑断招，回澜斩解围。带哪两路由你。剑饰另算：破势延长打断并让下一次普攻追击 +8；回气每次剑招命中返 18 内力，空挥不返。',note:'木人桩在铺旁：破势打断后接普攻，追击 +8；回气剑招命中返 18 内力（空挥不返）。战斗中不回内力，木人桩练习每秒回 1.5，脱离后回 6。',opts:[{label:'挑选携带的两招',key:'atlas_skills',primary:true},{label:'做一件「破势」',sub:'木料 2、废铁 1、铜钱 5；替换旧剑饰',key:'craft_ps'},{label:'做一件「回气」',sub:'木料 2、废铁 1、铜钱 5；替换旧剑饰',key:'craft_hq'},...(f.zhouBuys<2?[{label:'买一份料（10 铜钱）',key:'buy_zhou'}]:[]),{label:'告辞',key:'close'}]};
   }
   if(id==='boss' && f.branch){
     const opts=[];
@@ -1401,7 +1422,7 @@ function updArcher(e,dt){
   e.face=Math.atan2(dy,dx);e.state='chase';
   if(d<130){move(e,-dx/d*80*dt,-dy/d*80*dt,17);e.moving=true;}
   else if(d>280||!clearShot(e.x,e.y,G.p.x,G.p.y)){move(e,dx/d*90*dt,dy/d*90*dt,17);e.moving=true;}
-  else{e.atk={id:'arrow',shape:'line',range:330,width:7,tele:.95,inter:true};e.state='windup';e.t=0;}
+  else{e.atk={id:'arrow',shape:'line',range:330,width:7,tele:.95,inter:true};e.state='windup';e.t=0;trackCombat('windups');}
   if(e.moving)e.an+=dt;
 }
 function updateChapter(dt){
@@ -1411,7 +1432,7 @@ function updateChapter(dt){
     for(let i=0;i<n&&!gone;i++){
       a.x+=a.vx*dt/n;a.y+=a.vy*dt/n;
       if(covered(a.x,a.y)){gone=true;G.chapter.arrowsBlocked++;burst(a.x,a.y-15,3,['#D8B66A'],50,10);}
-      else if(Math.hypot(a.x-G.p.x,a.y-G.p.y)<20){gone=true;if(G.p.inv>0){G.stats.evades++;fxText(G.p.x,G.p.y-70,'闪过','#8CD4BC');}else hurtPlayer(12,a.x-a.vx,a.y-a.vy);}
+      else if(Math.hypot(a.x-G.p.x,a.y-G.p.y)<20){gone=true;if(G.p.inv>0){G.stats.evades++;trackCombat('evades');fxText(G.p.x,G.p.y-70,'闪过','#8CD4BC');}else hurtPlayer(12,a.x-a.vx,a.y-a.vy);}
     }if(!gone)arrows.push(a);
   }G.arrows=arrows;
   const ally=G.ally;
@@ -1445,7 +1466,7 @@ function frameMode(){if(!G.started)return 'startup';if(document.hidden)return 'b
 function nearDummy(){return Math.hypot(G.p.x-DUMMY_POS.x,G.p.y-DUMMY_POS.y)<190;}
 function trackCombat(key,n=1,state=G,orn=state.orn||'基础剑'){
   const r=Playtest.ensure(state);r.combat[key]=(r.combat[key]||0)+n;
-  if(!r.byOrn)r.byOrn={};const id=orn;if(!r.byOrn[id])r.byOrn[id]={casts:0,hits:0,misses:0,noMp:0,interrupts:0,counters:0,qiReturned:0};r.byOrn[id][key]+=n;
+  if(!r.byOrn)r.byOrn={};const id=orn;if(!r.byOrn[id])r.byOrn[id]={casts:0,hits:0,misses:0,noMp:0,interrupts:0,counters:0,qiReturned:0,windups:0,heavyWindups:0,dodges:0,evades:0};r.byOrn[id][key]=(r.byOrn[id][key]||0)+n;
 }
 let battle=null;
 function finishBattle(reason='离开战斗范围'){
@@ -1466,7 +1487,7 @@ function syncBattle(){
 function perfText(){const s=perfStats(),combat=perfStats('combat');return s?'性能（本页前台）：'+s.frames+' 帧 / '+(s.durationMs/1000).toFixed(1)+' 秒 · p95≤'+s.p95+'ms（1ms分辨率）· 最大 '+s.max.toFixed(1)+'ms · >100ms '+s.over100+' / >200ms '+s.over200+'；战斗段 '+(combat?(combat.durationMs/1000).toFixed(1)+' 秒':'尚无样本')+(combat?.durationMs>=300000?'（样本累计≥5分钟，不代表连续实机达标）':'（不足5分钟，不能据此判定达标）'):'性能：本页尚无采样';}
 function recordPayload(){
   syncBattle();const r=Playtest.ensure(G,{debug:DEBUG});
-  return {build:'V0.4-songfeng-clear1-20261023',session:PAGE_SESSION,exportedAt:new Date().toISOString(),evidence:r.debugUsed?'调试记录':r.profile.operator==='真人试玩'?'真人自报、正常输入记录':r.profile.operator==='自动化输入检查'?'自动化正常输入检查':'正常入口、操作者未声明',coverage:r.coverage,record:JSON.parse(JSON.stringify(r)),progress:{branch:G.f.branch,decision:G.chapter.decision,finished:G.chapter.finalResolved,inventory:{...G.inv},ornament:G.orn,skills:[...G.chapter.skills]},performance:{scope:'本页会话；p95向上取整至1ms，计入全部前台长帧；后台及恢复跨界帧排除',all:perfStats(),combat:perfStats('combat'),practice:perfStats('practice'),move:perfStats('move'),dialogue:perfStats('dialogue'),menu:perfStats('menu'),idle:perfStats('idle')},environment:{userAgent:navigator.userAgent,viewport:[innerWidth,innerHeight],pixelRatio:devicePixelRatio,standalone:matchMedia('(display-mode: standalone)').matches},limitations:['旧存档升级前的事件不补造','正常入口不证明操作者为真人','调试记录不能作为自然试玩样本','未进行五人真实实机验收']};
+  return {build:'V0.4-combat1-20261023',session:PAGE_SESSION,exportedAt:new Date().toISOString(),evidence:r.debugUsed?'调试记录':r.profile.operator==='真人试玩'?'真人自报、正常输入记录':r.profile.operator==='自动化输入检查'?'自动化正常输入检查':'正常入口、操作者未声明',coverage:r.coverage,record:JSON.parse(JSON.stringify(r)),progress:{branch:G.f.branch,decision:G.chapter.decision,finished:G.chapter.finalResolved,inventory:{...G.inv},ornament:G.orn,skills:[...G.chapter.skills]},performance:{scope:'本页会话；p95向上取整至1ms，计入全部前台长帧；后台及恢复跨界帧排除',all:perfStats(),combat:perfStats('combat'),practice:perfStats('practice'),move:perfStats('move'),dialogue:perfStats('dialogue'),menu:perfStats('menu'),idle:perfStats('idle')},environment:{userAgent:navigator.userAgent,viewport:[innerWidth,innerHeight],pixelRatio:devicePixelRatio,standalone:matchMedia('(display-mode: standalone)').matches},limitations:['旧存档升级前的事件不补造','正常入口不证明操作者为真人','调试记录不能作为自然试玩样本','未进行五人真实实机验收']};
 }
 function fmtTime(s) { const m = Math.floor(s / 60), r = Math.floor(s % 60); return m + ' 分 ' + (r < 10 ? '0' : '') + r + ' 秒'; }
 function recordText() {
@@ -1731,7 +1752,7 @@ function update(dt) {
   const il = Math.hypot(ix, iy); if (il > 1) { ix /= il; iy /= il; }
   p.ix = ix; p.iy = iy; p.moving = false;
   p.sp=Math.min(100,p.sp+21*dt);
-  p.mp = Math.min(p.maxMp, p.mp + (inCombat()||nearDummy()?1.5:P_.mpRegen) * dt);
+  p.mp = Math.min(p.maxMp, p.mp + (inCombat()?0:nearDummy()?1.5:P_.mpRegen) * dt);
   G.chapter.cooldowns=G.chapter.cooldowns.map(n=>Math.max(0,n-dt));
   if (p.dodge > 0) {
     p.dodge -= dt; move(p, p.dvx * dt, p.dvy * dt, 16);
@@ -1990,7 +2011,7 @@ function hud(dt) {
   $('quest').querySelector('.eyebrow').textContent=G.chapter.finalResolved?'第一章 · 风波之后':G.chapter.decision?'第三幕 · 渡口冲突':G.f.delivered?'第二幕 · 谁的账':'第一幕 · 渡口失药';
   drawMiniMap();
   for(let i=0;i<2;i++){const id=G.chapter.skills[i],sk=Chapter.SKILLS[id],canBreak=(G.orn==='破势'||id==='break')&&p.mp>=sk.cost&&G.chapter.cooldowns[i]<=0&&(G.enemies.some(e=>activeFoe(e)&&e.state==='windup'&&e.atk.inter&&Math.hypot(e.x-p.x,e.y-p.y)<sk.range+sk.dash+KIND[e.kind].r)||(G.dummy.state==='windup'&&nearDummy()));$(i?'bSk2':'bSk').classList.toggle('hot',canBreak);}
-  const hint=$('combatHint');hint.hidden=!G.started||paused()||!(inCombat()||nearDummy());if(!hint.hidden)hint.textContent=G.orn==='破势'?'破势：打断后接普攻，追击 +8':G.orn==='回气'?'回气：剑招命中返18，空挥不返；自然回气1.5/秒':'战斗 / 练习回气1.5/秒；截流剑可打断蓄力';
+  const hint=$('combatHint');hint.hidden=!G.started||paused()||!(inCombat()||nearDummy());if(!hint.hidden)hint.textContent=G.orn==='破势'?'破势：打断后接普攻，追击 +8':G.orn==='回气'?'回气：剑招命中返18，空挥不返；战斗中不自然回气':'战斗中不回气，练习 1.5/秒；截流剑可打断蓄力';
   setText('combo', p.comboT > 0 && p.combo > 0 ? (p.combo + 1) + ' 段' : '');
   curTarget = findTarget();
   const ib = $('interact');

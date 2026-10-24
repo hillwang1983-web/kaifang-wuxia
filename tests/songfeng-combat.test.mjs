@@ -40,7 +40,7 @@ test('按住普攻自动三段，原地出剑不位移，一剑只结算一次�
     d.step(.01, 15);
     return { origin, position: { x: d.G.p.x, y: d.G.p.y }, hp: e.hp, firstHp: after.hp, stop: after.stop, frozen };
   });
-  assert.equal(result.firstHp, 480); assert.equal(result.hp, 480); assert.ok(result.stop > 0); assert.equal(result.frozen, true); assert.deepEqual(result.position, result.origin);
+  assert.equal(result.firstHp, 490); assert.equal(result.hp, 490); assert.ok(result.stop > 0); assert.equal(result.frozen, true); assert.deepEqual(result.position, result.origin);
   await page.keyboard.down('j');
   try{await page.waitForFunction(()=>__duko.G.combatSerial>=4,{}, {timeout:2500});}finally{await page.keyboard.up('j');}
   assert.ok((await snapshot(page)).combatSerial >= 4); assert.deepEqual(errors, []);
@@ -140,7 +140,7 @@ test('试玩记录只按主动施放记命中或空挥，普攻不污染，取�
   assert.equal(result.hit.casts, 1); assert.equal(result.hit.hits, 1); assert.equal(result.hit.misses, 0);
   assert.equal(result.miss.casts, 2); assert.equal(result.miss.hits, 1); assert.equal(result.miss.misses, 1);
   assert.equal(result.canceled.casts, 3); assert.equal(result.canceled.hits, 1); assert.equal(result.canceled.misses, 2);
-  assert.equal(result.build, 'V0.4-songfeng-clear1-20261023'); assert.deepEqual(errors, []);
+  assert.equal(result.build, 'V0.4-combat1-20261023'); assert.deepEqual(errors, []);
 });
 
 test('回澜斩跨帧扫过的扇区不漏判，同一目标与回气只结算一次', async t => {
