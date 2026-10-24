@@ -49,7 +49,7 @@ powershell -ExecutionPolicy Bypass -File 原型/山寺/tools/export_web.ps1
 - 体积：`index.wasm` 约 39.5 MB（引擎本体，未压缩；服务器开 gzip / brotli 后约十分之一到四分之一），`index.pck` 是游戏内容。手机第一次打开要等下载。
 - 画面按设备实际像素整数倍放大（布局参数的约定）：iPhone 横屏（DPR 3）放大 2 倍，左右留黑边。**小屏安卓（如 740×360、DPR 2）只能放大 1 倍，画面只占屏幕约三分之二、12 像素字偏小**——要不要在手机上改成非整数放大铺满，需要拍板。
 - 网页里没有系统中文字体可回落，界面字体用工程自带的 Fusion Pixel 12px 简体（`assets/fonts/fusion-pixel/`，SIL OFL 1.1，许可文件同目录），主题在 `scenes/default_theme.tres`，字号按 12 的整数倍用。
-- 还没接到公网试玩发布流程（`scripts/update-preview.mjs`），手机目前只能在同一局域网另起服务访问。
+- 公网接入与 macOS 构建见根目录 `docs/山寺公网发布.md`；青石渡仍使用独立入口。
 - 导出模板 4.7.2 已装在 `%APPDATA%\Godot\export_templates\4.7.2.stable\`（含 Windows，以后要出 exe 也能直接导）。
 
 ## 键位
@@ -109,5 +109,5 @@ powershell -ExecutionPolicy Bypass -File 原型/山寺/tools/export_web.ps1
 - **数值**全部在 `scripts/sim/sim_data.gd`，按 V0.4 手感起步、待真人试玩复核。玄诚 5000 血：两个满操作 AI 约 37 秒（单测里会打印），按真人约一半输出估到规格书「约九十秒」；喽啰四个、各 240 血，靠净心和合击清得很快。
 - **手机缩放**：见上文，小屏安卓要不要非整数铺满。
 - **台词**：按小说原句节选（`scripts/game/story.gd`），规格书要求最终由策划改写。
-- 还没接公网试玩发布流程（等第一批场景、角色图和玩法稳定后再接）。
+- 公网试玩按第一里程碑交付，场景、角色与特效的占位状态保持如实标注。
 - 自动化只覆盖规则、流程和「不报错打完」；没有真人试玩、没在实体手机和手柄上验过。

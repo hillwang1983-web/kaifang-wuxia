@@ -32,7 +32,7 @@ func _dev_flags() -> Dictionary:
 	var out := {}
 	var args := Array(OS.get_cmdline_user_args())
 	if OS.has_feature("web"):
-		var q = JavaScriptBridge.eval("location.search", true)
+		var q = JavaScriptBridge.get_interface("location").search
 		if q is String:
 			args += Array(q.trim_prefix("?").split("&"))
 	for a in args:

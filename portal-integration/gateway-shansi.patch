@@ -1,0 +1,164 @@
+--- a/src/portal-config.mjs
++++ b/src/portal-config.mjs
+@@ -45,5 +45,9 @@
+     games.push({ id: 'songfeng-demo', prefix: '/songfeng-demo', origin: env.SONGFENG_ORIGIN,
+       targets: ['/'], wsPath: null, entryCookie: '__Secure-songfeng_demo_entry' });
+   }
++  if (env.SHANSI_ORIGIN) {
++    games.push({ id: 'shansi', prefix: '/shansi', origin: env.SHANSI_ORIGIN,
++      targets: ['/'], wsPath: null, entryCookie: '__Secure-shansi_entry', stripPrefix: true });
++  }
+   return games;
+ }
+--- a/src/portal.mjs
++++ b/src/portal.mjs
+@@ -201,7 +201,7 @@
+       });
+       const chunks = []; let size = 0;
+       if (request.method !== 'HEAD') for await (const chunk of result.body || []) {
+-        size += chunk.byteLength; if (size > 16 * 1024 * 1024) throw new Error('Game asset too large');
++        size += chunk.byteLength; if (size > (game.id === 'shansi' ? 128 : 16) * 1024 * 1024) throw new Error('Game asset too large');
+         chunks.push(Buffer.from(chunk));
+       }
+       if (!await permitted(request, game)) return redirect('/' + selected.query);
+@@ -213,6 +213,7 @@
+         output.headers.set('cache-control', 'private, max-age=' + Math.min(3600, +maxAge[1]));
+       }
+       output.headers.set('content-security-policy', "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self' data:; connect-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'");
++      if (game.id === 'shansi') output.headers.set('content-security-policy', output.headers.get('content-security-policy').replace("script-src 'self'", "script-src 'self' 'wasm-unsafe-eval'"));
+       return output;
+     }
+     if (game && path === game.prefix) return redirect('/' + select(url, game).query);
+--- a/src/portal-pages.mjs
++++ b/src/portal-pages.mjs
+@@ -86,6 +86,14 @@
+         <div class="actions"><form action="/launch/songfeng-demo" method="post"><input type="hidden" name="target" value="/">
+           <button class="primary" type="submit">进庭院试剑</button></form></div>
+         <p class="note">左手拖动行走，右手按住出剑。试剑不读写存档，《青石渡风波》进度保持独立。</p></div></article>` : ''}
++    ${games.some(item => item.id === 'shansi') ? `<article class="game" style="margin-top:24px">
++      <div class="preview" aria-hidden="true" style="background:#302a39"><strong>山寺</strong>
++        <p>慈云寺山门，携手净心。<br>一场合击，叩问江湖。</p></div>
++      <div class="details"><h2>山寺 · 第一里程碑试玩</h2><p class="description">选择少林或邪派，与 AI 净心同行，从茶棚进入山门，挑战两阶段玄诚与双人合击。</p>
++        <div class="facts"><span>单人 + AI</span><span>两门派</span><span>合击协作</span><span>横屏试玩</span></div>
++        <div class="actions"><form action="/launch/shansi" method="post"><input type="hidden" name="target" value="/">
++          <button class="primary" type="submit">进入山寺</button></form></div>
++        <p class="note">首次加载需要下载游戏资源，请稍候。场景、角色与招式特效部分为占位；与青石渡入口独立。</p></div></article>` : ''}
+     ${games.some(item => item.id === 'qingshi-v04') ? `<article class="game" style="margin-top:24px">
+       <div class="preview" aria-hidden="true" style="background:#28382e"><strong>青石渡风波</strong>
+         <p>一船救命药，一本旧账。<br>先救人，再决定如何问剑。</p></div>
+--- /dev/null
++++ b/tests/shansi.test.mjs
+@@ -0,0 +1,113 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import http from 'node:http';
++import { once } from 'node:events';
++import { randomBytes, scryptSync } from 'node:crypto';
++import { mkdtempSync, writeFileSync, rmSync } from 'node:fs';
++import { tmpdir } from 'node:os';
++import { join } from 'node:path';
++import { WebSocket } from 'ws';
++import { SQLiteStore } from '../src/sqlite.mjs';
++import { createPortalServer } from '../src/portal.mjs';
++import { portalGames } from '../src/portal-config.mjs';
++import { PUBLIC_ORIGIN } from '../src/gateway.mjs';
++
++test('山寺与青石渡并存，鉴权独立并支持大型 WASM，旧游戏保持原有限制', async t => {
++  const received = [];
++  const upstream = http.createServer((req, res) => {
++    received.push({ url: req.url, headers: req.headers });
++    if (req.url.endsWith('.wasm')) { res.setHeader('content-type', 'application/wasm'); res.end(Buffer.alloc(17 * 1024 * 1024, 0x71)); return; }
++    res.end('Shansi game fixture');
++  });
++  upstream.listen(0, '127.0.0.1'); await once(upstream, 'listening');
++  t.after(() => new Promise(resolve => upstream.close(resolve)));
++  const origin = 'http://127.0.0.1:' + upstream.address().port;
++  const dir = mkdtempSync(join(tmpdir(), 'shansi-config-')), key = join(dir, 'test.key');
++  writeFileSync(key, 'synthetic-identity-key-only-for-test', { mode: 0o600 });
++  t.after(() => rmSync(dir, { recursive: true, force: true }));
++  const games = portalGames({ GAME_ORIGIN: origin, SHANSI_ORIGIN: origin, QINGSHI_ORIGIN: origin,
++    XIN_WANG_JIN_ORIGIN: origin, XIN_WANG_JIN_KEY_FILE: key, AILANTIA_ORIGIN: origin,
++    WANGJIN_REMAKE_ORIGIN: origin, WANGJIN_REMAKE_KEY_FILE: key });
++  assert.deepEqual(games.map(item => item.id), ['permanent-record', 'xin-wang-jin', 'ailantia-chapter1', 'wangjin-remake', 'qingshi-v04', 'shansi']);
++  const game = games.find(item => item.id === 'shansi');
++  assert.ok(game, 'production config must register Qingshi');
++  assert.deepEqual(game.targets, ['/']); assert.equal(game.wsPath, null);
++  assert.equal(game.roomCodes, undefined); assert.equal(game.stripPrefix, true);
++  const DB = SQLiteStore.memory(), salt = randomBytes(16).toString('hex');
++  const password = 'Synthetic Qingshi test password';
++  const hash = scryptSync(password, Buffer.from(salt, 'hex'), 32,
++    { N: 32768, r: 8, p: 3, maxmem: 64 * 1024 * 1024 }).toString('hex');
++  DB.sql.prepare('INSERT INTO accounts(id,username,password_salt,password_hash) VALUES(?,?,?,?)')
++    .run('71988402-1bf9-43e7-a6fc-5ef23d6930ab', 'shansi-tester', salt, hash);
++  let now = Math.floor(Date.now() / 1000);
++  const server = createPortalServer({ DB, games, clock: () => now });
++  server.listen(0, '127.0.0.1'); await once(server, 'listening');
++  t.after(async () => { await new Promise(resolve => server.close(resolve)); DB.close(); });
++  const base = 'http://127.0.0.1:' + server.address().port;
++  const request = (path, options = {}) => fetch(base + path, { redirect: 'manual', ...options });
++  const post = (path, cookie, body) => request(path, { method: 'POST',
++    headers: { cookie, origin: PUBLIC_ORIGIN, 'content-type': 'application/x-www-form-urlencoded' }, body });
++  const login = async () => {
++    const response = await post('/login?game=shansi', '', new URLSearchParams({ username: 'shansi-tester', password }));
++    assert.equal(response.status, 303); assert.equal(response.headers.get('location'), '/?game=shansi');
++    return response.headers.get('set-cookie').split(';')[0];
++  };
++  const cookie = await login();
++  const board = await (await request('/', { headers: { cookie } })).text();
++  for (const title of ['Permanent Record', '新网金', '艾兰提亚', '网金复刻', '青石渡风波', '山寺']) assert.ok(board.includes(title));
++  assert.match(board, /action="\/launch\/shansi" method="post"/);
++  assert.match(board, /action="\/launch\/qingshi-v04" method="post"/);
++  for (const path of ['/shansi/', '/shansi/healthz', '/shansi/game.js?v=release']) {
++    for (const headers of [{}, { cookie }]) {
++      for (const method of ['GET', 'HEAD']) assert.equal((await request(path, { headers, method })).status, 303);
++    }
++  }
++  assert.equal(received.length, 0);
++  const issue = async id => {
++    const result = await post('/launch/' + id, cookie, 'target=%2F');
++    assert.equal(result.status, 303); return result.headers.get('location');
++  };
++  const redeem = (link, parent = cookie) => request(link, { headers: { cookie: parent } });
++  const oldLink = await issue('permanent-record');
++  assert.equal((await redeem(oldLink.replace('/permanent-record/', '/shansi/'))).headers.get('set-cookie'), null);
++  const oldGrant = (await redeem(oldLink)).headers.get('set-cookie').split(';')[0];
++  const forged = oldGrant.replace('__Secure-game_entry=', game.entryCookie + '=');
++  assert.equal((await request('/shansi/', { headers: { cookie: cookie + '; ' + forged } })).status, 303);
++  const link = await issue(game.id), other = await login();
++  assert.equal((await redeem(link, other)).headers.get('set-cookie'), null);
++  assert.equal((await redeem(link.replace('/?', '/other.html?'))).headers.get('set-cookie'), null);
++  const entered = await redeem(link), grant = entered.headers.get('set-cookie');
++  assert.equal(entered.headers.get('location'), '/shansi/');
++  assert.match(grant, /Path=\/shansi\/; HttpOnly; Secure; SameSite=Strict/);
++  assert.equal((await redeem(link)).headers.get('set-cookie'), null);
++  const both = cookie + '; ' + oldGrant + '; ' + grant.split(';')[0];
++  const denied = new WebSocket(base.replace('http:', 'ws:') + '/shansi/ws',
++    { headers: { cookie: both, origin: PUBLIC_ORIGIN } });
++  assert.match((await once(denied, 'error'))[0].message, /Unexpected server response: 404/);
++  for (const path of ['/permanent-record/', '/shansi/']) {
++    assert.equal((await request(path, { headers: { cookie: both, authorization: 'Bearer never-forward' } })).status, 200);
++  }
++  assert.equal(received.at(-1).url, '/');
++  assert.equal(received.at(-1).headers.cookie, undefined);
++  assert.equal(received.at(-1).headers.authorization, undefined);
++  assert.equal((await post('/launch/' + game.id, cookie, 'target=%2Fhost.html')).status, 400);
++  assert.equal((await post('/launch/' + game.id, cookie, 'target=%2F&code=ABCD')).status, 400);
++  assert.equal((await post('/shansi/api/save', both, '{}')).status, 405);
++  const wasm = await request('/shansi/index.wasm', { headers: { cookie: both } });
++  assert.equal(wasm.status, 200); assert.equal(wasm.headers.get('content-type'), 'application/wasm');
++  assert.equal((await wasm.arrayBuffer()).byteLength, 17 * 1024 * 1024);
++  assert.match(wasm.headers.get('content-security-policy'), /'wasm-unsafe-eval'/);
++  const qLink = await issue('qingshi-v04');
++  const qGrant = (await redeem(qLink)).headers.get('set-cookie').split(';')[0];
++  const qCookie = cookie + '; ' + qGrant;
++  assert.equal((await request('/qingshi-v04/index.wasm', { headers: { cookie: qCookie } })).status, 503);
++  const qPage = await request('/qingshi-v04/', { headers: { cookie: qCookie } });
++  assert.equal(qPage.status, 200); assert.doesNotMatch(qPage.headers.get('content-security-policy'), /wasm-unsafe-eval/);
++  assert.equal((await request('/shansi/', { headers: { cookie: qCookie } })).status, 303);
++  const expired = await issue(game.id); now += 60;
++  assert.equal((await redeem(expired)).headers.get('set-cookie'), null);
++  assert.equal((await post('/logout', both, '')).status, 303);
++  for (const path of ['/permanent-record/', '/shansi/']) {
++    assert.equal((await request(path, { headers: { cookie: both } })).status, 303);
++  }
++});
