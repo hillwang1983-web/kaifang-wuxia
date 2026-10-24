@@ -275,7 +275,7 @@ func _torch(it: Dictionary) -> void:
 		draw_circle(p + Vector2(0, -40), 26.0, Color(1.0, 0.6, 0.2, 0.08))
 		var me := world.fighter(me_id)
 		if me and me.pos.distance_to(p) < 44.0:
-			UiKit.text(self, p + Vector2(-20, -66), "E 熄灭" if not _mobile() else "点交谈熄灭", 12, UiKit.TEXT)
+			UiKit.text(self, p + Vector2(-20, -66), "E 熄灭" if not _mobile() else "点右侧熄灭", 12, UiKit.TEXT)
 	else:
 		draw_circle(p + Vector2(0, -40), 2.0, Color(0.5, 0.5, 0.5, 0.6))
 

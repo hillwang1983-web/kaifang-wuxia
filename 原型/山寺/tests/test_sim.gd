@@ -20,6 +20,19 @@ func _cmd() -> SimCommand:
 	return SimCommand.new()
 
 
+func test_torch_interact() -> void:
+	var w := _world()
+	var p := w.add_hero("player", "shaolin", "jiemai", Vector2(100, 100))
+	var near := w.add_interactable("torch", Vector2(130, 100))
+	var far := w.add_interactable("torch", Vector2(300, 100))
+	check_eq(w.interactable_near(p.pos).id, near.id, "够得着近处火把（手机交互键据此出现）")
+	w.step(DT, {p.id: _cmd().press("interact")})
+	check(not near.on and far.on, "交互只熄灭够得着的那根")
+	check(w.interactable_near(p.pos).is_empty(), "熄灭后不再可交互")
+	w.step(DT, {p.id: _cmd().press("interact")})
+	check(far.on, "远处火把不会被误熄")
+
+
 func test_attack_and_stance() -> void:
 	var w := _world()
 	var p := w.add_hero("player", "shaolin", "jiemai", Vector2(100, 100))

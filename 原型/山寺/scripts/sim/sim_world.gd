@@ -226,12 +226,19 @@ func _try_dodge(f: SimFighter, cmd: SimCommand) -> void:
 			e.read = true
 
 
-func _interact(f: SimFighter) -> void:
+## 站在 at 能够着的、还亮着的可交互物；没有返回空字典
+func interactable_near(at: Vector2) -> Dictionary:
 	for it in interactables:
-		if it.on and it.pos.distance_to(f.pos) < 44.0:
-			it.on = false
-			emit("interact", {"id": f.id, "kind": it.kind, "target": it.id, "pos": it.pos})
-			return
+		if it.on and it.pos.distance_to(at) < 44.0:
+			return it
+	return {}
+
+
+func _interact(f: SimFighter) -> void:
+	var it := interactable_near(f.pos)
+	if not it.is_empty():
+		it.on = false
+		emit("interact", {"id": f.id, "kind": it.kind, "target": it.id, "pos": it.pos})
 
 
 func _attack(f: SimFighter, cmd: SimCommand) -> void:
