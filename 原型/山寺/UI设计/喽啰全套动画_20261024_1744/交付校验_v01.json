@@ -1,0 +1,392 @@
+{
+  "delivery": "20261024-1744",
+  "row": 13,
+  "strips": 15,
+  "animation_frames": 60,
+  "generated_sources": 10,
+  "derived_direction_crops": 1,
+  "files": [
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/combat_prompts.json",
+      "bytes": 9017,
+      "sha256": "de3d45f6275864500f190d237631572972b0cc2a96626adec0f9f3a6fcc402cf"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/down_death_fix_prompt.txt",
+      "bytes": 783,
+      "sha256": "099f5be815709383deb7341964ed9c54c670ce0acafb853bd624b607351d4c81"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/left_slash_fix_prompt.txt",
+      "bytes": 785,
+      "sha256": "9671609ae9ae39d9d5c6add49b4b10be71ba3068526a79b7ac70306a179051d1"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_atk_down_6倍_v01.png",
+      "bytes": 5446,
+      "sha256": "3a4b7b7655c59a6f239f430967a32b8f403c368cb8992b3cdcb16ab7359392af"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_atk_down_播放预览_v01.gif",
+      "bytes": 15276,
+      "sha256": "22f4cec3328e8bbca079e93dd4d24bf3cd506dfdbbfedd018fcbbf7387ae12ee"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_atk_left_6倍_v01.png",
+      "bytes": 5673,
+      "sha256": "23a625542231912b66df9825a510c213716d11f9a1aa08298c9fa3b79cf4cf69"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_atk_left_播放预览_v01.gif",
+      "bytes": 16303,
+      "sha256": "0d66abe28e3d62577645fd55ec901db87adcabc33b8d9ad89f6df2e745023f11"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_atk_up_6倍_v01.png",
+      "bytes": 5562,
+      "sha256": "14953b5efa7a786595e6c672695f1b202da05b739fc4f891ce7b4b3578eb8cd4"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_atk_up_播放预览_v01.gif",
+      "bytes": 14256,
+      "sha256": "ff1ff50d9caadb3f8632bc4c4d451c6921cc38b9ee8ba00a80d349fe7c65727a"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_down_down_6倍_v01.png",
+      "bytes": 3776,
+      "sha256": "818a57188a0b233675a2d939a3f6ba4c0f27757e705899c4c159026d344deae3"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_down_down_播放预览_v01.gif",
+      "bytes": 12310,
+      "sha256": "a1396faf952fab7e7dd313d8ffeca99891fb795333f0c09e184ce3076c4a0d28"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_down_left_6倍_v01.png",
+      "bytes": 3463,
+      "sha256": "473bd640178910d6596250cd247543519ec5e122977d1db622f587b88b25fa78"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_down_left_播放预览_v01.gif",
+      "bytes": 11244,
+      "sha256": "909dcf826e9d50e32097a2e0efa80b7361cbe6672371a68b97f73b3618bb5ded"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_down_up_6倍_v01.png",
+      "bytes": 3789,
+      "sha256": "195690b03eb8c74c5b66d71fc9e219a4844727001a4c025932b1bb158ea35ac9"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_down_up_播放预览_v01.gif",
+      "bytes": 11236,
+      "sha256": "f6fdbd61b548a5222e0d996f334cd26a6f33f5746156e59d4b7dc2f357de9e58"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_hit_down_6倍_v01.png",
+      "bytes": 2811,
+      "sha256": "c9f3f8a722511c0446eb28cc0d6504a3dafebcb1b9e7b9c3c21310de909ee5fa"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_hit_down_播放预览_v01.gif",
+      "bytes": 7662,
+      "sha256": "2ce416415813e7d1c7fda53698de2fd4d06ecc05ae7960323e390ac2f6994251"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_hit_left_6倍_v01.png",
+      "bytes": 2655,
+      "sha256": "b45aa935b3e70f8383041bba611f221a113ab5271d6309dec53fe385ba7425a4"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_hit_left_播放预览_v01.gif",
+      "bytes": 7614,
+      "sha256": "8787847dc14d685d07fd70bc6057d55544ea5e1802cf6bec89e8d9e357478eb0"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_hit_up_6倍_v01.png",
+      "bytes": 2691,
+      "sha256": "bb0a879052798997381f49d0147dc10f2ea04a1b49347385a7baf254f805100c"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_hit_up_播放预览_v01.gif",
+      "bytes": 7093,
+      "sha256": "234033a4a0cc70acfe7babdecdaedfd5fe755ca5b6ce6b292b21a182671a37dc"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_idle_down_6倍_v01.png",
+      "bytes": 5111,
+      "sha256": "3e430885349209990245b57c26a788c877c96d28a938e105c08c6f45022b64f6"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_idle_down_播放预览_v01.gif",
+      "bytes": 14830,
+      "sha256": "372bf55553e15e73e125aea8416c96fb8ab31f5a7a5749babb0de28d4efbb7b2"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_idle_left_6倍_v01.png",
+      "bytes": 5162,
+      "sha256": "5c031e57ba913c803de44e2981588d92f83d6d350b7c4e08542c1d3025784575"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_idle_left_播放预览_v01.gif",
+      "bytes": 14366,
+      "sha256": "7ff8dbd30ffa35c9556d5c925f7fb1899ddd0643496ae0581efdc7f63a880d96"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_idle_up_6倍_v01.png",
+      "bytes": 4805,
+      "sha256": "77a7f151cfe985419ebd6a2ddf8bb1ed5dd8e65d177182e2dca41f6d22d3c0a2"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_idle_up_播放预览_v01.gif",
+      "bytes": 13871,
+      "sha256": "c2375711f3cf952297a77c9fe8dafeb8259192317d59cf74d58cecf21340d829"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_walk_down_6倍_v01.png",
+      "bytes": 7233,
+      "sha256": "642a374b8e76f4f3dc753019b92cffe3e6973d7f8967b9401787bed51a78f12f"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_walk_down_播放预览_v01.gif",
+      "bytes": 19780,
+      "sha256": "0505304907ae6092f65190339e9cb5a139f59e4f8ff7995f564a0141f8a93dc5"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_walk_left_6倍_v01.png",
+      "bytes": 7266,
+      "sha256": "212fd5579080332064f62516ce0d6ea6dbe5f80e83b9d7b7631df699f89544d8"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_walk_left_播放预览_v01.gif",
+      "bytes": 19433,
+      "sha256": "70f7f306ffd2090e2f656b2cd311d06d1800f092ec4ec934364cca6555724f21"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_walk_up_6倍_v01.png",
+      "bytes": 7101,
+      "sha256": "89b9bc4b45bf3d030060eab50f58504ffcb64a977932b1ddae4cf1ad8ed2a9e4"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/louluo_walk_up_播放预览_v01.gif",
+      "bytes": 18014,
+      "sha256": "ebe87f5ad72f81f11e07306ec51a4968e2be307d2cf0cf9ec7278fd90c60eccf"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/movement_fix_prompts.json",
+      "bytes": 2033,
+      "sha256": "8398944aa70c69151fa1bbe0abefc6f1f954e11f6c4b9a404acb678fffcfce1e"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/movement_prompts.json",
+      "bytes": 7457,
+      "sha256": "b8947c57037d74ce9b7eb8b1270b17f04e1f82b0ec4647323549d11a28ddf7f4"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/production_plan.md",
+      "bytes": 524,
+      "sha256": "54022e056aad99b01fd77474151e8b65a97150a85e569f57aa2a042c8ad25573"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/交付说明_v01.md",
+      "bytes": 3615,
+      "sha256": "d620045f87a2a988b129583be070a6a25c0ecab6cd0f5e3379c72062937f62c3"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/喽啰全套动画索引_v01.json",
+      "bytes": 62477,
+      "sha256": "747f54f3803bf2b3ee97dd262e248e0be581ae219b53a575d0afd3bd3438b4a9"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/喽啰战斗_down_逐帧总览_v01.png",
+      "bytes": 11596,
+      "sha256": "3c447cde4fca4c7b4b6f355f1f48c93c5871f7bb6f033d1bb7be110ebf5272b1"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/喽啰战斗_left_逐帧总览_v01.png",
+      "bytes": 11368,
+      "sha256": "0697a385d4f12f1b6115fc2c1bf94763881321c150168056351587e13971384b"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/喽啰战斗_up_逐帧总览_v01.png",
+      "bytes": 11628,
+      "sha256": "5cedc81041aa3f5fc4aee822864b913ebd1fc73d82c56ace52812c498fabcdc8"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/喽啰移动_down_逐帧总览_v01.png",
+      "bytes": 12303,
+      "sha256": "a3d2e9b53144f5c762f9d84b64cc52ea22d527cd89975e7fdfa51cecc3ae68d0"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/喽啰移动_left_逐帧总览_v01.png",
+      "bytes": 12320,
+      "sha256": "3dfa1e811ae69c6a50dcd1aa7b50765bb9e19ac98c6fc9e434cbbb76b01bf6f5"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/喽啰移动_up_逐帧总览_v01.png",
+      "bytes": 11852,
+      "sha256": "9aae06c01ee79815896255009e46e5b1c6b625f87c60db58c81ddcbb53852a18"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/山门1比1_四角色与喽啰动作_v01.png",
+      "bytes": 191834,
+      "sha256": "b2e248998f17e70b6f4575bf3243cb9aed5cb63aba165e852b470369cb47189c"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/战斗动画参数_v01.json",
+      "bytes": 31169,
+      "sha256": "28dc1f1600271d4029a7c99d2ba8ab7057ba91e67a898f82e6e183593d4e73ad"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/核验结果_v01.json",
+      "bytes": 14376,
+      "sha256": "a1fd66cdd62f5bbe2cb94d78f9a7d30b4837ac6a760363735757170337664ce6"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/移动动画参数_v01.json",
+      "bytes": 26290,
+      "sha256": "53bf073b29ef88517f05c4860c5a23c6afe2904e1fc2e2603bee45f22b4e941d"
+    },
+    {
+      "path": "UI设计/喽啰全套动画_20261024_1744/调色板_v01.json",
+      "bytes": 244,
+      "sha256": "702370ea1dda1e8bfb1998080dcfa1bd67a3dd4161f50884c0a13398458d04a9"
+    },
+    {
+      "path": "assets/npc/npc_louluo_atk_down_v01.png",
+      "bytes": 4392,
+      "sha256": "7369edb5d590571b8f20aafcb8f7559f9f2da76f027f4dd71d8ba6ccbee10b8b"
+    },
+    {
+      "path": "assets/npc/npc_louluo_atk_left_v01.png",
+      "bytes": 4402,
+      "sha256": "1c1f29b8bc5414c5adb8b71e9e7b36e7c46d3298080d09812a711f8b1200b60c"
+    },
+    {
+      "path": "assets/npc/npc_louluo_atk_up_v01.png",
+      "bytes": 3868,
+      "sha256": "90a8146436292eedb58c1a2fd71592fc15e4babe5a5959b33ee09f0b9f784216"
+    },
+    {
+      "path": "assets/npc/npc_louluo_down_down_v01.png",
+      "bytes": 3481,
+      "sha256": "f6e8ff8329f5958abf3e53906067148baa749ec472d687397b1957a5e75c08d1"
+    },
+    {
+      "path": "assets/npc/npc_louluo_down_left_v01.png",
+      "bytes": 3145,
+      "sha256": "6405e9547aba68efc3b0ded18ee64f2ca6245d8e630f35f4fe3579e14ca16867"
+    },
+    {
+      "path": "assets/npc/npc_louluo_down_up_v01.png",
+      "bytes": 3057,
+      "sha256": "88f8fd77c4885fe9982a6a96a67eceb4285c2f50a695461e834947f3827d16e7"
+    },
+    {
+      "path": "assets/npc/npc_louluo_hit_down_v01.png",
+      "bytes": 2500,
+      "sha256": "2a0065015da27a29d2ccfd2c92331716c6d64be7a271ffd517d3f1406d8a0d2a"
+    },
+    {
+      "path": "assets/npc/npc_louluo_hit_left_v01.png",
+      "bytes": 2356,
+      "sha256": "f9383c09046b9ffea44673e7af65d75edc375cb32ba0d1c07ed858f8b10c3e3d"
+    },
+    {
+      "path": "assets/npc/npc_louluo_hit_up_v01.png",
+      "bytes": 2232,
+      "sha256": "f553682d258fc31b0f956ca14d89dbbb830be10dfe7333969aabb0797811345a"
+    },
+    {
+      "path": "assets/npc/npc_louluo_idle_down_v01.png",
+      "bytes": 3659,
+      "sha256": "42faa15711fa538145f044c6772dcb7349e1e6922178d4655cf58a98a3242c6e"
+    },
+    {
+      "path": "assets/npc/npc_louluo_idle_left_v01.png",
+      "bytes": 3694,
+      "sha256": "de661b46327fdbc4e4bf3abea958d4a4c0ad1a2fe918356a720f6d13d13d8499"
+    },
+    {
+      "path": "assets/npc/npc_louluo_idle_up_v01.png",
+      "bytes": 3304,
+      "sha256": "638c47ce5853d4a5200ac6c25b4b5594a406b380d47a1cb197b26d6981730e06"
+    },
+    {
+      "path": "assets/npc/npc_louluo_walk_down_v01.png",
+      "bytes": 4552,
+      "sha256": "7f70f7da07bc9fc6f726b62d3bcb9eb2beb3d17689c3e84072c963a1ec887ccf"
+    },
+    {
+      "path": "assets/npc/npc_louluo_walk_left_v01.png",
+      "bytes": 4967,
+      "sha256": "a76a2c4d7cdea932a458d7178e68a5ee4053c6497a5f4b85b55e648aabe1d0dc"
+    },
+    {
+      "path": "assets/npc/npc_louluo_walk_up_v01.png",
+      "bytes": 4294,
+      "sha256": "549afc2bd8640006ac944780f4596872d06107ba1626e89489e986d02c0071dc"
+    },
+    {
+      "path": "assets/ref/ref_npc_louluo_combat_down_deathfix_source_v01.png",
+      "bytes": 853681,
+      "sha256": "6a6045eb07dcba96be209791b029905dab1e0411127d9be90544c3c3fad1ad52"
+    },
+    {
+      "path": "assets/ref/ref_npc_louluo_combat_down_source_v01.png",
+      "bytes": 866715,
+      "sha256": "f719606644534f33570599822e458fbb1c46523b6e5f72be4449d208953045e2"
+    },
+    {
+      "path": "assets/ref/ref_npc_louluo_combat_left_slashfix_source_v01.png",
+      "bytes": 855282,
+      "sha256": "d734e2fda08ce93d7404ab1d40b6f8c3119e89d232d9bd6b089d40e9b268a306"
+    },
+    {
+      "path": "assets/ref/ref_npc_louluo_combat_left_source_v01.png",
+      "bytes": 761889,
+      "sha256": "3f254ab5285970f286b8591195b594530cdb0f00b146c278ec498cbf7eb3a499"
+    },
+    {
+      "path": "assets/ref/ref_npc_louluo_combat_up_source_v01.png",
+      "bytes": 741322,
+      "sha256": "0459d038dadb24288bdf6b493e38ef3e1033f1705c6e73b43b285fd6f7fb1507"
+    },
+    {
+      "path": "assets/ref/ref_npc_louluo_move_down_gaitfix_source_v01.png",
+      "bytes": 848516,
+      "sha256": "8e333220eb8917df7adf71174eadd81a93cbcdbdbf10b61722cf3e0264f9df29"
+    },
+    {
+      "path": "assets/ref/ref_npc_louluo_move_down_source_v01.png",
+      "bytes": 767637,
+      "sha256": "bee7411d89fe1b358a587739a116f20de57f02b0e88ac43924ac1ad7a1772017"
+    },
+    {
+      "path": "assets/ref/ref_npc_louluo_move_left_source_v01.png",
+      "bytes": 882606,
+      "sha256": "cda78586e062c15214d1540adda4ebdbc1189c5f96f94bc8643e868224fe71ef"
+    },
+    {
+      "path": "assets/ref/ref_npc_louluo_move_up_idlefix_source_v01.png",
+      "bytes": 795388,
+      "sha256": "fba99cf6ffec614ef0ddd466fee932e668fca629261ccf53f3bda8c02faa0d2f"
+    },
+    {
+      "path": "assets/ref/ref_npc_louluo_move_up_source_v01.png",
+      "bytes": 838163,
+      "sha256": "f92c44801326d060a3e45e393782331e0d3100233283332de4166535ab5522d1"
+    },
+    {
+      "path": "assets/ref/ref_npc_louluo_up_direction_crop_v01.png",
+      "bytes": 476408,
+      "sha256": "23ff609acf599f848057cdaeae8b32288a570adac1b6f99631b27c6e176495bb"
+    }
+  ],
+  "existing_dependencies": [
+    {
+      "path": "assets/ref/ref_npc_louluo_down_v01.png",
+      "bytes": 1429,
+      "sha256": "f3a800ff62b36efd403afa5c884aba5ab2ace56fe7d672798f6b957c161df02e"
+    }
+  ]
+}

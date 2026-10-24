@@ -1,0 +1,29 @@
+[
+  {
+    "direction": "down",
+    "suffix": "pronefix",
+    "prompt": "Use case: precise-object-edit. This is a production pixel sprite atlas. CHANGE ONLY ROW4 COLUMNS3 and4 (the final TWO horizontal fallen poses). Their body+staff combined width is too wide for the same48native pixel cell. Keep SAME character identity, smallhead, anatomy scale and compact pixel style, palette, all other17frames/blankcells/layout exactly unchanged. Repose ONLY these2 lyingframes into more foreshortened, mildly bentknees horizontal side-lying body with headLEFT feetRIGHT (SAME sides across both). ONE wooden staff lies tightly alongside forearms/torso, ends no farther than head+feet, bentperspective not extending pastbody. Fit each complete posture inclstaff into about220sourcepixel horizontal span on this1330pixel6colsheet, without reducing character anatomical scale. NOT upright, not sitting. No new graphics/marks/text, actualtransparent. Preserve6col4rowatlas.",
+    "referenced_image_paths": [
+      "/Volumes/ML_models/游戏/开放武侠/output/art-shaolin-combat-20261024-1826/source/shaolin_combat_down_generated.png"
+    ],
+    "transparent_background": true
+  },
+  {
+    "direction": "left",
+    "suffix": "compactfix",
+    "prompt": "Use case: precise-object-edit. Production smallpixel sprite atlas, same identity/palette/anatomicalscale/layout and actualtransparent background. Fix ONLY following: ROW1 columns2and3 (ATK1 thrust/followthrough) shorten the staff's projected reach LEFT via strong foreshortening, keeping hands secure and feet underbody. Whole pose inclstaff must occupy at most200sourcepx width, compactinsideitscell. ROW3 column3 (kneeling roll exit) tuck/foreshorten staff towithinbody silhouette+small margin; no trailing long pole. ROW4 columns2,3,4: a continuous BACKWARD fall toRIGHT: col2 hipslower, shoulders tipRIGHT with headRIGHT ofhips; cols3and4 lie horizontally headRIGHT feetLEFT, mildlybentknees/foreshortenedbody, staff tightlyalongforearms/body withoutlongoverhang. Eachposeatmost200sourcepxhorizontalspan. Do NOT resize whole character or growhead; same40nativepixelanatomicalscale asstanding. Everything else UNCHANGED: noface/direction/wardrobe shifts elsewhere, no text/grid, same6col4rowatlas.",
+    "referenced_image_paths": [
+      "/Volumes/ML_models/游戏/开放武侠/output/art-shaolin-combat-20261024-1826/source/shaolin_combat_left_generated.png"
+    ],
+    "transparent_background": true
+  },
+  {
+    "direction": "up",
+    "suffix": "pronefix",
+    "prompt": "Use case: precise-object-edit. Production sprite atlas. Change ONLY ROW4 COLUMN4 finalhorizontal fallenframe: its body+staff is too wide. Make foreshortened horizontal side-prone posture, slightkneebend, headLEFT feetRIGHT aspreviousframe, visibleBACKjacket and rearhair, NOface. ONE woodenstaff tucked tightlyalongforearms/body, not extendingfartherthanhead/feet. Totalspanatmost220sourcepx atSAMEanatomicalscale, no shrinkwholeperson. Keep all18otherframes, cells/layout, colors/style/characteridentity EXACTLY unchanged. Actualtransparent6col4rowatlas, no labels.",
+    "referenced_image_paths": [
+      "/Volumes/ML_models/游戏/开放武侠/output/art-shaolin-combat-20261024-1826/source/shaolin_combat_up_generated.png"
+    ],
+    "transparent_background": true
+  }
+]

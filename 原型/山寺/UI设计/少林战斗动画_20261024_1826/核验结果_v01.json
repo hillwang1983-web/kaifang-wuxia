@@ -1,0 +1,1079 @@
+{
+  "result": "PASS",
+  "new_strips": 18,
+  "new_frames": 57,
+  "existing_movement_strips": 6,
+  "existing_movement_frames": 30,
+  "combined_base_frames": 87,
+  "combined_opaque_colors": 15,
+  "alpha": [
+    0,
+    255
+  ],
+  "anchor": [
+    24,
+    60
+  ],
+  "checks": [
+    "dimensions/frame counts/order",
+    "existing and new use same16color palette",
+    "binary alpha",
+    "fixed metadata root",
+    "distinct frames within each action",
+    "selected source poses uncut",
+    "6x nearest pixel exact",
+    "GIF counts/timings",
+    "final2 knockdown frames horizontal"
+  ],
+  "limits": [
+    "metadata/registration validation is not independent runtime motion/collision verification",
+    "review GIF repeats nonloop moves with600ms lastframe; gameJSON12fps",
+    "no Godot/mobile runtime test"
+  ],
+  "files": [
+    {
+      "file": "assets/chr/chr_shaolin_idle_down_v01.png",
+      "dependency_from_earlier_delivery": true,
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 15,
+      "bboxes": [
+        [
+          9,
+          20,
+          43,
+          61
+        ],
+        [
+          8,
+          20,
+          42,
+          61
+        ],
+        [
+          9,
+          20,
+          40,
+          61
+        ],
+        [
+          11,
+          20,
+          41,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "634b4a7b40f0150f8eafc9bf5d313f28207935dc27409f117a0cbefa259df279",
+        "2e30316d1b5373e6623989ab0671f90189d1540a870d608fb26e091baf04c15d",
+        "f874fda988c06abde8cd7414953487aefe36ac5507dd37c23f8f16895a38bc4c",
+        "c37c02291b38e86f1af7e850db20201fa963aeff10da95699ea73873a6fa5c5b"
+      ],
+      "gif_durations_ms": []
+    },
+    {
+      "file": "assets/chr/chr_shaolin_walk_down_v01.png",
+      "dependency_from_earlier_delivery": true,
+      "dimensions": [
+        288,
+        64
+      ],
+      "frames": 6,
+      "colors": 14,
+      "bboxes": [
+        [
+          8,
+          20,
+          42,
+          61
+        ],
+        [
+          8,
+          20,
+          42,
+          61
+        ],
+        [
+          10,
+          20,
+          40,
+          61
+        ],
+        [
+          8,
+          20,
+          42,
+          61
+        ],
+        [
+          9,
+          20,
+          43,
+          61
+        ],
+        [
+          9,
+          20,
+          43,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "2bb991f2427791b2608f0972270219a4cd1082285d902c2d2494e60f1d5fed48",
+        "7ff28fe4bbf8f043b0ea811c5d3193b341b10a42a60ad93cecf02f65e425a3cf",
+        "678d3e56ddd63964a5ecb919e02be7c563e854a07e68fe26b4ee18be9e0ee01e",
+        "875247b51a2bf1468ec1c48890e950818402e8a45ae22985a0f2427369227912",
+        "98a26c32045d35b348da9e59b8e0941b9cdd5d986b3d293d9e97a77e8ab9cc2f",
+        "24395e302d34065c4e9b57858cd1d4fd954960f4915be0fcecc30ec2f539d588"
+      ],
+      "gif_durations_ms": []
+    },
+    {
+      "file": "assets/chr/chr_shaolin_idle_left_v01.png",
+      "dependency_from_earlier_delivery": true,
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 14,
+      "bboxes": [
+        [
+          6,
+          20,
+          40,
+          61
+        ],
+        [
+          6,
+          20,
+          40,
+          61
+        ],
+        [
+          6,
+          20,
+          40,
+          61
+        ],
+        [
+          6,
+          20,
+          40,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "da8e4e650b37653d15613db72bbdabfa095bce3ca67037ffaf61ab22017990e8",
+        "42a4b3e334d9055c8db6f76e253e4556a8934719a218c91564addb77decd24d1",
+        "822c222e3fc6af75d041bc6267eca3274851b1ee30dffea149cadfcce0e317cc",
+        "4cd85ad35454a201ea4f3e1f42701dea12cf4e1df04505b575ba6b1df476566f"
+      ],
+      "gif_durations_ms": []
+    },
+    {
+      "file": "assets/chr/chr_shaolin_walk_left_v01.png",
+      "dependency_from_earlier_delivery": true,
+      "dimensions": [
+        288,
+        64
+      ],
+      "frames": 6,
+      "colors": 15,
+      "bboxes": [
+        [
+          7,
+          20,
+          41,
+          61
+        ],
+        [
+          6,
+          20,
+          40,
+          61
+        ],
+        [
+          6,
+          20,
+          40,
+          61
+        ],
+        [
+          6,
+          20,
+          40,
+          61
+        ],
+        [
+          7,
+          20,
+          41,
+          61
+        ],
+        [
+          7,
+          20,
+          41,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "a1b7f73e353d397ca4c37822e2a710d60a1805742ed84ffc69985101786fbf97",
+        "7c41009d7eca7766012ffdec1160c29071bd3d009f02e906b7289f5becae1e7a",
+        "49b72077faf3b1b2f6e1f70a24cc97897d0c63fce9aac896560f22453ba534a4",
+        "d1289de1fe371c1e012040f59d31fbbe2893caa60546c91cd122a053578284bd",
+        "0fc09cf72e84e73216c2e954ee1d6380515f46acf40de2756ef0120650873fde",
+        "b5d0d043e5e1030be33ca87841bca55fd2dfdf3feaf0afaf8395d76904524db0"
+      ],
+      "gif_durations_ms": []
+    },
+    {
+      "file": "assets/chr/chr_shaolin_idle_up_v01.png",
+      "dependency_from_earlier_delivery": true,
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 14,
+      "bboxes": [
+        [
+          8,
+          20,
+          42,
+          61
+        ],
+        [
+          8,
+          20,
+          42,
+          61
+        ],
+        [
+          8,
+          20,
+          42,
+          61
+        ],
+        [
+          8,
+          20,
+          42,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "8a9306267a57e01705c9dab180cf600311061f394223a1e865f1a0ee86b18050",
+        "72d8b6b224c22a780cef0f255ea67370d240dba45b02db4afd08d2e0ca42aaa9",
+        "3d6d9377a663183d7772744c4b2ca7a9e510592552004e0e0f5aa71b0109a615",
+        "79498c1b03c7c45a95e64946141b0894cd95512b23fe8f9761163b829f80110e"
+      ],
+      "gif_durations_ms": []
+    },
+    {
+      "file": "assets/chr/chr_shaolin_walk_up_v01.png",
+      "dependency_from_earlier_delivery": true,
+      "dimensions": [
+        288,
+        64
+      ],
+      "frames": 6,
+      "colors": 15,
+      "bboxes": [
+        [
+          8,
+          20,
+          42,
+          61
+        ],
+        [
+          8,
+          20,
+          42,
+          61
+        ],
+        [
+          8,
+          20,
+          42,
+          61
+        ],
+        [
+          8,
+          20,
+          42,
+          61
+        ],
+        [
+          8,
+          20,
+          42,
+          61
+        ],
+        [
+          8,
+          20,
+          42,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "9222a23d671a6cdcb74ad9813d827c3f5d104587722c1ec8abad3d2bcad5a760",
+        "3be8917d0014a7c20c7fd521a1935f68454d38801854a8d98c9eb64978b1a04e",
+        "02ca7bb02f8b91af6787a00fc78fb4931cc6b975476824948c2d244a9dccfa27",
+        "6b6b39cdf4e0b6900e3c678bd689b2fd18af6678fd2e7c5bb74d413f5dd9db27",
+        "b92e49d49522f4160a5bdfac595a09ca23b016ff0ae248e777e7ca129e52c191",
+        "f0e606241488848cf367b4014163af16612f5fafffb86264988c1244a7ebe0bf"
+      ],
+      "gif_durations_ms": []
+    },
+    {
+      "file": "assets/chr/chr_shaolin_atk1_down_v01.png",
+      "dependency_from_earlier_delivery": false,
+      "dimensions": [
+        144,
+        64
+      ],
+      "frames": 3,
+      "colors": 14,
+      "bboxes": [
+        [
+          7,
+          13,
+          43,
+          61
+        ],
+        [
+          11,
+          20,
+          35,
+          61
+        ],
+        [
+          8,
+          20,
+          42,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "696062a2690e2dc347cf7b1dd361bcdb9000e36ce6b9abc7985fdf93efb27175",
+        "ed8ed92848308e31f623ea8cab216bed39f07838768c5ae3a9fb93efb0888c9c",
+        "652ea10dbe481d4c27b69738476a28ca2e18e3f65c4021441f6521141b0cb7da"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/chr/chr_shaolin_atk2_down_v01.png",
+      "dependency_from_earlier_delivery": false,
+      "dimensions": [
+        144,
+        64
+      ],
+      "frames": 3,
+      "colors": 14,
+      "bboxes": [
+        [
+          9,
+          15,
+          39,
+          61
+        ],
+        [
+          10,
+          20,
+          43,
+          61
+        ],
+        [
+          9,
+          24,
+          45,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "82a05aa184987fad2ade11d1ced97f7dcde9db3e860d3a56910429f013904cce",
+        "49ac1227029c4c1833b1ea260b025697fad5411034c643945b82f319d167c514",
+        "f9e694a7c9bfe0f2e2bae8a25bfc8d9c3e5723ba2819a1d9adb25fa4828c7187"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/chr/chr_shaolin_atk3_down_v01.png",
+      "dependency_from_earlier_delivery": false,
+      "dimensions": [
+        144,
+        64
+      ],
+      "frames": 3,
+      "colors": 13,
+      "bboxes": [
+        [
+          9,
+          3,
+          37,
+          60
+        ],
+        [
+          11,
+          20,
+          35,
+          61
+        ],
+        [
+          9,
+          26,
+          45,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "f2c1c43a8fdd1d405fe9d72ccd744ff1fd256ad05389272a98e3f72bc21d0701",
+        "fcc4912b747170e8e90960c60a8b1925218f6c49955f2fa23e8961f649205d36",
+        "3c477efa75db9f81cdddb525d9c2df83407e5c62f8056c4793e915ba89260d20"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/chr/chr_shaolin_hit_down_v01.png",
+      "dependency_from_earlier_delivery": false,
+      "dimensions": [
+        96,
+        64
+      ],
+      "frames": 2,
+      "colors": 13,
+      "bboxes": [
+        [
+          9,
+          22,
+          38,
+          62
+        ],
+        [
+          7,
+          30,
+          41,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "5a7f106bbbea3fbe87274d03df173023d22e18bfc3668a55fe1b917535169452",
+        "cdb4d94fa06ea4baee7b058aa9593633cbd3088eb1e2d7b198ba6688492868be"
+      ],
+      "gif_durations_ms": [
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/chr/chr_shaolin_roll_down_v01.png",
+      "dependency_from_earlier_delivery": false,
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 15,
+      "bboxes": [
+        [
+          9,
+          34,
+          41,
+          61
+        ],
+        [
+          9,
+          26,
+          40,
+          62
+        ],
+        [
+          8,
+          33,
+          43,
+          61
+        ],
+        [
+          8,
+          17,
+          42,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "4618f287f60bb7749aa62b0b5b9a2bc1ba243ea60f31718fc7cfa38c9ee3531c",
+        "a9cd3adccee1fb121fc6e823145d12a6ced3360390d145c7d476956415a8fbe0",
+        "6ece88582281605cec03453c1769f198cd9fdc76e2fa36591f797f7890c6c7b6",
+        "3f97819d73f475b9a62cc9d444616a6ce36601633eb5f9273393e06ee674fedc"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        600
+      ]
+    },
+    {
+      "file": "assets/chr/chr_shaolin_down_down_v01.png",
+      "dependency_from_earlier_delivery": false,
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 15,
+      "bboxes": [
+        [
+          4,
+          35,
+          41,
+          62
+        ],
+        [
+          4,
+          41,
+          47,
+          61
+        ],
+        [
+          4,
+          42,
+          44,
+          61
+        ],
+        [
+          2,
+          43,
+          45,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "bcdc3a820515894416ad411145f89e056bd7298ec7f234b75a5323aa11749df5",
+        "1ccf21b0fa1610564a83dd89a0d20c970e0df1496ecebae2ec968446d60a18c0",
+        "859388299b3e4ee6c0ae5765961cc0d3dc36c87d6bf45703e284f55986e38be3",
+        "f70dda2bed002f1c2c3343ffaccd13ba4341f7008b53c93fa8ad6d36b5b6aaa8"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        600
+      ]
+    },
+    {
+      "file": "assets/chr/chr_shaolin_atk1_left_v01.png",
+      "dependency_from_earlier_delivery": false,
+      "dimensions": [
+        144,
+        64
+      ],
+      "frames": 3,
+      "colors": 14,
+      "bboxes": [
+        [
+          7,
+          19,
+          41,
+          60
+        ],
+        [
+          3,
+          21,
+          40,
+          60
+        ],
+        [
+          3,
+          20,
+          39,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "9a04a273aeffd18d8702eb7e96a438a8020819d1bbcf8e892d207e0a8e579f50",
+        "5346709c9cb5c925c5f795cd865c053c8e1f48e1cc5881f105240dafc730c705",
+        "bd8b1ba5ff2656a17d0414a5c653807530f2a8f4c10a29824b003871bb35375d"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/chr/chr_shaolin_atk2_left_v01.png",
+      "dependency_from_earlier_delivery": false,
+      "dimensions": [
+        144,
+        64
+      ],
+      "frames": 3,
+      "colors": 15,
+      "bboxes": [
+        [
+          7,
+          11,
+          40,
+          60
+        ],
+        [
+          3,
+          22,
+          43,
+          60
+        ],
+        [
+          4,
+          22,
+          45,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "ef93f6d3380c2c6dba5c24d4468bb15e62559850783ef25cfde82d9fd1a8d05b",
+        "dd9091de06eee8b2fb51f91fd6a86ab9870e00284ec80152e07c053058ea0ec5",
+        "9fa989071fdf99486a52041ed89747eee4baa98a9cdea818e020dfaa0263cd56"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/chr/chr_shaolin_atk3_left_v01.png",
+      "dependency_from_earlier_delivery": false,
+      "dimensions": [
+        144,
+        64
+      ],
+      "frames": 3,
+      "colors": 14,
+      "bboxes": [
+        [
+          10,
+          1,
+          39,
+          62
+        ],
+        [
+          1,
+          19,
+          44,
+          61
+        ],
+        [
+          2,
+          29,
+          45,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "51689ef26dcbd2ffe2a7aefb5820f8015b25b4c62090d0b22ae1f8688315d88f",
+        "30e0b86e7ae12b4791e112ffe771c5e8d89ffdde0fecc6363fcbd03f5aa15000",
+        "4a972eca43b00c87e83e7273645773c73cf30976924033215182eadd203b61f4"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/chr/chr_shaolin_hit_left_v01.png",
+      "dependency_from_earlier_delivery": false,
+      "dimensions": [
+        96,
+        64
+      ],
+      "frames": 2,
+      "colors": 15,
+      "bboxes": [
+        [
+          3,
+          22,
+          41,
+          60
+        ],
+        [
+          3,
+          25,
+          43,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "948e92e5136c3082f2442bbde8dad6ef688ca5d767dffa941f2eb454a7d23c22",
+        "cab03be309ebcdbd09f632750ba5ddc42194cdebd9dd04a8bb40900ca769bf21"
+      ],
+      "gif_durations_ms": [
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/chr/chr_shaolin_roll_left_v01.png",
+      "dependency_from_earlier_delivery": false,
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 14,
+      "bboxes": [
+        [
+          5,
+          33,
+          43,
+          61
+        ],
+        [
+          8,
+          25,
+          39,
+          60
+        ],
+        [
+          5,
+          31,
+          43,
+          61
+        ],
+        [
+          5,
+          18,
+          45,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "79e3577128175bcb48ac824506456b12aee320d87f58377b5b07ccb8a262065c",
+        "eae826aa434832f09c34a263313371dbfea57684ba3573f4c55d48a3d9d477e6",
+        "cd0012f360c27cb2db43477229977cbe5f32d0f9cf4c5f9acc33599cad598c0c",
+        "d63fe5192bf13e653bc52197c82120e02235f92bb294f4b6f77dc62693ca604e"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        600
+      ]
+    },
+    {
+      "file": "assets/chr/chr_shaolin_down_left_v01.png",
+      "dependency_from_earlier_delivery": false,
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 14,
+      "bboxes": [
+        [
+          6,
+          25,
+          41,
+          60
+        ],
+        [
+          1,
+          35,
+          46,
+          60
+        ],
+        [
+          3,
+          45,
+          43,
+          60
+        ],
+        [
+          2,
+          45,
+          45,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "fa5167714acc4af584c496a53fb8e86a9563ce451b33041d9206aeaa9b4bffdb",
+        "c335d6d71b3113199b437eefbb06677823e9a8dd86ef8b9a997de62bb990efe4",
+        "05c92c873310f3eb5da60df1d86d6f8f5bce64b39ee31f4d405cb7482e7b174c",
+        "24f2c760d161e22453f55dd9150c53ad2dc6561a5b85a19715da8c4faf09d837"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        600
+      ]
+    },
+    {
+      "file": "assets/chr/chr_shaolin_atk1_up_v01.png",
+      "dependency_from_earlier_delivery": false,
+      "dimensions": [
+        144,
+        64
+      ],
+      "frames": 3,
+      "colors": 14,
+      "bboxes": [
+        [
+          8,
+          14,
+          41,
+          61
+        ],
+        [
+          13,
+          12,
+          36,
+          60
+        ],
+        [
+          8,
+          19,
+          44,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "cb361ca156ec3ed01a38e153cef78330d57c679c158c593b09d3670939dd9895",
+        "1ef99aed1fa98cecc0c92d09ea5b6d0d1bce5f60dea67b778f8088029a2a73c2",
+        "94982b04f19a19926eba971a2d215f2510f557c1874abd7aae300240a73f5b89"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/chr/chr_shaolin_atk2_up_v01.png",
+      "dependency_from_earlier_delivery": false,
+      "dimensions": [
+        144,
+        64
+      ],
+      "frames": 3,
+      "colors": 14,
+      "bboxes": [
+        [
+          8,
+          18,
+          41,
+          61
+        ],
+        [
+          6,
+          20,
+          44,
+          61
+        ],
+        [
+          6,
+          26,
+          44,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "dedcdffbe854c3af9ab6018b373c176538f6bc620fb6ebdb7f8222b6969c526a",
+        "a862cec53db82457e0f13571b9c1099742d2226c28320f4bbe7ae35dd17b9dce",
+        "89a02cfba31cc3ee12df2374c81f73eb77d01bbf77b1997554aa1a0d7dc4a591"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/chr/chr_shaolin_atk3_up_v01.png",
+      "dependency_from_earlier_delivery": false,
+      "dimensions": [
+        144,
+        64
+      ],
+      "frames": 3,
+      "colors": 14,
+      "bboxes": [
+        [
+          12,
+          1,
+          36,
+          63
+        ],
+        [
+          8,
+          10,
+          40,
+          61
+        ],
+        [
+          8,
+          32,
+          41,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "56625eda727c40ab0bb9ea294dec97bdd2878b264c43355ea1a0ca967d2057d3",
+        "027d5d9a993ea35bf795a7fb4e635f5172a516c3307a56251f59c39ce6499e0a",
+        "e854b632d15596529e9958c9cbf9a253ba43d3534c557fc0d2dfad7b68e4d932"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/chr/chr_shaolin_hit_up_v01.png",
+      "dependency_from_earlier_delivery": false,
+      "dimensions": [
+        96,
+        64
+      ],
+      "frames": 2,
+      "colors": 14,
+      "bboxes": [
+        [
+          7,
+          29,
+          42,
+          61
+        ],
+        [
+          4,
+          18,
+          39,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "18a8575af9d5650d50d37d2389fa0ab31b14f67fff84babae61b1eb6902a9cee",
+        "63b4461a3cef573c8edf2f16b27bd633b8e4fff19ef5b4f207b3da5a42d57cc0"
+      ],
+      "gif_durations_ms": [
+        80,
+        600
+      ]
+    },
+    {
+      "file": "assets/chr/chr_shaolin_roll_up_v01.png",
+      "dependency_from_earlier_delivery": false,
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 15,
+      "bboxes": [
+        [
+          8,
+          33,
+          39,
+          61
+        ],
+        [
+          11,
+          26,
+          37,
+          60
+        ],
+        [
+          6,
+          35,
+          42,
+          61
+        ],
+        [
+          6,
+          16,
+          42,
+          61
+        ]
+      ],
+      "frame_sha256": [
+        "9bdfffe604c1f8fcd1a83d19a5fc053b9fb31ae2146228cdadd9ca75459bb5e8",
+        "d568c1d8eeea1ef7a6d833b0a569be830444f351ed91ce0a29c36fca62c970d1",
+        "15602d42a771840fd8330b306d57740a0337e66e5c06a2decc8a00a968f11941",
+        "fc378f0a785813362a6ce79b41e865d67b523c1a062c18bec0790b4633f0b405"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        600
+      ]
+    },
+    {
+      "file": "assets/chr/chr_shaolin_down_up_v01.png",
+      "dependency_from_earlier_delivery": false,
+      "dimensions": [
+        192,
+        64
+      ],
+      "frames": 4,
+      "colors": 14,
+      "bboxes": [
+        [
+          6,
+          29,
+          39,
+          61
+        ],
+        [
+          2,
+          37,
+          44,
+          61
+        ],
+        [
+          2,
+          43,
+          47,
+          61
+        ],
+        [
+          3,
+          48,
+          45,
+          60
+        ]
+      ],
+      "frame_sha256": [
+        "e83f230d56c9d796e0620a537be9739ade5a9a64bcfd4bbeba26b2cfeaa0c8ca",
+        "a128f2afe8b79fdf7a53810777a8ae49e55f876a9296896921151bc03bc83140",
+        "cb7332f79b9040ec03b7bf2219976fcdf5b30f833c4e6f76e9b32d8fd9b4ba55",
+        "2a48cde8aef1fc2223e38117e89496aadcf5fff6c473ddcd69c1a23ad5773525"
+      ],
+      "gif_durations_ms": [
+        80,
+        80,
+        90,
+        600
+      ]
+    }
+  ]
+}

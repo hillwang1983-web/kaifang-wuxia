@@ -66,9 +66,12 @@ static func action_for(f: SimFighter) -> String:
 			return "sit"
 		"dodge", "thrown":
 			return "roll"
-		"windup", "dash", "cast":
-			return f.atk_id if f.atk_id != "" else "atk"
-		"stagger":
+		"windup", "dash", "cast", "recover":
+			if f.atk_id != "":
+				return f.atk_id
+			if f.state != "recover":
+				return "atk"
+		"stagger", "flinch":
 			return "hit"
 	if f.hurt_t > 0.0:
 		return "hit"
@@ -103,7 +106,14 @@ static func draw(ci: CanvasItem, f: SimFighter, at: Vector2, clock: float, tint:
 	var count := maxi(1, tex.get_width() / fw)
 	var act: Dictionary = data().actions.get(found[0], {})
 	var i := int(clock * float(data().fps))
-	if act.get("loop", false):
+	var wind := int(set_.get("windup", {}).get(found[0], 0))
+	if wind > 0 and wind < count and not f.is_hero():
+		# 起手 + 出手分开的动作条：预警期间停在起手末帧，出手（收招、冲刺）后从出手第一帧接着播
+		if f.state == "windup" or f.state == "cast":
+			i = mini(i, wind - 1)
+		else:
+			i = mini(wind + i, count - 1)
+	elif act.get("loop", false):
 		i %= count
 	else:
 		i = mini(i, int(act.get("hold", count - 1)))

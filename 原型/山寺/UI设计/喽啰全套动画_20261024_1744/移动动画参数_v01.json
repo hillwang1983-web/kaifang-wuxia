@@ -1,0 +1,1061 @@
+[
+  {
+    "file": "assets/npc/npc_louluo_idle_down_v01.png",
+    "action": "idle",
+    "direction": "down",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 4,
+    "fps": 12,
+    "loop": true,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "loop",
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_npc_louluo_move_down_source_v01.png",
+        "source_component_id": 3,
+        "source_crop_xywh": [
+          23,
+          61,
+          262,
+          343
+        ],
+        "uniform_scale": 0.119533527696793,
+        "scaled_size": [
+          31,
+          41
+        ],
+        "offset": [
+          4,
+          20
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": 0.0,
+        "source_floor_y": 403,
+        "lift_from_floor_native": 0,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_npc_louluo_move_down_source_v01.png",
+        "source_component_id": 2,
+        "source_crop_xywh": [
+          336,
+          59,
+          262,
+          345
+        ],
+        "uniform_scale": 0.119533527696793,
+        "scaled_size": [
+          31,
+          41
+        ],
+        "offset": [
+          4,
+          20
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": 0.0,
+        "source_floor_y": 403,
+        "lift_from_floor_native": 0,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_npc_louluo_move_down_source_v01.png",
+        "source_component_id": 4,
+        "source_crop_xywh": [
+          650,
+          64,
+          263,
+          340
+        ],
+        "uniform_scale": 0.119533527696793,
+        "scaled_size": [
+          31,
+          41
+        ],
+        "offset": [
+          4,
+          20
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": 0.0,
+        "source_floor_y": 403,
+        "lift_from_floor_native": 0,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_npc_louluo_move_down_source_v01.png",
+        "source_component_id": 1,
+        "source_crop_xywh": [
+          962,
+          58,
+          264,
+          346
+        ],
+        "uniform_scale": 0.119533527696793,
+        "scaled_size": [
+          32,
+          41
+        ],
+        "offset": [
+          4,
+          20
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": 0.0,
+        "source_floor_y": 403,
+        "lift_from_floor_native": 0,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      }
+    ]
+  },
+  {
+    "file": "assets/npc/npc_louluo_walk_down_v01.png",
+    "action": "walk",
+    "direction": "down",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 6,
+    "fps": 12,
+    "loop": true,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "loop",
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_npc_louluo_move_down_source_v01.png",
+        "source_component_id": 13,
+        "source_crop_xywh": [
+          13,
+          470,
+          258,
+          331
+        ],
+        "uniform_scale": 0.119533527696793,
+        "scaled_size": [
+          31,
+          40
+        ],
+        "offset": [
+          4,
+          21
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": 0.0,
+        "source_floor_y": 800,
+        "lift_from_floor_native": 0,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_npc_louluo_move_down_source_v01.png",
+        "source_component_id": 12,
+        "source_crop_xywh": [
+          331,
+          464,
+          259,
+          337
+        ],
+        "uniform_scale": 0.119533527696793,
+        "scaled_size": [
+          31,
+          40
+        ],
+        "offset": [
+          5,
+          21
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": 0.0,
+        "source_floor_y": 800,
+        "lift_from_floor_native": 0,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_npc_louluo_move_down_source_v01.png",
+        "source_component_id": 14,
+        "source_crop_xywh": [
+          645,
+          470,
+          250,
+          309
+        ],
+        "uniform_scale": 0.119533527696793,
+        "scaled_size": [
+          30,
+          37
+        ],
+        "offset": [
+          5,
+          21
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": 0.0,
+        "source_floor_y": 800,
+        "lift_from_floor_native": 3,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_npc_louluo_move_down_gaitfix_source_v01.png",
+        "source_component_id": 15,
+        "source_crop_xywh": [
+          1038,
+          464,
+          183,
+          334
+        ],
+        "uniform_scale": 0.1191860465116279,
+        "scaled_size": [
+          22,
+          40
+        ],
+        "offset": [
+          13,
+          21
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": 0.0,
+        "source_floor_y": 799,
+        "lift_from_floor_native": 0,
+        "region_selection": {
+          "original_source": "assets/ref/ref_npc_louluo_move_down_source_v01.png",
+          "original_crop": [
+            954,
+            470,
+            257,
+            331
+          ],
+          "original_offset": [
+            4,
+            21
+          ],
+          "AI_corrected_region_native_xywh": [
+            14,
+            51,
+            20,
+            13
+          ],
+          "reason": "仅采用AI反相步态的膝下/鞋片，原图上身/背棍/背带保留，避免修正图重绘带来身份变化"
+        },
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      },
+      {
+        "index": 4,
+        "source": "assets/ref/ref_npc_louluo_move_down_gaitfix_source_v01.png",
+        "source_component_id": 16,
+        "source_crop_xywh": [
+          1272,
+          465,
+          258,
+          335
+        ],
+        "uniform_scale": 0.1191860465116279,
+        "scaled_size": [
+          31,
+          40
+        ],
+        "offset": [
+          4,
+          21
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": 0.0,
+        "source_floor_y": 799,
+        "lift_from_floor_native": 0,
+        "region_selection": {
+          "original_source": "assets/ref/ref_npc_louluo_move_down_source_v01.png",
+          "original_crop": [
+            1263,
+            471,
+            262,
+            330
+          ],
+          "original_offset": [
+            5,
+            22
+          ],
+          "AI_corrected_region_native_xywh": [
+            14,
+            51,
+            20,
+            13
+          ],
+          "reason": "仅采用AI反相步态的膝下/鞋片，原图上身/背棍/背带保留，避免修正图重绘带来身份变化"
+        },
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      },
+      {
+        "index": 5,
+        "source": "assets/ref/ref_npc_louluo_move_down_gaitfix_source_v01.png",
+        "source_component_id": 17,
+        "source_crop_xywh": [
+          1577,
+          465,
+          252,
+          335
+        ],
+        "uniform_scale": 0.1191860465116279,
+        "scaled_size": [
+          30,
+          40
+        ],
+        "offset": [
+          4,
+          21
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": 0.0,
+        "source_floor_y": 799,
+        "lift_from_floor_native": 0,
+        "region_selection": {
+          "original_source": "assets/ref/ref_npc_louluo_move_down_source_v01.png",
+          "original_crop": [
+            1565,
+            470,
+            247,
+            331
+          ],
+          "original_offset": [
+            4,
+            21
+          ],
+          "AI_corrected_region_native_xywh": [
+            14,
+            51,
+            20,
+            13
+          ],
+          "reason": "仅采用AI反相步态的膝下/鞋片，原图上身/背棍/背带保留，避免修正图重绘带来身份变化"
+        },
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      }
+    ]
+  },
+  {
+    "file": "assets/npc/npc_louluo_idle_left_v01.png",
+    "action": "idle",
+    "direction": "left",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 4,
+    "fps": 12,
+    "loop": true,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "loop",
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_npc_louluo_move_left_source_v01.png",
+        "source_component_id": 2,
+        "source_crop_xywh": [
+          51,
+          68,
+          273,
+          362
+        ],
+        "uniform_scale": 0.1132596685082873,
+        "scaled_size": [
+          31,
+          41
+        ],
+        "offset": [
+          4,
+          20
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": 1.25,
+        "source_floor_y": 429,
+        "lift_from_floor_native": 0,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_npc_louluo_move_left_source_v01.png",
+        "source_component_id": 3,
+        "source_crop_xywh": [
+          351,
+          68,
+          261,
+          362
+        ],
+        "uniform_scale": 0.1132596685082873,
+        "scaled_size": [
+          30,
+          41
+        ],
+        "offset": [
+          4,
+          20
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": 1.25,
+        "source_floor_y": 429,
+        "lift_from_floor_native": 0,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_npc_louluo_move_left_source_v01.png",
+        "source_component_id": 1,
+        "source_crop_xywh": [
+          639,
+          67,
+          263,
+          363
+        ],
+        "uniform_scale": 0.1132596685082873,
+        "scaled_size": [
+          30,
+          41
+        ],
+        "offset": [
+          5,
+          20
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": 1.25,
+        "source_floor_y": 429,
+        "lift_from_floor_native": 0,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_npc_louluo_move_left_source_v01.png",
+        "source_component_id": 4,
+        "source_crop_xywh": [
+          932,
+          70,
+          264,
+          360
+        ],
+        "uniform_scale": 0.1132596685082873,
+        "scaled_size": [
+          30,
+          41
+        ],
+        "offset": [
+          5,
+          20
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": 1.25,
+        "source_floor_y": 429,
+        "lift_from_floor_native": 0,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      }
+    ]
+  },
+  {
+    "file": "assets/npc/npc_louluo_walk_left_v01.png",
+    "action": "walk",
+    "direction": "left",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 6,
+    "fps": 12,
+    "loop": true,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "loop",
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_npc_louluo_move_left_source_v01.png",
+        "source_component_id": 13,
+        "source_crop_xywh": [
+          34,
+          469,
+          286,
+          336
+        ],
+        "uniform_scale": 0.1132596685082873,
+        "scaled_size": [
+          32,
+          38
+        ],
+        "offset": [
+          7,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": 1.25,
+        "source_floor_y": 809,
+        "lift_from_floor_native": 1,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_npc_louluo_move_left_source_v01.png",
+        "source_component_id": 14,
+        "source_crop_xywh": [
+          338,
+          470,
+          279,
+          337
+        ],
+        "uniform_scale": 0.1132596685082873,
+        "scaled_size": [
+          32,
+          38
+        ],
+        "offset": [
+          6,
+          23
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": 1.25,
+        "source_floor_y": 809,
+        "lift_from_floor_native": 0,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_npc_louluo_move_left_source_v01.png",
+        "source_component_id": 15,
+        "source_crop_xywh": [
+          630,
+          470,
+          272,
+          340
+        ],
+        "uniform_scale": 0.1132596685082873,
+        "scaled_size": [
+          31,
+          39
+        ],
+        "offset": [
+          6,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": 1.25,
+        "source_floor_y": 809,
+        "lift_from_floor_native": 0,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_npc_louluo_move_left_source_v01.png",
+        "source_component_id": 16,
+        "source_crop_xywh": [
+          943,
+          471,
+          285,
+          337
+        ],
+        "uniform_scale": 0.1132596685082873,
+        "scaled_size": [
+          32,
+          38
+        ],
+        "offset": [
+          8,
+          23
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": 1.25,
+        "source_floor_y": 809,
+        "lift_from_floor_native": 0,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      },
+      {
+        "index": 4,
+        "source": "assets/ref/ref_npc_louluo_move_left_source_v01.png",
+        "source_component_id": 11,
+        "source_crop_xywh": [
+          1257,
+          464,
+          274,
+          341
+        ],
+        "uniform_scale": 0.1132596685082873,
+        "scaled_size": [
+          31,
+          39
+        ],
+        "offset": [
+          7,
+          21
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": 1.25,
+        "source_floor_y": 809,
+        "lift_from_floor_native": 1,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      },
+      {
+        "index": 5,
+        "source": "assets/ref/ref_npc_louluo_move_left_source_v01.png",
+        "source_component_id": 12,
+        "source_crop_xywh": [
+          1569,
+          466,
+          261,
+          343
+        ],
+        "uniform_scale": 0.1132596685082873,
+        "scaled_size": [
+          30,
+          39
+        ],
+        "offset": [
+          6,
+          22
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": 1.25,
+        "source_floor_y": 809,
+        "lift_from_floor_native": 0,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      }
+    ]
+  },
+  {
+    "file": "assets/npc/npc_louluo_idle_up_v01.png",
+    "action": "idle",
+    "direction": "up",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 4,
+    "fps": 12,
+    "loop": true,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "loop",
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_npc_louluo_move_up_idlefix_source_v01.png",
+        "source_component_id": 1,
+        "source_crop_xywh": [
+          68,
+          79,
+          263,
+          322
+        ],
+        "uniform_scale": 0.12732919254658384,
+        "scaled_size": [
+          33,
+          41
+        ],
+        "offset": [
+          13,
+          20
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": -0.75,
+        "source_floor_y": 400,
+        "lift_from_floor_native": 0,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_npc_louluo_move_up_idlefix_source_v01.png",
+        "source_component_id": 2,
+        "source_crop_xywh": [
+          382,
+          79,
+          262,
+          322
+        ],
+        "uniform_scale": 0.12732919254658384,
+        "scaled_size": [
+          33,
+          41
+        ],
+        "offset": [
+          13,
+          20
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": -0.75,
+        "source_floor_y": 400,
+        "lift_from_floor_native": 0,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_npc_louluo_move_up_idlefix_source_v01.png",
+        "source_component_id": 3,
+        "source_crop_xywh": [
+          695,
+          79,
+          264,
+          322
+        ],
+        "uniform_scale": 0.12732919254658384,
+        "scaled_size": [
+          34,
+          41
+        ],
+        "offset": [
+          13,
+          20
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": -0.75,
+        "source_floor_y": 400,
+        "lift_from_floor_native": 0,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_npc_louluo_move_up_idlefix_source_v01.png",
+        "source_component_id": 4,
+        "source_crop_xywh": [
+          1009,
+          79,
+          264,
+          322
+        ],
+        "uniform_scale": 0.12732919254658384,
+        "scaled_size": [
+          34,
+          41
+        ],
+        "offset": [
+          13,
+          20
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": -0.75,
+        "source_floor_y": 400,
+        "lift_from_floor_native": 0,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      }
+    ]
+  },
+  {
+    "file": "assets/npc/npc_louluo_walk_up_v01.png",
+    "action": "walk",
+    "direction": "up",
+    "frame_size": [
+      48,
+      64
+    ],
+    "frame_count": 6,
+    "fps": 12,
+    "loop": true,
+    "anchor": [
+      24,
+      60
+    ],
+    "gap": 0,
+    "horizontal_strip": true,
+    "hold_frames": [],
+    "end_behavior": "loop",
+    "frames": [
+      {
+        "index": 0,
+        "source": "assets/ref/ref_npc_louluo_move_up_source_v01.png",
+        "source_component_id": 13,
+        "source_crop_xywh": [
+          64,
+          430,
+          267,
+          357
+        ],
+        "uniform_scale": 0.11484593837535013,
+        "scaled_size": [
+          31,
+          41
+        ],
+        "offset": [
+          15,
+          19
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": -0.75,
+        "source_floor_y": 792,
+        "lift_from_floor_native": 1,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      },
+      {
+        "index": 1,
+        "source": "assets/ref/ref_npc_louluo_move_up_source_v01.png",
+        "source_component_id": 10,
+        "source_crop_xywh": [
+          371,
+          425,
+          270,
+          362
+        ],
+        "uniform_scale": 0.11484593837535013,
+        "scaled_size": [
+          31,
+          42
+        ],
+        "offset": [
+          14,
+          18
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": -0.75,
+        "source_floor_y": 792,
+        "lift_from_floor_native": 1,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      },
+      {
+        "index": 2,
+        "source": "assets/ref/ref_npc_louluo_move_up_source_v01.png",
+        "source_component_id": 14,
+        "source_crop_xywh": [
+          677,
+          430,
+          270,
+          360
+        ],
+        "uniform_scale": 0.11484593837535013,
+        "scaled_size": [
+          31,
+          41
+        ],
+        "offset": [
+          15,
+          20
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": -0.75,
+        "source_floor_y": 792,
+        "lift_from_floor_native": 0,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      },
+      {
+        "index": 3,
+        "source": "assets/ref/ref_npc_louluo_move_up_source_v01.png",
+        "source_component_id": 15,
+        "source_crop_xywh": [
+          1005,
+          431,
+          268,
+          362
+        ],
+        "uniform_scale": 0.11484593837535013,
+        "scaled_size": [
+          31,
+          42
+        ],
+        "offset": [
+          15,
+          19
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": -0.75,
+        "source_floor_y": 792,
+        "lift_from_floor_native": 0,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      },
+      {
+        "index": 4,
+        "source": "assets/ref/ref_npc_louluo_move_up_source_v01.png",
+        "source_component_id": 11,
+        "source_crop_xywh": [
+          1308,
+          427,
+          268,
+          366
+        ],
+        "uniform_scale": 0.11484593837535013,
+        "scaled_size": [
+          31,
+          42
+        ],
+        "offset": [
+          14,
+          19
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": -0.75,
+        "source_floor_y": 792,
+        "lift_from_floor_native": 0,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      },
+      {
+        "index": 5,
+        "source": "assets/ref/ref_npc_louluo_move_up_source_v01.png",
+        "source_component_id": 12,
+        "source_crop_xywh": [
+          1609,
+          427,
+          265,
+          366
+        ],
+        "uniform_scale": 0.11484593837535013,
+        "scaled_size": [
+          30,
+          42
+        ],
+        "offset": [
+          15,
+          19
+        ],
+        "anchor": [
+          24,
+          60
+        ],
+        "head_ground_delta": -0.75,
+        "source_floor_y": 792,
+        "lift_from_floor_native": 0,
+        "region_selection": null,
+        "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+      }
+    ]
+  }
+]

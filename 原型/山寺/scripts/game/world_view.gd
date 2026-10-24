@@ -52,7 +52,8 @@ func _process(dt: float) -> void:
 		trails[id] = list.filter(func(tr): return tr.t > 0.0)
 	if world:
 		for f in world.fighters:
-			var act := SpriteLib.action_for(f)
+			# 动作或状态一变就从头播（同一招从预警进到出手也算一变，起手 / 出手分段靠这个）
+			var act := SpriteLib.action_for(f) + "|" + f.state
 			var a: Dictionary = _anim.get(f.id, {})
 			if a.get("action", "") != act:
 				_anim[f.id] = {"action": act, "t": 0.0}
@@ -243,7 +244,9 @@ func _draw() -> void:
 			continue
 		for tr in trails[id]:
 			_body(f, tr.pos, Color(1, 1, 1, tr.t / 0.22 * 0.35))
-	var list := world.fighters.filter(func(f): return f.alive or f.kind == "partner")
+	# 刚倒下的敌人有倒地动作条的，多画 1.2 秒把倒地播完
+	var list := world.fighters.filter(func(f): return f.alive or f.kind == "partner" 		or (not f.is_hero() and float(_anim.get(f.id, {}).get("t", 9.0)) < 1.2 and SpriteLib.prefix_for(f) != ""
+			and not SpriteLib.resolve(SpriteLib.prefix_for(f), "down", "down").is_empty() and SpriteLib.resolve(SpriteLib.prefix_for(f), "down", "down")[0] == "down"))
 	list.sort_custom(func(a, b): return a.pos.y < b.pos.y)
 	for f in list:
 		_fighter(f)

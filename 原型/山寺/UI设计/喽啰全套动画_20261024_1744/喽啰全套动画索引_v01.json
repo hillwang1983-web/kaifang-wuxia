@@ -1,0 +1,2343 @@
+{
+  "character": "louluo",
+  "frame_size": [
+    48,
+    64
+  ],
+  "anchor": [
+    24,
+    60
+  ],
+  "fps": 12,
+  "directions": [
+    "down",
+    "left",
+    "up"
+  ],
+  "right": "mirror_left",
+  "action_counts_per_direction": {
+    "idle": 4,
+    "walk": 6,
+    "atk": 4,
+    "hit": 2,
+    "down": 4
+  },
+  "total_frames": 60,
+  "total_strips": 15,
+  "palette_colors": 16,
+  "animations": [
+    {
+      "file": "assets/npc/npc_louluo_idle_down_v01.png",
+      "action": "idle",
+      "direction": "down",
+      "frame_size": [
+        48,
+        64
+      ],
+      "frame_count": 4,
+      "fps": 12,
+      "loop": true,
+      "anchor": [
+        24,
+        60
+      ],
+      "gap": 0,
+      "horizontal_strip": true,
+      "hold_frames": [],
+      "end_behavior": "loop",
+      "frames": [
+        {
+          "index": 0,
+          "source": "assets/ref/ref_npc_louluo_move_down_source_v01.png",
+          "source_component_id": 3,
+          "source_crop_xywh": [
+            23,
+            61,
+            262,
+            343
+          ],
+          "uniform_scale": 0.119533527696793,
+          "scaled_size": [
+            31,
+            41
+          ],
+          "offset": [
+            4,
+            20
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": 0.0,
+          "source_floor_y": 403,
+          "lift_from_floor_native": 0,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        },
+        {
+          "index": 1,
+          "source": "assets/ref/ref_npc_louluo_move_down_source_v01.png",
+          "source_component_id": 2,
+          "source_crop_xywh": [
+            336,
+            59,
+            262,
+            345
+          ],
+          "uniform_scale": 0.119533527696793,
+          "scaled_size": [
+            31,
+            41
+          ],
+          "offset": [
+            4,
+            20
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": 0.0,
+          "source_floor_y": 403,
+          "lift_from_floor_native": 0,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        },
+        {
+          "index": 2,
+          "source": "assets/ref/ref_npc_louluo_move_down_source_v01.png",
+          "source_component_id": 4,
+          "source_crop_xywh": [
+            650,
+            64,
+            263,
+            340
+          ],
+          "uniform_scale": 0.119533527696793,
+          "scaled_size": [
+            31,
+            41
+          ],
+          "offset": [
+            4,
+            20
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": 0.0,
+          "source_floor_y": 403,
+          "lift_from_floor_native": 0,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        },
+        {
+          "index": 3,
+          "source": "assets/ref/ref_npc_louluo_move_down_source_v01.png",
+          "source_component_id": 1,
+          "source_crop_xywh": [
+            962,
+            58,
+            264,
+            346
+          ],
+          "uniform_scale": 0.119533527696793,
+          "scaled_size": [
+            32,
+            41
+          ],
+          "offset": [
+            4,
+            20
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": 0.0,
+          "source_floor_y": 403,
+          "lift_from_floor_native": 0,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        }
+      ]
+    },
+    {
+      "file": "assets/npc/npc_louluo_walk_down_v01.png",
+      "action": "walk",
+      "direction": "down",
+      "frame_size": [
+        48,
+        64
+      ],
+      "frame_count": 6,
+      "fps": 12,
+      "loop": true,
+      "anchor": [
+        24,
+        60
+      ],
+      "gap": 0,
+      "horizontal_strip": true,
+      "hold_frames": [],
+      "end_behavior": "loop",
+      "frames": [
+        {
+          "index": 0,
+          "source": "assets/ref/ref_npc_louluo_move_down_source_v01.png",
+          "source_component_id": 13,
+          "source_crop_xywh": [
+            13,
+            470,
+            258,
+            331
+          ],
+          "uniform_scale": 0.119533527696793,
+          "scaled_size": [
+            31,
+            40
+          ],
+          "offset": [
+            4,
+            21
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": 0.0,
+          "source_floor_y": 800,
+          "lift_from_floor_native": 0,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        },
+        {
+          "index": 1,
+          "source": "assets/ref/ref_npc_louluo_move_down_source_v01.png",
+          "source_component_id": 12,
+          "source_crop_xywh": [
+            331,
+            464,
+            259,
+            337
+          ],
+          "uniform_scale": 0.119533527696793,
+          "scaled_size": [
+            31,
+            40
+          ],
+          "offset": [
+            5,
+            21
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": 0.0,
+          "source_floor_y": 800,
+          "lift_from_floor_native": 0,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        },
+        {
+          "index": 2,
+          "source": "assets/ref/ref_npc_louluo_move_down_source_v01.png",
+          "source_component_id": 14,
+          "source_crop_xywh": [
+            645,
+            470,
+            250,
+            309
+          ],
+          "uniform_scale": 0.119533527696793,
+          "scaled_size": [
+            30,
+            37
+          ],
+          "offset": [
+            5,
+            21
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": 0.0,
+          "source_floor_y": 800,
+          "lift_from_floor_native": 3,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        },
+        {
+          "index": 3,
+          "source": "assets/ref/ref_npc_louluo_move_down_gaitfix_source_v01.png",
+          "source_component_id": 15,
+          "source_crop_xywh": [
+            1038,
+            464,
+            183,
+            334
+          ],
+          "uniform_scale": 0.1191860465116279,
+          "scaled_size": [
+            22,
+            40
+          ],
+          "offset": [
+            13,
+            21
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": 0.0,
+          "source_floor_y": 799,
+          "lift_from_floor_native": 0,
+          "region_selection": {
+            "original_source": "assets/ref/ref_npc_louluo_move_down_source_v01.png",
+            "original_crop": [
+              954,
+              470,
+              257,
+              331
+            ],
+            "original_offset": [
+              4,
+              21
+            ],
+            "AI_corrected_region_native_xywh": [
+              14,
+              51,
+              20,
+              13
+            ],
+            "reason": "仅采用AI反相步态的膝下/鞋片，原图上身/背棍/背带保留，避免修正图重绘带来身份变化"
+          },
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        },
+        {
+          "index": 4,
+          "source": "assets/ref/ref_npc_louluo_move_down_gaitfix_source_v01.png",
+          "source_component_id": 16,
+          "source_crop_xywh": [
+            1272,
+            465,
+            258,
+            335
+          ],
+          "uniform_scale": 0.1191860465116279,
+          "scaled_size": [
+            31,
+            40
+          ],
+          "offset": [
+            4,
+            21
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": 0.0,
+          "source_floor_y": 799,
+          "lift_from_floor_native": 0,
+          "region_selection": {
+            "original_source": "assets/ref/ref_npc_louluo_move_down_source_v01.png",
+            "original_crop": [
+              1263,
+              471,
+              262,
+              330
+            ],
+            "original_offset": [
+              5,
+              22
+            ],
+            "AI_corrected_region_native_xywh": [
+              14,
+              51,
+              20,
+              13
+            ],
+            "reason": "仅采用AI反相步态的膝下/鞋片，原图上身/背棍/背带保留，避免修正图重绘带来身份变化"
+          },
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        },
+        {
+          "index": 5,
+          "source": "assets/ref/ref_npc_louluo_move_down_gaitfix_source_v01.png",
+          "source_component_id": 17,
+          "source_crop_xywh": [
+            1577,
+            465,
+            252,
+            335
+          ],
+          "uniform_scale": 0.1191860465116279,
+          "scaled_size": [
+            30,
+            40
+          ],
+          "offset": [
+            4,
+            21
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": 0.0,
+          "source_floor_y": 799,
+          "lift_from_floor_native": 0,
+          "region_selection": {
+            "original_source": "assets/ref/ref_npc_louluo_move_down_source_v01.png",
+            "original_crop": [
+              1565,
+              470,
+              247,
+              331
+            ],
+            "original_offset": [
+              4,
+              21
+            ],
+            "AI_corrected_region_native_xywh": [
+              14,
+              51,
+              20,
+              13
+            ],
+            "reason": "仅采用AI反相步态的膝下/鞋片，原图上身/背棍/背带保留，避免修正图重绘带来身份变化"
+          },
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        }
+      ]
+    },
+    {
+      "file": "assets/npc/npc_louluo_idle_left_v01.png",
+      "action": "idle",
+      "direction": "left",
+      "frame_size": [
+        48,
+        64
+      ],
+      "frame_count": 4,
+      "fps": 12,
+      "loop": true,
+      "anchor": [
+        24,
+        60
+      ],
+      "gap": 0,
+      "horizontal_strip": true,
+      "hold_frames": [],
+      "end_behavior": "loop",
+      "frames": [
+        {
+          "index": 0,
+          "source": "assets/ref/ref_npc_louluo_move_left_source_v01.png",
+          "source_component_id": 2,
+          "source_crop_xywh": [
+            51,
+            68,
+            273,
+            362
+          ],
+          "uniform_scale": 0.1132596685082873,
+          "scaled_size": [
+            31,
+            41
+          ],
+          "offset": [
+            4,
+            20
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": 1.25,
+          "source_floor_y": 429,
+          "lift_from_floor_native": 0,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        },
+        {
+          "index": 1,
+          "source": "assets/ref/ref_npc_louluo_move_left_source_v01.png",
+          "source_component_id": 3,
+          "source_crop_xywh": [
+            351,
+            68,
+            261,
+            362
+          ],
+          "uniform_scale": 0.1132596685082873,
+          "scaled_size": [
+            30,
+            41
+          ],
+          "offset": [
+            4,
+            20
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": 1.25,
+          "source_floor_y": 429,
+          "lift_from_floor_native": 0,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        },
+        {
+          "index": 2,
+          "source": "assets/ref/ref_npc_louluo_move_left_source_v01.png",
+          "source_component_id": 1,
+          "source_crop_xywh": [
+            639,
+            67,
+            263,
+            363
+          ],
+          "uniform_scale": 0.1132596685082873,
+          "scaled_size": [
+            30,
+            41
+          ],
+          "offset": [
+            5,
+            20
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": 1.25,
+          "source_floor_y": 429,
+          "lift_from_floor_native": 0,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        },
+        {
+          "index": 3,
+          "source": "assets/ref/ref_npc_louluo_move_left_source_v01.png",
+          "source_component_id": 4,
+          "source_crop_xywh": [
+            932,
+            70,
+            264,
+            360
+          ],
+          "uniform_scale": 0.1132596685082873,
+          "scaled_size": [
+            30,
+            41
+          ],
+          "offset": [
+            5,
+            20
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": 1.25,
+          "source_floor_y": 429,
+          "lift_from_floor_native": 0,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        }
+      ]
+    },
+    {
+      "file": "assets/npc/npc_louluo_walk_left_v01.png",
+      "action": "walk",
+      "direction": "left",
+      "frame_size": [
+        48,
+        64
+      ],
+      "frame_count": 6,
+      "fps": 12,
+      "loop": true,
+      "anchor": [
+        24,
+        60
+      ],
+      "gap": 0,
+      "horizontal_strip": true,
+      "hold_frames": [],
+      "end_behavior": "loop",
+      "frames": [
+        {
+          "index": 0,
+          "source": "assets/ref/ref_npc_louluo_move_left_source_v01.png",
+          "source_component_id": 13,
+          "source_crop_xywh": [
+            34,
+            469,
+            286,
+            336
+          ],
+          "uniform_scale": 0.1132596685082873,
+          "scaled_size": [
+            32,
+            38
+          ],
+          "offset": [
+            7,
+            22
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": 1.25,
+          "source_floor_y": 809,
+          "lift_from_floor_native": 1,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        },
+        {
+          "index": 1,
+          "source": "assets/ref/ref_npc_louluo_move_left_source_v01.png",
+          "source_component_id": 14,
+          "source_crop_xywh": [
+            338,
+            470,
+            279,
+            337
+          ],
+          "uniform_scale": 0.1132596685082873,
+          "scaled_size": [
+            32,
+            38
+          ],
+          "offset": [
+            6,
+            23
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": 1.25,
+          "source_floor_y": 809,
+          "lift_from_floor_native": 0,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        },
+        {
+          "index": 2,
+          "source": "assets/ref/ref_npc_louluo_move_left_source_v01.png",
+          "source_component_id": 15,
+          "source_crop_xywh": [
+            630,
+            470,
+            272,
+            340
+          ],
+          "uniform_scale": 0.1132596685082873,
+          "scaled_size": [
+            31,
+            39
+          ],
+          "offset": [
+            6,
+            22
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": 1.25,
+          "source_floor_y": 809,
+          "lift_from_floor_native": 0,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        },
+        {
+          "index": 3,
+          "source": "assets/ref/ref_npc_louluo_move_left_source_v01.png",
+          "source_component_id": 16,
+          "source_crop_xywh": [
+            943,
+            471,
+            285,
+            337
+          ],
+          "uniform_scale": 0.1132596685082873,
+          "scaled_size": [
+            32,
+            38
+          ],
+          "offset": [
+            8,
+            23
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": 1.25,
+          "source_floor_y": 809,
+          "lift_from_floor_native": 0,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        },
+        {
+          "index": 4,
+          "source": "assets/ref/ref_npc_louluo_move_left_source_v01.png",
+          "source_component_id": 11,
+          "source_crop_xywh": [
+            1257,
+            464,
+            274,
+            341
+          ],
+          "uniform_scale": 0.1132596685082873,
+          "scaled_size": [
+            31,
+            39
+          ],
+          "offset": [
+            7,
+            21
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": 1.25,
+          "source_floor_y": 809,
+          "lift_from_floor_native": 1,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        },
+        {
+          "index": 5,
+          "source": "assets/ref/ref_npc_louluo_move_left_source_v01.png",
+          "source_component_id": 12,
+          "source_crop_xywh": [
+            1569,
+            466,
+            261,
+            343
+          ],
+          "uniform_scale": 0.1132596685082873,
+          "scaled_size": [
+            30,
+            39
+          ],
+          "offset": [
+            6,
+            22
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": 1.25,
+          "source_floor_y": 809,
+          "lift_from_floor_native": 0,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        }
+      ]
+    },
+    {
+      "file": "assets/npc/npc_louluo_idle_up_v01.png",
+      "action": "idle",
+      "direction": "up",
+      "frame_size": [
+        48,
+        64
+      ],
+      "frame_count": 4,
+      "fps": 12,
+      "loop": true,
+      "anchor": [
+        24,
+        60
+      ],
+      "gap": 0,
+      "horizontal_strip": true,
+      "hold_frames": [],
+      "end_behavior": "loop",
+      "frames": [
+        {
+          "index": 0,
+          "source": "assets/ref/ref_npc_louluo_move_up_idlefix_source_v01.png",
+          "source_component_id": 1,
+          "source_crop_xywh": [
+            68,
+            79,
+            263,
+            322
+          ],
+          "uniform_scale": 0.12732919254658384,
+          "scaled_size": [
+            33,
+            41
+          ],
+          "offset": [
+            13,
+            20
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": -0.75,
+          "source_floor_y": 400,
+          "lift_from_floor_native": 0,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        },
+        {
+          "index": 1,
+          "source": "assets/ref/ref_npc_louluo_move_up_idlefix_source_v01.png",
+          "source_component_id": 2,
+          "source_crop_xywh": [
+            382,
+            79,
+            262,
+            322
+          ],
+          "uniform_scale": 0.12732919254658384,
+          "scaled_size": [
+            33,
+            41
+          ],
+          "offset": [
+            13,
+            20
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": -0.75,
+          "source_floor_y": 400,
+          "lift_from_floor_native": 0,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        },
+        {
+          "index": 2,
+          "source": "assets/ref/ref_npc_louluo_move_up_idlefix_source_v01.png",
+          "source_component_id": 3,
+          "source_crop_xywh": [
+            695,
+            79,
+            264,
+            322
+          ],
+          "uniform_scale": 0.12732919254658384,
+          "scaled_size": [
+            34,
+            41
+          ],
+          "offset": [
+            13,
+            20
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": -0.75,
+          "source_floor_y": 400,
+          "lift_from_floor_native": 0,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        },
+        {
+          "index": 3,
+          "source": "assets/ref/ref_npc_louluo_move_up_idlefix_source_v01.png",
+          "source_component_id": 4,
+          "source_crop_xywh": [
+            1009,
+            79,
+            264,
+            322
+          ],
+          "uniform_scale": 0.12732919254658384,
+          "scaled_size": [
+            34,
+            41
+          ],
+          "offset": [
+            13,
+            20
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": -0.75,
+          "source_floor_y": 400,
+          "lift_from_floor_native": 0,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        }
+      ]
+    },
+    {
+      "file": "assets/npc/npc_louluo_walk_up_v01.png",
+      "action": "walk",
+      "direction": "up",
+      "frame_size": [
+        48,
+        64
+      ],
+      "frame_count": 6,
+      "fps": 12,
+      "loop": true,
+      "anchor": [
+        24,
+        60
+      ],
+      "gap": 0,
+      "horizontal_strip": true,
+      "hold_frames": [],
+      "end_behavior": "loop",
+      "frames": [
+        {
+          "index": 0,
+          "source": "assets/ref/ref_npc_louluo_move_up_source_v01.png",
+          "source_component_id": 13,
+          "source_crop_xywh": [
+            64,
+            430,
+            267,
+            357
+          ],
+          "uniform_scale": 0.11484593837535013,
+          "scaled_size": [
+            31,
+            41
+          ],
+          "offset": [
+            15,
+            19
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": -0.75,
+          "source_floor_y": 792,
+          "lift_from_floor_native": 1,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        },
+        {
+          "index": 1,
+          "source": "assets/ref/ref_npc_louluo_move_up_source_v01.png",
+          "source_component_id": 10,
+          "source_crop_xywh": [
+            371,
+            425,
+            270,
+            362
+          ],
+          "uniform_scale": 0.11484593837535013,
+          "scaled_size": [
+            31,
+            42
+          ],
+          "offset": [
+            14,
+            18
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": -0.75,
+          "source_floor_y": 792,
+          "lift_from_floor_native": 1,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        },
+        {
+          "index": 2,
+          "source": "assets/ref/ref_npc_louluo_move_up_source_v01.png",
+          "source_component_id": 14,
+          "source_crop_xywh": [
+            677,
+            430,
+            270,
+            360
+          ],
+          "uniform_scale": 0.11484593837535013,
+          "scaled_size": [
+            31,
+            41
+          ],
+          "offset": [
+            15,
+            20
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": -0.75,
+          "source_floor_y": 792,
+          "lift_from_floor_native": 0,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        },
+        {
+          "index": 3,
+          "source": "assets/ref/ref_npc_louluo_move_up_source_v01.png",
+          "source_component_id": 15,
+          "source_crop_xywh": [
+            1005,
+            431,
+            268,
+            362
+          ],
+          "uniform_scale": 0.11484593837535013,
+          "scaled_size": [
+            31,
+            42
+          ],
+          "offset": [
+            15,
+            19
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": -0.75,
+          "source_floor_y": 792,
+          "lift_from_floor_native": 0,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        },
+        {
+          "index": 4,
+          "source": "assets/ref/ref_npc_louluo_move_up_source_v01.png",
+          "source_component_id": 11,
+          "source_crop_xywh": [
+            1308,
+            427,
+            268,
+            366
+          ],
+          "uniform_scale": 0.11484593837535013,
+          "scaled_size": [
+            31,
+            42
+          ],
+          "offset": [
+            14,
+            19
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": -0.75,
+          "source_floor_y": 792,
+          "lift_from_floor_native": 0,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        },
+        {
+          "index": 5,
+          "source": "assets/ref/ref_npc_louluo_move_up_source_v01.png",
+          "source_component_id": 12,
+          "source_crop_xywh": [
+            1609,
+            427,
+            265,
+            366
+          ],
+          "uniform_scale": 0.11484593837535013,
+          "scaled_size": [
+            30,
+            42
+          ],
+          "offset": [
+            15,
+            19
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "head_ground_delta": -0.75,
+          "source_floor_y": 792,
+          "lift_from_floor_native": 0,
+          "region_selection": null,
+          "registration": "首帧双脚参考中点校准同方向头部与地面根；步态抬脚不按单只鞋重居中，所有原点不变"
+        }
+      ]
+    },
+    {
+      "file": "assets/npc/npc_louluo_atk_down_v01.png",
+      "action": "atk",
+      "direction": "down",
+      "frame_size": [
+        48,
+        64
+      ],
+      "frame_count": 4,
+      "fps": 12,
+      "loop": false,
+      "anchor": [
+        24,
+        60
+      ],
+      "gap": 0,
+      "horizontal_strip": true,
+      "hold_frames": [],
+      "end_behavior": "return_to_idle_by_controller",
+      "frames": [
+        {
+          "index": 0,
+          "source": "assets/ref/ref_npc_louluo_combat_down_source_v01.png",
+          "source_component_id": 2,
+          "source_crop_xywh": [
+            16,
+            160,
+            302,
+            341
+          ],
+          "uniform_scale": 0.11781609195402298,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            36,
+            40
+          ],
+          "source_projected_ground_point": [
+            202,
+            499
+          ],
+          "offset": [
+            2,
+            21
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        },
+        {
+          "index": 1,
+          "source": "assets/ref/ref_npc_louluo_combat_down_source_v01.png",
+          "source_component_id": 1,
+          "source_crop_xywh": [
+            338,
+            111,
+            256,
+            398
+          ],
+          "uniform_scale": 0.11781609195402298,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            30,
+            47
+          ],
+          "source_projected_ground_point": [
+            497,
+            507
+          ],
+          "offset": [
+            5,
+            14
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        },
+        {
+          "index": 2,
+          "source": "assets/ref/ref_npc_louluo_combat_down_source_v01.png",
+          "source_component_id": 3,
+          "source_crop_xywh": [
+            650,
+            190,
+            255,
+            311
+          ],
+          "uniform_scale": 0.11781609195402298,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            30,
+            37
+          ],
+          "source_projected_ground_point": [
+            770,
+            499
+          ],
+          "offset": [
+            10,
+            24
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        },
+        {
+          "index": 3,
+          "source": "assets/ref/ref_npc_louluo_combat_down_source_v01.png",
+          "source_component_id": 4,
+          "source_crop_xywh": [
+            956,
+            202,
+            265,
+            304
+          ],
+          "uniform_scale": 0.11781609195402298,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            31,
+            36
+          ],
+          "source_projected_ground_point": [
+            1083,
+            502
+          ],
+          "offset": [
+            9,
+            25
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        }
+      ],
+      "visual_phase_frames_0based": {
+        "anticipation": [
+          0,
+          1
+        ],
+        "strike_followthrough": [
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "file": "assets/npc/npc_louluo_hit_down_v01.png",
+      "action": "hit",
+      "direction": "down",
+      "frame_size": [
+        48,
+        64
+      ],
+      "frame_count": 2,
+      "fps": 12,
+      "loop": false,
+      "anchor": [
+        24,
+        60
+      ],
+      "gap": 0,
+      "horizontal_strip": true,
+      "hold_frames": [],
+      "end_behavior": "return_to_idle_by_controller",
+      "frames": [
+        {
+          "index": 0,
+          "source": "assets/ref/ref_npc_louluo_combat_down_source_v01.png",
+          "source_component_id": 6,
+          "source_crop_xywh": [
+            17,
+            542,
+            272,
+            348
+          ],
+          "uniform_scale": 0.11781609195402298,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            32,
+            41
+          ],
+          "source_projected_ground_point": [
+            200,
+            888
+          ],
+          "offset": [
+            2,
+            20
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        },
+        {
+          "index": 1,
+          "source": "assets/ref/ref_npc_louluo_combat_down_source_v01.png",
+          "source_component_id": 7,
+          "source_crop_xywh": [
+            316,
+            614,
+            271,
+            276
+          ],
+          "uniform_scale": 0.11781609195402298,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            32,
+            33
+          ],
+          "source_projected_ground_point": [
+            505,
+            888
+          ],
+          "offset": [
+            2,
+            28
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        }
+      ]
+    },
+    {
+      "file": "assets/npc/npc_louluo_down_down_v01.png",
+      "action": "down",
+      "direction": "down",
+      "frame_size": [
+        48,
+        64
+      ],
+      "frame_count": 4,
+      "fps": 12,
+      "loop": false,
+      "anchor": [
+        24,
+        60
+      ],
+      "gap": 0,
+      "horizontal_strip": true,
+      "hold_frames": [
+        3
+      ],
+      "end_behavior": "hold_last_until_state_change",
+      "frames": [
+        {
+          "index": 0,
+          "source": "assets/ref/ref_npc_louluo_combat_down_source_v01.png",
+          "source_component_id": 8,
+          "source_crop_xywh": [
+            16,
+            912,
+            286,
+            292
+          ],
+          "uniform_scale": 0.11781609195402298,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            34,
+            34
+          ],
+          "source_projected_ground_point": [
+            175,
+            1202
+          ],
+          "offset": [
+            5,
+            27
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        },
+        {
+          "index": 1,
+          "source": "assets/ref/ref_npc_louluo_combat_down_source_v01.png",
+          "source_component_id": 10,
+          "source_crop_xywh": [
+            266,
+            997,
+            321,
+            207
+          ],
+          "uniform_scale": 0.11781609195402298,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            38,
+            24
+          ],
+          "source_projected_ground_point": [
+            433,
+            1202
+          ],
+          "offset": [
+            4,
+            37
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        },
+        {
+          "index": 2,
+          "source": "assets/ref/ref_npc_louluo_combat_down_source_v01.png",
+          "source_component_id": 11,
+          "source_crop_xywh": [
+            584,
+            1050,
+            316,
+            139
+          ],
+          "uniform_scale": 0.11781609195402298,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            37,
+            16
+          ],
+          "source_projected_ground_point": [
+            742,
+            1187
+          ],
+          "offset": [
+            6,
+            45
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        },
+        {
+          "index": 3,
+          "source": "assets/ref/ref_npc_louluo_combat_down_deathfix_source_v01.png",
+          "source_component_id": 10,
+          "source_crop_xywh": [
+            922,
+            1076,
+            317,
+            115
+          ],
+          "uniform_scale": 0.11781609195402298,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            37,
+            14
+          ],
+          "source_projected_ground_point": [
+            1080,
+            1183
+          ],
+          "offset": [
+            6,
+            48
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        }
+      ]
+    },
+    {
+      "file": "assets/npc/npc_louluo_atk_left_v01.png",
+      "action": "atk",
+      "direction": "left",
+      "frame_size": [
+        48,
+        64
+      ],
+      "frame_count": 4,
+      "fps": 12,
+      "loop": false,
+      "anchor": [
+        24,
+        60
+      ],
+      "gap": 0,
+      "horizontal_strip": true,
+      "hold_frames": [],
+      "end_behavior": "return_to_idle_by_controller",
+      "frames": [
+        {
+          "index": 0,
+          "source": "assets/ref/ref_npc_louluo_combat_left_source_v01.png",
+          "source_component_id": 2,
+          "source_crop_xywh": [
+            70,
+            174,
+            279,
+            343
+          ],
+          "uniform_scale": 0.128125,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            36,
+            44
+          ],
+          "source_projected_ground_point": [
+            192,
+            515
+          ],
+          "offset": [
+            8,
+            17
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        },
+        {
+          "index": 1,
+          "source": "assets/ref/ref_npc_louluo_combat_left_source_v01.png",
+          "source_component_id": 1,
+          "source_crop_xywh": [
+            360,
+            139,
+            224,
+            374
+          ],
+          "uniform_scale": 0.128125,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            29,
+            48
+          ],
+          "source_projected_ground_point": [
+            484,
+            511
+          ],
+          "offset": [
+            8,
+            13
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        },
+        {
+          "index": 2,
+          "source": "assets/ref/ref_npc_louluo_combat_left_slashfix_source_v01.png",
+          "source_component_id": 3,
+          "source_crop_xywh": [
+            607,
+            194,
+            309,
+            321
+          ],
+          "uniform_scale": 0.128125,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            40,
+            41
+          ],
+          "source_projected_ground_point": [
+            801,
+            515
+          ],
+          "offset": [
+            1,
+            20
+          ],
+          "integer_margin_registration": [
+            2,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        },
+        {
+          "index": 3,
+          "source": "assets/ref/ref_npc_louluo_combat_left_source_v01.png",
+          "source_component_id": 4,
+          "source_crop_xywh": [
+            971,
+            237,
+            237,
+            282
+          ],
+          "uniform_scale": 0.128125,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            30,
+            36
+          ],
+          "source_projected_ground_point": [
+            1089,
+            517
+          ],
+          "offset": [
+            9,
+            25
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        }
+      ],
+      "visual_phase_frames_0based": {
+        "anticipation": [
+          0,
+          1
+        ],
+        "strike_followthrough": [
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "file": "assets/npc/npc_louluo_hit_left_v01.png",
+      "action": "hit",
+      "direction": "left",
+      "frame_size": [
+        48,
+        64
+      ],
+      "frame_count": 2,
+      "fps": 12,
+      "loop": false,
+      "anchor": [
+        24,
+        60
+      ],
+      "gap": 0,
+      "horizontal_strip": true,
+      "hold_frames": [],
+      "end_behavior": "return_to_idle_by_controller",
+      "frames": [
+        {
+          "index": 0,
+          "source": "assets/ref/ref_npc_louluo_combat_left_source_v01.png",
+          "source_component_id": 8,
+          "source_crop_xywh": [
+            33,
+            589,
+            270,
+            320
+          ],
+          "uniform_scale": 0.128125,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            35,
+            41
+          ],
+          "source_projected_ground_point": [
+            201,
+            907
+          ],
+          "offset": [
+            2,
+            20
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        },
+        {
+          "index": 1,
+          "source": "assets/ref/ref_npc_louluo_combat_left_source_v01.png",
+          "source_component_id": 9,
+          "source_crop_xywh": [
+            338,
+            640,
+            272,
+            269
+          ],
+          "uniform_scale": 0.128125,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            35,
+            34
+          ],
+          "source_projected_ground_point": [
+            492,
+            907
+          ],
+          "offset": [
+            4,
+            27
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        }
+      ]
+    },
+    {
+      "file": "assets/npc/npc_louluo_down_left_v01.png",
+      "action": "down",
+      "direction": "left",
+      "frame_size": [
+        48,
+        64
+      ],
+      "frame_count": 4,
+      "fps": 12,
+      "loop": false,
+      "anchor": [
+        24,
+        60
+      ],
+      "gap": 0,
+      "horizontal_strip": true,
+      "hold_frames": [
+        3
+      ],
+      "end_behavior": "hold_last_until_state_change",
+      "frames": [
+        {
+          "index": 0,
+          "source": "assets/ref/ref_npc_louluo_combat_left_source_v01.png",
+          "source_component_id": 13,
+          "source_crop_xywh": [
+            66,
+            966,
+            233,
+            247
+          ],
+          "uniform_scale": 0.128125,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            30,
+            32
+          ],
+          "source_projected_ground_point": [
+            181,
+            1211
+          ],
+          "offset": [
+            9,
+            29
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        },
+        {
+          "index": 1,
+          "source": "assets/ref/ref_npc_louluo_combat_left_source_v01.png",
+          "source_component_id": 16,
+          "source_crop_xywh": [
+            314,
+            1022,
+            246,
+            182
+          ],
+          "uniform_scale": 0.128125,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            32,
+            23
+          ],
+          "source_projected_ground_point": [
+            436,
+            1202
+          ],
+          "offset": [
+            8,
+            38
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        },
+        {
+          "index": 2,
+          "source": "assets/ref/ref_npc_louluo_combat_left_source_v01.png",
+          "source_component_id": 18,
+          "source_crop_xywh": [
+            579,
+            1103,
+            319,
+            108
+          ],
+          "uniform_scale": 0.128125,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            41,
+            14
+          ],
+          "source_projected_ground_point": [
+            736,
+            1209
+          ],
+          "offset": [
+            4,
+            47
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        },
+        {
+          "index": 3,
+          "source": "assets/ref/ref_npc_louluo_combat_left_source_v01.png",
+          "source_component_id": 19,
+          "source_crop_xywh": [
+            920,
+            1111,
+            322,
+            99
+          ],
+          "uniform_scale": 0.128125,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            41,
+            13
+          ],
+          "source_projected_ground_point": [
+            1087,
+            1208
+          ],
+          "offset": [
+            3,
+            48
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        }
+      ]
+    },
+    {
+      "file": "assets/npc/npc_louluo_atk_up_v01.png",
+      "action": "atk",
+      "direction": "up",
+      "frame_size": [
+        48,
+        64
+      ],
+      "frame_count": 4,
+      "fps": 12,
+      "loop": false,
+      "anchor": [
+        24,
+        60
+      ],
+      "gap": 0,
+      "horizontal_strip": true,
+      "hold_frames": [],
+      "end_behavior": "return_to_idle_by_controller",
+      "frames": [
+        {
+          "index": 0,
+          "source": "assets/ref/ref_npc_louluo_combat_up_source_v01.png",
+          "source_component_id": 2,
+          "source_crop_xywh": [
+            53,
+            111,
+            279,
+            339
+          ],
+          "uniform_scale": 0.13183279742765272,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            37,
+            45
+          ],
+          "source_projected_ground_point": [
+            177,
+            448
+          ],
+          "offset": [
+            8,
+            16
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        },
+        {
+          "index": 1,
+          "source": "assets/ref/ref_npc_louluo_combat_up_source_v01.png",
+          "source_component_id": 1,
+          "source_crop_xywh": [
+            349,
+            107,
+            231,
+            343
+          ],
+          "uniform_scale": 0.13183279742765272,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            30,
+            45
+          ],
+          "source_projected_ground_point": [
+            474,
+            448
+          ],
+          "offset": [
+            8,
+            16
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        },
+        {
+          "index": 2,
+          "source": "assets/ref/ref_npc_louluo_combat_up_source_v01.png",
+          "source_component_id": 3,
+          "source_crop_xywh": [
+            639,
+            122,
+            293,
+            332
+          ],
+          "uniform_scale": 0.13183279742765272,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            39,
+            44
+          ],
+          "source_projected_ground_point": [
+            790,
+            452
+          ],
+          "offset": [
+            4,
+            17
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        },
+        {
+          "index": 3,
+          "source": "assets/ref/ref_npc_louluo_combat_up_source_v01.png",
+          "source_component_id": 4,
+          "source_crop_xywh": [
+            970,
+            157,
+            268,
+            286
+          ],
+          "uniform_scale": 0.13183279742765272,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            35,
+            38
+          ],
+          "source_projected_ground_point": [
+            1094,
+            441
+          ],
+          "offset": [
+            8,
+            23
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        }
+      ],
+      "visual_phase_frames_0based": {
+        "anticipation": [
+          0,
+          1
+        ],
+        "strike_followthrough": [
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "file": "assets/npc/npc_louluo_hit_up_v01.png",
+      "action": "hit",
+      "direction": "up",
+      "frame_size": [
+        48,
+        64
+      ],
+      "frame_count": 2,
+      "fps": 12,
+      "loop": false,
+      "anchor": [
+        24,
+        60
+      ],
+      "gap": 0,
+      "horizontal_strip": true,
+      "hold_frames": [],
+      "end_behavior": "return_to_idle_by_controller",
+      "frames": [
+        {
+          "index": 0,
+          "source": "assets/ref/ref_npc_louluo_combat_up_source_v01.png",
+          "source_component_id": 5,
+          "source_crop_xywh": [
+            63,
+            513,
+            272,
+            311
+          ],
+          "uniform_scale": 0.13183279742765272,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            36,
+            41
+          ],
+          "source_projected_ground_point": [
+            180,
+            822
+          ],
+          "offset": [
+            9,
+            20
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        },
+        {
+          "index": 1,
+          "source": "assets/ref/ref_npc_louluo_combat_up_source_v01.png",
+          "source_component_id": 6,
+          "source_crop_xywh": [
+            353,
+            569,
+            272,
+            250
+          ],
+          "uniform_scale": 0.13183279742765272,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            36,
+            33
+          ],
+          "source_projected_ground_point": [
+            478,
+            817
+          ],
+          "offset": [
+            7,
+            28
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        }
+      ]
+    },
+    {
+      "file": "assets/npc/npc_louluo_down_up_v01.png",
+      "action": "down",
+      "direction": "up",
+      "frame_size": [
+        48,
+        64
+      ],
+      "frame_count": 4,
+      "fps": 12,
+      "loop": false,
+      "anchor": [
+        24,
+        60
+      ],
+      "gap": 0,
+      "horizontal_strip": true,
+      "hold_frames": [
+        3
+      ],
+      "end_behavior": "hold_last_until_state_change",
+      "frames": [
+        {
+          "index": 0,
+          "source": "assets/ref/ref_npc_louluo_combat_up_source_v01.png",
+          "source_component_id": 7,
+          "source_crop_xywh": [
+            32,
+            886,
+            289,
+            278
+          ],
+          "uniform_scale": 0.13183279742765272,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            38,
+            37
+          ],
+          "source_projected_ground_point": [
+            171,
+            1162
+          ],
+          "offset": [
+            6,
+            24
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        },
+        {
+          "index": 1,
+          "source": "assets/ref/ref_npc_louluo_combat_up_source_v01.png",
+          "source_component_id": 8,
+          "source_crop_xywh": [
+            335,
+            943,
+            260,
+            229
+          ],
+          "uniform_scale": 0.13183279742765272,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            34,
+            30
+          ],
+          "source_projected_ground_point": [
+            442,
+            1170
+          ],
+          "offset": [
+            10,
+            31
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        },
+        {
+          "index": 2,
+          "source": "assets/ref/ref_npc_louluo_combat_up_source_v01.png",
+          "source_component_id": 9,
+          "source_crop_xywh": [
+            594,
+            1023,
+            302,
+            127
+          ],
+          "uniform_scale": 0.13183279742765272,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            40,
+            17
+          ],
+          "source_projected_ground_point": [
+            746,
+            1148
+          ],
+          "offset": [
+            4,
+            44
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        },
+        {
+          "index": 3,
+          "source": "assets/ref/ref_npc_louluo_combat_up_source_v01.png",
+          "source_component_id": 10,
+          "source_crop_xywh": [
+            922,
+            1039,
+            314,
+            111
+          ],
+          "uniform_scale": 0.13183279742765272,
+          "scale_reference": "同方向首张受击站姿41px（武器低持，包含人体全高）；整组动作同等比尺度，原生取整",
+          "scaled_size": [
+            41,
+            15
+          ],
+          "source_projected_ground_point": [
+            1075,
+            1148
+          ],
+          "offset": [
+            4,
+            46
+          ],
+          "integer_margin_registration": [
+            0,
+            0
+          ],
+          "anchor": [
+            24,
+            60
+          ],
+          "registration": "站姿按地面中点、倒地按投影身体根注册；保持所有帧原点，程序负责世界位移"
+        }
+      ]
+    }
+  ]
+}
