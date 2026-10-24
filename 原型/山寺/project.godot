@@ -24,6 +24,10 @@ window/size/window_height_override=1080
 window/stretch/mode="viewport"
 window/stretch/scale_mode="integer"
 
+[gui]
+
+theme/custom="res://scenes/default_theme.tres"
+
 [input]
 
 move_up={
