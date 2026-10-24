@@ -166,28 +166,27 @@ func _sect_select() -> void:
 
 # ---------- 茶棚（节点 0）----------
 
-class ChapengBackdrop extends Control:
-	func _draw() -> void:
-		draw_rect(Rect2(0, 0, 960, 540), Color("#1C2233"))
-		draw_rect(Rect2(0, 300, 960, 240), Color("#4A3B2A"))
-		for i in 7:
-			draw_rect(Rect2(60 + i * 140, 250 - (i % 3) * 30, 70, 60 + (i % 3) * 30), Color("#24302A"))
-		draw_rect(Rect2(300, 210, 360, 18), Color("#7A6A48"))   # 茅草棚顶
-		draw_rect(Rect2(316, 228, 8, 120), Color("#3B2A20"))
-		draw_rect(Rect2(636, 228, 8, 120), Color("#3B2A20"))
-		draw_rect(Rect2(380, 300, 90, 30), Color("#5A3F29"))   # 粗桌
-		draw_rect(Rect2(520, 300, 90, 30), Color("#5A3F29"))
-		draw_circle(Vector2(700, 326), 14, Color("#6E5A44"))     # 泥炉
-		draw_rect(Rect2(790, 120, 60, 20), Color("#6E6A5E"))     # 远处寺顶
-		UiKit.panel(self, Rect2(720, 16, 224, 24))
-		UiKit.text(self, Vector2(732, 21), "场景图待出：山路茶棚", 12, UiKit.MUTED)
+## 茶棚底图 → 人物 → 棚顶遮挡层，三层同在 (0,0)（UI设计/茶棚交付_20261024_1313/图层参数_v01.json）
+const CHAPENG_BG := "res://assets/env/env_chapeng_v01.png"
+const CHAPENG_FRONT := "res://assets/env/env_chapeng_front_v01.png"
+const CHAPENG_ME := Vector2(430, 272)        # 你：刚从土路走到桌边
+const CHAPENG_JINGXIN := Vector2(300, 266)   # 净心：蹲在棚外桌前
 
 
 func _chapeng() -> void:
 	_reset()
-	var bd := ChapengBackdrop.new()
-	bd.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_layer.add_child(bd)
+	var w := SimWorld.new(1)
+	var me := w.add_hero("player", sect, "", CHAPENG_ME)
+	me.facing = Vector2.LEFT
+	w.add_hero("partner", "shaolin", "", CHAPENG_JINGXIN).facing = Vector2.RIGHT
+	var view := WorldView.new()
+	view.world = w
+	view.background = UiKit.tex(CHAPENG_BG)
+	_layer.add_child(view)
+	var front := TextureRect.new()
+	front.texture = UiKit.tex(CHAPENG_FRONT)
+	front.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_layer.add_child(front)
 	var d := DialogueBox.new()
 	_layer.add_child(d)
 	d.finished.connect(_utility_select)
