@@ -1,9 +1,25 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, existsSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 const release = await import('../scripts/update-preview.mjs');
+test('超过 64 MiB 的 Git 归档不经过进程输出缓冲区，解包后逐字节一致', t => {
+  const root = mkdtempSync(join(tmpdir(), 'preview-archive-test-'));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  const repo = join(root, 'repo'), source = join(root, 'source');
+  mkdirSync(repo); mkdirSync(source);
+  const bytes = Buffer.alloc(65 * 1024 * 1024, 0x71);
+  writeFileSync(join(repo, 'large.dat'), bytes);
+  const git = args => execFileSync('git', args, { cwd: repo });
+  git(['init', '-q']); git(['add', 'large.dat']);
+  git(['-c', 'user.name=Test', '-c', 'user.email=test@example.invalid', 'commit', '-qm', 'fixture']);
+  assert.equal(typeof release.archiveSource, 'function');
+  release.archiveSource(repo, 'HEAD', source);
+  assert.deepEqual(readFileSync(join(source, 'large.dat')), bytes);
+  assert.equal(existsSync(source + '.tar'), false);
+});
 function fixture(t) {
   const home = mkdtempSync(join(tmpdir(), 'qingshi-release-test-'));
   t.after(() => rmSync(home, { recursive: true, force: true }));

@@ -15,6 +15,15 @@ const readJSON = path => JSON.parse(readFileSync(path, 'utf8'));
 function run(command, args, cwd) { execFileSync(command, args, { cwd, stdio: 'inherit' }); }
 function git(repo, args) { return execFileSync('git', args, { cwd: repo, encoding: 'utf8' }).trim(); }
 
+// 写入磁盘，避免仓库素材超过 execFileSync 的 stdout 缓冲区上限。
+export function archiveSource(repo, commit, source) {
+  const archive = source + '.tar';
+  try {
+    execFileSync('git', ['archive', '--format=tar', '--output', archive, commit], { cwd: repo });
+    execFileSync('tar', ['-xf', archive, '-C', source]);
+  } finally { rmSync(archive, { force: true }); }
+}
+
 export async function withLock(home, task) {
   const lock = join(home, '.update-lock');
   try { mkdirSync(lock); }
@@ -108,8 +117,7 @@ async function main() {
     const source = mkdtempSync(join(tmpdir(), 'qingshi-source-'));
     let stage;
     try {
-      const archive = execFileSync('git', ['archive', commit], { cwd: repo, maxBuffer: 64 * 1024 * 1024 });
-      execFileSync('tar', ['-xf', '-', '-C', source], { input: archive });
+      archiveSource(repo, commit, source);
       for (const file of ['package-lock.json', 'portal-integration/server.mjs', ...assets.map(name => '原型/V0.4/' + name), ...artDirs.map(dir=>'原型/V0.4/'+dir)]) {
         if (!existsSync(join(source, file))) throw Error('该分支缺少 V0.4 发布文件：' + file);
       }
