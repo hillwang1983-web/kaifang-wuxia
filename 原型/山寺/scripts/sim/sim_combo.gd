@@ -6,7 +6,10 @@ extends RefCounted
 
 const C := SimData.COMBO
 
-var w: SimWorld
+## 世界持有合击，合击只弱引用世界，免得两个 RefCounted 互相持有、永不释放
+var w: SimWorld:
+	get:
+		return _world.get_ref()
 var moqi := 0               # 默契值，局内计算，所有人共享
 var last_success := -999.0
 var cd := 0.0
@@ -15,10 +18,11 @@ var invite := {}            # {from, point, t, level}；空 = 没有邀请
 var pending := {}           # 定格结束后要结算的合击
 var muted := {}             # hero_id -> true：本局关闭合击提示（防骚扰预留，规格书第四节）
 var _serial := 0
+var _world: WeakRef
 
 
 func _init(world: SimWorld) -> void:
-	w = world
+	_world = weakref(world)
 
 
 ## 0 / 1 / 2 对应一 / 二 / 三级：零到二为一级，三到五为二级，六以上为三级

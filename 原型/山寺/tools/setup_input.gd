@@ -2,6 +2,7 @@
 ## 改键位就改这里再跑一遍，别只在编辑器里手改：
 ##   Godot_v4.7.2-stable_win64_console.exe --headless --path . --script res://tools/setup_input.gd
 ## 键位依据规格书第五节；规格书的 Q W E 与 WASD 里的 W 冲突，三主动改为 U I O。
+## 鼠标左键普攻、右键取消不放进映射：网页上触屏会模拟鼠标，由 PlayerInput 在非触屏时单独读。
 extends SceneTree
 
 const DEADZONE := 0.2
@@ -16,7 +17,7 @@ var ACTIONS := {
 	"aim_down": [["axis", JOY_AXIS_RIGHT_Y, 1.0]],
 	"aim_left": [["axis", JOY_AXIS_RIGHT_X, -1.0]],
 	"aim_right": [["axis", JOY_AXIS_RIGHT_X, 1.0]],
-	"attack": [["key", KEY_J], ["mouse", MOUSE_BUTTON_LEFT], ["pad", JOY_BUTTON_A]],
+	"attack": [["key", KEY_J], ["pad", JOY_BUTTON_A]],
 	"skill_1": [["key", KEY_U], ["pad", JOY_BUTTON_X]],
 	"skill_2": [["key", KEY_I], ["pad", JOY_BUTTON_Y]],
 	"skill_3": [["key", KEY_O], ["pad", JOY_BUTTON_B]],
@@ -24,7 +25,7 @@ var ACTIONS := {
 	"combo": [["key", KEY_F], ["axis", JOY_AXIS_TRIGGER_RIGHT, 1.0]],
 	"dodge": [["key", KEY_SPACE], ["pad", JOY_BUTTON_LEFT_SHOULDER]],
 	# 规格书把手柄取消放在 B，但 B 已是主动三；暂放 LT。
-	"cancel": [["key", KEY_ESCAPE], ["mouse", MOUSE_BUTTON_RIGHT], ["axis", JOY_AXIS_TRIGGER_LEFT, 1.0]],
+	"cancel": [["key", KEY_ESCAPE], ["axis", JOY_AXIS_TRIGGER_LEFT, 1.0]],
 	# 规格书没给手柄交谈 / 互动键，暂放十字键上。
 	"interact": [["key", KEY_E], ["pad", JOY_BUTTON_DPAD_UP]],
 	"inventory": [["key", KEY_TAB], ["pad", JOY_BUTTON_START]],
