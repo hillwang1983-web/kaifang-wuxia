@@ -1,0 +1,66 @@
+{
+  "status": "PASS",
+  "checked_at_utc": "2026-10-24T05:10:23.650094+00:00",
+  "sheets": [
+    {
+      "file": "vfx_heji_ring_open_v01.png",
+      "dimensions": [
+        576,
+        96
+      ],
+      "frames": 6,
+      "colors": 3,
+      "alpha": "0/255",
+      "frame_bounds": "PASS"
+    },
+    {
+      "file": "vfx_heji_ring_loop_v01.png",
+      "dimensions": [
+        384,
+        96
+      ],
+      "frames": 4,
+      "colors": 3,
+      "alpha": "0/255",
+      "frame_bounds": "PASS"
+    },
+    {
+      "file": "vfx_heji_ring_countdown_v01.png",
+      "dimensions": [
+        3456,
+        96
+      ],
+      "frames": 36,
+      "colors": 1,
+      "alpha": "0/255",
+      "frame_bounds": "PASS"
+    },
+    {
+      "file": "vfx_heji_ring_invite_v01.png",
+      "dimensions": [
+        3456,
+        96
+      ],
+      "frames": 36,
+      "colors": 3,
+      "alpha": "0/255",
+      "frame_bounds": "PASS"
+    }
+  ],
+  "master": {
+    "dimensions": [
+      1024,
+      576
+    ],
+    "colors": 48,
+    "original_preserved": true
+  },
+  "countdown_seconds": 3,
+  "countdown_frames": 36,
+  "countdown_area_strictly_decreases": true,
+  "baked_layer_pixel_check": "PASS",
+  "gif_frames": 42,
+  "gif_duration_ms": 3500,
+  "visual_review": "母图、十帧、倒计时采样和实际比例均已检查",
+  "runtime_validation": "未执行Godot导入或实机验收"
+}

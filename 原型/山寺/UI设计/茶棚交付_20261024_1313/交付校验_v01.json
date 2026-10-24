@@ -1,0 +1,69 @@
+{
+  "delivery_id": "20261024-1313",
+  "rows": [
+    1,
+    4
+  ],
+  "files": [
+    {
+      "path": "UI设计/茶棚交付_20261024_1313/交付说明_v01.md",
+      "bytes": 2962,
+      "sha256": "56ef4fc813c29903dace3df62d7d5a8620bd8ffb68f2ebf724efb53c63bb5ef0"
+    },
+    {
+      "path": "UI设计/茶棚交付_20261024_1313/图层参数_v01.json",
+      "bytes": 3363,
+      "sha256": "a011a6d4b174a2399014bb1462e35d91a2d3de6e2fd8dc6ad348f21f402d4a33"
+    },
+    {
+      "path": "UI设计/茶棚交付_20261024_1313/核验结果_v01.json",
+      "bytes": 733,
+      "sha256": "b64c2f3a422e03a5bdeb93f974c4eb0c4284247b898816b3af2cdee09b369225"
+    },
+    {
+      "path": "UI设计/茶棚交付_20261024_1313/棚顶_透明区预览_v01.png",
+      "bytes": 16478,
+      "sha256": "b18432ca8f3093660a420477b9be084fe0c7e9e1055c697146f598f52103684e"
+    },
+    {
+      "path": "UI设计/茶棚交付_20261024_1313/棚顶_遮挡对照_v01.png",
+      "bytes": 66589,
+      "sha256": "416485a275c2cde796af7c57e5593acffe3ec711ffffe97fcc3e519b83777708"
+    },
+    {
+      "path": "UI设计/茶棚交付_20261024_1313/生图提示词_v01.json",
+      "bytes": 3949,
+      "sha256": "1d6adea27e90216b6576cb359e0327e4f0c3f5c94b10b6a95ae6361cb37ce638"
+    },
+    {
+      "path": "UI设计/茶棚交付_20261024_1313/茶棚_2倍预览_v01.png",
+      "bytes": 351231,
+      "sha256": "b6b1eda61429e22b5ed8004b40687d9c0bb312d627112aa3669107b1bafc171e"
+    },
+    {
+      "path": "UI设计/茶棚交付_20261024_1313/茶棚_实际比例预览_v01.png",
+      "bytes": 279596,
+      "sha256": "37f0873a859d9a14d94ed63d4bc7c3703291673aa67f01eb92855269a00ef0e7"
+    },
+    {
+      "path": "assets/env/env_chapeng_front_v01.png",
+      "bytes": 1010271,
+      "sha256": "9e1ee84f32f1a8dbb5a1508630e1eb2efea95a6f034d13a86c30b2290c231363"
+    },
+    {
+      "path": "assets/env/env_chapeng_v01.png",
+      "bytes": 278745,
+      "sha256": "fbecaf2a1051cd9c78c1ae0307144af6060cca511f1462c167dfc0fb2e749436"
+    },
+    {
+      "path": "assets/ref/ref_env_chapeng_source_v01.png",
+      "bytes": 3641409,
+      "sha256": "6a4f2bb184b140b197211d928b964e22ed8556c2c19f3d04ae7d79e9a38c795c"
+    },
+    {
+      "path": "assets/ref/ref_env_chapeng_stove_source_v01.png",
+      "bytes": 3352420,
+      "sha256": "16276ab25284038027d4b53798619eae158367fee549b2df1174891f6c9867fe"
+    }
+  ]
+}

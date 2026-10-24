@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "checked_at_utc": "2026-10-24T05:24:55.141590+00:00",
+  "rows": [
+    1,
+    4
+  ],
+  "dimensions": [
+    960,
+    540
+  ],
+  "base_colors": 48,
+  "foreground_colors": 45,
+  "base_alpha": [
+    255
+  ],
+  "foreground_alpha": [
+    0,
+    255
+  ],
+  "foreground_opaque_pixels": 24640,
+  "foreground_pixel_match": "PASS",
+  "foreground_overlay_base_identity": "PASS",
+  "occluded_test_sprite_pixels": 105,
+  "exact_nearest_neighbor_2x": "PASS",
+  "source_originals_preserved": true,
+  "visual_check": "茶棚、两桌长凳、泥炉水壶、竹篱、上山土路与寺顶；无人物/文字；棚顶透明边界及角色比例",
+  "runtime_validation": "未执行Godot、碰撞、剧情或手机实机验收"
+}
